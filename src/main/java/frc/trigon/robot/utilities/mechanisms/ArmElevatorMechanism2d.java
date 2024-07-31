@@ -30,7 +30,7 @@ public class ArmElevatorMechanism2d {
         this.key = "Mechanisms/" + name;
         this.minimumLength = minimumLength;
         this.mechanism = new Mechanism2d(2 * maximumLength, 2 * maximumLength);
-        final MechanismRoot2d root = mechanism.getRoot("CurrentPositionRoot", maximumLength, maximumLength);
+        final MechanismRoot2d root = mechanism.getRoot("Root", maximumLength, maximumLength);
         this.currentPositionLigament = root.append(new MechanismLigament2d("ZCurrentPositionLigament", 0, 0, MechanismConstants.MECHANISM_LINE_WIDTH, mechanismColor));
         this.targetPositionLigament = root.append(new MechanismLigament2d("TargetPositionLigament", 0, 0, MechanismConstants.TARGET_ELEVATOR_POSITION_LIGAMENT_WIDTH, MechanismConstants.GRAY));
     }

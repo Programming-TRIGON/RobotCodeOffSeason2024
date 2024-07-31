@@ -41,7 +41,7 @@ public class SpeedMechanism2d {
         this.deadband = deadband;
         this.key = "Mechanisms/" + name;
         this.mechanism = new Mechanism2d(2 * maximumDisplayableVelocity, 2 * maximumDisplayableVelocity);
-        final MechanismRoot2d root = mechanism.getRoot("VelocityRoot", maximumDisplayableVelocity, maximumDisplayableVelocity);
+        final MechanismRoot2d root = mechanism.getRoot("Root", maximumDisplayableVelocity, maximumDisplayableVelocity);
         this.currentVelocityLigament = root.append(new MechanismLigament2d("ZCurrentVelocityLigament", 0, 0, MechanismConstants.MECHANISM_LINE_WIDTH, MechanismConstants.BLUE));
         this.currentVelocityTopArrowLigament = currentVelocityLigament.append(new MechanismLigament2d("ZCurrentVelocityTopArrowLigament", MechanismConstants.ARROW_LENGTH_SCALE * maximumDisplayableVelocity, MechanismConstants.ZERO_TOP_ANGLE, MechanismConstants.MECHANISM_LINE_WIDTH, MechanismConstants.BLUE));
         this.currentVelocityBottomArrowLigament = currentVelocityLigament.append(new MechanismLigament2d("ZCurrentVelocityBottomArrowLigament", MechanismConstants.ARROW_LENGTH_SCALE * maximumDisplayableVelocity, MechanismConstants.ZERO_BOTTOM_ANGLE, MechanismConstants.MECHANISM_LINE_WIDTH, MechanismConstants.BLUE));
