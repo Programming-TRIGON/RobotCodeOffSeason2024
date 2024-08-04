@@ -6,18 +6,23 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.system.plant.DCMotor;
 import frc.trigon.robot.constants.RobotConstants;
+import frc.trigon.robot.hardware.misc.simplesensor.SimpleSensor;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
 import frc.trigon.robot.hardware.simulation.SimpleMotorSimulation;
 import frc.trigon.robot.utilities.mechanisms.SpeedMechanism2d;
 
+import java.util.function.DoubleSupplier;
+
 public class IntakeConstants {
     private static final int
             MASTER_MOTOR_ID = 1,
             FOLLOWER_MOTOR_ID = 2;
+    private static final int DISTANCE_SENSOR_CHANNEL = 0;
     private static final String
             MASTER_MOTOR_NAME = "MasterIntakeMotor",
-            FOLLOWER_MOTOR_NAME = "FollowerIntakeMotor";
+            FOLLOWER_MOTOR_NAME = "FollowerIntakeMotor",
+            DISTANCE_SENSOR_NAME = "IntakeDistanceSensor";
     static final TalonFXMotor
             MASTER_MOTOR = new TalonFXMotor(
             MASTER_MOTOR_ID,
@@ -29,6 +34,7 @@ public class IntakeConstants {
                     FOLLOWER_MOTOR_NAME,
                     RobotConstants.CANIVORE_NAME
             );
+    static final SimpleSensor DISTANCE_SENSOR = SimpleSensor.createDutyCycleSensor(DISTANCE_SENSOR_CHANNEL, DISTANCE_SENSOR_NAME);
 
     private static final InvertedValue
             MASTER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive,
@@ -46,6 +52,7 @@ public class IntakeConstants {
             GEAR_RATIO,
             MOMENT_OF_INERTIA
     );
+    private static final DoubleSupplier DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER = () -> 0;
 
     private static final double MAX_DISPLAYABLE_VELOCITY = 12;
     static final SpeedMechanism2d MECHANISM = new SpeedMechanism2d(
@@ -89,5 +96,20 @@ public class IntakeConstants {
 
         final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_MOTOR_OPPOSITE_DIRECTION);
         FOLLOWER_MOTOR.setControl(followerRequest);
+    }
+
+    private static void configureDistanceSensor() {
+        DISTANCE_SENSOR.setSimulationSupplier(DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER);
+    }
+
+    public enum IntakeState {
+        COLLECTING(10),
+        EJECTING(-4);
+
+        public final double voltage;
+
+        IntakeState(double voltage) {
+            this.voltage = voltage;
+        }
     }
 }
