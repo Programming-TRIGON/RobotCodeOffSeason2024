@@ -112,7 +112,10 @@ public class PitcherConstants {
         MOTOR.setPhysicsSimulation(SIMULATION);
 
         MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
+        MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
+        MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
+        MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
     public static void configureEncoder() {

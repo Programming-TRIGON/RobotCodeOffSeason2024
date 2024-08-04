@@ -1,6 +1,9 @@
 package frc.trigon.robot.subsystems.shooter;
 
 import com.ctre.phoenix6.controls.VelocityVoltage;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -21,6 +24,17 @@ public class Shooter extends MotorSubsystem {
         setName("Shooter");
     }
 
+    public void updateLog(SysIdRoutineLog log) {
+        log.motor("RightShooter")
+                .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
+                .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+        log.motor("LeftShooter")
+                .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
+                .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+    }
+
     @Override
     public void setBrake(boolean brake) {
         rightMotor.setBrake(brake);
@@ -38,6 +52,10 @@ public class Shooter extends MotorSubsystem {
         rightMotor.update();
         leftMotor.update();
         updateMechanism();
+    }
+
+    public SysIdRoutine.Config getSysIdConfig() {
+        return ShooterConstants.SYSID_CONFIG;
     }
 
     void reachTargetShootingVelocityFromShootingCalculations() {

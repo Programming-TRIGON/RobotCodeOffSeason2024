@@ -20,8 +20,8 @@ public class ShooterConstants {
             RIGHT_MOTOR_NAME = "rightShootingMotor",
             LEFT_MOTOR_NAME = "leftShootingMotor";
     static final TalonFXMotor
-            RIGHT_MOTOR = new TalonFXMotor(RIGHT_MOTOR_ID, RIGHT_MOTOR_NAME),
-            LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME);
+            RIGHT_MOTOR = new TalonFXMotor(RIGHT_MOTOR_ID, RIGHT_MOTOR_NAME, RobotConstants.CANIVORE_NAME),
+            LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME, RobotConstants.CANIVORE_NAME);
     private static final InvertedValue
             RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
@@ -40,7 +40,6 @@ public class ShooterConstants {
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
             LEFT_MOTOR_AMOUNT = 1;
-
     private static final DCMotor
             RIGHT_GEARBOX = DCMotor.getFalcon500Foc(RIGHT_MOTOR_AMOUNT),
             LEFT_GEARBOX = DCMotor.getFalcon500Foc(LEFT_MOTOR_AMOUNT);
@@ -49,7 +48,7 @@ public class ShooterConstants {
             RIGHT_SIMULATION = new FlywheelSimulation(RIGHT_GEARBOX, GEAR_RATIO, MOMENT_OF_INERTIA),
             LEFT_SIMULATION = new FlywheelSimulation(LEFT_GEARBOX, GEAR_RATIO, MOMENT_OF_INERTIA);
 
-    static final SysIdRoutine.Config SYS_ID_CONFIG = new SysIdRoutine.Config(
+    static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
             Units.Volts.of(0.25).per(Units.Second),
             Units.Volts.of(7),
             Units.Second.of(1000000000)
@@ -89,6 +88,7 @@ public class ShooterConstants {
         RIGHT_MOTOR.setPhysicsSimulation(RIGHT_SIMULATION);
 
         RIGHT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
+        RIGHT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
     private static void configureLeftMotor() {
@@ -112,5 +112,6 @@ public class ShooterConstants {
         LEFT_MOTOR.setPhysicsSimulation(LEFT_SIMULATION);
 
         LEFT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
+        LEFT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 }

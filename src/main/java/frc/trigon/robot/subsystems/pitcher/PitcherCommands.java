@@ -6,19 +6,17 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
 
 public class PitcherCommands {
-    private static final Pitcher PITCHER = RobotContainer.PITCHER;
-
     public static Command getReachTargetPitchFromShootingCalculationsCommand() {
         return new RunCommand(
-                PITCHER::reachTargetPitchFromShootingCalculations,
-                PITCHER
+                RobotContainer.PITCHER::reachTargetPitchFromShootingCalculations,
+                RobotContainer.PITCHER
         );
     }
 
     public static Command getSetPositionCommand(Rotation2d targetPitch) {
         return new RunCommand(
-                () -> PITCHER.setPosition(targetPitch),
-                PITCHER
+                () -> RobotContainer.PITCHER.setPosition(targetPitch),
+                RobotContainer.PITCHER
         );
     }
 }

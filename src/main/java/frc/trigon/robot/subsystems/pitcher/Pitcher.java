@@ -2,6 +2,9 @@ package frc.trigon.robot.subsystems.pitcher;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -15,6 +18,13 @@ public class Pitcher extends MotorSubsystem {
 
     public Pitcher() {
         setName("Pitcher");
+    }
+
+    public void updateLog(SysIdRoutineLog log) {
+        log.motor("Pitcher")
+                .linearPosition(Units.Meters.of(motor.getSignal(TalonFXSignal.POSITION)))
+                .linearVelocity(Units.MetersPerSecond.of(motor.getSignal(TalonFXSignal.VELOCITY)))
+                .voltage(Units.Volts.of(motor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
     @Override
@@ -33,6 +43,10 @@ public class Pitcher extends MotorSubsystem {
         updateMechanism();
     }
 
+    public SysIdRoutine.Config getSysIdConfig() {
+        return PitcherConstants.SYSID_CONFIG;
+    }
+
     public Rotation2d getTargetPitch() {
         return targetPosition;
     }
@@ -48,6 +62,9 @@ public class Pitcher extends MotorSubsystem {
     }
 
     private void updateMechanism() {
-        PitcherConstants.MECHANISM.update(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION)), Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+        PitcherConstants.MECHANISM.update(
+                Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION)),
+                Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
+        );
     }
 }
