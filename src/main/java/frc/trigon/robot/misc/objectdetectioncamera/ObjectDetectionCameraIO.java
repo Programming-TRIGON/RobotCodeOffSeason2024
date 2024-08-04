@@ -1,4 +1,4 @@
-package frc.trigon.robot.hardware.misc.objectdetectioncamera;
+package frc.trigon.robot.misc.objectdetectioncamera;
 
 import org.littletonrobotics.junction.AutoLog;
 
