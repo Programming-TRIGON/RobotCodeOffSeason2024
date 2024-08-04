@@ -9,15 +9,16 @@ import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.hardware.phoenix6.Phoenix6SignalThread;
-import frc.trigon.robot.hardware.phoenix6.pigeon2.Pigeon2Gyro;
-import frc.trigon.robot.hardware.phoenix6.pigeon2.Pigeon2Signal;
-import frc.trigon.robot.subsystems.MotorSubsystem;
-import frc.trigon.robot.utilities.mirrorable.Mirrorable;
-import frc.trigon.robot.utilities.mirrorable.MirrorablePose2d;
-import frc.trigon.robot.utilities.mirrorable.MirrorableRotation2d;
+import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.phoenix6.Phoenix6SignalThread;
+import org.trigon.hardware.phoenix6.pigeon2.Pigeon2Gyro;
+import org.trigon.hardware.phoenix6.pigeon2.Pigeon2Signal;
+import org.trigon.utilities.MotorSubsystem;
+import org.trigon.utilities.mirrorable.Mirrorable;
+import org.trigon.utilities.mirrorable.MirrorablePose2d;
+import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 public class Swerve extends MotorSubsystem {
     private final Pigeon2Gyro gyro = SwerveConstants.GYRO;
@@ -28,6 +29,7 @@ public class Swerve extends MotorSubsystem {
     public Swerve() {
         setName("Swerve");
         configurePathPlanner();
+        phoenix6SignalThread.setOdometryFrequencyHertz(PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
         SwerveConstants.PROFILED_ROTATION_PID_CONTROLLER.enableContinuousInput(-180, 180);
     }
 

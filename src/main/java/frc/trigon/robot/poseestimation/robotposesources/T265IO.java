@@ -4,7 +4,7 @@ import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import frc.trigon.robot.utilities.JsonHandler;
+import org.trigon.utilities.JsonHandler;
 
 public class T265IO extends RobotPoseSourceIO {
     private static final NetworkTable NETWORK_TABLE = NetworkTableInstance.getDefault().getTable("T265");

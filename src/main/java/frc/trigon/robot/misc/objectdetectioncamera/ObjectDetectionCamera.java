@@ -1,8 +1,8 @@
-package frc.trigon.robot.hardware.misc.objectdetectioncamera;
+package frc.trigon.robot.misc.objectdetectioncamera;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.trigon.robot.constants.RobotConstants;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.RobotHardwareStats;
 
 public class ObjectDetectionCamera extends SubsystemBase {
     private final ObjectDetectionCameraInputsAutoLogged objectDetectionCameraInputs = new ObjectDetectionCameraInputsAutoLogged();
@@ -54,9 +54,9 @@ public class ObjectDetectionCamera extends SubsystemBase {
     }
 
     private ObjectDetectionCameraIO generateIO(String hostname) {
-        if (RobotConstants.IS_REPLAY)
+        if (RobotHardwareStats.isReplay())
             return new ObjectDetectionCameraIO();
-        if (RobotConstants.IS_SIMULATION)
+        if (RobotHardwareStats.isSimulation())
             return new SimulationObjectDetectionCameraIO(hostname);
         return new PhotonObjectDetectionCameraIO(hostname);
     }
