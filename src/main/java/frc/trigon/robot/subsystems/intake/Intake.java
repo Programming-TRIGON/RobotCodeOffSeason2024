@@ -13,7 +13,6 @@ public class Intake extends MotorSubsystem {
 
     public Intake() {
         setName("Intake");
-        updateMechanism();
     }
 
     @Override
@@ -21,6 +20,7 @@ public class Intake extends MotorSubsystem {
         masterMotor.update();
         followerMotor.update();
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
+        updateMechanism();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Intake extends MotorSubsystem {
         masterMotor.setControl(voltageRequest.withOutput(collectionVoltage));
         IntakeConstants.MECHANISM.setTargetVelocity(collectionVoltage);
     }
-    
+
     private double getDistance(double maximumDistance) {
         return IntakeConstants.DISTANCE_SENSOR.getDutyCycleValue(maximumDistance);
     }
