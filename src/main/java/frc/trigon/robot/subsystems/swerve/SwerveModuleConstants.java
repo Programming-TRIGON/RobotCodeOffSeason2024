@@ -4,16 +4,16 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.system.plant.DCMotor;
-import frc.trigon.robot.constants.RobotConstants;
-import frc.trigon.robot.hardware.simulation.SimpleMotorSimulation;
+import org.trigon.hardware.RobotHardwareStats;
+import org.trigon.hardware.simulation.SimpleMotorSimulation;
 
 public class SwerveModuleConstants {
     private static final double
             DRIVE_GEAR_RATIO = 6.12,
             STEER_GEAR_RATIO = 12.8;
     private static final double
-            DRIVE_OPEN_LOOP_RAMP_RATE = RobotConstants.IS_SIMULATION ? 0.1 : 0.1,
-            DRIVE_CLOSED_LOOP_RAMP_RATE = RobotConstants.IS_SIMULATION ? 0.1 : 0.1;
+            DRIVE_OPEN_LOOP_RAMP_RATE = RobotHardwareStats.isSimulation() ? 0.1 : 0.1,
+            DRIVE_CLOSED_LOOP_RAMP_RATE = RobotHardwareStats.isSimulation() ? 0.1 : 0.1;
     private static final InvertedValue
             DRIVE_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive,
             STEER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
@@ -23,14 +23,14 @@ public class SwerveModuleConstants {
             DRIVE_MOTOR_NEUTRAL_MODE_VALUE = NeutralModeValue.Brake,
             STEER_MOTOR_NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            DRIVE_SLIP_CURRENT = RobotConstants.IS_SIMULATION ? 1000 : 100,
-            STEER_CURRENT_LIMIT = RobotConstants.IS_SIMULATION ? 1000 : 50;
+            DRIVE_SLIP_CURRENT = RobotHardwareStats.isSimulation() ? 1000 : 100,
+            STEER_CURRENT_LIMIT = RobotHardwareStats.isSimulation() ? 1000 : 50;
     private static final double
-            STEER_MOTOR_P = RobotConstants.IS_SIMULATION ? 75 : 75,
+            STEER_MOTOR_P = RobotHardwareStats.isSimulation() ? 75 : 75,
             STEER_MOTOR_I = 0,
             STEER_MOTOR_D = 0;
     private static final double
-            DRIVE_MOTOR_P = RobotConstants.IS_SIMULATION ? 50 : 50,
+            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 50 : 50,
             DRIVE_MOTOR_I = 0,
             DRIVE_MOTOR_D = 0;
     static final boolean ENABLE_FOC = true;
@@ -49,7 +49,7 @@ public class SwerveModuleConstants {
             DRIVE_MOTOR_GEARBOX = DCMotor.getKrakenX60Foc(DRIVE_MOTOR_AMOUNT),
             STEER_MOTOR_GEARBOX = DCMotor.getFalcon500Foc(STEER_MOTOR_AMOUNT);
 
-    static final double WHEEL_DIAMETER_METERS = RobotConstants.IS_SIMULATION ? 0.1016 : 0.049149 * 2;
+    static final double WHEEL_DIAMETER_METERS = RobotHardwareStats.isSimulation() ? 0.1016 : 0.049149 * 2;
     static final double VOLTAGE_COMPENSATION_SATURATION = 12;
 
     static SimpleMotorSimulation createDriveSimulation() {
