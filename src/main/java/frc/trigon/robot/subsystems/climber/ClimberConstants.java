@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
-import frc.trigon.robot.hardware.simulation.ElevatorSimulation;
-import frc.trigon.robot.utilities.mechanisms.ElevatorMechanism2d;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.hardware.simulation.ElevatorSimulation;
+import org.trigon.utilities.mechanisms.ElevatorMechanism2d;
 
 public class ClimberConstants {
     private static final int
@@ -110,7 +110,8 @@ public class ClimberConstants {
         MASTER_MOTOR.applyConfiguration(config);
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
-        MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
@@ -126,5 +127,16 @@ public class ClimberConstants {
 
         final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_MOTOR_OPPOSITE_DIRECTION);
         FOLLOWER_MOTOR.setControl(followerRequest);
+    }
+
+    public enum ClimberState {
+        RETRACTED(0.1),
+        CLIMBING(0.7);
+
+        public final double positionMeters;
+
+        ClimberState(double positionMeters) {
+            this.positionMeters = positionMeters;
+        }
     }
 }
