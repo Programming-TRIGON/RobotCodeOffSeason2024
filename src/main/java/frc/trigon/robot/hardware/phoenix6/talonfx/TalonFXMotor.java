@@ -87,8 +87,8 @@ public class TalonFXMotor {
         motorIO.setControl(request);
     }
 
-    public void setPosition(double position) {
-        motorIO.setPosition(position);
+    public void setPosition(double positionRotations) {
+        motorIO.setPosition(positionRotations);
     }
 
     public void setBrake(boolean brake) {

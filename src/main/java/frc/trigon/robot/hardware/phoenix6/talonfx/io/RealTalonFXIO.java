@@ -19,8 +19,8 @@ public class RealTalonFXIO extends TalonFXIO {
     }
 
     @Override
-    protected void setPosition(double position) {
-        talonFX.setPosition(position);
+    protected void setPosition(double positionRotations) {
+        talonFX.setPosition(positionRotations);
     }
 
     @Override

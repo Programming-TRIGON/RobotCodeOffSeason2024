@@ -41,7 +41,7 @@ public class DoubleJointedArmMechanism2d {
         this.key = "Mechanisms/" + name;
         final double mechanismMiddle = MechanismConstants.LIGAMENT_END_TO_EDGE_RATIO * (firstJointLength + secondJointLength);
         this.mechanism = new Mechanism2d(2 * mechanismMiddle, 2 * mechanismMiddle);
-        final MechanismRoot2d root = mechanism.getRoot("AngleRoot", mechanismMiddle, mechanismMiddle);
+        final MechanismRoot2d root = mechanism.getRoot("Root", mechanismMiddle, mechanismMiddle);
 
         this.currentPositionFirstLigament = root.append(new MechanismLigament2d("ZCurrentPositionFirstLigament", firstJointLength, 0, MechanismConstants.MECHANISM_LINE_WIDTH, mechanismColor));
         this.currentPositionSecondLigament = currentPositionFirstLigament.append(new MechanismLigament2d("ZCurrentPositionSecondLigament", secondJointLength, 0, MechanismConstants.MECHANISM_LINE_WIDTH, mechanismColor));

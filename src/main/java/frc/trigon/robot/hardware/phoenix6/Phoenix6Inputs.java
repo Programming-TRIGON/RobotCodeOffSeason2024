@@ -1,6 +1,7 @@
 package frc.trigon.robot.hardware.phoenix6;
 
 import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
 import frc.trigon.robot.constants.RobotConstants;
 import frc.trigon.robot.hardware.BaseInputs;
 import org.littletonrobotics.junction.LogTable;
@@ -23,8 +24,11 @@ public class Phoenix6Inputs extends BaseInputs {
         if (signals.length == 0)
             return;
         BaseStatusSignal.refreshAll(signals);
-        for (BaseStatusSignal signal : signals)
+        for (BaseStatusSignal signal : signals) {
+            if (signal.getName().equals("ClosedLoopReference"))
+                ((StatusSignal<Double>) signal).refresh();
             table.put(signal.getName(), signal.getValueAsDouble());
+        }
         for (Map.Entry<String, Queue<Double>> entry : signalToThreadedQueue.entrySet()) {
             table.put(entry.getKey(), entry.getValue().stream().mapToDouble(Double::doubleValue).toArray());
             entry.getValue().clear();

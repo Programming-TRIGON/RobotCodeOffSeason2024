@@ -17,7 +17,7 @@ import frc.trigon.robot.utilities.Conversions;
 public class SwerveModule {
     private final TalonFXMotor driveMotor, steerMotor;
     private final CANcoderEncoder steerEncoder;
-    private final PositionVoltage steerPositionRequest = new PositionVoltage(0);
+    private final PositionVoltage steerPositionRequest = new PositionVoltage(0).withEnableFOC(SwerveModuleConstants.ENABLE_FOC);
     private final VelocityTorqueCurrentFOC driveVelocityRequest = new VelocityTorqueCurrentFOC(0);
     private final VoltageOut driveVoltageRequest = new VoltageOut(0);
     private boolean driveMotorClosedLoop = false;
@@ -103,15 +103,22 @@ public class SwerveModule {
      */
     private void setTargetVelocity(double targetVelocityMetersPerSecond, Rotation2d targetSteerAngle) {
         targetVelocityMetersPerSecond = reduceSkew(targetVelocityMetersPerSecond, targetSteerAngle);
-        final double targetVelocityRotationsPerSecond = Conversions.distanceToRotations(targetVelocityMetersPerSecond, SwerveModuleConstants.WHEEL_DIAMETER_METERS);
 
-        if (driveMotorClosedLoop) {
-            driveMotor.setControl(driveVelocityRequest.withVelocity(targetVelocityRotationsPerSecond));
-        } else {
-            final double power = targetVelocityRotationsPerSecond / SwerveModuleConstants.MAX_SPEED_ROTATIONS_PER_SECOND;
-            final double voltage = Conversions.compensatedPowerToVoltage(power, SwerveModuleConstants.VOLTAGE_COMPENSATION_SATURATION);
-            driveMotor.setControl(driveVoltageRequest.withOutput(voltage));
-        }
+        if (driveMotorClosedLoop)
+            setTargetClosedLoopVelocity(targetVelocityMetersPerSecond);
+        else
+            setTargetOpenLoopVelocity(targetVelocityMetersPerSecond);
+    }
+
+    private void setTargetClosedLoopVelocity(double targetVelocityMetersPerSecond) {
+        final double targetVelocityRotationsPerSecond = Conversions.distanceToRotations(targetVelocityMetersPerSecond, SwerveModuleConstants.WHEEL_DIAMETER_METERS);
+        driveMotor.setControl(driveVelocityRequest.withVelocity(targetVelocityRotationsPerSecond));
+    }
+
+    private void setTargetOpenLoopVelocity(double targetVelocityMetersPerSecond) {
+        final double power = targetVelocityMetersPerSecond / SwerveConstants.MAX_SPEED_METERS_PER_SECOND;
+        final double voltage = Conversions.compensatedPowerToVoltage(power, SwerveModuleConstants.VOLTAGE_COMPENSATION_SATURATION);
+        driveMotor.setControl(driveVoltageRequest.withOutput(voltage));
     }
 
     /**
@@ -133,13 +140,15 @@ public class SwerveModule {
     }
 
     private void configureHardware(double offsetRotations) {
-        driveMotor.applyConfiguration(SwerveModuleConstants.DRIVE_CONFIGURATION);
-        steerMotor.applyConfiguration(SwerveModuleConstants.STEER_CONFIGURATION);
+        driveMotor.applyConfiguration(SwerveModuleConstants.DRIVE_MOTOR_CONFIGURATION);
+        driveMotor.setPhysicsSimulation(SwerveModuleConstants.createDriveSimulation());
+
+        SwerveModuleConstants.STEER_MOTOR_CONFIGURATION.Feedback.FeedbackRemoteSensorID = steerEncoder.getID();
+        steerMotor.applyConfiguration(SwerveModuleConstants.STEER_MOTOR_CONFIGURATION);
+        steerMotor.setPhysicsSimulation(SwerveModuleConstants.createSteerSimulation());
+
         SwerveModuleConstants.STEER_ENCODER_CONFIGURATION.MagnetSensor.MagnetOffset = offsetRotations;
         steerEncoder.applyConfiguration(SwerveModuleConstants.STEER_ENCODER_CONFIGURATION);
-
-        driveMotor.setPhysicsSimulation(SwerveModuleConstants.DRIVE_SIMULATION);
-        steerMotor.setPhysicsSimulation(SwerveModuleConstants.STEER_SIMULATION);
         steerEncoder.setSimulationInputsFromTalonFX(steerMotor);
 
         configureSignals();
