@@ -7,10 +7,11 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
-import frc.trigon.robot.hardware.simulation.FlywheelSimulation;
-import frc.trigon.robot.utilities.mechanisms.SpeedMechanism2d;
+import org.trigon.hardware.RobotHardwareStats;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.hardware.simulation.FlywheelSimulation;
+import org.trigon.utilities.mechanisms.SpeedMechanism2d;
 
 public class ShooterConstants {
     private static final int
@@ -27,13 +28,13 @@ public class ShooterConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double
-            P = RobotConstants.IS_SIMULATION ? 1 : 1,
-            I = RobotConstants.IS_SIMULATION ? 0 : 0,
-            D = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KS = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KV = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KA = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KG = RobotConstants.IS_SIMULATION ? 0 : 0;
+            P = RobotHardwareStats.isSimulation() ? 1 : 1,
+            I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KG = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double GEAR_RATIO = 1;
     static final boolean FOC_ENABLED = true;
 

@@ -4,11 +4,11 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
-import frc.trigon.robot.subsystems.MotorSubsystem;
-import frc.trigon.robot.utilities.Conversions;
 import frc.trigon.robot.utilities.ShootingCalculations;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.utilities.Conversions;
+import org.trigon.utilities.MotorSubsystem;
 
 public class Shooter extends MotorSubsystem {
     private final ShootingCalculations shootingCalculations = ShootingCalculations.getInstance();

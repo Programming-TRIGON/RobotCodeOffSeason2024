@@ -7,9 +7,9 @@ import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
-import frc.trigon.robot.utilities.mirrorable.MirrorableRotation2d;
-import frc.trigon.robot.utilities.mirrorable.MirrorableTranslation3d;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.utilities.mirrorable.MirrorableRotation2d;
+import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
 public class ShootingCalculations {
     private static ShootingCalculations INSTANCE = null;

@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
-import frc.trigon.robot.hardware.phoenix6.cancoder.CANcoderEncoder;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
-import frc.trigon.robot.hardware.simulation.SingleJointedArmSimulation;
-import frc.trigon.robot.utilities.mechanisms.SingleJointedArmMechanism2d;
+import org.trigon.hardware.RobotHardwareStats;
+import org.trigon.hardware.phoenix6.cancoder.CANcoderEncoder;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.hardware.simulation.SingleJointedArmSimulation;
+import org.trigon.utilities.mechanisms.SingleJointedArmMechanism2d;
 
 public class PitcherConstants {
     private static final int
@@ -28,13 +29,13 @@ public class PitcherConstants {
     private static final InvertedValue INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotConstants.IS_SIMULATION ? 1 : 1,
-            I = RobotConstants.IS_SIMULATION ? 0 : 0,
-            D = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KS = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KV = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KA = RobotConstants.IS_SIMULATION ? 0 : 0,
-            KG = RobotConstants.IS_SIMULATION ? 0 : 0;
+            P = RobotHardwareStats.isSimulation() ? 1 : 1,
+            I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KG = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double
             MOTION_MAGIC_ACCELERATION = 0,
             MOTION_MAGIC_CRUISE_VELOCITY = 0;
