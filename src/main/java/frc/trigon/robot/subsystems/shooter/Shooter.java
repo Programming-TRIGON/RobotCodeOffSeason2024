@@ -15,7 +15,6 @@ public class Shooter extends MotorSubsystem {
     private final TalonFXMotor
             rightMotor = ShooterConstants.RIGHT_MOTOR,
             leftMotor = ShooterConstants.LEFT_MOTOR;
-
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0).withEnableFOC(ShooterConstants.FOC_ENABLED);
     private double
             rightMotorTargetVelocityRotationsPerSecond = 0,
@@ -28,7 +27,7 @@ public class Shooter extends MotorSubsystem {
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightShooter")
                 .linearPosition(Units.Meters.of(toMeters(rightMotor.getSignal(TalonFXSignal.POSITION))))
-                .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .linearVelocity(Units.MetersPerSecond.of(toMeters(rightMotor.getSignal(TalonFXSignal.VELOCITY))))
                 .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
         log.motor("LeftShooter")
                 .linearPosition(Units.Meters.of(toMeters(leftMotor.getSignal(TalonFXSignal.POSITION))))

@@ -89,6 +89,7 @@ public class ShooterConstants {
         RIGHT_MOTOR.setPhysicsSimulation(RIGHT_SIMULATION);
 
         RIGHT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
+        RIGHT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
         RIGHT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
@@ -113,6 +114,7 @@ public class ShooterConstants {
         LEFT_MOTOR.setPhysicsSimulation(LEFT_SIMULATION);
 
         LEFT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
+        LEFT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
         LEFT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 }
