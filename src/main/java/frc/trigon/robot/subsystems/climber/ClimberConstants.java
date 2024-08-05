@@ -1,7 +1,6 @@
 package frc.trigon.robot.subsystems.climber;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -20,27 +19,26 @@ import org.trigon.utilities.mechanisms.ElevatorMechanism2d;
 
 public class ClimberConstants {
     private static final int
-            MASTER_MOTOR_ID = 1,
-            FOLLOWER_MOTOR_ID = 12;
+            RIGHT_MOTOR_ID = 1,
+            LEFT_MOTOR_ID = 12;
     private static final String
-            MASTER_MOTOR_NAME = "ClimberMasterMotor",
-            FOLLOWER_MOTOR_NAME = "ClimberFollowerMotor";
+            RIGHT_MOTOR_NAME = "RightClimberMotor",
+            LEFT_MOTOR_NAME = "LeftClimberMotor";
     static final TalonFXMotor
-            MASTER_MOTOR = new TalonFXMotor(
-            MASTER_MOTOR_ID,
-            MASTER_MOTOR_NAME,
+            RIGHT_MOTOR = new TalonFXMotor(
+            RIGHT_MOTOR_ID,
+            RIGHT_MOTOR_NAME,
             RobotConstants.CANIVORE_NAME
     ),
-            FOLLOWER_MOTOR = new TalonFXMotor(
-                    FOLLOWER_MOTOR_ID,
-                    FOLLOWER_MOTOR_NAME,
+            LEFT_MOTOR = new TalonFXMotor(
+                    LEFT_MOTOR_ID,
+                    LEFT_MOTOR_NAME,
                     RobotConstants.CANIVORE_NAME
             );
 
     private static final InvertedValue
-            MASTER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
-            FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
-    private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
+            RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
+            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
     static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
@@ -53,8 +51,12 @@ public class ClimberConstants {
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0;
 
-    private static final int MOTOR_AMOUNT = 2;
-    private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
+    private static final int
+            RIGHT_MOTOR_AMOUNT = 1,
+            LEFT_MOTOR_AMOUNT = 1;
+    private static final DCMotor
+            RIGHT_GEARBOX = DCMotor.getFalcon500Foc(RIGHT_MOTOR_AMOUNT),
+            LEFT_GEARBOX = DCMotor.getFalcon500Foc(LEFT_MOTOR_AMOUNT);
     private static final double MASS_KILOGRAMS = 1; //TODO: get number from mechanics
     static final double
             DRUM_RADIUS_METERS = 0, //TODO: get number from mechanics
@@ -62,15 +64,25 @@ public class ClimberConstants {
     static final double RETRACTED_CLIMBER_LENGTH_METERS = 0.1; //TODO: get number from mechanics
     private static final double MAXIMUM_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
     private static final boolean SIMULATE_GRAVITY = true;
-    private static final ElevatorSimulation SIMULATION = new ElevatorSimulation(
-            GEARBOX,
+    private static final ElevatorSimulation
+            RIGHT_MOTOR_SIMULATION = new ElevatorSimulation(
+            RIGHT_GEARBOX,
             GEAR_RATIO,
             MASS_KILOGRAMS,
             DRUM_RADIUS_METERS,
             RETRACTED_CLIMBER_LENGTH_METERS,
             MAXIMUM_HEIGHT_METERS,
             SIMULATE_GRAVITY
-    );
+    ),
+            LEFT_MOTOR_SIMULATION = new ElevatorSimulation(
+                    LEFT_GEARBOX,
+                    GEAR_RATIO,
+                    MASS_KILOGRAMS,
+                    DRUM_RADIUS_METERS,
+                    RETRACTED_CLIMBER_LENGTH_METERS,
+                    MAXIMUM_HEIGHT_METERS,
+                    SIMULATE_GRAVITY
+            );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
             Units.Volts.of(1.5).per(Units.Second.of(1)),
@@ -79,20 +91,26 @@ public class ClimberConstants {
             null
     );
 
-    static final Pose3d CLIMBER_ORIGIN_POINT = new Pose3d(0.1, 0, 0.1, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-15), 0)); //TODO: get numbers from mechanics
-    static final ElevatorMechanism2d MECHANISM = new ElevatorMechanism2d(
-            "ClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
-    );
+    static final Pose3d
+            RIGHT_CLIMBER_ORIGIN_POINT = new Pose3d(0.1, 0, 0.1, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-15), 0)), //TODO: get numbers from mechanics
+            LEFT_CLIMBER_ORIGIN_POINT = new Pose3d(0.1, 0, 0.1, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-15), 0)); //TODO: get numbers from mechanics
+    static final ElevatorMechanism2d
+            RIGHT_MECHANISM = new ElevatorMechanism2d(
+            "RightClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
+    ),
+            LEFT_MECHANISM = new ElevatorMechanism2d(
+                    "LeftClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
+            );
 
     static {
-        configureMasterMotor();
-        configureFollowerMotor();
+        configureRightMotor();
+        configureLeftMotor();
     }
 
-    private static void configureMasterMotor() {
+    private static void configureRightMotor() {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
-        config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED_VALUE;
+        config.MotorOutput.Inverted = RIGHT_MOTOR_INVERTED_VALUE;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
@@ -107,26 +125,38 @@ public class ClimberConstants {
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
-        MASTER_MOTOR.applyConfiguration(config);
-        MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
+        RIGHT_MOTOR.applyConfiguration(config);
+        RIGHT_MOTOR.setPhysicsSimulation(RIGHT_MOTOR_SIMULATION);
 
-        MASTER_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        MASTER_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
-        MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        RIGHT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
+        RIGHT_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
+        RIGHT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
-    private static void configureFollowerMotor() {
+    private static void configureLeftMotor() {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
-        config.MotorOutput.Inverted = FOLLOWER_MOTOR_INVERTED_VALUE;
+        config.MotorOutput.Inverted = LEFT_MOTOR_INVERTED_VALUE;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-        FOLLOWER_MOTOR.applyConfiguration(config);
+        config.Slot0.kP = P;
+        config.Slot0.kI = I;
+        config.Slot0.kD = D;
+        config.Slot0.kS = KS;
+        config.Slot0.kV = KV;
+        config.Slot0.kG = KG;
+        config.Slot0.kA = KA;
 
-        final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_MOTOR_OPPOSITE_DIRECTION);
-        FOLLOWER_MOTOR.setControl(followerRequest);
+        config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
+
+        LEFT_MOTOR.applyConfiguration(config);
+        LEFT_MOTOR.setPhysicsSimulation(LEFT_MOTOR_SIMULATION);
+
+        LEFT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
+        LEFT_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
+        LEFT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
     public enum ClimberState {

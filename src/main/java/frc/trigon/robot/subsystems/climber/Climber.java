@@ -19,8 +19,8 @@ import org.trigon.utilities.MotorSubsystem;
 
 public class Climber extends MotorSubsystem {
     private final TalonFXMotor
-            masterMotor = ClimberConstants.MASTER_MOTOR,
-            followerMotor = ClimberConstants.FOLLOWER_MOTOR;
+            rightMotor = ClimberConstants.RIGHT_MOTOR,
+            leftMotor = ClimberConstants.LEFT_MOTOR;
     private final MotionMagicVoltage motionMagicRequest = new MotionMagicVoltage(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
 
@@ -30,26 +30,31 @@ public class Climber extends MotorSubsystem {
 
     @Override
     public void periodic() {
-        masterMotor.update();
-        followerMotor.update();
+        rightMotor.update();
+        leftMotor.update();
         updateMechanism();
     }
 
     public void drive(Measure<Voltage> voltageMeasure) {
-        masterMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+        rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+        leftMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
     public void updateLog(SysIdRoutineLog log) {
-        log.motor("Climber")
-                .linearPosition(Units.Meters.of(toMeters(masterMotor.getSignal(TalonFXSignal.POSITION))))
-                .linearVelocity(Units.MetersPerSecond.of(toMeters(masterMotor.getSignal(TalonFXSignal.VELOCITY))))
-                .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+        log.motor("RightClimberMotor")
+                .linearPosition(Units.Meters.of(toMeters(rightMotor.getSignal(TalonFXSignal.POSITION))))
+                .linearVelocity(Units.MetersPerSecond.of(toMeters(rightMotor.getSignal(TalonFXSignal.VELOCITY))))
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+        log.motor("LeftClimberMotor")
+                .linearPosition(Units.Meters.of(toMeters(leftMotor.getSignal(TalonFXSignal.POSITION))))
+                .linearVelocity(Units.MetersPerSecond.of(toMeters(leftMotor.getSignal(TalonFXSignal.VELOCITY))))
+                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
     @Override
     public void setBrake(boolean brake) {
-        masterMotor.setBrake(brake);
-        followerMotor.setBrake(brake);
+        rightMotor.setBrake(brake);
+        leftMotor.setBrake(brake);
     }
 
     public SysIdRoutine.Config getSysIdConfig() {
@@ -58,30 +63,53 @@ public class Climber extends MotorSubsystem {
 
     @Override
     public void stop() {
-        masterMotor.stopMotor();
+        rightMotor.stopMotor();
+        leftMotor.stopMotor();
     }
 
-    void setTargetState(ClimberConstants.ClimberState targetState) {
-        setTargetPosition(targetState.positionMeters);
+    void setTargetState(ClimberConstants.ClimberState rightTargetState, ClimberConstants.ClimberState leftTargetState) {
+        setTargetPosition(rightTargetState.positionMeters, leftTargetState.positionMeters);
     }
 
-    void setTargetPosition(double targetPositionMeters) {
-        masterMotor.setControl(motionMagicRequest.withPosition(targetPositionMeters));
+    void setTargetPosition(double rightTargetPositionMeters, double leftTargetPositionMeters) {
+        setRightMotorTargetPosition(rightTargetPositionMeters);
+        setLeftMotorTargetPosition(leftTargetPositionMeters);
+    }
+
+    void setRightMotorTargetPosition(double targetPositionMeters) {
+        rightMotor.setControl(motionMagicRequest.withPosition(targetPositionMeters));
+    }
+
+    void setLeftMotorTargetPosition(double targetPositionMeters) {
+        leftMotor.setControl(motionMagicRequest.withPosition(targetPositionMeters));
     }
 
     private void updateMechanism() {
-        ClimberConstants.MECHANISM.update(
-                toMeters(masterMotor.getSignal(TalonFXSignal.POSITION)),
-                toMeters(masterMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
-        Logger.recordOutput("Poses/Components/ClimberPose", getClimberPose());
+        ClimberConstants.RIGHT_MECHANISM.update(
+                toMeters(rightMotor.getSignal(TalonFXSignal.POSITION)),
+                toMeters(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+        ClimberConstants.LEFT_MECHANISM.update(
+                toMeters(leftMotor.getSignal(TalonFXSignal.POSITION)),
+                toMeters(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+
+        Logger.recordOutput("Poses/Components/RightClimberPose", getRightClimberPose());
+        Logger.recordOutput("Poses/Components/LeftClimberPose", getLeftClimberPose());
     }
 
-    private Pose3d getClimberPose() {
+    private Pose3d getRightClimberPose() {
         final Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, 0, toMeters(masterMotor.getSignal(TalonFXSignal.POSITION))),
+                new Translation3d(0, 0, toMeters(rightMotor.getSignal(TalonFXSignal.POSITION))),
                 new Rotation3d()
         );
-        return ClimberConstants.CLIMBER_ORIGIN_POINT.transformBy(climberTransform);
+        return ClimberConstants.RIGHT_CLIMBER_ORIGIN_POINT.transformBy(climberTransform);
+    }
+
+    private Pose3d getLeftClimberPose() {
+        final Transform3d climberTransform = new Transform3d(
+                new Translation3d(0, 0, toMeters(leftMotor.getSignal(TalonFXSignal.POSITION))),
+                new Rotation3d()
+        );
+        return ClimberConstants.LEFT_CLIMBER_ORIGIN_POINT.transformBy(climberTransform);
     }
 
     private double toMeters(double rotations) {
