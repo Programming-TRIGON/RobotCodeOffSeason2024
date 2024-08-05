@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.utilities.Conversions;
 import frc.trigon.robot.utilities.ShootingCalculations;
 
 public class Shooter extends MotorSubsystem {
@@ -26,12 +27,12 @@ public class Shooter extends MotorSubsystem {
 
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightShooter")
-                .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
+                .linearPosition(Units.Meters.of(toMeters(rightMotor.getSignal(TalonFXSignal.POSITION))))
                 .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
         log.motor("LeftShooter")
-                .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
-                .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .linearPosition(Units.Meters.of(toMeters(leftMotor.getSignal(TalonFXSignal.POSITION))))
+                .linearVelocity(Units.MetersPerSecond.of(toMeters(leftMotor.getSignal(TalonFXSignal.VELOCITY))))
                 .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
@@ -80,5 +81,9 @@ public class Shooter extends MotorSubsystem {
     private void updateMechanism() {
         ShooterConstants.RIGHT_MECHANISM.update(rightMotor.getSignal(TalonFXSignal.VELOCITY), rightMotorTargetVelocityRotationsPerSecond);
         ShooterConstants.LEFT_MECHANISM.update(leftMotor.getSignal(TalonFXSignal.VELOCITY), leftMotorTargetVelocityRotationsPerSecond);
+    }
+
+    private static double toMeters(double rotations) {
+        return Conversions.rotationsToDistance(rotations, ShooterConstants.WHEEL_DIAMETER_METERS);
     }
 }

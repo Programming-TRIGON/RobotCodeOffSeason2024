@@ -44,6 +44,7 @@ public class PitcherConstants {
     private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
     static final boolean FOC_ENABLED = true;
+    static final double WHEEL_DIAMETER_METERS = 0.1;
 
     private static final int MOTOR_AMOUNT = 1;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
 import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.utilities.Conversions;
 import frc.trigon.robot.utilities.ShootingCalculations;
 
 public class Pitcher extends MotorSubsystem {
@@ -22,8 +23,8 @@ public class Pitcher extends MotorSubsystem {
 
     public void updateLog(SysIdRoutineLog log) {
         log.motor("Pitcher")
-                .linearPosition(Units.Meters.of(motor.getSignal(TalonFXSignal.POSITION)))
-                .linearVelocity(Units.MetersPerSecond.of(motor.getSignal(TalonFXSignal.VELOCITY)))
+                .linearPosition(Units.Meters.of(toMeters(motor.getSignal(TalonFXSignal.POSITION))))
+                .linearVelocity(Units.MetersPerSecond.of(toMeters(motor.getSignal(TalonFXSignal.VELOCITY))))
                 .voltage(Units.Volts.of(motor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
@@ -66,5 +67,9 @@ public class Pitcher extends MotorSubsystem {
                 Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION)),
                 Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
+    }
+
+    private static double toMeters(double rotations) {
+        return Conversions.rotationsToDistance(rotations, PitcherConstants.WHEEL_DIAMETER_METERS);
     }
 }

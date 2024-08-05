@@ -59,7 +59,7 @@ public class ShooterConstants {
             RIGHT_MECHANISM = new SpeedMechanism2d("RightShooterMechanism", MAX_DISPLAYABLE_VELOCITY),
             LEFT_MECHANISM = new SpeedMechanism2d("LeftShooterMechanism", MAX_DISPLAYABLE_VELOCITY);
 
-    private static final double WHEEL_DIAMETER_METERS = 0;
+    static final double WHEEL_DIAMETER_METERS = 0;
     public static final double ROTATIONS_TO_METERS = GEAR_RATIO / (WHEEL_DIAMETER_METERS * Math.PI);
 
     static {
