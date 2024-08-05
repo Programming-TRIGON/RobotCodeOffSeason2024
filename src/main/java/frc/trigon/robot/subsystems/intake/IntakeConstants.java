@@ -49,7 +49,7 @@ public class IntakeConstants {
 
     private static final int MOTOR_AMOUNT = 2;
     private static final DCMotor GEARBOX = DCMotor.getKrakenX60Foc(MOTOR_AMOUNT);
-    private static final double MOMENT_OF_INERTIA = 1; // get value from mechanics
+    private static final double MOMENT_OF_INERTIA = 0.003;
     private static final SimpleMotorSimulation SIMULATION = new SimpleMotorSimulation(
             GEARBOX,
             GEAR_RATIO,
@@ -62,7 +62,8 @@ public class IntakeConstants {
             "IntakeMechanism", MAX_DISPLAYABLE_VELOCITY
     );
 
-    static final double NOTE_DISTANCE_THRESHOLD_ROTATIONS = 5;
+    static final double NOTE_DISTANCE_THRESHOLD_METERS = 5;
+    static final double DRUM_DIAMETER_METERS = 0.1;
 
     static {
         ConfigureMasterMotor();

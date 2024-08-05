@@ -3,6 +3,7 @@ package frc.trigon.robot.subsystems.intake;
 import com.ctre.phoenix6.controls.VoltageOut;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.utilities.Conversions;
 import org.trigon.utilities.MotorSubsystem;
 
 public class Intake extends MotorSubsystem {
@@ -40,7 +41,7 @@ public class Intake extends MotorSubsystem {
     }
 
     boolean hasNote() {
-        return IntakeConstants.DISTANCE_SENSOR.getScaledValue() < IntakeConstants.NOTE_DISTANCE_THRESHOLD_ROTATIONS;
+        return Conversions.rotationsToDistance(IntakeConstants.DISTANCE_SENSOR.getScaledValue(), IntakeConstants.DRUM_DIAMETER_METERS) < IntakeConstants.NOTE_DISTANCE_THRESHOLD_METERS;
     }
 
     private void updateMechanism() {
