@@ -18,11 +18,11 @@ public class IntakeCommands {
         );
     }
 
-    public static Command getSetTargetVoltageCommand(double collectorVoltage) {
+    public static Command getSetTargetVoltageCommand(double targetVoltage) {
         return new FunctionalCommand(
                 () -> {
                 },
-                () -> RobotContainer.INTAKE.setTargetVoltage(collectorVoltage),
+                () -> RobotContainer.INTAKE.setTargetVoltage(targetVoltage),
                 (interrupted) -> RobotContainer.INTAKE.stop(),
                 () -> false,
                 RobotContainer.INTAKE
