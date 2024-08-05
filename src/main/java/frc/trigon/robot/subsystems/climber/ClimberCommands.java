@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 
 public class ClimberCommands {
-
     public static Command getSetTargetPositionCommand(double targetPositionMeters) {
         return new StartEndCommand(
                 () -> RobotContainer.CLIMBER.setTargetPosition(targetPositionMeters),
