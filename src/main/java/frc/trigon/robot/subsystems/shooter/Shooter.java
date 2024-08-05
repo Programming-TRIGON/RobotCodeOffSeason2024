@@ -60,7 +60,7 @@ public class Shooter extends MotorSubsystem {
 
     void reachTargetShootingVelocityFromShootingCalculations() {
         rightMotorTargetVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond();
-        leftMotorTargetVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond();
+        leftMotorTargetVelocityRotationsPerSecond = rightMotorTargetVelocityRotationsPerSecond * ShooterConstants.LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO;
         setTargetVelocity(rightMotorTargetVelocityRotationsPerSecond, leftMotorTargetVelocityRotationsPerSecond);
     }
 
