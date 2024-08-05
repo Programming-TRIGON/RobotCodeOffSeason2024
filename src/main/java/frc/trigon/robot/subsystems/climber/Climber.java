@@ -3,6 +3,9 @@ package frc.trigon.robot.subsystems.climber;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -74,7 +77,11 @@ public class Climber extends MotorSubsystem {
     }
 
     private Pose3d getClimberPose() {
-        return ClimberConstants.CLIMBER_ORIGIN_POINT;
+        final Transform3d climberTransform = new Transform3d(
+                new Translation3d(0, 0, toMeters(masterMotor.getSignal(TalonFXSignal.POSITION))),
+                new Rotation3d()
+        );
+        return ClimberConstants.CLIMBER_ORIGIN_POINT.transformBy(climberTransform);
     }
 
     private double toMeters(double rotations) {
