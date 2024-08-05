@@ -62,6 +62,7 @@ public class IntakeConstants {
     static {
         ConfigureMasterMotor();
         configureFollowerMotor();
+        configureDistanceSensor();
     }
 
     private static void ConfigureMasterMotor() {
