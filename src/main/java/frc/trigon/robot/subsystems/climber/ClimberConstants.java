@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
+import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.ElevatorSimulation;
@@ -44,13 +45,13 @@ public class ClimberConstants {
     static final boolean ENABLE_FOC = true;
     static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
     private static final double
-            P = 0,
-            I = 0,
-            D = 0,
-            KS = 0,
-            KG = 0,
-            KV = 0,
-            KA = 0;
+            P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KG = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
 
     private static final int MOTOR_AMOUNT = 2;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
