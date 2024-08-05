@@ -8,9 +8,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.commands.InitExecuteCommand;
-import frc.trigon.robot.utilities.mirrorable.MirrorablePose2d;
-import frc.trigon.robot.utilities.mirrorable.MirrorableRotation2d;
+import org.trigon.commands.InitExecuteCommand;
+import org.trigon.utilities.mirrorable.MirrorablePose2d;
+import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 import java.util.List;
 import java.util.Set;
