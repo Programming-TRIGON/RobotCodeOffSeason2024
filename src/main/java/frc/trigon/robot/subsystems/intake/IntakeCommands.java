@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 
 public class IntakeCommands {
-
     public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
         return new FunctionalCommand(
                 () -> {
