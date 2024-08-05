@@ -6,11 +6,11 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.system.plant.DCMotor;
 import frc.trigon.robot.constants.RobotConstants;
-import frc.trigon.robot.hardware.misc.simplesensor.SimpleSensor;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
-import frc.trigon.robot.hardware.simulation.SimpleMotorSimulation;
-import frc.trigon.robot.utilities.mechanisms.SpeedMechanism2d;
+import org.trigon.hardware.misc.simplesensor.SimpleSensor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.hardware.simulation.SimpleMotorSimulation;
+import org.trigon.utilities.mechanisms.SpeedMechanism2d;
 
 import java.util.function.DoubleSupplier;
 
@@ -42,6 +42,9 @@ public class IntakeConstants {
     private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double GEAR_RATIO = 0.003;
+    private static final double
+            DISTANCE_SENSOR_SCALING_SLOPE = 0.0004,
+            DISTANCE_SENSOR_SCALING_INTERCEPT_POINT = 400;
     static final boolean FOC_ENABLED = true;
 
     private static final int MOTOR_AMOUNT = 2;
@@ -58,6 +61,8 @@ public class IntakeConstants {
     static final SpeedMechanism2d MECHANISM = new SpeedMechanism2d(
             "IntakeMechanism", MAX_DISPLAYABLE_VELOCITY
     );
+
+    static final double NOTE_DISTANCE_THRESHOLD_ROTATIONS = 5;
 
     static {
         ConfigureMasterMotor();
@@ -98,6 +103,7 @@ public class IntakeConstants {
 
     private static void configureDistanceSensor() {
         DISTANCE_SENSOR.setSimulationSupplier(DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER);
+        DISTANCE_SENSOR.setScalingConstants(DISTANCE_SENSOR_SCALING_SLOPE, DISTANCE_SENSOR_SCALING_INTERCEPT_POINT);
     }
 
     public enum IntakeState {

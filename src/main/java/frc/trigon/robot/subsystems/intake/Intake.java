@@ -1,9 +1,9 @@
 package frc.trigon.robot.subsystems.intake;
 
 import com.ctre.phoenix6.controls.VoltageOut;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXMotor;
-import frc.trigon.robot.hardware.phoenix6.talonfx.TalonFXSignal;
-import frc.trigon.robot.subsystems.MotorSubsystem;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.utilities.MotorSubsystem;
 
 public class Intake extends MotorSubsystem {
     private final TalonFXMotor
@@ -39,8 +39,8 @@ public class Intake extends MotorSubsystem {
         IntakeConstants.MECHANISM.setTargetVelocity(collectionVoltage);
     }
 
-    private double getDistance(double maximumDistance) {
-        return IntakeConstants.DISTANCE_SENSOR.getDutyCycleValue(maximumDistance);
+    boolean hasNote() {
+        return IntakeConstants.DISTANCE_SENSOR.getScaledValue() < IntakeConstants.NOTE_DISTANCE_THRESHOLD_ROTATIONS;
     }
 
     private void updateMechanism() {
