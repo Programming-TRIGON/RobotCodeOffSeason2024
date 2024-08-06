@@ -63,7 +63,6 @@ public class IntakeConstants {
     );
 
     static final double NOTE_DISTANCE_THRESHOLD_METERS = 5;
-    static final double DRUM_DIAMETER_METERS = 0.1;
 
     static {
         ConfigureMasterMotor();
