@@ -8,10 +8,10 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.utilities.ShootingCalculations;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-import org.trigon.utilities.MotorSubsystem;
 
 public class Pitcher extends MotorSubsystem {
     private final ShootingCalculations shootingCalculations = ShootingCalculations.getInstance();
@@ -26,6 +26,7 @@ public class Pitcher extends MotorSubsystem {
         setName("Pitcher");
     }
 
+    @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("Pitcher")
                 .linearPosition(Units.Meters.of(masterMotor.getSignal(TalonFXSignal.POSITION)))
@@ -50,10 +51,12 @@ public class Pitcher extends MotorSubsystem {
         updateMechanism();
     }
 
+    @Override
     public void drive(Measure<Voltage> voltageMeasure) {
         masterMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
+    @Override
     public SysIdRoutine.Config getSysIdConfig() {
         return PitcherConstants.SYSID_CONFIG;
     }

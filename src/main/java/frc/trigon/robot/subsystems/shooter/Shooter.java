@@ -6,10 +6,10 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.utilities.ShootingCalculations;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-import org.trigon.utilities.MotorSubsystem;
 
 public class Shooter extends MotorSubsystem {
     private final ShootingCalculations shootingCalculations = ShootingCalculations.getInstance();
@@ -25,6 +25,7 @@ public class Shooter extends MotorSubsystem {
         setName("Shooter");
     }
 
+    @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightShooter")
                 .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
@@ -55,10 +56,12 @@ public class Shooter extends MotorSubsystem {
         updateMechanism();
     }
 
+    @Override
     public void drive(Measure<Voltage> voltageMeasure) {
         leftMotor.setControl(velocityRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
+    @Override
     public SysIdRoutine.Config getSysIdConfig() {
         return ShooterConstants.SYSID_CONFIG;
     }
