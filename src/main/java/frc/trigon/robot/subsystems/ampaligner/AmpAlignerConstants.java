@@ -121,13 +121,15 @@ public class AmpAlignerConstants {
     }
 
     public enum AmpAlignerState {
-        OPENING(5),
-        CLOSING(-5);
+        OPENING(5, AMP_ALIGNER_MAXIMUM_ANGLE),
+        CLOSING(-5, AMP_ALIGNER_MINIMUM_ANGLE);
 
         public final double voltage;
+        public final Rotation2d targetPosition;
 
-        AmpAlignerState(double voltage) {
+        AmpAlignerState(double voltage, Rotation2d targetPosition) {
             this.voltage = voltage;
+            this.targetPosition = targetPosition;
         }
     }
 }

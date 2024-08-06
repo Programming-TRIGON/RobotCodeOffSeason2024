@@ -1,6 +1,7 @@
 package frc.trigon.robot.subsystems.ampaligner;
 
 import com.ctre.phoenix6.controls.VoltageOut;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -71,7 +72,7 @@ public class AmpAligner extends MotorSubsystem {
         return AmpAlignerConstants.BACKWARD_LIMIT_SWITCH.getBinaryValue();
     }
 
-    private static void updateMechanism() {
-        AmpAlignerConstants.MECHANISM.update();
+    private void updateMechanism() {
+        AmpAlignerConstants.MECHANISM.update(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION)), targetState.targetPosition);
     }
 }
