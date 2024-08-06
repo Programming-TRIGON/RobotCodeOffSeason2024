@@ -25,7 +25,7 @@ public class ShooterConstants {
             LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME, RobotConstants.CANIVORE_NAME);
     private static final InvertedValue
             RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
-            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
+            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double
             P = RobotHardwareStats.isSimulation() ? 1 : 1,
@@ -62,7 +62,7 @@ public class ShooterConstants {
 
     static final double WHEEL_DIAMETER_METERS = 1;
     static final double LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO = 1.3;
-    public static final double ROTATIONS_TO_METERS = GEAR_RATIO / (WHEEL_DIAMETER_METERS * Math.PI);
+    public static final double SHOOTER_ROTATIONS_TO_METERS = GEAR_RATIO / (WHEEL_DIAMETER_METERS * Math.PI);
 
     static {
         configureRightMotor();
@@ -91,6 +91,7 @@ public class ShooterConstants {
 
         RIGHT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
         RIGHT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
+        RIGHT_MOTOR.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
         RIGHT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
@@ -116,6 +117,7 @@ public class ShooterConstants {
 
         LEFT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
         LEFT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
+        LEFT_MOTOR.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
         LEFT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 }

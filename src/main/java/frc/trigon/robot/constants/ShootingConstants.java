@@ -12,7 +12,6 @@ public class ShootingConstants {
             DELIVERY_STANDING_VELOCITY_ROTATIONS_PER_SECOND = 35;
 
     public static final double CLOSE_SHOT_VELOCITY_METERS_PER_SECOND = 45;
-    //    public static final Rotation2d CLOSE_SHOT_ANGLE = Rotation2d.fromDegrees(60.5);
     public static final Rotation2d CLOSE_SHOT_ANGLE = Rotation2d.fromDegrees(40);
 
     public static final Pose3d ROBOT_RELATIVE_PIVOT_POINT = new Pose3d(-0.025, 0, 0.190, new Rotation3d(0, 0, Math.PI));

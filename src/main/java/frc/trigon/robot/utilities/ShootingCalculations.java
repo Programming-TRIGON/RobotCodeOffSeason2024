@@ -55,7 +55,7 @@ public class ShootingCalculations {
      * @return the tangential velocity of the shooter
      */
     public double angularVelocityToTangentialVelocity(double angularVelocity) {
-        return angularVelocity / ShooterConstants.ROTATIONS_TO_METERS;
+        return angularVelocity / ShooterConstants.SHOOTER_ROTATIONS_TO_METERS;
     }
 
     /**
@@ -66,7 +66,7 @@ public class ShootingCalculations {
      * @return the angular velocity of the shooter
      */
     public double tangentialVelocityToAngularVelocity(double tangentialVelocity) {
-        return tangentialVelocity * ShooterConstants.ROTATIONS_TO_METERS;
+        return tangentialVelocity * ShooterConstants.SHOOTER_ROTATIONS_TO_METERS;
     }
 
     /**

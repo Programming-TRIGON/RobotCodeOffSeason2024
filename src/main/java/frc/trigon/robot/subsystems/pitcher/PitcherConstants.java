@@ -2,6 +2,7 @@ package frc.trigon.robot.subsystems.pitcher;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -19,14 +20,21 @@ import org.trigon.utilities.mechanisms.SingleJointedArmMechanism2d;
 
 public class PitcherConstants {
     private static final int
-            MOTOR_ID = 0,
+            MASTER_MOTOR_ID = 0,
+            FOLLOWER_MOTOR_ID = 0,
             ENCODER_ID = 0;
     private static final String
-            MOTOR_NAME = "PitcherMotor",
+            MASTER_MOTOR_NAME = "MasterPitcherMotor",
+            FOLLOWER_MOTOR_NAME = "FollowerPitcherMotor",
             ENCODER_NAME = "PitcherEncoder";
-    static final TalonFXMotor MOTOR = new TalonFXMotor(MOTOR_ID, MOTOR_NAME, RobotConstants.CANIVORE_NAME);
+    static final TalonFXMotor
+            MASTER_MOTOR = new TalonFXMotor(MASTER_MOTOR_ID, MASTER_MOTOR_NAME, RobotConstants.CANIVORE_NAME),
+            FOLLOWER_MOTOR = new TalonFXMotor(FOLLOWER_MOTOR_ID, FOLLOWER_MOTOR_NAME, RobotConstants.CANIVORE_NAME);
     static final CANcoderEncoder ENCODER = new CANcoderEncoder(ENCODER_ID, ENCODER_NAME, RobotConstants.CANIVORE_NAME);
-    private static final InvertedValue INVERTED_VALUE = InvertedValue.Clockwise_Positive;
+    private static final InvertedValue
+            MASTER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
+            FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
+    private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
             P = RobotHardwareStats.isSimulation() ? 1 : 1,
@@ -45,9 +53,8 @@ public class PitcherConstants {
     private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
     static final boolean FOC_ENABLED = true;
-    static final double WHEEL_DIAMETER_METERS = 0.1;
 
-    private static final int MOTOR_AMOUNT = 1;
+    private static final int MOTOR_AMOUNT = 2;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
     private static final double
             PITCHER_LENGTH_METERS = 1,
@@ -78,19 +85,20 @@ public class PitcherConstants {
     );
 
     public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(0);
+    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(0.6);
 
     static {
-        configureMotor();
+        configureMasterMotor();
         configureEncoder();
     }
 
-    private static void configureMotor() {
+    private static void configureMasterMotor() {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-        config.MotorOutput.Inverted = INVERTED_VALUE;
+        config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED_VALUE;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
         config.Slot0.kP = P;
@@ -101,7 +109,7 @@ public class PitcherConstants {
         config.Slot0.kA = KA;
         config.Slot0.kG = KG;
         config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-        config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseClosedLoopSign;
+        config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
         config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
@@ -110,14 +118,29 @@ public class PitcherConstants {
         config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
-        MOTOR.applyConfiguration(config);
-        MOTOR.setPhysicsSimulation(SIMULATION);
+        MASTER_MOTOR.applyConfiguration(config);
+        MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
-        MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
-        MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
-        MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
-        MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+    }
+
+    private static void configureFollowerMotor() {
+        final TalonFXConfiguration config = new TalonFXConfiguration();
+
+        config.Audio.BeepOnBoot = false;
+        config.Audio.BeepOnConfig = false;
+
+        config.MotorOutput.Inverted = FOLLOWER_MOTOR_INVERTED_VALUE;
+        config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
+
+        FOLLOWER_MOTOR.applyConfiguration(config);
+
+        final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_MOTOR_OPPOSITE_DIRECTION);
+        FOLLOWER_MOTOR.setControl(followerRequest);
     }
 
     public static void configureEncoder() {
@@ -128,6 +151,6 @@ public class PitcherConstants {
         config.MagnetSensor.AbsoluteSensorRange = ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE;
 
         ENCODER.applyConfiguration(config);
-        ENCODER.setSimulationInputsFromTalonFX(MOTOR);
+        ENCODER.setSimulationInputsFromTalonFX(MASTER_MOTOR);
     }
 }

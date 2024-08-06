@@ -1,13 +1,14 @@
 package frc.trigon.robot.subsystems.shooter;
 
-import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.TorqueCurrentFOC;
+import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.utilities.ShootingCalculations;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-import org.trigon.utilities.Conversions;
 import org.trigon.utilities.MotorSubsystem;
 
 public class Shooter extends MotorSubsystem {
@@ -15,10 +16,10 @@ public class Shooter extends MotorSubsystem {
     private final TalonFXMotor
             rightMotor = ShooterConstants.RIGHT_MOTOR,
             leftMotor = ShooterConstants.LEFT_MOTOR;
-    private final VelocityVoltage velocityRequest = new VelocityVoltage(0).withEnableFOC(ShooterConstants.FOC_ENABLED);
+    private final TorqueCurrentFOC velocityRequest = new TorqueCurrentFOC(0);
     private double
-            rightMotorTargetVelocityRotationsPerSecond = 0,
-            leftMotorTargetVelocityRotationsPerSecond = 0;
+            targetRightVelocityRotationsPerSecond = 0,
+            targetLeftVelocityRotationsPerSecond = 0;
 
     public Shooter() {
         setName("Shooter");
@@ -26,12 +27,12 @@ public class Shooter extends MotorSubsystem {
 
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightShooter")
-                .linearPosition(Units.Meters.of(toMeters(rightMotor.getSignal(TalonFXSignal.POSITION))))
-                .linearVelocity(Units.MetersPerSecond.of(toMeters(rightMotor.getSignal(TalonFXSignal.VELOCITY))))
+                .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
+                .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
         log.motor("LeftShooter")
-                .linearPosition(Units.Meters.of(toMeters(leftMotor.getSignal(TalonFXSignal.POSITION))))
-                .linearVelocity(Units.MetersPerSecond.of(toMeters(leftMotor.getSignal(TalonFXSignal.VELOCITY))))
+                .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
+                .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
@@ -54,35 +55,35 @@ public class Shooter extends MotorSubsystem {
         updateMechanism();
     }
 
+    public void drive(Measure<Voltage> voltageMeasure) {
+        leftMotor.setControl(velocityRequest.withOutput(voltageMeasure.in(Units.Volts)));
+    }
+
     public SysIdRoutine.Config getSysIdConfig() {
         return ShooterConstants.SYSID_CONFIG;
     }
 
     void reachTargetShootingVelocityFromShootingCalculations() {
-        rightMotorTargetVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond();
-        leftMotorTargetVelocityRotationsPerSecond = rightMotorTargetVelocityRotationsPerSecond * ShooterConstants.LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO;
-        setTargetVelocity(rightMotorTargetVelocityRotationsPerSecond, leftMotorTargetVelocityRotationsPerSecond);
+        targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond();
+        targetLeftVelocityRotationsPerSecond = targetRightVelocityRotationsPerSecond * ShooterConstants.LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO;
+        setTargetVelocity(targetRightVelocityRotationsPerSecond, targetLeftVelocityRotationsPerSecond);
     }
 
-    void setTargetVelocity(double rightMotorTargetVelocityRotationsPerSecond, double leftMotorTargetVelocityRotationsPerSecond) {
-        setRightTargetVelocity(rightMotorTargetVelocityRotationsPerSecond);
-        setLeftTargetVelocity(leftMotorTargetVelocityRotationsPerSecond);
+    void setTargetVelocity(double targetRightVelocityRotationsPerSecond, double targetLeftVelocityRotationsPerSecond) {
+        setTargetRightVelocity(targetRightVelocityRotationsPerSecond);
+        setTargetLeftVelocity(targetLeftVelocityRotationsPerSecond);
     }
 
-    void setRightTargetVelocity(double targetVelocityRotationsPerSecond) {
-        rightMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
+    void setTargetRightVelocity(double targetVelocityRotationsPerSecond) {
+        rightMotor.setControl(velocityRequest.withOutput(targetVelocityRotationsPerSecond));
     }
 
-    void setLeftTargetVelocity(double targetVelocityRotationsPerSecond) {
-        leftMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
+    void setTargetLeftVelocity(double targetVelocityRotationsPerSecond) {
+        leftMotor.setControl(velocityRequest.withOutput(targetVelocityRotationsPerSecond));
     }
 
     private void updateMechanism() {
-        ShooterConstants.RIGHT_MECHANISM.update(rightMotor.getSignal(TalonFXSignal.VELOCITY), rightMotorTargetVelocityRotationsPerSecond);
-        ShooterConstants.LEFT_MECHANISM.update(leftMotor.getSignal(TalonFXSignal.VELOCITY), leftMotorTargetVelocityRotationsPerSecond);
-    }
-
-    private static double toMeters(double rotations) {
-        return Conversions.rotationsToDistance(rotations, ShooterConstants.WHEEL_DIAMETER_METERS);
+        ShooterConstants.RIGHT_MECHANISM.update(rightMotor.getSignal(TalonFXSignal.VELOCITY), targetRightVelocityRotationsPerSecond);
+        ShooterConstants.LEFT_MECHANISM.update(leftMotor.getSignal(TalonFXSignal.VELOCITY), targetLeftVelocityRotationsPerSecond);
     }
 }
