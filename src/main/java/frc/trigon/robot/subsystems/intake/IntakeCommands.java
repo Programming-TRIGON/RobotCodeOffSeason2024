@@ -7,6 +7,7 @@ import frc.trigon.robot.RobotContainer;
 
 public class IntakeCommands {
     public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
+        RobotContainer.INTAKE.targetState = targetState;
         if (targetState == IntakeConstants.IntakeState.COLLECTING)
             return new FunctionalCommand(
                     () -> RobotContainer.INTAKE.setTargetVoltage(targetState.voltage),
@@ -16,14 +17,7 @@ public class IntakeCommands {
                     RobotContainer.INTAKE::hasNote,
                     RobotContainer.INTAKE
             );
-        return new FunctionalCommand(
-                () -> RobotContainer.INTAKE.setTargetVoltage(targetState.voltage),
-                () -> {
-                },
-                (interrupted) -> RobotContainer.INTAKE.stop(),
-                () -> false,
-                RobotContainer.INTAKE
-        );
+        return getSetTargetVoltageCommand(targetState.voltage);
     }
 
     public static Command getSetTargetVoltageCommand(double targetVoltage) {

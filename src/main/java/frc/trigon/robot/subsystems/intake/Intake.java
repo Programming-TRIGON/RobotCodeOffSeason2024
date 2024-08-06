@@ -6,6 +6,7 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.utilities.MotorSubsystem;
 
 public class Intake extends MotorSubsystem {
+    public IntakeConstants.IntakeState targetState;
     private final TalonFXMotor
             masterMotor = IntakeConstants.MASTER_MOTOR,
             followerMotor = IntakeConstants.FOLLOWER_MOTOR;

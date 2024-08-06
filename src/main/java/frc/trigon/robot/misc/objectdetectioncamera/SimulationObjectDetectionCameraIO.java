@@ -3,6 +3,7 @@ package frc.trigon.robot.misc.objectdetectioncamera;
 import edu.wpi.first.math.geometry.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.Commands;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import org.littletonrobotics.junction.Logger;
 
 import java.util.ArrayList;
@@ -107,12 +108,14 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
     }
 
     private boolean isEjecting() {
-        //todo: check if the robot is ejecting
+        if (RobotContainer.INTAKE.targetState == IntakeConstants.IntakeState.EJECTING)
+            return true;
         return false;
     }
 
     private boolean isCollecting() {
-        //todo: check if the robot is collecting
+        if (RobotContainer.INTAKE.targetState == IntakeConstants.IntakeState.COLLECTING)
+            return true;
         return false;
     }
 
