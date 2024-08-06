@@ -82,6 +82,7 @@ public class AmpAlignerConstants {
 
     static {
         configureMotor();
+        configureLimitSwitches();
     }
 
     private static void configureMotor() {
