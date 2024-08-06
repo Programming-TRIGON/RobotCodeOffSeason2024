@@ -13,6 +13,7 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 public class AmpAligner extends MotorSubsystem {
     private final TalonFXMotor motor = AmpAlignerConstants.MOTOR;
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
+    private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSING;
 
     @Override
     public void stop() {
@@ -48,12 +49,18 @@ public class AmpAligner extends MotorSubsystem {
         return AmpAlignerConstants.SYSID_CONFIG;
     }
 
+    public AmpAlignerConstants.AmpAlignerState getTargetState() {
+        return targetState;
+    }
+
     void openAmpAligner() {
-        motor.setControl(voltageRequest.withOutput(AmpAlignerConstants.AmpAlignerState.OPENING.voltage));
+        targetState = AmpAlignerConstants.AmpAlignerState.OPENING;
+        motor.setControl(voltageRequest.withOutput(targetState.voltage));
     }
 
     void closeAmpAligner() {
-        motor.setControl(voltageRequest.withOutput(AmpAlignerConstants.AmpAlignerState.CLOSING.voltage));
+        targetState = AmpAlignerConstants.AmpAlignerState.CLOSING;
+        motor.setControl(voltageRequest.withOutput(targetState.voltage));
     }
 
     boolean isForwardLimitSwitchPressed() {
