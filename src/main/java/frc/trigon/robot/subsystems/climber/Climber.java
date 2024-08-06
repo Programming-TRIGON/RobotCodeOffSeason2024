@@ -67,13 +67,13 @@ public class Climber extends MotorSubsystem {
         leftMotor.stopMotor();
     }
 
-    void setTargetState(ClimberConstants.ClimberState rightTargetState, ClimberConstants.ClimberState leftTargetState) {
-        setTargetPosition(rightTargetState.positionMeters, leftTargetState.positionMeters);
+    void setTargetState(ClimberConstants.ClimberState targetRightState, ClimberConstants.ClimberState targetLeftState) {
+        setTargetPosition(targetRightState.positionMeters, targetLeftState.positionMeters);
     }
 
-    void setTargetPosition(double rightTargetPositionMeters, double leftTargetPositionMeters) {
-        setRightMotorTargetPosition(rightTargetPositionMeters);
-        setLeftMotorTargetPosition(leftTargetPositionMeters);
+    void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters) {
+        setRightMotorTargetPosition(targetRightPositionMeters);
+        setLeftMotorTargetPosition(targetLeftPositionMeters);
     }
 
     void setRightMotorTargetPosition(double targetPositionMeters) {

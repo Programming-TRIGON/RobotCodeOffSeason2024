@@ -6,28 +6,28 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 
 public class ClimberCommands {
-    public static Command getSetTargetPositionCommand(double targetPositionMeters, double leftTargetMeters) {
+    public static Command getSetTargetPositionCommand(double targetRightPositionMeters, double targetLeftPositionMeters) {
         return new StartEndCommand(
-                () -> RobotContainer.CLIMBER.setTargetPosition(targetPositionMeters, leftTargetMeters),
+                () -> RobotContainer.CLIMBER.setTargetPosition(targetRightPositionMeters, targetLeftPositionMeters),
                 RobotContainer.CLIMBER::stop,
                 RobotContainer.CLIMBER
         );
     }
 
-    public static Command getSetTargetStateCommand(ClimberConstants.ClimberState rightTargetState, ClimberConstants.ClimberState leftTargetState) {
+    public static Command getSetTargetStateCommand(ClimberConstants.ClimberState targetRightState, ClimberConstants.ClimberState targetLeftState) {
         return new StartEndCommand(
-                () -> RobotContainer.CLIMBER.setTargetState(rightTargetState, leftTargetState),
+                () -> RobotContainer.CLIMBER.setTargetState(targetRightState, targetLeftState),
                 RobotContainer.CLIMBER::stop,
                 RobotContainer.CLIMBER
         );
     }
 
-    public static Command getSetRightMotorTargetStateCommand(ClimberConstants.ClimberState rightTargetState) {
-        return getSetRightMotorTargetPositionCommand(rightTargetState.positionMeters);
+    public static Command getSetRightMotorTargetStateCommand(ClimberConstants.ClimberState targetState) {
+        return getSetRightMotorTargetPositionCommand(targetState.positionMeters);
     }
 
-    public static Command getSetLeftMotorTargetStateCommand(ClimberConstants.ClimberState leftTargetState) {
-        return getSetLeftMotorTargetPositionCommand(leftTargetState.positionMeters);
+    public static Command getSetLeftMotorTargetStateCommand(ClimberConstants.ClimberState targetState) {
+        return getSetLeftMotorTargetPositionCommand(targetState.positionMeters);
     }
 
     public static Command getSetRightMotorTargetPositionCommand(double targetPositionMeters) {
