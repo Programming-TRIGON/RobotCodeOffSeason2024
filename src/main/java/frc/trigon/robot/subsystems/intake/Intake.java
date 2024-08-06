@@ -34,6 +34,11 @@ public class Intake extends MotorSubsystem {
         masterMotor.stopMotor();
     }
 
+    void setTargetState(IntakeConstants.IntakeState targetState) {
+        this.targetState = targetState;
+        setTargetVoltage(targetState.voltage);
+    }
+
     void setTargetVoltage(double targetVoltage) {
         masterMotor.setControl(voltageRequest.withOutput(targetVoltage));
         IntakeConstants.MECHANISM.setTargetVelocity(targetVoltage);
