@@ -36,7 +36,15 @@ public class Climber extends MotorSubsystem {
     }
 
     public void drive(Measure<Voltage> voltageMeasure) {
+        rightMotorDrive(voltageMeasure);
+        leftMotorDrive(voltageMeasure);
+    }
+
+    void rightMotorDrive(Measure<Voltage> voltageMeasure) {
         rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+    }
+
+    void leftMotorDrive(Measure<Voltage> voltageMeasure) {
         leftMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 

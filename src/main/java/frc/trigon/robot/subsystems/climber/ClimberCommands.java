@@ -54,6 +54,22 @@ public class ClimberCommands {
         );
     }
 
+    public static Command getSetRightMotorTargetVoltageCommand(double targetVoltage) {
+        return new StartEndCommand(
+                () -> RobotContainer.CLIMBER.rightMotorDrive(Units.Volt.of(targetVoltage)),
+                RobotContainer.CLIMBER::stop,
+                RobotContainer.CLIMBER
+        );
+    }
+
+    public static Command getSetLeftMotorTargetVoltageCommand(double targetVoltage) {
+        return new StartEndCommand(
+                () -> RobotContainer.CLIMBER.leftMotorDrive(Units.Volt.of(targetVoltage)),
+                RobotContainer.CLIMBER::stop,
+                RobotContainer.CLIMBER
+        );
+    }
+
     public static Command getStopCommand() {
         return new StartEndCommand(
                 RobotContainer.CLIMBER::stop,
