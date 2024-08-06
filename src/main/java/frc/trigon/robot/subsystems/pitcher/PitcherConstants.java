@@ -89,6 +89,7 @@ public class PitcherConstants {
 
     static {
         configureMasterMotor();
+        configureFollowerMotor();
         configureEncoder();
     }
 
