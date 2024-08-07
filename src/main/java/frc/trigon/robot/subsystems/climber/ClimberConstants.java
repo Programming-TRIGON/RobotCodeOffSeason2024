@@ -136,7 +136,7 @@ public class ClimberConstants {
 
     public enum ClimberState {
         RETRACTED(0),
-        CLIMBING(0.7);
+        CLIMBING(0.7); //TODO: get number from mechanics
 
         public final double positionMeters;
 
