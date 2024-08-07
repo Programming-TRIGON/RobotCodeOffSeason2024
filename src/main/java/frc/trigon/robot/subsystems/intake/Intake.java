@@ -1,12 +1,13 @@
 package frc.trigon.robot.subsystems.intake;
 
 import com.ctre.phoenix6.controls.VoltageOut;
+import frc.trigon.robot.constants.OperatorConstants;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-import org.trigon.utilities.MotorSubsystem;
 
 public class Intake extends MotorSubsystem {
-    public IntakeConstants.IntakeState targetState;
+    IntakeConstants.IntakeState targetState;
     private final TalonFXMotor
             masterMotor = IntakeConstants.MASTER_MOTOR,
             followerMotor = IntakeConstants.FOLLOWER_MOTOR;
@@ -32,10 +33,16 @@ public class Intake extends MotorSubsystem {
     @Override
     public void stop() {
         masterMotor.stopMotor();
+        IntakeConstants.MECHANISM.setTargetVelocity(0);
+    }
+
+    public IntakeConstants.IntakeState getTargetState() {
+        return targetState;
     }
 
     void setTargetState(IntakeConstants.IntakeState targetState) {
         this.targetState = targetState;
+        OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
         setTargetVoltage(targetState.voltage);
     }
 
