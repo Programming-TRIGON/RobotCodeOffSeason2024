@@ -41,14 +41,6 @@ public class Climber extends MotorSubsystem {
         leftMotorDrive(voltageMeasure);
     }
 
-    void rightMotorDrive(Measure<Voltage> voltageMeasure) {
-        rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
-    }
-
-    void leftMotorDrive(Measure<Voltage> voltageMeasure) {
-        leftMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
-    }
-
     @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightClimberMotor")
@@ -78,21 +70,21 @@ public class Climber extends MotorSubsystem {
         leftMotor.stopMotor();
     }
 
-    void setTargetState(ClimberConstants.ClimberState targetRightState, ClimberConstants.ClimberState targetLeftState) {
-        setTargetPosition(targetRightState.positionMeters, targetLeftState.positionMeters);
+    void rightMotorDrive(Measure<Voltage> voltageMeasure) {
+        rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+    }
+
+    void leftMotorDrive(Measure<Voltage> voltageMeasure) {
+        leftMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+    }
+
+    void setTargetState(ClimberConstants.ClimberState targetState) {
+        setTargetPosition(targetState.positionMeters, targetState.positionMeters);
     }
 
     void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters) {
-        setRightMotorTargetPosition(targetRightPositionMeters);
-        setLeftMotorTargetPosition(targetLeftPositionMeters);
-    }
-
-    void setRightMotorTargetPosition(double targetPositionMeters) {
-        rightMotor.setControl(motionMagicRequest.withPosition(targetPositionMeters));
-    }
-
-    void setLeftMotorTargetPosition(double targetPositionMeters) {
-        leftMotor.setControl(motionMagicRequest.withPosition(targetPositionMeters));
+        rightMotor.setControl(motionMagicRequest.withPosition(targetRightPositionMeters));
+        leftMotor.setControl(motionMagicRequest.withPosition(targetLeftPositionMeters));
     }
 
     private void updateMechanism() {

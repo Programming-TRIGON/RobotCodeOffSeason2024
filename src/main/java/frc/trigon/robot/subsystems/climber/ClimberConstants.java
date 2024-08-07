@@ -103,14 +103,15 @@ public class ClimberConstants {
             );
 
     static {
-        configureRightMotor();
-        configureLeftMotor();
+        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
+        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_MOTOR_SIMULATION);
     }
 
-    private static void configureRightMotor() {
+    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, ElevatorSimulation simulation) {
+
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
-        config.MotorOutput.Inverted = RIGHT_MOTOR_INVERTED_VALUE;
+        config.MotorOutput.Inverted = invertedValue;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
@@ -125,38 +126,12 @@ public class ClimberConstants {
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
-        RIGHT_MOTOR.applyConfiguration(config);
-        RIGHT_MOTOR.setPhysicsSimulation(RIGHT_MOTOR_SIMULATION);
+        motor.applyConfiguration(config);
+        motor.setPhysicsSimulation(simulation);
 
-        RIGHT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        RIGHT_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
-        RIGHT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
-    }
-
-    private static void configureLeftMotor() {
-        final TalonFXConfiguration config = new TalonFXConfiguration();
-
-        config.MotorOutput.Inverted = LEFT_MOTOR_INVERTED_VALUE;
-        config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
-        config.Audio.BeepOnBoot = false;
-        config.Audio.BeepOnConfig = false;
-
-        config.Slot0.kP = P;
-        config.Slot0.kI = I;
-        config.Slot0.kD = D;
-        config.Slot0.kS = KS;
-        config.Slot0.kV = KV;
-        config.Slot0.kG = KG;
-        config.Slot0.kA = KA;
-
-        config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
-
-        LEFT_MOTOR.applyConfiguration(config);
-        LEFT_MOTOR.setPhysicsSimulation(LEFT_MOTOR_SIMULATION);
-
-        LEFT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        LEFT_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
-        LEFT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        motor.registerSignal(TalonFXSignal.POSITION, 100);
+        motor.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
+        motor.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
     public enum ClimberState {

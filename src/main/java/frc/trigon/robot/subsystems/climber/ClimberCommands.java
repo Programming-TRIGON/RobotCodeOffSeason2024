@@ -4,8 +4,17 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
+import org.trigon.commands.NetworkTablesCommand;
 
 public class ClimberCommands {
+    public static Command getDebuggingCommand() {
+        return new NetworkTablesCommand(
+                (positionMeters) -> ClimberCommands.getSetTargetPositionCommand(positionMeters, positionMeters),
+                false,
+                "Debugging/TargetDebuggingClimberPositionMeters"
+        );
+    }
+
     public static Command getSetTargetPositionCommand(double targetRightPositionMeters, double targetLeftPositionMeters) {
         return new StartEndCommand(
                 () -> RobotContainer.CLIMBER.setTargetPosition(targetRightPositionMeters, targetLeftPositionMeters),
@@ -14,33 +23,9 @@ public class ClimberCommands {
         );
     }
 
-    public static Command getSetTargetStateCommand(ClimberConstants.ClimberState targetRightState, ClimberConstants.ClimberState targetLeftState) {
+    public static Command getSetTargetStateCommand(ClimberConstants.ClimberState targetState) {
         return new StartEndCommand(
-                () -> RobotContainer.CLIMBER.setTargetState(targetRightState, targetLeftState),
-                RobotContainer.CLIMBER::stop,
-                RobotContainer.CLIMBER
-        );
-    }
-
-    public static Command getSetRightMotorTargetStateCommand(ClimberConstants.ClimberState targetState) {
-        return getSetRightMotorTargetPositionCommand(targetState.positionMeters);
-    }
-
-    public static Command getSetLeftMotorTargetStateCommand(ClimberConstants.ClimberState targetState) {
-        return getSetLeftMotorTargetPositionCommand(targetState.positionMeters);
-    }
-
-    public static Command getSetRightMotorTargetPositionCommand(double targetPositionMeters) {
-        return new StartEndCommand(
-                () -> RobotContainer.CLIMBER.setRightMotorTargetPosition(targetPositionMeters),
-                RobotContainer.CLIMBER::stop,
-                RobotContainer.CLIMBER
-        );
-    }
-
-    public static Command getSetLeftMotorTargetPositionCommand(double targetPositionMeters) {
-        return new StartEndCommand(
-                () -> RobotContainer.CLIMBER.setLeftMotorTargetPosition(targetPositionMeters),
+                () -> RobotContainer.CLIMBER.setTargetState(targetState),
                 RobotContainer.CLIMBER::stop,
                 RobotContainer.CLIMBER
         );
