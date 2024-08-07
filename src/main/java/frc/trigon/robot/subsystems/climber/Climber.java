@@ -11,11 +11,11 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.utilities.Conversions;
-import org.trigon.utilities.MotorSubsystem;
 
 public class Climber extends MotorSubsystem {
     private final TalonFXMotor
@@ -35,6 +35,7 @@ public class Climber extends MotorSubsystem {
         updateMechanism();
     }
 
+    @Override
     public void drive(Measure<Voltage> voltageMeasure) {
         rightMotorDrive(voltageMeasure);
         leftMotorDrive(voltageMeasure);
@@ -48,6 +49,7 @@ public class Climber extends MotorSubsystem {
         leftMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
+    @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightClimberMotor")
                 .linearPosition(Units.Meters.of(toMeters(rightMotor.getSignal(TalonFXSignal.POSITION))))
@@ -65,6 +67,7 @@ public class Climber extends MotorSubsystem {
         leftMotor.setBrake(brake);
     }
 
+    @Override
     public SysIdRoutine.Config getSysIdConfig() {
         return ClimberConstants.SYSID_CONFIG;
     }
