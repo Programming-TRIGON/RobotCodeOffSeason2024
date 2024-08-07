@@ -135,7 +135,7 @@ public class ClimberConstants {
     }
 
     public enum ClimberState {
-        RETRACTED(0.1),
+        RETRACTED(0),
         CLIMBING(0.7);
 
         public final double positionMeters;
