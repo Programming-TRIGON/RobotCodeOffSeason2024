@@ -98,10 +98,12 @@ public class Climber extends MotorSubsystem {
     private void updateMechanism() {
         ClimberConstants.RIGHT_MECHANISM.update(
                 toMeters(rightMotor.getSignal(TalonFXSignal.POSITION)),
-                toMeters(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+                toMeters(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
+         );
         ClimberConstants.LEFT_MECHANISM.update(
                 toMeters(leftMotor.getSignal(TalonFXSignal.POSITION)),
-                toMeters(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+                toMeters(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
+         );
 
         Logger.recordOutput("Poses/Components/RightClimberPose", getRightClimberPose());
         Logger.recordOutput("Poses/Components/LeftClimberPose", getLeftClimberPose());
