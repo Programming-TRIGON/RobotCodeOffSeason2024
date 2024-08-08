@@ -16,15 +16,13 @@ import org.trigon.hardware.simulation.SingleJointedArmSimulation;
 import org.trigon.utilities.mechanisms.SingleJointedArmMechanism2d;
 
 public class AmpAlignerConstants {
-    private static final int
-            MOTOR_ID = 0,
-            REVERSE_LIMIT_SENSOR_ID = 0;
+    private static final int MOTOR_ID = 0;
     private static final String MOTOR_NAME = "AmpAlignerMotor";
     static final TalonFXMotor MOTOR = new TalonFXMotor(MOTOR_ID, MOTOR_NAME, RobotConstants.CANIVORE_NAME);
 
     private static final InvertedValue INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
-    private static final ReverseLimitTypeValue REVERSE_LIMIT_TYPE_VALUE = ReverseLimitTypeValue.NormallyClosed;
+    private static final ReverseLimitTypeValue REVERSE_LIMIT_TYPE_VALUE = ReverseLimitTypeValue.NormallyOpen;
     private static final ReverseLimitSourceValue REVERSE_LIMIT_SOURCE_VALUE = ReverseLimitSourceValue.LimitSwitchPin;
     private static final double
             P = RobotHardwareStats.isSimulation() ? 1 : 1,
@@ -32,8 +30,8 @@ public class AmpAlignerConstants {
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
             KS = RobotHardwareStats.isSimulation() ? 0 : 0,
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KG = RobotHardwareStats.isSimulation() ? 0 : 0;
+            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double KG = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double GEAR_RATIO = 1;
     static final boolean FOC_ENABLED = true;
 
@@ -80,7 +78,6 @@ public class AmpAlignerConstants {
         config.MotorOutput.Inverted = INVERTED_VALUE;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
-        config.HardwareLimitSwitch.ReverseLimitRemoteSensorID = REVERSE_LIMIT_SENSOR_ID;
         config.HardwareLimitSwitch.ReverseLimitType = REVERSE_LIMIT_TYPE_VALUE;
         config.HardwareLimitSwitch.ReverseLimitSource = REVERSE_LIMIT_SOURCE_VALUE;
 
@@ -90,12 +87,13 @@ public class AmpAlignerConstants {
         config.Slot0.kS = KS;
         config.Slot0.kV = KV;
         config.Slot0.kA = KA;
-        config.Slot0.kG = KG;
+        if (RobotHardwareStats.isSimulation())
+            config.Slot0.kG = KG;
+
         config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
         config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseClosedLoopSign;
 
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
-        ;
 
         MOTOR.applyConfiguration(config);
         MOTOR.setPhysicsSimulation(SIMULATION);

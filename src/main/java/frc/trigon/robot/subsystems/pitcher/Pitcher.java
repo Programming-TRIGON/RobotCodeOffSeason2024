@@ -61,6 +61,10 @@ public class Pitcher extends MotorSubsystem {
         return PitcherConstants.SYSID_CONFIG;
     }
 
+    public Rotation2d getCurrentPitch() {
+        return Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.POSITION));
+    }
+
     public Rotation2d getTargetPitch() {
         return targetPitch;
     }

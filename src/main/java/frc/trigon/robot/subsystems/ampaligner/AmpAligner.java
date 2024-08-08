@@ -8,6 +8,7 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
@@ -17,9 +18,11 @@ public class AmpAligner extends MotorSubsystem {
     private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
+    private boolean isStopped = true;
 
     @Override
     public void stop() {
+        isStopped = true;
         motor.stopMotor();
     }
 
@@ -27,6 +30,8 @@ public class AmpAligner extends MotorSubsystem {
     public void periodic() {
         motor.update();
         updateMechanism();
+        if (!isStopped)
+            motor.setControl(positionRequest.withFeedForward(calculateFeedForward()));
     }
 
     @Override
@@ -57,13 +62,29 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     void openAmpAligner() {
+        isStopped = false;
         targetState = AmpAlignerConstants.AmpAlignerState.OPENED;
-        motor.setControl(positionRequest.withPosition(targetState.targetPosition.getRotations()));
+        motor.setControl(positionRequest
+                .withPosition(targetState.targetPosition.getRotations())
+                .withFeedForward(calculateFeedForward())
+        );
     }
 
     void closeAmpAligner() {
+        isStopped = false;
         targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
-        motor.setControl(positionRequest.withPosition(targetState.targetPosition.getRotations()));
+        motor.setControl(positionRequest
+                .withPosition(targetState.targetPosition.getRotations())
+                .withFeedForward(calculateFeedForward())
+        );
+    }
+
+    private double calculateFeedForward() {
+        return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
+    }
+
+    private Rotation2d getCurrentAngle() {
+        return Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION));
     }
 
     private void updateMechanism() {
