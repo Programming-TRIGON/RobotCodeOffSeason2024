@@ -37,7 +37,6 @@ public class ShooterConstants {
             KA = RobotHardwareStats.isSimulation() ? 0 : 0,
             KG = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double GEAR_RATIO = 1;
-    static final boolean FOC_ENABLED = true;
 
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,

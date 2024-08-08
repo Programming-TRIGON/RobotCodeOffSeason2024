@@ -78,11 +78,11 @@ public class Shooter extends MotorSubsystem {
         setTargetLeftVelocity(targetLeftVelocityRotationsPerSecond);
     }
 
-    void setTargetRightVelocity(double targetVelocityRotationsPerSecond) {
+    private void setTargetRightVelocity(double targetVelocityRotationsPerSecond) {
         rightMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }
 
-    void setTargetLeftVelocity(double targetVelocityRotationsPerSecond) {
+    private void setTargetLeftVelocity(double targetVelocityRotationsPerSecond) {
         leftMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }
 
