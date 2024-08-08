@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -88,6 +89,6 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private void updateMechanism() {
-        AmpAlignerConstants.MECHANISM.update(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION)), targetState.targetPosition);
+        PitcherConstants.MECHANISM.updateSecondJoint(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION)), targetState.targetPosition);
     }
 }

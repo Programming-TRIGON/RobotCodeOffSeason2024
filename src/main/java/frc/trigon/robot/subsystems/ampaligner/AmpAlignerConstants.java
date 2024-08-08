@@ -5,15 +5,12 @@ import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
-import org.trigon.utilities.mechanisms.SingleJointedArmMechanism2d;
 
 public class AmpAlignerConstants {
     private static final int MOTOR_ID = 0;
@@ -37,9 +34,8 @@ public class AmpAlignerConstants {
 
     private static final int MOTOR_AMOUNT = 1;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
-    private static final double
-            AMP_ALIGNER_LENGTH_METERS = 0.5,
-            AMP_ALIGNER_MASS_KILOGRAMS = 0.5;
+    private static final double AMP_ALIGNER_MASS_KILOGRAMS = 0.5;
+    public static final double AMP_ALIGNER_LENGTH_METERS = 0.5;
     private static final Rotation2d
             AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
             AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(90);
@@ -57,12 +53,6 @@ public class AmpAlignerConstants {
             Units.Volts.of(0.25).per(Units.Second.of(1)),
             Units.Volts.of(2),
             Units.Second.of(1000)
-    );
-
-    static final SingleJointedArmMechanism2d MECHANISM = new SingleJointedArmMechanism2d(
-            "AmpAlignerMechanism",
-            AMP_ALIGNER_LENGTH_METERS,
-            new Color8Bit(Color.kYellow)
     );
 
     static {

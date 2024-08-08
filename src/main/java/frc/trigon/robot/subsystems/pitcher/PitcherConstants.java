@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.cancoder.CANcoderEncoder;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
-import org.trigon.utilities.mechanisms.SingleJointedArmMechanism2d;
+import org.trigon.utilities.mechanisms.DoubleJointedArmMechanism2d;
 
 public class PitcherConstants {
     private static final int
@@ -79,9 +80,10 @@ public class PitcherConstants {
             Units.Second.of(1000)
     );
 
-    static final SingleJointedArmMechanism2d MECHANISM = new SingleJointedArmMechanism2d(
+    public static final DoubleJointedArmMechanism2d MECHANISM = new DoubleJointedArmMechanism2d(
             "PitcherMechanism",
             PITCHER_LENGTH_METERS,
+            AmpAlignerConstants.AMP_ALIGNER_LENGTH_METERS,
             new Color8Bit(Color.kBlue)
     );
 
