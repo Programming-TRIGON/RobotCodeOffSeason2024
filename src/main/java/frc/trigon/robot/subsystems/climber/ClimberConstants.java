@@ -41,7 +41,6 @@ public class ClimberConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
-    static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
     private static final double
             P = RobotHardwareStats.isSimulation() ? 0 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
@@ -50,6 +49,8 @@ public class ClimberConstants {
             KG = RobotHardwareStats.isSimulation() ? 0 : 0,
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
+
 
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
