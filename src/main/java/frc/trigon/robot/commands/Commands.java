@@ -3,7 +3,7 @@ package frc.trigon.robot.commands;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CommandConstants;
-import org.trigon.utilities.MotorSubsystem;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 
 import java.util.function.BooleanSupplier;
 
