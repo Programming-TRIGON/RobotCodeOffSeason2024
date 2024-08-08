@@ -60,9 +60,8 @@ public class ShooterConstants {
             RIGHT_MECHANISM = new SpeedMechanism2d("RightShooterMechanism", MAX_DISPLAYABLE_VELOCITY),
             LEFT_MECHANISM = new SpeedMechanism2d("LeftShooterMechanism", MAX_DISPLAYABLE_VELOCITY);
 
-    static final double WHEEL_DIAMETER_METERS = 1;
+    public static final double WHEEL_DIAMETER_METERS = 1;
     static final double LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO = 1.3;
-    public static final double SHOOTER_ROTATIONS_TO_METERS = GEAR_RATIO / (WHEEL_DIAMETER_METERS * Math.PI);
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION);

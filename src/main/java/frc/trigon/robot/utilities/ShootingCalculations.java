@@ -8,6 +8,7 @@ import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.utilities.Conversions;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
@@ -55,7 +56,7 @@ public class ShootingCalculations {
      * @return the tangential velocity of the shooter
      */
     public double angularVelocityToTangentialVelocity(double angularVelocity) {
-        return angularVelocity / ShooterConstants.SHOOTER_ROTATIONS_TO_METERS;
+        return Conversions.rotationsToDistance(angularVelocity, ShooterConstants.WHEEL_DIAMETER_METERS);
     }
 
     /**
@@ -66,7 +67,7 @@ public class ShootingCalculations {
      * @return the angular velocity of the shooter
      */
     public double tangentialVelocityToAngularVelocity(double tangentialVelocity) {
-        return tangentialVelocity * ShooterConstants.SHOOTER_ROTATIONS_TO_METERS;
+        return Conversions.rotationsToDistance(tangentialVelocity, ShooterConstants.WHEEL_DIAMETER_METERS;
     }
 
     /**
