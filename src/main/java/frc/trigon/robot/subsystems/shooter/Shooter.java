@@ -28,12 +28,12 @@ public class Shooter extends MotorSubsystem {
     @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightShooter")
-                .angularPosition(Units.Degrees.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
-                .angularVelocity(Units.DegreesPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularPosition(Units.Rotations.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularVelocity(Units.RotationsPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
         log.motor("LeftShooter")
-                .angularPosition(Units.Degrees.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
-                .angularVelocity(Units.DegreesPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularPosition(Units.Rotations.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularVelocity(Units.RotationsPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 

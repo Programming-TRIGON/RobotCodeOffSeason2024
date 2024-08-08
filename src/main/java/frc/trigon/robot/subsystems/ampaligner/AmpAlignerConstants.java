@@ -1,10 +1,7 @@
 package frc.trigon.robot.subsystems.ampaligner;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.signals.GravityTypeValue;
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
+import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
@@ -13,29 +10,22 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
 import org.trigon.hardware.RobotHardwareStats;
-import org.trigon.hardware.misc.simplesensor.SimpleSensor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
 import org.trigon.utilities.mechanisms.SingleJointedArmMechanism2d;
 
-import java.util.function.DoubleSupplier;
-
 public class AmpAlignerConstants {
     private static final int
             MOTOR_ID = 0,
-            FORWARD_LIMIT_SWITCH_ID = 0,
-            BACKWARD_LIMIT_SWITCH_ID = 1;
-    private static final String
-            MOTOR_NAME = "AmpAlignerMotor",
-            FORWARD_LIMIT_SWITCH_NAME = "AmpAlignerForwardLimitSwitch",
-            BACKWARD_LIMIT_SWITCH_NAME = "AmpAlignerBackwardLimitSwitch";
+            REVERSE_LIMIT_SENSOR_ID = 0;
+    private static final String MOTOR_NAME = "AmpAlignerMotor";
     static final TalonFXMotor MOTOR = new TalonFXMotor(MOTOR_ID, MOTOR_NAME, RobotConstants.CANIVORE_NAME);
-    static final SimpleSensor
-            FORWARD_LIMIT_SWITCH = SimpleSensor.createDigitalSensor(FORWARD_LIMIT_SWITCH_ID, FORWARD_LIMIT_SWITCH_NAME),
-            BACKWARD_LIMIT_SWITCH = SimpleSensor.createDigitalSensor(BACKWARD_LIMIT_SWITCH_ID, BACKWARD_LIMIT_SWITCH_NAME);
+
     private static final InvertedValue INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
+    private static final ReverseLimitTypeValue REVERSE_LIMIT_TYPE_VALUE = ReverseLimitTypeValue.NormallyClosed;
+    private static final ReverseLimitSourceValue REVERSE_LIMIT_SOURCE_VALUE = ReverseLimitSourceValue.LimitSwitchPin;
     private static final double
             P = RobotHardwareStats.isSimulation() ? 1 : 1,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
@@ -55,9 +45,6 @@ public class AmpAlignerConstants {
     private static final Rotation2d
             AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
             AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(90);
-    private static final DoubleSupplier
-            FORWARD_LIMIT_SWITCH_SUPPLIER = () -> 0,
-            BACKWARD_LIMIT_SWITCH_SUPPLIER = () -> 0;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
             GEAR_RATIO,
@@ -82,7 +69,6 @@ public class AmpAlignerConstants {
 
     static {
         configureMotor();
-        configureLimitSwitches();
     }
 
     private static void configureMotor() {
@@ -93,6 +79,10 @@ public class AmpAlignerConstants {
 
         config.MotorOutput.Inverted = INVERTED_VALUE;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
+
+        config.HardwareLimitSwitch.ReverseLimitRemoteSensorID = REVERSE_LIMIT_SENSOR_ID;
+        config.HardwareLimitSwitch.ReverseLimitType = REVERSE_LIMIT_TYPE_VALUE;
+        config.HardwareLimitSwitch.ReverseLimitSource = REVERSE_LIMIT_SOURCE_VALUE;
 
         config.Slot0.kP = P;
         config.Slot0.kI = I;
@@ -105,6 +95,7 @@ public class AmpAlignerConstants {
         config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseClosedLoopSign;
 
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
+        ;
 
         MOTOR.applyConfiguration(config);
         MOTOR.setPhysicsSimulation(SIMULATION);
@@ -115,20 +106,12 @@ public class AmpAlignerConstants {
         MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
-    private static void configureLimitSwitches() {
-        FORWARD_LIMIT_SWITCH.setSimulationSupplier(FORWARD_LIMIT_SWITCH_SUPPLIER);
-        BACKWARD_LIMIT_SWITCH.setSimulationSupplier(BACKWARD_LIMIT_SWITCH_SUPPLIER);
-    }
-
     public enum AmpAlignerState {
-        OPENING(5, AMP_ALIGNER_MAXIMUM_ANGLE),
-        CLOSING(-5, AMP_ALIGNER_MINIMUM_ANGLE);
-
-        public final double voltage;
+        OPEN(AMP_ALIGNER_MAXIMUM_ANGLE),
+        CLOSED(AMP_ALIGNER_MINIMUM_ANGLE);
         public final Rotation2d targetPosition;
 
-        AmpAlignerState(double voltage, Rotation2d targetPosition) {
-            this.voltage = voltage;
+        AmpAlignerState(Rotation2d targetPosition) {
             this.targetPosition = targetPosition;
         }
     }

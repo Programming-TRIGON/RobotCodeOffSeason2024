@@ -29,8 +29,8 @@ public class Pitcher extends MotorSubsystem {
     @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("Pitcher")
-                .linearPosition(Units.Meters.of(masterMotor.getSignal(TalonFXSignal.POSITION)))
-                .linearVelocity(Units.MetersPerSecond.of(masterMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularPosition(Units.Rotations.of(masterMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularVelocity(Units.RotationsPerSecond.of(masterMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
@@ -63,6 +63,10 @@ public class Pitcher extends MotorSubsystem {
 
     public Rotation2d getTargetPitch() {
         return targetPitch;
+    }
+
+    public Rotation2d getPitch() {
+        return Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.POSITION));
     }
 
     boolean atTargetPitch() {
