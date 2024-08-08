@@ -33,7 +33,6 @@ public class Intake extends MotorSubsystem {
     @Override
     public void stop() {
         masterMotor.stopMotor();
-        OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
         IntakeConstants.MECHANISM.setTargetVelocity(0);
     }
 
@@ -53,6 +52,12 @@ public class Intake extends MotorSubsystem {
 
     boolean hasNote() {
         return IntakeConstants.DISTANCE_SENSOR.getScaledValue() < IntakeConstants.NOTE_DISTANCE_THRESHOLD_METERS;
+    }
+
+    void rumble(boolean interrupted) {
+        if (!interrupted) {
+            OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
+        }
     }
 
     private void updateMechanism() {

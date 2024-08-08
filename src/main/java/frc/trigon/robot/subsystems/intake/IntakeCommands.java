@@ -12,7 +12,10 @@ public class IntakeCommands {
                     () -> RobotContainer.INTAKE.setTargetState(targetState),
                     () -> {
                     },
-                    (interrupted) -> RobotContainer.INTAKE.stop(),
+                    (interrupted) -> {
+                        RobotContainer.INTAKE.stop();
+                        RobotContainer.INTAKE.rumble(interrupted);
+                    },
                     RobotContainer.INTAKE::hasNote,
                     RobotContainer.INTAKE
             );
