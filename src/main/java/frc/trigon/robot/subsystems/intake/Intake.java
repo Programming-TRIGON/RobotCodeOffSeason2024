@@ -33,6 +33,7 @@ public class Intake extends MotorSubsystem {
     @Override
     public void stop() {
         masterMotor.stopMotor();
+        OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
         IntakeConstants.MECHANISM.setTargetVelocity(0);
     }
 
@@ -42,7 +43,6 @@ public class Intake extends MotorSubsystem {
 
     void setTargetState(IntakeConstants.IntakeState targetState) {
         this.targetState = targetState;
-        OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
         setTargetVoltage(targetState.voltage);
     }
 

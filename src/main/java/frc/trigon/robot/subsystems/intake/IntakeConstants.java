@@ -64,7 +64,7 @@ public class IntakeConstants {
     );
 
     static final double NOTE_DISTANCE_THRESHOLD_METERS = 5;
-    static final double RUMBLE_DURATION_SECONDS = 1;
+    static final double RUMBLE_DURATION_SECONDS = 0.6;
     static final double RUMBLE_POWER = 1;
 
     static {
