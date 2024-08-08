@@ -49,7 +49,7 @@ public class IntakeConstants {
     static final boolean FOC_ENABLED = true;
 
     private static final int MOTOR_AMOUNT = 2;
-    private static final DCMotor GEARBOX = DCMotor.getKrakenX60Foc(MOTOR_AMOUNT);
+    private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
     private static final double MOMENT_OF_INERTIA = 0.003;
     private static final SimpleMotorSimulation SIMULATION = new SimpleMotorSimulation(
             GEARBOX,
