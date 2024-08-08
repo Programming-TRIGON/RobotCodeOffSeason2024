@@ -4,7 +4,9 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -51,7 +53,6 @@ public class ClimberConstants {
             KA = RobotHardwareStats.isSimulation() ? 0 : 0;
     static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
 
-
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
             LEFT_MOTOR_AMOUNT = 1;
@@ -63,7 +64,7 @@ public class ClimberConstants {
             DRUM_RADIUS_METERS = 0, //TODO: get number from mechanics
             DRUM_DIAMETER_METERS = DRUM_RADIUS_METERS * 2;
     static final double RETRACTED_CLIMBER_LENGTH_METERS = 0.1; //TODO: get number from mechanics
-    private static final double MAXIMUM_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
+    static final double MAXIMUM_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
     private static final boolean SIMULATE_GRAVITY = true;
     private static final ElevatorSimulation
             RIGHT_MOTOR_SIMULATION = new ElevatorSimulation(
@@ -92,9 +93,9 @@ public class ClimberConstants {
             null
     );
 
-    static final Pose3d
-            RIGHT_CLIMBER_ORIGIN_POINT = new Pose3d(0.1, 0, 0.1, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-15), 0)), //TODO: get numbers from mechanics
-            LEFT_CLIMBER_ORIGIN_POINT = new Pose3d(0.1, 0, 0.1, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-15), 0)); //TODO: get numbers from mechanics
+    static final Translation3d
+            RIGHT_CLIMBER_ORIGIN_POINT = new Translation3d(0.1, 0, 0.1), //TODO: get numbers from mechanics
+            LEFT_CLIMBER_ORIGIN_POINT = new Translation3d(0.1, 0, 0.1); //TODO: get numbers from mechanics
     static final ElevatorMechanism2d
             RIGHT_MECHANISM = new ElevatorMechanism2d(
             "RightClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
@@ -102,6 +103,10 @@ public class ClimberConstants {
             LEFT_MECHANISM = new ElevatorMechanism2d(
                     "LeftClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
             );
+
+    static final Rotation2d STRING_PITCH = Rotation2d.fromDegrees(75); //TODO: get number from mechanics
+    static final double STRING_LENGTH_METERS = 0.2; //TODO: get number from mechanics
+    static final Pose3d STRING_POSE = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
@@ -137,7 +142,8 @@ public class ClimberConstants {
 
     public enum ClimberState {
         RETRACTED(0),
-        CLIMBING(0.7); //TODO: get number from mechanics
+        CLIMBING(0.7), //TODO: get number from mechanics
+        RESTING(0.2); //TODO: get number from mechanics
 
         public final double positionMeters;
 

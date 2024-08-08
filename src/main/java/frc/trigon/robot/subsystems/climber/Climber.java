@@ -2,10 +2,7 @@ package frc.trigon.robot.subsystems.climber;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -23,6 +20,7 @@ public class Climber extends MotorSubsystem {
             leftMotor = ClimberConstants.LEFT_MOTOR;
     private final MotionMagicVoltage motionMagicRequest = new MotionMagicVoltage(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
+    private ClimberConstants.ClimberState currentState = ClimberConstants.ClimberState.RESTING;
 
     public Climber() {
         setName("Climber");
@@ -79,6 +77,7 @@ public class Climber extends MotorSubsystem {
     }
 
     void setTargetState(ClimberConstants.ClimberState targetState) {
+        currentState = targetState;
         setTargetPosition(targetState.positionMeters, targetState.positionMeters);
     }
 
@@ -91,30 +90,76 @@ public class Climber extends MotorSubsystem {
         ClimberConstants.RIGHT_MECHANISM.update(
                 toMeters(rightMotor.getSignal(TalonFXSignal.POSITION)),
                 toMeters(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
-         );
+        );
         ClimberConstants.LEFT_MECHANISM.update(
                 toMeters(leftMotor.getSignal(TalonFXSignal.POSITION)),
                 toMeters(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
-         );
+        );
 
         Logger.recordOutput("Poses/Components/RightClimberPose", getRightClimberPose());
         Logger.recordOutput("Poses/Components/LeftClimberPose", getLeftClimberPose());
     }
 
     private Pose3d getRightClimberPose() {
+        final Pose3d currentFirstJointPose = new Pose3d(
+                ClimberConstants.RIGHT_CLIMBER_ORIGIN_POINT,
+                new Rotation3d(0, getRightClimberPitch().getRadians(), 0)
+        );
         final Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, 0, toMeters(rightMotor.getSignal(TalonFXSignal.POSITION))),
+                new Translation3d(0, ClimberConstants.MAXIMUM_HEIGHT_METERS, 0),
                 new Rotation3d()
         );
-        return ClimberConstants.RIGHT_CLIMBER_ORIGIN_POINT.transformBy(climberTransform);
+        return currentFirstJointPose.transformBy(climberTransform);
     }
 
     private Pose3d getLeftClimberPose() {
+        final Pose3d currentFirstJointPose = new Pose3d(
+                ClimberConstants.LEFT_CLIMBER_ORIGIN_POINT,
+                new Rotation3d(0, getLeftClimberPitch().getRadians(), 0)
+        );
         final Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, 0, toMeters(leftMotor.getSignal(TalonFXSignal.POSITION))),
+                new Translation3d(0, ClimberConstants.MAXIMUM_HEIGHT_METERS, 0),
                 new Rotation3d()
         );
-        return ClimberConstants.LEFT_CLIMBER_ORIGIN_POINT.transformBy(climberTransform);
+        return currentFirstJointPose.transformBy(climberTransform);
+    }
+
+    private Rotation2d getRightClimberPitch() {
+        final Translation3d difference = getRightClimberStringConnectionPointPose()
+                .getTranslation()
+                .minus(ClimberConstants.STRING_POSE.getTranslation()
+                );
+        final Rotation2d stringToClimberAngle = Rotation2d.fromRadians(Math.atan2(difference.getY(), difference.getX()));
+        final double climberPitchDegrees = 180 - ClimberConstants.STRING_PITCH.minus(stringToClimberAngle).getDegrees();
+        return Rotation2d.fromDegrees(climberPitchDegrees);
+    }
+
+    private Rotation2d getLeftClimberPitch() {
+        final Translation3d difference = getLeftClimberStringConnectionPointPose()
+                .getTranslation()
+                .minus(ClimberConstants.STRING_POSE.getTranslation()
+                );
+        final Rotation2d stringToClimberAngle = Rotation2d.fromRadians(Math.atan2(difference.getY(), difference.getX()));
+        final double climberPitchDegrees = 180 - ClimberConstants.STRING_PITCH.minus(stringToClimberAngle).getDegrees();
+        return Rotation2d.fromDegrees(climberPitchDegrees);
+    }
+
+    private Pose3d getRightClimberStringConnectionPointPose() {
+        final double currentStringLength = toMeters(rightMotor.getSignal(TalonFXSignal.POSITION)) * ClimberConstants.STRING_LENGTH_METERS;
+        final Transform3d climberTransform = new Transform3d(
+                new Translation3d(0, 0, currentStringLength),
+                new Rotation3d()
+        );
+        return ClimberConstants.STRING_POSE.transformBy(climberTransform);
+    }
+
+    private Pose3d getLeftClimberStringConnectionPointPose() {
+        final double currentStringLength = toMeters(leftMotor.getSignal(TalonFXSignal.POSITION)) * ClimberConstants.STRING_LENGTH_METERS;
+        final Transform3d climberTransform = new Transform3d(
+                new Translation3d(0, 0, currentStringLength),
+                new Rotation3d()
+        );
+        return ClimberConstants.STRING_POSE.transformBy(climberTransform);
     }
 
     private double toMeters(double rotations) {
