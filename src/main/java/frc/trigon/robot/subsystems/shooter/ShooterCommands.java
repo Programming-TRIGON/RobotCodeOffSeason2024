@@ -21,4 +21,13 @@ public class ShooterCommands {
                 RobotContainer.SHOOTER
         );
     }
+
+    public static Command getStopCommand() {
+        return new StartEndCommand(
+                RobotContainer.SHOOTER::stop,
+                () -> {
+                },
+                RobotContainer.SHOOTER
+        );
+    }
 }

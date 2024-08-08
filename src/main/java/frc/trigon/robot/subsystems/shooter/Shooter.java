@@ -1,6 +1,6 @@
 package frc.trigon.robot.subsystems.shooter;
 
-import com.ctre.phoenix6.controls.TorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -16,7 +16,7 @@ public class Shooter extends MotorSubsystem {
     private final TalonFXMotor
             rightMotor = ShooterConstants.RIGHT_MOTOR,
             leftMotor = ShooterConstants.LEFT_MOTOR;
-    private final TorqueCurrentFOC velocityRequest = new TorqueCurrentFOC(0);
+    private final VelocityTorqueCurrentFOC velocityRequest = new VelocityTorqueCurrentFOC(0);
     private double
             targetRightVelocityRotationsPerSecond = 0,
             targetLeftVelocityRotationsPerSecond = 0;
@@ -28,12 +28,12 @@ public class Shooter extends MotorSubsystem {
     @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightShooter")
-                .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
-                .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularPosition(Units.Degrees.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularVelocity(Units.DegreesPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
         log.motor("LeftShooter")
-                .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
-                .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularPosition(Units.Degrees.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularVelocity(Units.DegreesPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
@@ -58,7 +58,8 @@ public class Shooter extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        leftMotor.setControl(velocityRequest.withOutput(voltageMeasure.in(Units.Volts)));
+        rightMotor.setControl(velocityRequest.withVelocity(voltageMeasure.in(Units.Volts)));
+        leftMotor.setControl(velocityRequest.withVelocity(voltageMeasure.in(Units.Volts)));
     }
 
     @Override
@@ -78,11 +79,11 @@ public class Shooter extends MotorSubsystem {
     }
 
     void setTargetRightVelocity(double targetVelocityRotationsPerSecond) {
-        rightMotor.setControl(velocityRequest.withOutput(targetVelocityRotationsPerSecond));
+        rightMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }
 
     void setTargetLeftVelocity(double targetVelocityRotationsPerSecond) {
-        leftMotor.setControl(velocityRequest.withOutput(targetVelocityRotationsPerSecond));
+        leftMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }
 
     private void updateMechanism() {

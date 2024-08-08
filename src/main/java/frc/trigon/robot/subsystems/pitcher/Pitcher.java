@@ -71,10 +71,10 @@ public class Pitcher extends MotorSubsystem {
 
     void reachTargetPitchFromShootingCalculations() {
         targetPitch = shootingCalculations.getTargetShootingState().targetPitch();
-        setPitch(targetPitch);
+        setTargetPitch(targetPitch);
     }
 
-    void setPitch(Rotation2d targetPitch) {
+    void setTargetPitch(Rotation2d targetPitch) {
         this.targetPitch = targetPitch;
         masterMotor.setControl(positionRequest.withPosition(targetPitch.getRotations()));
     }

@@ -17,7 +17,7 @@ public class PitcherCommands {
 
     public static Command getSetTargetPitchCommand(Rotation2d targetPitch) {
         return new StartEndCommand(
-                () -> RobotContainer.PITCHER.setPitch(targetPitch),
+                () -> RobotContainer.PITCHER.setTargetPitch(targetPitch),
                 RobotContainer.PITCHER::stop,
                 RobotContainer.PITCHER
         );

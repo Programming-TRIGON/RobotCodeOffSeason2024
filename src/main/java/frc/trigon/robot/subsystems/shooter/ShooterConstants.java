@@ -23,6 +23,7 @@ public class ShooterConstants {
     static final TalonFXMotor
             RIGHT_MOTOR = new TalonFXMotor(RIGHT_MOTOR_ID, RIGHT_MOTOR_NAME, RobotConstants.CANIVORE_NAME),
             LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME, RobotConstants.CANIVORE_NAME);
+
     private static final InvertedValue
             RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
@@ -65,17 +66,17 @@ public class ShooterConstants {
     public static final double SHOOTER_ROTATIONS_TO_METERS = GEAR_RATIO / (WHEEL_DIAMETER_METERS * Math.PI);
 
     static {
-        configureRightMotor();
-        configureLeftMotor();
+        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION);
+        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_SIMULATION);
     }
 
-    private static void configureRightMotor() {
+    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, FlywheelSimulation simulation) {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-        config.MotorOutput.Inverted = RIGHT_MOTOR_INVERTED_VALUE;
+        config.MotorOutput.Inverted = invertedValue;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
         config.Slot0.kP = P;
@@ -86,38 +87,11 @@ public class ShooterConstants {
         config.Slot0.kA = KA;
         config.Slot0.kG = KG;
 
-        RIGHT_MOTOR.applyConfiguration(config);
-        RIGHT_MOTOR.setPhysicsSimulation(RIGHT_SIMULATION);
+        motor.applyConfiguration(config);
+        motor.setPhysicsSimulation(simulation);
 
-        RIGHT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
-        RIGHT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        RIGHT_MOTOR.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
-        RIGHT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
-    }
-
-    private static void configureLeftMotor() {
-        final TalonFXConfiguration config = new TalonFXConfiguration();
-
-        config.Audio.BeepOnBoot = false;
-        config.Audio.BeepOnConfig = false;
-
-        config.MotorOutput.Inverted = LEFT_MOTOR_INVERTED_VALUE;
-        config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
-
-        config.Slot0.kP = P;
-        config.Slot0.kI = I;
-        config.Slot0.kD = D;
-        config.Slot0.kS = KS;
-        config.Slot0.kV = KV;
-        config.Slot0.kA = KA;
-        config.Slot0.kG = KG;
-
-        LEFT_MOTOR.applyConfiguration(config);
-        LEFT_MOTOR.setPhysicsSimulation(LEFT_SIMULATION);
-
-        LEFT_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
-        LEFT_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        LEFT_MOTOR.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
-        LEFT_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        motor.registerSignal(TalonFXSignal.VELOCITY, 100);
+        motor.registerSignal(TalonFXSignal.POSITION, 100);
+        motor.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
     }
 }
