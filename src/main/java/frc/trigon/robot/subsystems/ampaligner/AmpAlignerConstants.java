@@ -107,7 +107,7 @@ public class AmpAlignerConstants {
     }
 
     public enum AmpAlignerState {
-        OPEN(AMP_ALIGNER_MAXIMUM_ANGLE),
+        OPENED(AMP_ALIGNER_MAXIMUM_ANGLE),
         CLOSED(AMP_ALIGNER_MINIMUM_ANGLE);
         public final Rotation2d targetPosition;
 

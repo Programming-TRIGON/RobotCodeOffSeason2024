@@ -41,7 +41,7 @@ public class AmpAligner extends MotorSubsystem {
 
     @Override
     public void updateLog(SysIdRoutineLog log) {
-        log.motor("Pitcher")
+        log.motor("AmpAligner")
                 .angularPosition(Units.Rotations.of(motor.getSignal(TalonFXSignal.POSITION)))
                 .angularVelocity(Units.RotationsPerSecond.of(motor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(motor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
@@ -57,21 +57,13 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     void openAmpAligner() {
-        targetState = AmpAlignerConstants.AmpAlignerState.OPENING;
-        motor.setControl(voltageRequest.withOutput(targetState.voltage));
+        targetState = AmpAlignerConstants.AmpAlignerState.OPENED;
+        motor.setControl(positionRequest.withPosition(targetState.targetPosition.getRotations()));
     }
 
     void closeAmpAligner() {
-        targetState = AmpAlignerConstants.AmpAlignerState.CLOSING;
-        motor.setControl(voltageRequest.withOutput(targetState.voltage));
-    }
-
-    boolean isForwardLimitSwitchPressed() {
-        return AmpAlignerConstants.FORWARD_LIMIT_SWITCH.getBinaryValue();
-    }
-
-    boolean isBackwardLimitSwitchPressed() {
-        return AmpAlignerConstants.BACKWARD_LIMIT_SWITCH.getBinaryValue();
+        targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
+        motor.setControl(positionRequest.withPosition(targetState.targetPosition.getRotations()));
     }
 
     private void updateMechanism() {
