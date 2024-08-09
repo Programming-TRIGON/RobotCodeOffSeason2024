@@ -155,8 +155,7 @@ public class Climber extends MotorSubsystem {
     private Rotation2d getRightClimberPitch() {
         final Translation3d difference = getRightClimberStringConnectionPointPose()
                 .getTranslation()
-                .minus(ClimberConstants.STRING_POSE.getTranslation()
-                );
+                .minus(ClimberConstants.STRING_POSE.getTranslation());
         final Rotation2d stringToClimberAngle = Rotation2d.fromRadians(Math.atan2(difference.getY(), difference.getX()));
         final double climberPitchDegrees = 180 - ClimberConstants.STRING_PITCH.minus(stringToClimberAngle).getDegrees();
         return Rotation2d.fromDegrees(climberPitchDegrees);
