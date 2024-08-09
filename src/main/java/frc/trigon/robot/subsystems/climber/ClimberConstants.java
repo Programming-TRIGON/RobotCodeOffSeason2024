@@ -43,14 +43,30 @@ public class ClimberConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
-    private static final double
-            P = RobotHardwareStats.isSimulation() ? 0 : 0,
-            I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KG = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double //TODO: calibrate
+            MAX_NON_CLIMBING_VELOCITY = 1,
+            MAX_NON_CLIMBING_ACCELERATION = 1,
+            MAX_CLIMBING_VELOCITY = 1,
+            MAX_CLIMBING_ACCELERATION = 1;
+    private static final double //TODO: calibrate
+            NON_CLIMBING_P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            NON_CLIMBING_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            NON_CLIMBING_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            NON_CLIMBING_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            NON_CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 0,
+            NON_CLIMBING_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            NON_CLIMBING_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    private static final double //TODO: calibrate
+            CLIMBING_P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            CLIMBING_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            CLIMBING_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            CLIMBING_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 0,
+            CLIMBING_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            CLIMBING_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final int
+            NON_CLIMBING_SLOT = 0,
+            CLIMBING_SLOT = 1;
     static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
 
     private static final int
@@ -99,6 +115,11 @@ public class ClimberConstants {
     static final Translation3d
             RIGHT_CLIMBER_SECOND_JOINT_ORIGIN_POINT = new Translation3d(0, 0, 0.1), //TODO: get numbers from mechanics
             LEFT_CLIMBER_SECOND_JOINT_ORIGIN_POINT = new Translation3d(0, 0, 0.1); //TODO: get numbers from mechanics
+    static final Rotation2d STRING_PITCH = Rotation2d.fromDegrees(75); //TODO: get number from mechanics
+    static final double STRING_LENGTH_METERS = 0.2; //TODO: get number from mechanics
+    static final Pose3d
+            RIGHT_STRING_POSE = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0)), //TODO: get numbers from mechanics
+            LEFT_STRING_POSE = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0)); //TODO: get numbers from mechanics
     static final ElevatorMechanism2d
             RIGHT_MECHANISM = new ElevatorMechanism2d(
             "RightClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
@@ -107,17 +128,12 @@ public class ClimberConstants {
                     "LeftClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
             );
 
-    static final Rotation2d STRING_PITCH = Rotation2d.fromDegrees(75); //TODO: get number from mechanics
-    static final double STRING_LENGTH_METERS = 0.2; //TODO: get number from mechanics
-    static final Pose3d STRING_POSE = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
-
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
         configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_MOTOR_SIMULATION);
     }
 
     private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, ElevatorSimulation simulation) {
-
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = invertedValue;
@@ -125,13 +141,21 @@ public class ClimberConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-        config.Slot0.kP = P;
-        config.Slot0.kI = I;
-        config.Slot0.kD = D;
-        config.Slot0.kS = KS;
-        config.Slot0.kV = KV;
-        config.Slot0.kG = KG;
-        config.Slot0.kA = KA;
+        config.Slot0.kP = NON_CLIMBING_P;
+        config.Slot0.kI = NON_CLIMBING_I;
+        config.Slot0.kD = NON_CLIMBING_D;
+        config.Slot0.kS = NON_CLIMBING_KS;
+        config.Slot0.kV = NON_CLIMBING_KV;
+        config.Slot0.kG = NON_CLIMBING_KG;
+        config.Slot0.kA = NON_CLIMBING_KA;
+
+        config.Slot1.kP = CLIMBING_P;
+        config.Slot1.kI = CLIMBING_I;
+        config.Slot1.kD = CLIMBING_D;
+        config.Slot1.kS = CLIMBING_KS;
+        config.Slot1.kV = CLIMBING_KV;
+        config.Slot1.kG = CLIMBING_KG;
+        config.Slot1.kA = CLIMBING_KA;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
@@ -139,19 +163,22 @@ public class ClimberConstants {
         motor.setPhysicsSimulation(simulation);
 
         motor.registerSignal(TalonFXSignal.POSITION, 100);
+        motor.registerSignal(TalonFXSignal.VELOCITY, 100);
         motor.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         motor.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
     public enum ClimberState {
-        RETRACTED(0),
-        CLIMBING(0.7), //TODO: get number from mechanics
-        RESTING(0.2); //TODO: get number from mechanics
+        RESTING(0, false),
+        PREPARE_FOR_CLIMBING(0.2, false), //TODO: calibrate
+        CLIMBING(0.7, true); //TODO: calibrate
 
         public final double positionMeters;
+        public final boolean affectedByWeight;
 
-        ClimberState(double positionMeters) {
+        ClimberState(double positionMeters, boolean affectedByWeight) {
             this.positionMeters = positionMeters;
+            this.affectedByWeight = affectedByWeight;
         }
     }
 }

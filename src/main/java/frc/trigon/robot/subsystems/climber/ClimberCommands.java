@@ -9,15 +9,16 @@ import org.trigon.commands.NetworkTablesCommand;
 public class ClimberCommands {
     public static Command getDebuggingCommand() {
         return new NetworkTablesCommand(
-                (positionMeters) -> ClimberCommands.getSetTargetPositionCommand(positionMeters, positionMeters),
+                (positionMeters, affectedByWeight) -> ClimberCommands.getSetTargetPositionCommand(positionMeters, positionMeters, affectedByWeight == 1),
                 false,
-                "Debugging/TargetDebuggingClimberPositionMeters"
+                "Debugging/TargetDebuggingClimberPositionMeters",
+                "Debugging/TargetDebuggingClimberPositionAffectedByWeight"
         );
     }
 
-    public static Command getSetTargetPositionCommand(double targetRightPositionMeters, double targetLeftPositionMeters) {
+    public static Command getSetTargetPositionCommand(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByWeight) {
         return new StartEndCommand(
-                () -> RobotContainer.CLIMBER.setTargetPosition(targetRightPositionMeters, targetLeftPositionMeters),
+                () -> RobotContainer.CLIMBER.setTargetPosition(targetRightPositionMeters, targetLeftPositionMeters, affectedByWeight),
                 RobotContainer.CLIMBER::stop,
                 RobotContainer.CLIMBER
         );
