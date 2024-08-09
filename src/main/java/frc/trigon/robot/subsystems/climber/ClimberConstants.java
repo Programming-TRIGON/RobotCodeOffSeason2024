@@ -3,9 +3,6 @@ package frc.trigon.robot.subsystems.climber;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
@@ -115,11 +112,10 @@ public class ClimberConstants {
     static final Translation3d
             RIGHT_CLIMBER_SECOND_JOINT_ORIGIN_POINT = new Translation3d(0, 0, 0.1), //TODO: get numbers from mechanics
             LEFT_CLIMBER_SECOND_JOINT_ORIGIN_POINT = new Translation3d(0, 0, 0.1); //TODO: get numbers from mechanics
-    static final Rotation2d STRING_PITCH = Rotation2d.fromDegrees(75); //TODO: get number from mechanics
-    static final double STRING_LENGTH_METERS = 0.2; //TODO: get number from mechanics
-    static final Pose3d
-            RIGHT_STRING_POSE = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0)), //TODO: get numbers from mechanics
-            LEFT_STRING_POSE = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0)); //TODO: get numbers from mechanics
+    static final double FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS = 0.312;
+    static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.343;
+    static final double STRING_LENGTH_ADDITION = 0.143655638521;
+    static final double ANGLE_ADDITION = 57.87 + 7.37 - 90;
     static final ElevatorMechanism2d
             RIGHT_MECHANISM = new ElevatorMechanism2d(
             "RightClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
