@@ -81,7 +81,7 @@ public class AmpAlignerConstants {
             config.Slot0.kG = KG;
 
         config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-        config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseClosedLoopSign;
+        config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
@@ -91,16 +91,18 @@ public class AmpAlignerConstants {
         MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
         MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
         MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
+        MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 
     public enum AmpAlignerState {
         OPENED(AMP_ALIGNER_MAXIMUM_ANGLE),
         CLOSED(AMP_ALIGNER_MINIMUM_ANGLE);
-        public final Rotation2d targetPosition;
 
-        AmpAlignerState(Rotation2d targetPosition) {
-            this.targetPosition = targetPosition;
+        public final Rotation2d targetAngle;
+
+        AmpAlignerState(Rotation2d targetAngle) {
+            this.targetAngle = targetAngle;
         }
     }
 }

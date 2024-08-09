@@ -18,8 +18,8 @@ public class ShooterConstants {
             RIGHT_MOTOR_ID = 0,
             LEFT_MOTOR_ID = 1;
     private static final String
-            RIGHT_MOTOR_NAME = "rightShootingMotor",
-            LEFT_MOTOR_NAME = "leftShootingMotor";
+            RIGHT_MOTOR_NAME = "RightShootingMotor",
+            LEFT_MOTOR_NAME = "LeftShootingMotor";
     static final TalonFXMotor
             RIGHT_MOTOR = new TalonFXMotor(RIGHT_MOTOR_ID, RIGHT_MOTOR_NAME, RobotConstants.CANIVORE_NAME),
             LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME, RobotConstants.CANIVORE_NAME);
@@ -37,13 +37,14 @@ public class ShooterConstants {
             KA = RobotHardwareStats.isSimulation() ? 0 : 0,
             KG = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double GEAR_RATIO = 1;
+    static final boolean FOC_ENABLED = true;
 
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
             LEFT_MOTOR_AMOUNT = 1;
     private static final DCMotor
-            RIGHT_GEARBOX = DCMotor.getFalcon500Foc(RIGHT_MOTOR_AMOUNT),
-            LEFT_GEARBOX = DCMotor.getFalcon500Foc(LEFT_MOTOR_AMOUNT);
+            RIGHT_GEARBOX = DCMotor.getKrakenX60Foc(RIGHT_MOTOR_AMOUNT),
+            LEFT_GEARBOX = DCMotor.getKrakenX60Foc(LEFT_MOTOR_AMOUNT);
     private static final double MOMENT_OF_INERTIA = 0.003;
     static final FlywheelSimulation
             RIGHT_SIMULATION = new FlywheelSimulation(RIGHT_GEARBOX, GEAR_RATIO, MOMENT_OF_INERTIA),

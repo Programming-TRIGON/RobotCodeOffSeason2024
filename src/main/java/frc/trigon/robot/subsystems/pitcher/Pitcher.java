@@ -69,10 +69,6 @@ public class Pitcher extends MotorSubsystem {
         return targetPitch;
     }
 
-    public Rotation2d getPitch() {
-        return Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.POSITION));
-    }
-
     boolean atTargetPitch() {
         return Math.abs(masterMotor.getSignal(TalonFXSignal.POSITION) - targetPitch.getRotations()) < PitcherConstants.PITCH_TOLERANCE.getRotations();
     }
@@ -89,7 +85,7 @@ public class Pitcher extends MotorSubsystem {
 
     private void updateMechanism() {
         PitcherConstants.MECHANISM.updateFirstJoint(
-                Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.POSITION)),
+                getCurrentPitch(),
                 Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
     }

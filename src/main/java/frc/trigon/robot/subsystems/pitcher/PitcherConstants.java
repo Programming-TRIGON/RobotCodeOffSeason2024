@@ -81,7 +81,7 @@ public class PitcherConstants {
     );
 
     public static final DoubleJointedArmMechanism2d MECHANISM = new DoubleJointedArmMechanism2d(
-            "PitcherMechanism",
+            "PitcherAndAmpAlignerMechanism",
             PITCHER_LENGTH_METERS,
             AmpAlignerConstants.AMP_ALIGNER_LENGTH_METERS,
             new Color8Bit(Color.kBlue)

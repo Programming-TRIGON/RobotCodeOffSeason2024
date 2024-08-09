@@ -62,20 +62,15 @@ public class AmpAligner extends MotorSubsystem {
         return targetState;
     }
 
-    void openAmpAligner() {
+    void setTargetState(AmpAlignerConstants.AmpAlignerState targetState) {
         isStopped = false;
-        targetState = AmpAlignerConstants.AmpAlignerState.OPENED;
-        motor.setControl(positionRequest
-                .withPosition(targetState.targetPosition.getRotations())
-                .withFeedForward(calculateFeedForward())
-        );
+        this.targetState = targetState;
+        setTargetAngle(targetState.targetAngle);
     }
 
-    void closeAmpAligner() {
-        isStopped = false;
-        targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
+    void setTargetAngle(Rotation2d targetAngle) {
         motor.setControl(positionRequest
-                .withPosition(targetState.targetPosition.getRotations())
+                .withPosition(targetAngle.getRotations())
                 .withFeedForward(calculateFeedForward())
         );
     }
@@ -89,6 +84,6 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private void updateMechanism() {
-        PitcherConstants.MECHANISM.updateSecondJoint(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION)), targetState.targetPosition);
+        PitcherConstants.MECHANISM.updateSecondJoint(getCurrentAngle(), Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
     }
 }

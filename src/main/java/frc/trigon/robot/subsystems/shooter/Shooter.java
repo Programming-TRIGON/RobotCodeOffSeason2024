@@ -1,6 +1,7 @@
 package frc.trigon.robot.subsystems.shooter;
 
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -17,6 +18,7 @@ public class Shooter extends MotorSubsystem {
             rightMotor = ShooterConstants.RIGHT_MOTOR,
             leftMotor = ShooterConstants.LEFT_MOTOR;
     private final VelocityTorqueCurrentFOC velocityRequest = new VelocityTorqueCurrentFOC(0);
+    private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ShooterConstants.FOC_ENABLED);
     private double
             targetRightVelocityRotationsPerSecond = 0,
             targetLeftVelocityRotationsPerSecond = 0;
@@ -58,8 +60,8 @@ public class Shooter extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        rightMotor.setControl(velocityRequest.withVelocity(voltageMeasure.in(Units.Volts)));
-        leftMotor.setControl(velocityRequest.withVelocity(voltageMeasure.in(Units.Volts)));
+        rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+        leftMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
     @Override
