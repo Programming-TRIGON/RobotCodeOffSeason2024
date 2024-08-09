@@ -170,11 +170,11 @@ public class ClimberConstants {
         CLIMBING(0.7, true); //TODO: calibrate
 
         public final double positionMeters;
-        public final boolean affectedByWeight;
+        public final boolean affectedByRobotWeight;
 
-        ClimberState(double positionMeters, boolean affectedByWeight) {
+        ClimberState(double positionMeters, boolean affectedByRobotWeight) {
             this.positionMeters = positionMeters;
-            this.affectedByWeight = affectedByWeight;
+            this.affectedByRobotWeight = affectedByRobotWeight;
         }
     }
 }

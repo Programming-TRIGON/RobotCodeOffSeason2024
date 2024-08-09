@@ -90,12 +90,12 @@ public class Climber extends MotorSubsystem {
 
     void setTargetState(ClimberConstants.ClimberState targetState) {
         currentState = targetState;
-        setTargetPosition(targetState.positionMeters, targetState.positionMeters, targetState.affectedByWeight);
+        setTargetPosition(targetState.positionMeters, targetState.positionMeters, targetState.affectedByRobotWeight);
     }
 
-    void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByWeight) {
-        rightMotor.setControl(determineRequest(affectedByWeight).withPosition(targetRightPositionMeters));
-        leftMotor.setControl(determineRequest(affectedByWeight).withPosition(targetLeftPositionMeters));
+    void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByRobotWeight) {
+        rightMotor.setControl(determineRequest(affectedByRobotWeight).withPosition(targetRightPositionMeters));
+        leftMotor.setControl(determineRequest(affectedByRobotWeight).withPosition(targetLeftPositionMeters));
     }
 
     private void updateMechanism() {
@@ -151,8 +151,8 @@ public class Climber extends MotorSubsystem {
         return Rotation2d.fromRadians(angle);
     }
 
-    private DynamicMotionMagicVoltage determineRequest(boolean affectedByWeight) {
-        return affectedByWeight ? climbingPositionRequest : nonClimbingPositionRequest;
+    private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
+        return affectedByRobotWeight ? climbingPositionRequest : nonClimbingPositionRequest;
     }
 
     private double toMeters(double rotations) {
