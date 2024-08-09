@@ -11,11 +11,13 @@ import frc.trigon.robot.commands.Commands;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
+import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
     public static final Swerve SWERVE = new Swerve();
+    public static final Intake INTAKE = new Intake();
     public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator();
     private LoggedDashboardChooser<Command> autoChooser;
 
