@@ -7,7 +7,7 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
 public class Intake extends MotorSubsystem {
-    IntakeConstants.IntakeState targetState;
+    private IntakeConstants.IntakeState targetState;
     private final TalonFXMotor
             masterMotor = IntakeConstants.MASTER_MOTOR,
             followerMotor = IntakeConstants.FOLLOWER_MOTOR;
@@ -54,10 +54,14 @@ public class Intake extends MotorSubsystem {
         return IntakeConstants.DISTANCE_SENSOR.getScaledValue() < IntakeConstants.NOTE_DISTANCE_THRESHOLD_METERS;
     }
 
+    /**
+     * Rumbles the driver controller if it stops without being interrupted.
+     *
+     * @param interrupted whether the command was interrupted or not
+     */
     void rumble(boolean interrupted) {
-        if (!interrupted) {
+        if (!interrupted)
             OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
-        }
     }
 
     private void updateMechanism() {

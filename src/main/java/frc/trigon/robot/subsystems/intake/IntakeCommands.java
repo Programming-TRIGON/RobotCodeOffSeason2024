@@ -28,7 +28,10 @@ public class IntakeCommands {
                 () -> RobotContainer.INTAKE.setTargetVoltage(targetVoltage),
                 () -> {
                 },
-                (interrupted) -> RobotContainer.INTAKE.stop(),
+                (interrupted) -> {
+                    RobotContainer.INTAKE.stop();
+                    RobotContainer.INTAKE.rumble(interrupted);
+                },
                 () -> false,
                 RobotContainer.INTAKE
         );

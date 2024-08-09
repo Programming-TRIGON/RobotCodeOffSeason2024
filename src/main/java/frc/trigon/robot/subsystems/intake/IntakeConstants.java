@@ -110,8 +110,10 @@ public class IntakeConstants {
     }
 
     public enum IntakeState {
-        COLLECTING(10),
-        EJECTING(-4);
+        COLLECTING(10), //TODO: calibrate
+        EJECTING(-4), //TODO: calibrate
+        SHOT_FEEDING(8), //TODO: calibrate
+        AMP_FEEDING(4); //TODO: calibrate
 
         public final double voltage;
 
