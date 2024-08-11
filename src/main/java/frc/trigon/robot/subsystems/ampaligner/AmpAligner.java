@@ -21,7 +21,7 @@ public class AmpAligner extends MotorSubsystem {
     private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
-    private boolean isStopped = true;
+
 
     public AmpAligner() {
         setName("AmpAligner");
@@ -30,7 +30,6 @@ public class AmpAligner extends MotorSubsystem {
 
     @Override
     public void stop() {
-        isStopped = true;
         motor.stopMotor();
     }
 
@@ -38,8 +37,6 @@ public class AmpAligner extends MotorSubsystem {
     public void periodic() {
         motor.update();
         updateMechanism();
-        if (!isStopped)
-            motor.setControl(positionRequest.withFeedForward(calculateFeedForward()));
     }
 
     @Override
@@ -70,7 +67,6 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     void setTargetState(AmpAlignerConstants.AmpAlignerState targetState) {
-        isStopped = false;
         this.targetState = targetState;
         setTargetAngle(targetState.targetAngle);
     }
@@ -80,6 +76,10 @@ public class AmpAligner extends MotorSubsystem {
                 .withPosition(targetAngle.getRotations())
                 .withFeedForward(calculateFeedForward())
         );
+    }
+
+    void setMotorFeedForwardFromCurrentAngle() {
+        motor.setControl(positionRequest.withFeedForward(calculateFeedForward()));
     }
 
     private void configureLimitSwitchTrigger() {

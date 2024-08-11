@@ -9,9 +9,10 @@ import org.trigon.commands.NetworkTablesCommand;
 public class ShooterCommands {
     public static Command getDebuggingCommand() {
         return new NetworkTablesCommand(
-                (targetVelocity) -> ShooterCommands.getSetTargetVelocity(targetVelocity, targetVelocity),
+                ShooterCommands::getSetTargetVelocity,
                 false,
-                "Debugging/TargetDebuggingShootingVelocity"
+                "Debugging/TargetRightMotorDebuggingShootingVelocity",
+                "Debugging/TargetLeftMotorDebuggingShootingVelocity"
         );
     }
 
