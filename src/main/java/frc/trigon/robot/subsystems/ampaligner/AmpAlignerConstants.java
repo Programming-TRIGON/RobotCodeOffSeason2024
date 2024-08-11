@@ -55,6 +55,9 @@ public class AmpAlignerConstants {
             Units.Second.of(1000)
     );
 
+    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);
+    static final double LIMIT_SWITCH_REPEAT_TIME_THRESHOLD_SECONDS = 0.1;
+
     static {
         configureMotor();
     }

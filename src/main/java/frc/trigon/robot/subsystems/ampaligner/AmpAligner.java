@@ -7,6 +7,8 @@ import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -20,6 +22,11 @@ public class AmpAligner extends MotorSubsystem {
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
     private boolean isStopped = true;
+
+    public AmpAligner() {
+        setName("AmpAligner");
+        configureLimitSwitchTrigger();
+    }
 
     @Override
     public void stop() {
@@ -73,6 +80,11 @@ public class AmpAligner extends MotorSubsystem {
                 .withPosition(targetAngle.getRotations())
                 .withFeedForward(calculateFeedForward())
         );
+    }
+
+    private void configureLimitSwitchTrigger() {
+        final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitReverseLimit);
+        hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())));
     }
 
     private boolean hasHitReverseLimit() {
