@@ -15,6 +15,7 @@ public class IntakeCommands {
                     (interrupted) -> {
                         RobotContainer.INTAKE.stop();
                         RobotContainer.INTAKE.indicateCollection();
+                        RobotContainer.INTAKE.setBrake(true);
                     },
                     RobotContainer.INTAKE::hasNote,
                     RobotContainer.INTAKE

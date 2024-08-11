@@ -51,9 +51,7 @@ public class Intake extends MotorSubsystem {
     }
 
     boolean hasNote() {
-        if (IntakeConstants.BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS).getAsBoolean())
-            setBrake(true);
-        return IntakeConstants.DISTANCE_SENSOR.getScaledValue() < IntakeConstants.NOTE_DISTANCE_THRESHOLD_METERS;
+        return IntakeConstants.BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS).getAsBoolean();
     }
 
     /**
