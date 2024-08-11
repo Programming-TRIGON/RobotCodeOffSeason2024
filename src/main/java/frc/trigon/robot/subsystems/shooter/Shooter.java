@@ -81,15 +81,17 @@ public class Shooter extends MotorSubsystem {
     }
 
     private void setTargetRightVelocity(double targetVelocityRotationsPerSecond) {
+        ShooterConstants.RIGHT_MECHANISM.setTargetVelocity(targetVelocityRotationsPerSecond);
         rightMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }
 
     private void setTargetLeftVelocity(double targetVelocityRotationsPerSecond) {
+        ShooterConstants.LEFT_MECHANISM.setTargetVelocity(targetVelocityRotationsPerSecond);
         leftMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }
 
     private void updateMechanism() {
-        ShooterConstants.RIGHT_MECHANISM.update(rightMotor.getSignal(TalonFXSignal.VELOCITY), targetRightVelocityRotationsPerSecond);
-        ShooterConstants.LEFT_MECHANISM.update(leftMotor.getSignal(TalonFXSignal.VELOCITY), targetLeftVelocityRotationsPerSecond);
+        ShooterConstants.RIGHT_MECHANISM.update(rightMotor.getSignal(TalonFXSignal.VELOCITY));
+        ShooterConstants.LEFT_MECHANISM.update(leftMotor.getSignal(TalonFXSignal.VELOCITY));
     }
 }

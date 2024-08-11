@@ -21,8 +21,7 @@ public class AmpAligner extends MotorSubsystem {
     private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
-
-
+    
     public AmpAligner() {
         setName("AmpAligner");
         configureLimitSwitchTrigger();
