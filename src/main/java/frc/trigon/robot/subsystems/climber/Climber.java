@@ -94,8 +94,22 @@ public class Climber extends MotorSubsystem {
     }
 
     void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByRobotWeight) {
-        rightMotor.setControl(determineRequest(affectedByRobotWeight).withPosition(targetRightPositionMeters));
-        leftMotor.setControl(determineRequest(affectedByRobotWeight).withPosition(targetLeftPositionMeters));
+        rightMotor.setControl(determineRequest(affectedByRobotWeight)
+                .withPosition(targetRightPositionMeters)
+                .withFeedForward(calculateFeedforward(rightMotor, affectedByRobotWeight)));
+        leftMotor.setControl(determineRequest(affectedByRobotWeight)
+                .withPosition(targetLeftPositionMeters)
+                .withFeedForward(calculateFeedforward(leftMotor, affectedByRobotWeight)));
+    }
+
+    private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
+        return affectedByRobotWeight ? climbingPositionRequest : nonClimbingPositionRequest;
+    }
+
+    private double calculateFeedforward(TalonFXMotor motor, boolean affectedByRobotWeight) {
+        return affectedByRobotWeight ?
+                ClimberConstants.CLIMBING_KG * Math.cos(getClimberFirstJointPitch(motor).getRadians()) :
+                ClimberConstants.NON_CLIMBING_KG * Math.cos(getClimberFirstJointPitch(motor).getRadians());
     }
 
     private void updateMechanism() {
@@ -145,14 +159,10 @@ public class Climber extends MotorSubsystem {
                 ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS
                         + ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS
                         - (toMeters(motor.getSignal(TalonFXSignal.POSITION)) + ClimberConstants.STRING_LENGTH_ADDITION);
-        final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
+        final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
         final double angle = Math.acos(division + ClimberConstants.ANGLE_ADDITION);
         return Rotation2d.fromRadians(angle);
-    }
-
-    private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
-        return affectedByRobotWeight ? climbingPositionRequest : nonClimbingPositionRequest;
     }
 
     private double toMeters(double rotations) {

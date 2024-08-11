@@ -13,7 +13,7 @@ import frc.trigon.robot.constants.RobotConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-import org.trigon.hardware.simulation.ElevatorSimulation;
+import org.trigon.hardware.simulation.SimpleMotorSimulation;
 import org.trigon.utilities.mechanisms.ElevatorMechanism2d;
 
 public class ClimberConstants {
@@ -50,17 +50,17 @@ public class ClimberConstants {
             NON_CLIMBING_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             NON_CLIMBING_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             NON_CLIMBING_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            NON_CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 0,
             NON_CLIMBING_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             NON_CLIMBING_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double NON_CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 1;
     private static final double //TODO: calibrate
             CLIMBING_P = RobotHardwareStats.isSimulation() ? 0 : 0,
             CLIMBING_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             CLIMBING_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             CLIMBING_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 0,
             CLIMBING_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             CLIMBING_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 1;
     static final int
             NON_CLIMBING_SLOT = 0,
             CLIMBING_SLOT = 1;
@@ -72,31 +72,17 @@ public class ClimberConstants {
     private static final DCMotor
             RIGHT_GEARBOX = DCMotor.getFalcon500Foc(RIGHT_MOTOR_AMOUNT),
             LEFT_GEARBOX = DCMotor.getFalcon500Foc(LEFT_MOTOR_AMOUNT);
-    private static final double MASS_KILOGRAMS = 1; //TODO: get number from mechanics
-    static final double
-            DRUM_RADIUS_METERS = 0, //TODO: get number from mechanics
-            DRUM_DIAMETER_METERS = DRUM_RADIUS_METERS * 2;
-    static final double RETRACTED_CLIMBER_LENGTH_METERS = 0.1; //TODO: get number from mechanics
-    static final double MAXIMUM_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
-    private static final boolean SIMULATE_GRAVITY = true;
-    private static final ElevatorSimulation
-            RIGHT_MOTOR_SIMULATION = new ElevatorSimulation(
+    private static final double MOMENT_OF_INERTIA = 0.003;
+    private static final SimpleMotorSimulation
+            RIGHT_MOTOR_SIMULATION = new SimpleMotorSimulation(
             RIGHT_GEARBOX,
             GEAR_RATIO,
-            MASS_KILOGRAMS,
-            DRUM_RADIUS_METERS,
-            RETRACTED_CLIMBER_LENGTH_METERS,
-            MAXIMUM_HEIGHT_METERS,
-            SIMULATE_GRAVITY
+            MOMENT_OF_INERTIA
     ),
-            LEFT_MOTOR_SIMULATION = new ElevatorSimulation(
+            LEFT_MOTOR_SIMULATION = new SimpleMotorSimulation(
                     LEFT_GEARBOX,
                     GEAR_RATIO,
-                    MASS_KILOGRAMS,
-                    DRUM_RADIUS_METERS,
-                    RETRACTED_CLIMBER_LENGTH_METERS,
-                    MAXIMUM_HEIGHT_METERS,
-                    SIMULATE_GRAVITY
+                    MOMENT_OF_INERTIA
             );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
@@ -116,6 +102,8 @@ public class ClimberConstants {
     static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.343;
     static final double STRING_LENGTH_ADDITION = 0.143655638521;
     static final double ANGLE_ADDITION = 57.87 + 7.37 - 90;
+    static final double RETRACTED_CLIMBER_LENGTH_METERS = 0.1; //TODO: get number from mechanics
+    static final double MAXIMUM_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
     static final ElevatorMechanism2d
             RIGHT_MECHANISM = new ElevatorMechanism2d(
             "RightClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
@@ -124,12 +112,14 @@ public class ClimberConstants {
                     "LeftClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
             );
 
+    static final double DRUM_DIAMETER_METERS = 0.04; //TODO: get number from mechanics
+
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
         configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_MOTOR_SIMULATION);
     }
 
-    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, ElevatorSimulation simulation) {
+    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, SimpleMotorSimulation simulation) {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = invertedValue;
