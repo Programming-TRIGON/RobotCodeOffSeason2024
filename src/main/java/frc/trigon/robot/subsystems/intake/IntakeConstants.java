@@ -73,6 +73,7 @@ public class IntakeConstants {
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_METERS
     );
     static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.6;
+    static final double WAIT_COMMAND_SECONDS = 1;
 
     static {
         ConfigureMasterMotor();
