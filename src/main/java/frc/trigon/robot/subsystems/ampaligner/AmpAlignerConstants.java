@@ -92,6 +92,7 @@ public class AmpAlignerConstants {
         MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
         MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
+        MOTOR.registerSignal(TalonFXSignal.REVERSE_LIMIT, 100);
         MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
     }
 

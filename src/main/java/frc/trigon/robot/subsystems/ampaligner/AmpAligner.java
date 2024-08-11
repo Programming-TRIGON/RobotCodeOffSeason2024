@@ -75,6 +75,10 @@ public class AmpAligner extends MotorSubsystem {
         );
     }
 
+    private boolean hasHitReverseLimit() {
+        return motor.getSignal(TalonFXSignal.REVERSE_LIMIT) == 1;
+    }
+
     private double calculateFeedForward() {
         return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
     }
