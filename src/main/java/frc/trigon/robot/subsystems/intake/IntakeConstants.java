@@ -20,8 +20,8 @@ import java.util.function.DoubleSupplier;
 public class IntakeConstants {
     private static final int
             MASTER_MOTOR_ID = 1,
-            FOLLOWER_MOTOR_ID = 2;
-    private static final int DISTANCE_SENSOR_CHANNEL = 0;
+            FOLLOWER_MOTOR_ID = 2,
+            DISTANCE_SENSOR_CHANNEL = 0;
     private static final String
             MASTER_MOTOR_NAME = "MasterIntakeMotor",
             FOLLOWER_MOTOR_NAME = "FollowerIntakeMotor",
@@ -58,7 +58,7 @@ public class IntakeConstants {
             GEAR_RATIO,
             MOMENT_OF_INERTIA
     );
-    static final double NOTE_DISTANCE_THRESHOLD_METERS = 5;
+    private static final double NOTE_DISTANCE_THRESHOLD_METERS = 0.05;
     private static final DoubleSupplier DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER = () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS ? NOTE_DISTANCE_THRESHOLD_METERS - 1 : NOTE_DISTANCE_THRESHOLD_METERS + 1;
 
     private static final double MAX_DISPLAYABLE_VELOCITY = 12;
