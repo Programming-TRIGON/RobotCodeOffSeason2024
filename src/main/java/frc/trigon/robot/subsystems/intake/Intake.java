@@ -51,17 +51,16 @@ public class Intake extends MotorSubsystem {
     }
 
     boolean hasNote() {
+        if (IntakeConstants.BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS).getAsBoolean())
+            setBrake(true);
         return IntakeConstants.DISTANCE_SENSOR.getScaledValue() < IntakeConstants.NOTE_DISTANCE_THRESHOLD_METERS;
     }
 
     /**
-     * Rumbles the driver controller if it stops without being interrupted.
-     *
-     * @param interrupted whether the command was interrupted or not
+     * Rumbles the driver controller.
      */
-    void rumble(boolean interrupted) {
-        if (!interrupted)
-            OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
+    void indicateCollection() {
+        OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
     }
 
     private void updateMechanism() {

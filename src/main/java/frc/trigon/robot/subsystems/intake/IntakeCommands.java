@@ -14,7 +14,7 @@ public class IntakeCommands {
                     },
                     (interrupted) -> {
                         RobotContainer.INTAKE.stop();
-                        RobotContainer.INTAKE.rumble(interrupted);
+                        RobotContainer.INTAKE.indicateCollection();
                     },
                     RobotContainer.INTAKE::hasNote,
                     RobotContainer.INTAKE
@@ -24,15 +24,9 @@ public class IntakeCommands {
     }
 
     public static Command getSetTargetVoltageCommand(double targetVoltage) {
-        return new FunctionalCommand(
+        return new StartEndCommand(
                 () -> RobotContainer.INTAKE.setTargetVoltage(targetVoltage),
-                () -> {
-                },
-                (interrupted) -> {
-                    RobotContainer.INTAKE.stop();
-                    RobotContainer.INTAKE.rumble(interrupted);
-                },
-                () -> false,
+                RobotContainer.INTAKE::stop,
                 RobotContainer.INTAKE
         );
     }
