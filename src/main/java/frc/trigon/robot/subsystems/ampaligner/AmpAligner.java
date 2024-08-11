@@ -100,6 +100,6 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private void updateMechanism() {
-        PitcherConstants.MECHANISM.updateSecondJoint(getCurrentAngle(), Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.updateSecondJoint(getCurrentAngle(), Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
     }
 }

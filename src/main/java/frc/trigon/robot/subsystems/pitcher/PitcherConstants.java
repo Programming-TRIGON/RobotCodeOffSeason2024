@@ -80,7 +80,7 @@ public class PitcherConstants {
             Units.Second.of(1000)
     );
 
-    public static final DoubleJointedArmMechanism2d MECHANISM = new DoubleJointedArmMechanism2d(
+    public static final DoubleJointedArmMechanism2d PITCHER_AND_AMP_ALIGNER_MECHANISM = new DoubleJointedArmMechanism2d(
             "PitcherAndAmpAlignerMechanism",
             PITCHER_LENGTH_METERS,
             AmpAlignerConstants.AMP_ALIGNER_LENGTH_METERS,
