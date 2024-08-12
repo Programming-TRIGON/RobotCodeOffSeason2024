@@ -76,12 +76,12 @@ public class IntakeConstants {
     static final double WAIT_COMMAND_SECONDS = 1;
 
     static {
-        ConfigureMasterMotor();
+        configureMasterMotor();
         configureFollowerMotor();
         configureDistanceSensor();
     }
 
-    private static void ConfigureMasterMotor() {
+    private static void configureMasterMotor() {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED_VALUE;
