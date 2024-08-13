@@ -55,7 +55,7 @@ public class Intake extends MotorSubsystem {
     }
 
     /**
-     * Rumbles the driver controller.
+     * Indicates to the driver that a note has been collected by rumbling the controller.
      */
     void indicateCollection() {
         OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
