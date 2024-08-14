@@ -46,6 +46,8 @@ public class PitcherConstants {
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0,
             KG = RobotHardwareStats.isSimulation() ? 0 : 0;
+    private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
+    private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double
             MOTION_MAGIC_ACCELERATION = 0,
             MOTION_MAGIC_CRUISE_VELOCITY = 0;
@@ -112,8 +114,8 @@ public class PitcherConstants {
         config.Slot0.kV = KV;
         config.Slot0.kA = KA;
         config.Slot0.kG = KG;
-        config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-        config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+        config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
+        config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
 
         config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;

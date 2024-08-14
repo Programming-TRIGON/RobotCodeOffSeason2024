@@ -19,9 +19,6 @@ public class Shooter extends MotorSubsystem {
             leftMotor = ShooterConstants.LEFT_MOTOR;
     private final VelocityTorqueCurrentFOC velocityRequest = new VelocityTorqueCurrentFOC(0);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ShooterConstants.FOC_ENABLED);
-    private double
-            targetRightVelocityRotationsPerSecond = 0,
-            targetLeftVelocityRotationsPerSecond = 0;
 
     public Shooter() {
         setName("Shooter");
@@ -70,8 +67,8 @@ public class Shooter extends MotorSubsystem {
     }
 
     void reachTargetShootingVelocityFromShootingCalculations() {
-        targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond();
-        targetLeftVelocityRotationsPerSecond = targetRightVelocityRotationsPerSecond * ShooterConstants.LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO;
+        final double targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond(),
+                targetLeftVelocityRotationsPerSecond = targetRightVelocityRotationsPerSecond * ShooterConstants.LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO;
         setTargetVelocity(targetRightVelocityRotationsPerSecond, targetLeftVelocityRotationsPerSecond);
     }
 

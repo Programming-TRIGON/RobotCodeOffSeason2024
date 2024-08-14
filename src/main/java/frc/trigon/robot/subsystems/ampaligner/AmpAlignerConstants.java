@@ -29,8 +29,12 @@ public class AmpAlignerConstants {
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0;
     static final double KG = RobotHardwareStats.isSimulation() ? 0 : 0;
+    private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
+    private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 1;
     static final boolean FOC_ENABLED = true;
+    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);
+    static final double LIMIT_SWITCH_REPEAT_TIME_THRESHOLD_SECONDS = 0.1;
 
     private static final int MOTOR_AMOUNT = 1;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
@@ -54,9 +58,6 @@ public class AmpAlignerConstants {
             Units.Volts.of(2),
             Units.Second.of(1000)
     );
-
-    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);
-    static final double LIMIT_SWITCH_REPEAT_TIME_THRESHOLD_SECONDS = 0.1;
 
     static {
         configureMotor();
@@ -83,8 +84,8 @@ public class AmpAlignerConstants {
         if (RobotHardwareStats.isSimulation())
             config.Slot0.kG = KG;
 
-        config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-        config.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+        config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
+        config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
 
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
