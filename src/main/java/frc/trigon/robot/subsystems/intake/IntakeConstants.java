@@ -44,7 +44,7 @@ public class IntakeConstants {
             FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
-    private static final double GEAR_RATIO = 0.003;
+    private static final double GEAR_RATIO = 1.5;
     private static final double
             DISTANCE_SENSOR_SCALING_SLOPE = 0.0004,
             DISTANCE_SENSOR_SCALING_INTERCEPT_POINT = 400;
