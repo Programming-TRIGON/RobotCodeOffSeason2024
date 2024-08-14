@@ -95,9 +95,6 @@ public class ClimberConstants {
     static final Translation3d
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.1, 0, 0.1), //TODO: get numbers from mechanics
             LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.1, 0, 0.1); //TODO: get numbers from mechanics
-    static final Translation3d
-            RIGHT_CLIMBER_SECOND_JOINT_ORIGIN_POINT = new Translation3d(0, 0, 0.1), //TODO: get numbers from mechanics
-            LEFT_CLIMBER_SECOND_JOINT_ORIGIN_POINT = new Translation3d(0, 0, 0.1); //TODO: get numbers from mechanics
     static final double FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS = 0.312;
     static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.343;
     static final double STRING_LENGTH_ADDITION = 0.143655638521;

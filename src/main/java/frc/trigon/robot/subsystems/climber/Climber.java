@@ -100,6 +100,8 @@ public class Climber extends MotorSubsystem {
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionMeters)
                 .withFeedForward(calculateFeedforward(leftMotor, affectedByRobotWeight)));
+        ClimberConstants.RIGHT_MECHANISM.setTargetPosition(targetRightPositionMeters);
+        ClimberConstants.LEFT_MECHANISM.setTargetPosition(targetLeftPositionMeters);
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
@@ -124,24 +126,24 @@ public class Climber extends MotorSubsystem {
 
         Logger.recordOutput("Poses/Components/RightClimberFirstJointPose", getClimberFirstJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, rightMotor));
         Logger.recordOutput("Poses/Components/LeftClimberFirstJointPose", getClimberFirstJointPose(ClimberConstants.LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, leftMotor));
-        Logger.recordOutput("Poses/Components/RightClimberSecondJointPose", getClimberSecondJointPose(ClimberConstants.RIGHT_CLIMBER_SECOND_JOINT_ORIGIN_POINT));
-        Logger.recordOutput("Poses/Components/LeftClimberSecondJointPose", getClimberSecondJointPose(ClimberConstants.LEFT_CLIMBER_SECOND_JOINT_ORIGIN_POINT));
+        Logger.recordOutput("Poses/Components/RightClimberSecondJointPose", getClimberSecondJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT));
+        Logger.recordOutput("Poses/Components/LeftClimberSecondJointPose", getClimberSecondJointPose(ClimberConstants.LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT));
     }
 
-    private Pose3d getClimberSecondJointPose(Translation3d originPoint) {
+    private Pose3d getClimberSecondJointPose(Translation3d firstJointOriginPoint) {
         final Transform3d climberTransform = new Transform3d(
                 new Translation3d(0, ClimberConstants.MAXIMUM_HEIGHT_METERS, 0),
                 new Rotation3d()
         );
         if (currentState != ClimberConstants.ClimberState.RESTING) {
             Pose3d currentPose = new Pose3d(
-                    originPoint,
+                    firstJointOriginPoint,
                     new Rotation3d(0, 90, 0)
             );
             return currentPose.transformBy(climberTransform);
         }
         Pose3d currentPose = new Pose3d(
-                originPoint,
+                firstJointOriginPoint,
                 new Rotation3d()
         );
         return currentPose.transformBy(climberTransform);
