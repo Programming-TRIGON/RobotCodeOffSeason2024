@@ -46,6 +46,8 @@ public class Shooter extends MotorSubsystem {
     public void stop() {
         rightMotor.stopMotor();
         leftMotor.stopMotor();
+        ShooterConstants.RIGHT_MECHANISM.setTargetVelocity(0);
+        ShooterConstants.LEFT_MECHANISM.setTargetVelocity(0);
     }
 
     @Override
