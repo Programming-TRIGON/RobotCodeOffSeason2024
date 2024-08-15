@@ -126,27 +126,23 @@ public class Climber extends MotorSubsystem {
 
         Logger.recordOutput("Poses/Components/RightClimberFirstJointPose", getClimberFirstJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, rightMotor));
         Logger.recordOutput("Poses/Components/LeftClimberFirstJointPose", getClimberFirstJointPose(ClimberConstants.LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, leftMotor));
-        Logger.recordOutput("Poses/Components/RightClimberSecondJointPose", getClimberSecondJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT));
-        Logger.recordOutput("Poses/Components/LeftClimberSecondJointPose", getClimberSecondJointPose(ClimberConstants.LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT));
+        Logger.recordOutput("Poses/Components/RightClimberSecondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, rightMotor)));
+        Logger.recordOutput("Poses/Components/LeftClimberSecondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(ClimberConstants.LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, leftMotor)));
     }
 
-    private Pose3d getClimberSecondJointPose(Translation3d firstJointOriginPoint) {
-        final Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, ClimberConstants.MAXIMUM_HEIGHT_METERS, 0),
-                new Rotation3d()
-        );
+    private Pose3d getClimberSecondJointPose(Pose3d firstJointPose) {
         if (currentState != ClimberConstants.ClimberState.RESTING) {
-            Pose3d currentPose = new Pose3d(
-                    firstJointOriginPoint,
+            Transform3d climberTransform = new Transform3d(
+                    new Translation3d(0, ClimberConstants.MAXIMUM_HEIGHT_METERS, 0),
                     new Rotation3d(0, 90, 0)
             );
-            return currentPose.transformBy(climberTransform);
+            return firstJointPose.transformBy(climberTransform);
         }
-        Pose3d currentPose = new Pose3d(
-                firstJointOriginPoint,
-                new Rotation3d()
+        Transform3d climberTransform = new Transform3d(
+                new Translation3d(0, ClimberConstants.RETRACTED_CLIMBER_LENGTH_METERS, 0),
+                new Rotation3d(0, 0, 0)
         );
-        return currentPose.transformBy(climberTransform);
+        return firstJointPose.transformBy(climberTransform);
     }
 
     private Pose3d getClimberFirstJointPose(Translation3d originPoint, TalonFXMotor motor) {
