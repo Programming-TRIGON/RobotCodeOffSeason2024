@@ -100,8 +100,8 @@ public class Climber extends MotorSubsystem {
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionMeters)
                 .withFeedForward(calculateFeedforward(leftMotor, affectedByRobotWeight)));
-        ClimberConstants.RIGHT_MECHANISM.setTargetPosition(targetRightPositionMeters);
-        ClimberConstants.LEFT_MECHANISM.setTargetPosition(targetLeftPositionMeters);
+        ClimberConstants.RIGHT_MECHANISM.setTargetPosition(getClimberFirstJointPitch(rightMotor), getStringLength(rightMotor));
+        ClimberConstants.LEFT_MECHANISM.setTargetPosition(getClimberFirstJointPitch(leftMotor), getStringLength(leftMotor));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
@@ -116,12 +116,12 @@ public class Climber extends MotorSubsystem {
 
     private void updateMechanism() {
         ClimberConstants.RIGHT_MECHANISM.update(
-                toMeters(rightMotor.getSignal(TalonFXSignal.POSITION)),
-                toMeters(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
+                getClimberFirstJointPitch(rightMotor),
+                getStringLength(rightMotor)
         );
         ClimberConstants.LEFT_MECHANISM.update(
-                toMeters(leftMotor.getSignal(TalonFXSignal.POSITION)),
-                toMeters(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
+                getClimberFirstJointPitch(leftMotor),
+                getStringLength(leftMotor)
         );
 
         Logger.recordOutput("Poses/Components/RightClimberFirstJointPose", getClimberFirstJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, rightMotor));
@@ -133,13 +133,13 @@ public class Climber extends MotorSubsystem {
     private Pose3d getClimberSecondJointPose(Pose3d firstJointPose) {
         if (currentState != ClimberConstants.ClimberState.RESTING) {
             Transform3d climberTransform = new Transform3d(
-                    new Translation3d(0, ClimberConstants.CLIMBER_HEIGHT_METERS, 0),
+                    new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS, 0),
                     new Rotation3d(0, 90, 0)
             );
             return firstJointPose.transformBy(climberTransform);
         }
         Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, ClimberConstants.CLIMBER_HEIGHT_METERS, 0),
+                new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS, 0),
                 new Rotation3d(0, 0, 0)
         );
         return firstJointPose.transformBy(climberTransform);
@@ -152,15 +152,19 @@ public class Climber extends MotorSubsystem {
         );
     }
 
-    private Rotation2d getClimberFirstJointPitch(TalonFXMotor motor) {
+    Rotation2d getClimberFirstJointPitch(TalonFXMotor motor) {
         final double numeratorCalculation =
                 Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS, 2)
                         + Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS, 2)
-                        - Math.pow(toMeters(motor.getSignal(TalonFXSignal.POSITION)) + ClimberConstants.STRING_LENGTH_ADDITION, 2);
+                        - Math.pow(toMeters(getStringLength(motor)), 2);
         final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
         final double angle = Math.acos(division + ClimberConstants.ANGLE_ADDITION);
         return Rotation2d.fromRadians(angle);
+    }
+
+    private double getStringLength(TalonFXMotor motor) {
+        return motor.getSignal(TalonFXSignal.POSITION) + ClimberConstants.STRING_LENGTH_ADDITION;
     }
 
     private double toMeters(double rotations) {

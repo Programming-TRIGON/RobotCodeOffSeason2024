@@ -14,7 +14,6 @@ import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SimpleMotorSimulation;
-import org.trigon.utilities.mechanisms.ElevatorMechanism2d;
 
 public class ClimberConstants {
     private static final int
@@ -64,7 +63,7 @@ public class ClimberConstants {
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;
-    static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
+    static final double GEAR_RATIO = 74.67;
 
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
@@ -93,22 +92,26 @@ public class ClimberConstants {
     );
 
     static final Translation3d
-            RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.1, 0, 0.1), //TODO: get numbers from mechanics
-            LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.1, 0, 0.1); //TODO: get numbers from mechanics
+            RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -254.5, 274.45),
+            LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, 254.5, 274.45);
     static final double FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS = 0.312;
-    static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.343;
+    static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.35;
     static final double STRING_LENGTH_ADDITION = 0.143655638521;
     static final double ANGLE_ADDITION = 57.87 + 7.37 - 90;
-    static final double CLIMBER_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
-    static final ElevatorMechanism2d
-            RIGHT_MECHANISM = new ElevatorMechanism2d(
-            "RightClimberMechanism", CLIMBER_HEIGHT_METERS, 0, new Color8Bit(Color.kRed)
-    ),
-            LEFT_MECHANISM = new ElevatorMechanism2d(
-                    "LeftClimberMechanism", CLIMBER_HEIGHT_METERS, 0, new Color8Bit(Color.kRed)
-            );
+    static final double DISTANCE_BETWEEN_JOINTS = 0.42;
+    static final double CLOSED_STRING_LENGTH = 0.168;
+    static final double CLOSED_STRING_ANGLE_DEGREES = 63.32;
+    static final double DRUM_TO_CLIMBER_FIRST_JOINT_Z_DISTANCE_METERS = 0.197;
+    static final Color8Bit
+            RED = new Color8Bit(Color.kRed),
+            YELLOW = new Color8Bit(Color.kYellow),
+            GRAY = new Color8Bit(Color.kGray);
+    static final double MECHANISM_LINE_WIDTH = 5;
+    static final ClimberMechanism2d
+            RIGHT_MECHANISM = new ClimberMechanism2d("RightClimberMechanism", RED),
+            LEFT_MECHANISM = new ClimberMechanism2d("LeftClimberMechanism", YELLOW);
 
-    static final double DRUM_DIAMETER_METERS = 0.04; //TODO: get number from mechanics
+    static final double DRUM_DIAMETER_METERS = 0.04;
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
