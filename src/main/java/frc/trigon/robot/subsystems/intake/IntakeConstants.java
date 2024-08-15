@@ -19,8 +19,8 @@ import java.util.function.DoubleSupplier;
 
 public class IntakeConstants {
     private static final int
-            MASTER_MOTOR_ID = 1,
-            FOLLOWER_MOTOR_ID = 2,
+            MASTER_MOTOR_ID = 16,
+            FOLLOWER_MOTOR_ID = 17,
             DISTANCE_SENSOR_CHANNEL = 0;
     private static final String
             MASTER_MOTOR_NAME = "MasterIntakeMotor",
