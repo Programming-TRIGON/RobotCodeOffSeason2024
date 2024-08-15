@@ -133,13 +133,13 @@ public class Climber extends MotorSubsystem {
     private Pose3d getClimberSecondJointPose(Pose3d firstJointPose) {
         if (currentState != ClimberConstants.ClimberState.RESTING) {
             Transform3d climberTransform = new Transform3d(
-                    new Translation3d(0, ClimberConstants.MAXIMUM_HEIGHT_METERS, 0),
+                    new Translation3d(0, ClimberConstants.CLIMBER_HEIGHT_METERS, 0),
                     new Rotation3d(0, 90, 0)
             );
             return firstJointPose.transformBy(climberTransform);
         }
         Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, ClimberConstants.RETRACTED_CLIMBER_LENGTH_METERS, 0),
+                new Translation3d(0, ClimberConstants.CLIMBER_HEIGHT_METERS, 0),
                 new Rotation3d(0, 0, 0)
         );
         return firstJointPose.transformBy(climberTransform);

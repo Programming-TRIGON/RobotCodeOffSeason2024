@@ -99,14 +99,13 @@ public class ClimberConstants {
     static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.343;
     static final double STRING_LENGTH_ADDITION = 0.143655638521;
     static final double ANGLE_ADDITION = 57.87 + 7.37 - 90;
-    static final double RETRACTED_CLIMBER_LENGTH_METERS = 0.1; //TODO: get number from mechanics
-    static final double MAXIMUM_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
+    static final double CLIMBER_HEIGHT_METERS = 0.7; //TODO: get number from mechanics
     static final ElevatorMechanism2d
             RIGHT_MECHANISM = new ElevatorMechanism2d(
-            "RightClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
+            "RightClimberMechanism", CLIMBER_HEIGHT_METERS, 0, new Color8Bit(Color.kRed)
     ),
             LEFT_MECHANISM = new ElevatorMechanism2d(
-                    "LeftClimberMechanism", MAXIMUM_HEIGHT_METERS, RETRACTED_CLIMBER_LENGTH_METERS, new Color8Bit(Color.kRed)
+                    "LeftClimberMechanism", CLIMBER_HEIGHT_METERS, 0, new Color8Bit(Color.kRed)
             );
 
     static final double DRUM_DIAMETER_METERS = 0.04; //TODO: get number from mechanics
