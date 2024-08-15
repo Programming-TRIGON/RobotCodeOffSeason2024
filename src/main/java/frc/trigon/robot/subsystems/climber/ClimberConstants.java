@@ -18,8 +18,8 @@ import org.trigon.utilities.mechanisms.ElevatorMechanism2d;
 
 public class ClimberConstants {
     private static final int
-            RIGHT_MOTOR_ID = 1,
-            LEFT_MOTOR_ID = 12;
+            RIGHT_MOTOR_ID = 14,
+            LEFT_MOTOR_ID = 15;
     private static final String
             RIGHT_MOTOR_NAME = "RightClimberMotor",
             LEFT_MOTOR_NAME = "LeftClimberMotor";

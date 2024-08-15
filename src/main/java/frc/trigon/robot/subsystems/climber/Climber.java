@@ -160,7 +160,7 @@ public class Climber extends MotorSubsystem {
         final double numeratorCalculation =
                 Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS, 2)
                         + Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS, 2)
-                        - (toMeters(motor.getSignal(TalonFXSignal.POSITION)) + ClimberConstants.STRING_LENGTH_ADDITION);
+                        - Math.pow(toMeters(motor.getSignal(TalonFXSignal.POSITION)) + ClimberConstants.STRING_LENGTH_ADDITION, 2);
         final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
         final double angle = Math.acos(division + ClimberConstants.ANGLE_ADDITION);
