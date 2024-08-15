@@ -24,13 +24,13 @@ public class Climber extends MotorSubsystem {
             ClimberConstants.MAX_NON_CLIMBING_VELOCITY,
             ClimberConstants.MAX_NON_CLIMBING_ACCELERATION,
             0
-    ).withSlot(ClimberConstants.NON_CLIMBING_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC),
+    ).withSlot(ClimberConstants.GROUNDED_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC),
             climbingPositionRequest = new DynamicMotionMagicVoltage(
                     0,
                     ClimberConstants.MAX_CLIMBING_VELOCITY,
                     ClimberConstants.MAX_CLIMBING_ACCELERATION,
                     0
-            ).withSlot(ClimberConstants.CLIMBING_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC);
+            ).withSlot(ClimberConstants.ON_CHAIN_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private ClimberConstants.ClimberState currentState = ClimberConstants.ClimberState.RESTING;
 
@@ -110,8 +110,8 @@ public class Climber extends MotorSubsystem {
 
     private double calculateFeedforward(TalonFXMotor motor, boolean affectedByRobotWeight) {
         return affectedByRobotWeight ?
-                ClimberConstants.CLIMBING_KG * Math.cos(getClimberFirstJointPitch(motor).getRadians()) :
-                ClimberConstants.NON_CLIMBING_KG * Math.cos(getClimberFirstJointPitch(motor).getRadians());
+                ClimberConstants.ON_CHAIN_KG * Math.cos(getClimberFirstJointPitch(motor).getRadians()) :
+                ClimberConstants.GROUNDED_KG * Math.cos(getClimberFirstJointPitch(motor).getRadians());
     }
 
     private void updateMechanism() {

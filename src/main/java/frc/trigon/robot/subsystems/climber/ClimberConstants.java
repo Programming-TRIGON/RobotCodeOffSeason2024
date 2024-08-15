@@ -46,24 +46,24 @@ public class ClimberConstants {
             MAX_CLIMBING_VELOCITY = 1,
             MAX_CLIMBING_ACCELERATION = 1;
     private static final double //TODO: calibrate
-            NON_CLIMBING_P = RobotHardwareStats.isSimulation() ? 0 : 0,
-            NON_CLIMBING_I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            NON_CLIMBING_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            NON_CLIMBING_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            NON_CLIMBING_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            NON_CLIMBING_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
-    static final double NON_CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 1;
+            GROUNDED_P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double GROUNDED_KG = RobotHardwareStats.isSimulation() ? 0 : 1;
     private static final double //TODO: calibrate
-            CLIMBING_P = RobotHardwareStats.isSimulation() ? 0 : 0,
-            CLIMBING_I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            CLIMBING_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            CLIMBING_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            CLIMBING_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            CLIMBING_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
-    static final double CLIMBING_KG = RobotHardwareStats.isSimulation() ? 0 : 1;
+            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double ON_CHAIN_KG = RobotHardwareStats.isSimulation() ? 0 : 1;
     static final int
-            NON_CLIMBING_SLOT = 0,
-            CLIMBING_SLOT = 1;
+            GROUNDED_SLOT = 0,
+            ON_CHAIN_SLOT = 1;
     static final double GEAR_RATIO = 1; //TODO: ask mechanics for number
 
     private static final int
@@ -124,21 +124,21 @@ public class ClimberConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-        config.Slot0.kP = NON_CLIMBING_P;
-        config.Slot0.kI = NON_CLIMBING_I;
-        config.Slot0.kD = NON_CLIMBING_D;
-        config.Slot0.kS = NON_CLIMBING_KS;
-        config.Slot0.kV = NON_CLIMBING_KV;
-        config.Slot0.kG = NON_CLIMBING_KG;
-        config.Slot0.kA = NON_CLIMBING_KA;
+        config.Slot0.kP = GROUNDED_P;
+        config.Slot0.kI = GROUNDED_I;
+        config.Slot0.kD = GROUNDED_D;
+        config.Slot0.kS = GROUNDED_KS;
+        config.Slot0.kV = GROUNDED_KV;
+        config.Slot0.kG = GROUNDED_KG;
+        config.Slot0.kA = GROUNDED_KA;
 
-        config.Slot1.kP = CLIMBING_P;
-        config.Slot1.kI = CLIMBING_I;
-        config.Slot1.kD = CLIMBING_D;
-        config.Slot1.kS = CLIMBING_KS;
-        config.Slot1.kV = CLIMBING_KV;
-        config.Slot1.kG = CLIMBING_KG;
-        config.Slot1.kA = CLIMBING_KA;
+        config.Slot1.kP = ON_CHAIN_P;
+        config.Slot1.kI = ON_CHAIN_I;
+        config.Slot1.kD = ON_CHAIN_D;
+        config.Slot1.kS = ON_CHAIN_KS;
+        config.Slot1.kV = ON_CHAIN_KV;
+        config.Slot1.kG = ON_CHAIN_KG;
+        config.Slot1.kA = ON_CHAIN_KA;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
