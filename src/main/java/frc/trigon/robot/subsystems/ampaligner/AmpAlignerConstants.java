@@ -13,7 +13,7 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
 
 public class AmpAlignerConstants {
-    private static final int MOTOR_ID = 4;
+    private static final int MOTOR_ID = 13;
     private static final String MOTOR_NAME = "AmpAlignerMotor";
     static final TalonFXMotor MOTOR = new TalonFXMotor(MOTOR_ID, MOTOR_NAME, RobotConstants.CANIVORE_NAME);
 
@@ -42,7 +42,7 @@ public class AmpAlignerConstants {
     public static final double AMP_ALIGNER_LENGTH_METERS = 0.5;
     private static final Rotation2d
             AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
-            AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(90);
+            AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(180);
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
             GEAR_RATIO,

@@ -31,7 +31,7 @@ public class Pitcher extends MotorSubsystem {
         log.motor("Pitcher")
                 .angularPosition(Units.Rotations.of(masterMotor.getSignal(TalonFXSignal.POSITION)))
                 .angularVelocity(Units.RotationsPerSecond.of(masterMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+                .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
     }
 
     @Override

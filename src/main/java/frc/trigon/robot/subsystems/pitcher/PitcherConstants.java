@@ -21,8 +21,8 @@ import org.trigon.utilities.mechanisms.DoubleJointedArmMechanism2d;
 
 public class PitcherConstants {
     private static final int
-            MASTER_MOTOR_ID = 2,
-            FOLLOWER_MOTOR_ID = 3,
+            MASTER_MOTOR_ID = 11,
+            FOLLOWER_MOTOR_ID = 12,
             ENCODER_ID = 0;
     private static final String
             MASTER_MOTOR_NAME = "MasterPitcherMotor",

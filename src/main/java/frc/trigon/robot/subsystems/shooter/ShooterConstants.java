@@ -15,8 +15,8 @@ import org.trigon.utilities.mechanisms.SpeedMechanism2d;
 
 public class ShooterConstants {
     private static final int
-            RIGHT_MOTOR_ID = 0,
-            LEFT_MOTOR_ID = 1;
+            RIGHT_MOTOR_ID = 9,
+            LEFT_MOTOR_ID = 10;
     private static final String
             RIGHT_MOTOR_NAME = "RightShootingMotor",
             LEFT_MOTOR_NAME = "LeftShootingMotor";
@@ -29,12 +29,12 @@ public class ShooterConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            P = RobotHardwareStats.isSimulation() ? 15 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KS = RobotHardwareStats.isSimulation() ? 0.35586 : 0,
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+            KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0;
     private static final double GEAR_RATIO = 1;
     static final boolean FOC_ENABLED = true;
 

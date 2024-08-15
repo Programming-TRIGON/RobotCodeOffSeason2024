@@ -21,7 +21,7 @@ public class AmpAligner extends MotorSubsystem {
     private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
-    
+
     public AmpAligner() {
         setName("AmpAligner");
         configureLimitSwitchTrigger();
@@ -53,7 +53,7 @@ public class AmpAligner extends MotorSubsystem {
         log.motor("AmpAligner")
                 .angularPosition(Units.Rotations.of(motor.getSignal(TalonFXSignal.POSITION)))
                 .angularVelocity(Units.RotationsPerSecond.of(motor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(motor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+                .voltage(Units.Volts.of(motor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
     }
 
     @Override
