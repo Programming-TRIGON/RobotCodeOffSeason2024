@@ -29,13 +29,12 @@ public class ShooterConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 1 : 1,
+            P = RobotHardwareStats.isSimulation() ? 0 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
             KS = RobotHardwareStats.isSimulation() ? 0 : 0,
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KG = RobotHardwareStats.isSimulation() ? 0 : 0;
+            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double GEAR_RATIO = 1;
     static final boolean FOC_ENABLED = true;
 
@@ -56,12 +55,12 @@ public class ShooterConstants {
             Units.Second.of(1000)
     );
 
-    private static final double MAX_DISPLAYABLE_VELOCITY = 5;
+    private static final double MAX_DISPLAYABLE_VELOCITY = 55;
     static final SpeedMechanism2d
             RIGHT_MECHANISM = new SpeedMechanism2d("RightShooterMechanism", MAX_DISPLAYABLE_VELOCITY),
             LEFT_MECHANISM = new SpeedMechanism2d("LeftShooterMechanism", MAX_DISPLAYABLE_VELOCITY);
 
-    public static final double WHEEL_DIAMETER_METERS = 1;
+    public static final double WHEEL_DIAMETER_METERS = Units.Meters.convertFrom(4, Units.Inch);
     static final double LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO = 1.3;
 
     static {
@@ -84,7 +83,6 @@ public class ShooterConstants {
         config.Slot0.kS = KS;
         config.Slot0.kV = KV;
         config.Slot0.kA = KA;
-        config.Slot0.kG = KG;
 
         motor.applyConfiguration(config);
         motor.setPhysicsSimulation(simulation);

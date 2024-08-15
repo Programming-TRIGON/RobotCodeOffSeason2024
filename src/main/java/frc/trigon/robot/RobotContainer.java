@@ -7,6 +7,7 @@ package frc.trigon.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.Commands;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
@@ -51,6 +52,12 @@ public class RobotContainer {
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
+
+//        OperatorConstants.OPERATOR_CONTROLLER.z().whileTrue(ShooterCommands.getSetTargetVelocity(30, 30));
+        OperatorConstants.OPERATOR_CONTROLLER.z().whileTrue(SHOOTER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kForward));
+        OperatorConstants.OPERATOR_CONTROLLER.x().whileTrue(SHOOTER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kReverse));
+        OperatorConstants.OPERATOR_CONTROLLER.c().whileTrue(SHOOTER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kForward));
+        OperatorConstants.OPERATOR_CONTROLLER.v().whileTrue(SHOOTER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kReverse));
     }
 
     private void buildAutoChooser() {

@@ -13,7 +13,7 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
 
 public class AmpAlignerConstants {
-    private static final int MOTOR_ID = 0;
+    private static final int MOTOR_ID = 4;
     private static final String MOTOR_NAME = "AmpAlignerMotor";
     static final TalonFXMotor MOTOR = new TalonFXMotor(MOTOR_ID, MOTOR_NAME, RobotConstants.CANIVORE_NAME);
 
@@ -22,7 +22,7 @@ public class AmpAlignerConstants {
     private static final ReverseLimitTypeValue REVERSE_LIMIT_TYPE_VALUE = ReverseLimitTypeValue.NormallyOpen;
     private static final ReverseLimitSourceValue REVERSE_LIMIT_SOURCE_VALUE = ReverseLimitSourceValue.LimitSwitchPin;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 1 : 1,
+            P = RobotHardwareStats.isSimulation() ? 10 : 1,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
             KS = RobotHardwareStats.isSimulation() ? 0 : 0,

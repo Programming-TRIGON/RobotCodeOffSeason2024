@@ -21,8 +21,8 @@ import org.trigon.utilities.mechanisms.DoubleJointedArmMechanism2d;
 
 public class PitcherConstants {
     private static final int
-            MASTER_MOTOR_ID = 0,
-            FOLLOWER_MOTOR_ID = 0,
+            MASTER_MOTOR_ID = 2,
+            FOLLOWER_MOTOR_ID = 3,
             ENCODER_ID = 0;
     private static final String
             MASTER_MOTOR_NAME = "MasterPitcherMotor",
@@ -39,7 +39,7 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 1 : 1,
+            P = RobotHardwareStats.isSimulation() ? 10 : 1,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
             KS = RobotHardwareStats.isSimulation() ? 0 : 0,
@@ -49,8 +49,8 @@ public class PitcherConstants {
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double
-            MOTION_MAGIC_ACCELERATION = 0,
-            MOTION_MAGIC_CRUISE_VELOCITY = 0;
+            MOTION_MAGIC_ACCELERATION = 50,
+            MOTION_MAGIC_CRUISE_VELOCITY = 50;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
     private static final double GEAR_RATIO = 1;
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
@@ -61,7 +61,7 @@ public class PitcherConstants {
     private static final int MOTOR_AMOUNT = 2;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
     private static final double
-            PITCHER_LENGTH_METERS = 1,
+            PITCHER_LENGTH_METERS = 0.5,
             PITCHER_MASS_KILOGRAMS = 0.5;
     private static final Rotation2d
             PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
@@ -86,7 +86,7 @@ public class PitcherConstants {
             "PitcherAndAmpAlignerMechanism",
             PITCHER_LENGTH_METERS,
             AmpAlignerConstants.AMP_ALIGNER_LENGTH_METERS,
-            new Color8Bit(Color.kBlue)
+            new Color8Bit(Color.kGreen)
     );
 
     public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(0);
