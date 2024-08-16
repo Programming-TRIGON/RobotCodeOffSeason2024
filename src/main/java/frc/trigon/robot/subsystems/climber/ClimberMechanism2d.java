@@ -51,22 +51,23 @@ public class ClimberMechanism2d {
      *
      * @param currentClimberAngle the current climber arm angle
      * @param targetClimberAngle  the target climber arm angle
-     * @param stringLength        the current string length used to calculate the string angle
+     * @param currentStringLength the current string length used to calculate the string angle
+     * @param targetStringLength  the target string length used to calculate the target string angle
      */
-    public void update(Rotation2d currentClimberAngle, Rotation2d targetClimberAngle, double stringLength) {
-        update(currentClimberAngle, stringLength);
-        setTargetPosition(targetClimberAngle, stringLength);
+    public void update(Rotation2d currentClimberAngle, Rotation2d targetClimberAngle, double currentStringLength, double targetStringLength) {
+        update(currentClimberAngle, currentStringLength);
+        setTargetPosition(targetClimberAngle, targetStringLength);
     }
 
     /**
      * Updates the current climber arm angle and the string angle, then logs the mechanism.
      *
      * @param currentClimberAngle the current climber arm angle
-     * @param stringLength        the current string length used to calculate the string angle
+     * @param currentStringLength the current string length used to calculate the string angle
      */
-    public void update(Rotation2d currentClimberAngle, double stringLength) {
+    public void update(Rotation2d currentClimberAngle, double currentStringLength) {
         currentClimberPositionLigament.setAngle(currentClimberAngle.getDegrees());
-        currentStringPositionLigament.setAngle(calculateStringAngle(currentClimberAngle, stringLength).getDegrees());
+        currentStringPositionLigament.setAngle(calculateStringAngle(currentClimberAngle, currentStringLength).getDegrees());
         Logger.recordOutput(key, mechanism);
     }
 
@@ -74,17 +75,17 @@ public class ClimberMechanism2d {
      * Sets the target climber arm angle and the target string angle but doesn't log the mechanism.
      *
      * @param targetClimberAngle the target climber arm angle
-     * @param stringLength       the current string length used to calculate the target string angle
+     * @param targetStringLength the current string length used to calculate the target string angle
      */
-    public void setTargetPosition(Rotation2d targetClimberAngle, double stringLength) {
+    public void setTargetPosition(Rotation2d targetClimberAngle, double targetStringLength) {
         targetClimberPositionLigament.setAngle(targetClimberAngle.getDegrees());
-        targetStringPositionLigament.setAngle(calculateStringAngle(targetClimberAngle, stringLength).getDegrees());
+        targetStringPositionLigament.setAngle(calculateStringAngle(targetClimberAngle, targetStringLength + ClimberConstants.STRING_LENGTH_ADDITION).getDegrees());
     }
 
 
     private Rotation2d calculateStringAngle(Rotation2d climberAngle, double stringLength) {
         return Rotation2d.fromDegrees(
-                Math.asin(climberAngle.getSin() * stringLength / ClimberConstants.DISTANCE_BETWEEN_JOINTS)
+                Math.asin(climberAngle.getSin() * stringLength / ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS)
         );
     }
 }

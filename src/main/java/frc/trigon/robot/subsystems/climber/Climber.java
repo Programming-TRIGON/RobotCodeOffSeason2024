@@ -100,8 +100,6 @@ public class Climber extends MotorSubsystem {
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionMeters)
                 .withFeedForward(calculateFeedforward(leftMotor, affectedByRobotWeight)));
-        ClimberConstants.RIGHT_MECHANISM.setTargetPosition(getClimberFirstJointPitch(rightMotor), getStringLength(rightMotor));
-        ClimberConstants.LEFT_MECHANISM.setTargetPosition(getClimberFirstJointPitch(leftMotor), getStringLength(leftMotor));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
@@ -117,11 +115,15 @@ public class Climber extends MotorSubsystem {
     private void updateMechanism() {
         ClimberConstants.RIGHT_MECHANISM.update(
                 getClimberFirstJointPitch(rightMotor),
-                getStringLength(rightMotor)
+                Rotation2d.fromRotations(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)),
+                getStringLength(rightMotor),
+                toMeters(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
         ClimberConstants.LEFT_MECHANISM.update(
                 getClimberFirstJointPitch(leftMotor),
-                getStringLength(leftMotor)
+                Rotation2d.fromRotations(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)),
+                getStringLength(leftMotor),
+                toMeters(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
 
         Logger.recordOutput("Poses/Components/RightClimberFirstJointPose", getClimberFirstJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, rightMotor));
@@ -164,7 +166,7 @@ public class Climber extends MotorSubsystem {
     }
 
     private double getStringLength(TalonFXMotor motor) {
-        return motor.getSignal(TalonFXSignal.POSITION) + ClimberConstants.STRING_LENGTH_ADDITION;
+        return toMeters(motor.getSignal(TalonFXSignal.POSITION)) + ClimberConstants.STRING_LENGTH_ADDITION;
     }
 
     private double toMeters(double rotations) {
