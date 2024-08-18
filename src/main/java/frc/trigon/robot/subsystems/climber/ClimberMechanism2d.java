@@ -91,7 +91,7 @@ public class ClimberMechanism2d {
 
 
     private Rotation2d calculateStringAngle(Rotation2d climberAngle, double stringLength) {
-        return Rotation2d.fromDegrees(
+        return Rotation2d.fromRadians(
                 Math.asin(climberAngle.getSin() * stringLength / ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS)
         );
     }
