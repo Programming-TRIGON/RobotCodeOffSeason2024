@@ -20,7 +20,7 @@ public class Pitcher extends MotorSubsystem {
             followerMotor = PitcherConstants.FOLLOWER_MOTOR;
     private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
-    private Rotation2d targetPitch = new Rotation2d();
+    private Rotation2d targetPitch = PitcherConstants.DEFAULT_PITCH;
 
     public Pitcher() {
         setName("Pitcher");
@@ -31,7 +31,7 @@ public class Pitcher extends MotorSubsystem {
         log.motor("Pitcher")
                 .angularPosition(Units.Rotations.of(masterMotor.getSignal(TalonFXSignal.POSITION)))
                 .angularVelocity(Units.RotationsPerSecond.of(masterMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
+                .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Pitcher extends MotorSubsystem {
     private void updateMechanism() {
         PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.updateFirstJoint(
                 getCurrentPitch(),
-                Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
+                Rotation2d.fromRotations(targetPitch.getRotations())
         );
     }
 }

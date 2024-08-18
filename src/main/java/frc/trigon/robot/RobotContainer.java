@@ -6,16 +6,18 @@
 package frc.trigon.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.Commands;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
-import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
+import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.Swerve;
@@ -48,8 +50,7 @@ public class RobotContainer {
 
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
-        AMP_ALIGNER.setDefaultCommand(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSED));
-        PITCHER.setDefaultCommand(PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand());
+        PITCHER.setDefaultCommand(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.DEFAULT_PITCH));
     }
 
     private void bindControllerCommands() {
@@ -58,12 +59,13 @@ public class RobotContainer {
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
 
-        OperatorConstants.OPERATOR_CONTROLLER.s().whileTrue(ShooterCommands.getSetTargetVelocity(30, 30));
-//        OperatorConstants.OPERATOR_CONTROLLER.z().whileTrue(SHOOTER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kForward));
-//        OperatorConstants.OPERATOR_CONTROLLER.x().whileTrue(SHOOTER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kReverse));
-//        OperatorConstants.OPERATOR_CONTROLLER.c().whileTrue(SHOOTER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kForward));
-//        OperatorConstants.OPERATOR_CONTROLLER.v().whileTrue(SHOOTER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kReverse));
-//        OperatorConstants.OPERATOR_CONTROLLER.z().whileTrue(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPENED));
+        OperatorConstants.OPERATOR_CONTROLLER.s().whileTrue(ShooterCommands.getSetTargetVelocity(50, 50));
+        OperatorConstants.OPERATOR_CONTROLLER.p().whileTrue(PitcherCommands.getSetTargetPitchCommand(Rotation2d.fromDegrees(50)));
+        OperatorConstants.OPERATOR_CONTROLLER.t().whileTrue(AmpAlignerCommands.getSetTargetAngleCommand(Rotation2d.fromDegrees(90)));
+        OperatorConstants.OPERATOR_CONTROLLER.z().whileTrue(AMP_ALIGNER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kForward));
+        OperatorConstants.OPERATOR_CONTROLLER.x().whileTrue(AMP_ALIGNER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kReverse));
+        OperatorConstants.OPERATOR_CONTROLLER.c().whileTrue(AMP_ALIGNER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kForward));
+        OperatorConstants.OPERATOR_CONTROLLER.v().whileTrue(AMP_ALIGNER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kReverse));
     }
 
     private void buildAutoChooser() {

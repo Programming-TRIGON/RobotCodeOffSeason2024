@@ -53,7 +53,7 @@ public class AmpAligner extends MotorSubsystem {
         log.motor("AmpAligner")
                 .angularPosition(Units.Rotations.of(motor.getSignal(TalonFXSignal.POSITION)))
                 .angularVelocity(Units.RotationsPerSecond.of(motor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(motor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
+                .voltage(Units.Volts.of(motor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
     @Override
@@ -71,6 +71,7 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     void setTargetAngle(Rotation2d targetAngle) {
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointTargetAngle(targetAngle);
         motor.setControl(positionRequest
                 .withPosition(targetAngle.getRotations())
                 .withFeedForward(calculateFeedForward())
@@ -99,6 +100,6 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private void updateMechanism() {
-        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.updateSecondJoint(getCurrentAngle(), Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointCurrentAngle(getCurrentAngle());
     }
 }

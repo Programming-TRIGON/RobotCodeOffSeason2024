@@ -23,7 +23,7 @@ public class PitcherConstants {
     private static final int
             MASTER_MOTOR_ID = 11,
             FOLLOWER_MOTOR_ID = 12,
-            ENCODER_ID = 0;
+            ENCODER_ID = 11;
     private static final String
             MASTER_MOTOR_NAME = "MasterPitcherMotor",
             FOLLOWER_MOTOR_NAME = "FollowerPitcherMotor",
@@ -39,20 +39,20 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 10 : 1,
+            P = RobotHardwareStats.isSimulation() ? 500 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KG = RobotHardwareStats.isSimulation() ? 0 : 0;
+            KS = RobotHardwareStats.isSimulation() ? 0.46583 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 19.611 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0.48644 : 0,
+            KG = RobotHardwareStats.isSimulation() ? 0.2 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double
-            MOTION_MAGIC_ACCELERATION = 50,
-            MOTION_MAGIC_CRUISE_VELOCITY = 50;
+            MOTION_MAGIC_ACCELERATION = 1000,
+            MOTION_MAGIC_CRUISE_VELOCITY = 100;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
-    private static final double GEAR_RATIO = 1;
+    private static final double GEAR_RATIO = 200;
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
     private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
@@ -62,10 +62,10 @@ public class PitcherConstants {
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
     private static final double
             PITCHER_LENGTH_METERS = 0.5,
-            PITCHER_MASS_KILOGRAMS = 0.5;
+            PITCHER_MASS_KILOGRAMS = 11;
     private static final Rotation2d
-            PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
-            PITCHER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(90);
+            PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(12),
+            PITCHER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(73);
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
             GEAR_RATIO,
@@ -77,8 +77,8 @@ public class PitcherConstants {
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(0.25).per(Units.Second.of(1)),
-            Units.Volts.of(2),
+            Units.Volts.of(2).per(Units.Second.of(1)),
+            Units.Volts.of(3),
             Units.Second.of(1000)
     );
 
@@ -89,7 +89,7 @@ public class PitcherConstants {
             new Color8Bit(Color.kGreen)
     );
 
-    public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(0);
+    public static final Rotation2d DEFAULT_PITCH = PITCHER_MINIMUM_ANGLE;
     static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(0.6);
 
     static {
@@ -104,8 +104,8 @@ public class PitcherConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-        config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED_VALUE;
-        config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
+//        config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED_VALUE;
+//        config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
         config.Slot0.kP = P;
         config.Slot0.kI = I;
@@ -120,15 +120,15 @@ public class PitcherConstants {
         config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
 
-        config.Feedback.FeedbackRemoteSensorID = ENCODER_ID;
-        config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
-        config.Feedback.RotorToSensorRatio = GEAR_RATIO;
+//        config.Feedback.FeedbackRemoteSensorID = ENCODER_ID;
+//        config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
+//        config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
         MASTER_MOTOR.applyConfiguration(config);
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
         MASTER_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        MASTER_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 1000);
         MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);

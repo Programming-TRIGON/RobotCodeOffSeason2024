@@ -22,26 +22,26 @@ public class AmpAlignerConstants {
     private static final ReverseLimitTypeValue REVERSE_LIMIT_TYPE_VALUE = ReverseLimitTypeValue.NormallyOpen;
     private static final ReverseLimitSourceValue REVERSE_LIMIT_SOURCE_VALUE = ReverseLimitSourceValue.LimitSwitchPin;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 10 : 1,
+            P = RobotHardwareStats.isSimulation() ? 5 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
-    static final double KG = RobotHardwareStats.isSimulation() ? 0 : 0;
+            KS = RobotHardwareStats.isSimulation() ? 0.13729 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 5.7088 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0.13025 : 0;
+    static final double KG = RobotHardwareStats.isSimulation() ? 0.007923 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
-    private static final double GEAR_RATIO = 1;
+    private static final double GEAR_RATIO = 52;
     static final boolean FOC_ENABLED = true;
-    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);
+    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(24);
     static final double LIMIT_SWITCH_REPEAT_TIME_THRESHOLD_SECONDS = 0.1;
 
     private static final int MOTOR_AMOUNT = 1;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
-    private static final double AMP_ALIGNER_MASS_KILOGRAMS = 0.5;
-    public static final double AMP_ALIGNER_LENGTH_METERS = 0.5;
+    private static final double AMP_ALIGNER_MASS_KILOGRAMS = 1.1;
+    public static final double AMP_ALIGNER_LENGTH_METERS = 0.52;
     private static final Rotation2d
-            AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
+            AMP_ALIGNER_MINIMUM_ANGLE = LIMIT_SWITCH_PRESSED_ANGLE,
             AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(180);
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
@@ -54,8 +54,8 @@ public class AmpAlignerConstants {
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(0.25).per(Units.Second.of(1)),
-            Units.Volts.of(2),
+            Units.Volts.of(2).per(Units.Second.of(1)),
+            Units.Volts.of(3),
             Units.Second.of(1000)
     );
 
