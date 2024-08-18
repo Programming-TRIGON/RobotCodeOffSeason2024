@@ -42,7 +42,7 @@ public class Climber extends MotorSubsystem {
     public void periodic() {
         rightMotor.update();
         leftMotor.update();
-        updateMechanism();
+        updateMechanisms();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class Climber extends MotorSubsystem {
                 ClimberConstants.GROUNDED_KG * Math.cos(getClimberFirstJointPitch(motor).getRadians());
     }
 
-    private void updateMechanism() {
+    private void updateMechanisms() {
         ClimberConstants.RIGHT_MECHANISM.update(
                 getClimberFirstJointPitch(rightMotor),
                 Rotation2d.fromRotations(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)),
@@ -161,7 +161,7 @@ public class Climber extends MotorSubsystem {
                         - Math.pow(toMeters(getStringLengthMeters(motor)), 2);
         final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
-        final double angle = Math.acos(division + ClimberConstants.ANGLE_ADDITION_DEGREES);
+        final double angle = Math.acos(division + edu.wpi.first.math.util.Units.degreesToRadians(ClimberConstants.ANGLE_ADDITION_DEGREES));
         return Rotation2d.fromRadians(angle);
     }
 

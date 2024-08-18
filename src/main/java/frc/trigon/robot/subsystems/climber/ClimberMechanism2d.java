@@ -40,8 +40,8 @@ public class ClimberMechanism2d {
         final MechanismRoot2d
                 climberRoot = mechanism.getRoot("ClimberRoot", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, ClimberConstants.DRUM_TO_CLIMBER_FIRST_JOINT_Z_DISTANCE_METERS),
                 stringRoot = mechanism.getRoot("StringRoot", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS / 2, 0);
-        this.currentClimberPositionLigament = climberRoot.append(new MechanismLigament2d("ZCurrentClimberPositionLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0, ClimberConstants.MECHANISM_LINE_WIDTH, color));
-        this.targetClimberPositionLigament = climberRoot.append(new MechanismLigament2d("TargetClimberPositionLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0, ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
+        this.currentClimberPositionLigament = climberRoot.append(new MechanismLigament2d("ZCurrentClimberPositionLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 180, ClimberConstants.MECHANISM_LINE_WIDTH, color));
+        this.targetClimberPositionLigament = climberRoot.append(new MechanismLigament2d("TargetClimberPositionLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 180, ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
         this.currentStringPositionLigament = stringRoot.append(new MechanismLigament2d("ZCurrentStringPositionLigament", ClimberConstants.CLOSED_STRING_LENGTH_METERS, ClimberConstants.CLOSED_STRING_ANGLE_DEGREES, ClimberConstants.MECHANISM_LINE_WIDTH, color));
         this.targetStringPositionLigament = stringRoot.append(new MechanismLigament2d("TargetStringPositionLigament", ClimberConstants.CLOSED_STRING_LENGTH_METERS, ClimberConstants.CLOSED_STRING_ANGLE_DEGREES, ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
     }
