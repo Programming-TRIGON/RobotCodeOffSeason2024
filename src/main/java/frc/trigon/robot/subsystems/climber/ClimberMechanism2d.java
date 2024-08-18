@@ -68,6 +68,13 @@ public class ClimberMechanism2d {
     public void update(Rotation2d currentClimberAngle, double currentStringLength) {
         currentClimberPositionLigament.setAngle(currentClimberAngle.getDegrees());
         currentStringPositionLigament.setAngle(calculateStringAngle(currentClimberAngle, currentStringLength).getDegrees());
+        update();
+    }
+
+    /**
+     * Logs the mechanism.
+     */
+    public void update() {
         Logger.recordOutput(key, mechanism);
     }
 
