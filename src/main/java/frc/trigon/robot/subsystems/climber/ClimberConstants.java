@@ -96,10 +96,10 @@ public class ClimberConstants {
             LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, 254.5, 274.45);
     static final double FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS = 0.312;
     static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.35;
-    static final double STRING_LENGTH_ADDITION = 0.143655638521;
-    static final double ANGLE_ADDITION = 57.87 + 7.37 - 90;
-    static final double DISTANCE_BETWEEN_JOINTS = 0.42;
-    static final double CLOSED_STRING_LENGTH = 0.168;
+    static final double STRING_LENGTH_ADDITION_METERS = 0.143655638521;
+    static final double ANGLE_ADDITION_DEGREES = 57.87 + 7.37 - 90;
+    static final double DISTANCE_BETWEEN_JOINTS_METERS = 0.42;
+    static final double CLOSED_STRING_LENGTH_METERS = 0.168;
     static final double CLOSED_STRING_ANGLE_DEGREES = 63.32;
     static final double DRUM_TO_CLIMBER_FIRST_JOINT_Z_DISTANCE_METERS = 0.197;
     static final Color8Bit
