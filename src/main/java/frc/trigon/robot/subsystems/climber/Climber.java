@@ -116,13 +116,13 @@ public class Climber extends MotorSubsystem {
         ClimberConstants.RIGHT_MECHANISM.update(
                 getClimberFirstJointPitch(rightMotor),
                 Rotation2d.fromRotations(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)),
-                getStringLength(rightMotor),
+                getStringLengthMeters(rightMotor),
                 toMeters(rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
         ClimberConstants.LEFT_MECHANISM.update(
                 getClimberFirstJointPitch(leftMotor),
                 Rotation2d.fromRotations(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)),
-                getStringLength(leftMotor),
+                getStringLengthMeters(leftMotor),
                 toMeters(leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
 
@@ -158,14 +158,14 @@ public class Climber extends MotorSubsystem {
         final double numeratorCalculation =
                 Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS, 2)
                         + Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS, 2)
-                        - Math.pow(toMeters(getStringLength(motor)), 2);
+                        - Math.pow(toMeters(getStringLengthMeters(motor)), 2);
         final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
         final double angle = Math.acos(division + ClimberConstants.ANGLE_ADDITION);
         return Rotation2d.fromRadians(angle);
     }
 
-    private double getStringLength(TalonFXMotor motor) {
+    private double getStringLengthMeters(TalonFXMotor motor) {
         return toMeters(motor.getSignal(TalonFXSignal.POSITION)) + ClimberConstants.STRING_LENGTH_ADDITION;
     }
 
