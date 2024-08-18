@@ -35,11 +35,11 @@ public class ClimberMechanism2d {
      */
     public ClimberMechanism2d(String name, Color8Bit color) {
         this.key = "Mechanisms/" + name;
-        this.mechanism = new Mechanism2d(ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS);
+        this.mechanism = new Mechanism2d(2 * ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 2 * ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS);
 
         final MechanismRoot2d
-                climberRoot = mechanism.getRoot("ClimberRoot", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, ClimberConstants.DRUM_TO_CLIMBER_FIRST_JOINT_Z_DISTANCE_METERS),
-                stringRoot = mechanism.getRoot("StringRoot", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS / 2, 0);
+                climberRoot = mechanism.getRoot("ClimberRoot", 2 * ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, ClimberConstants.DRUM_TO_CLIMBER_FIRST_JOINT_Z_DISTANCE_METERS),
+                stringRoot = mechanism.getRoot("StringRoot", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0);
         this.currentClimberPositionLigament = climberRoot.append(new MechanismLigament2d("ZCurrentClimberPositionLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 180, ClimberConstants.MECHANISM_LINE_WIDTH, color));
         this.targetClimberPositionLigament = climberRoot.append(new MechanismLigament2d("TargetClimberPositionLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 180, ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
         this.currentStringPositionLigament = stringRoot.append(new MechanismLigament2d("ZCurrentStringPositionLigament", ClimberConstants.CLOSED_STRING_LENGTH_METERS, ClimberConstants.CLOSED_STRING_ANGLE_DEGREES, ClimberConstants.MECHANISM_LINE_WIDTH, color));
@@ -66,8 +66,8 @@ public class ClimberMechanism2d {
      * @param currentStringLengthMeters the current string length in meters used to calculate the string angle
      */
     public void update(Rotation2d currentClimberAngle, double currentStringLengthMeters) {
-        currentClimberPositionLigament.setAngle(currentClimberAngle);
-        currentStringPositionLigament.setAngle(calculateStringAngle(currentClimberAngle, currentStringLengthMeters));
+        currentClimberPositionLigament.setAngle(180 - currentClimberAngle.getDegrees());
+        currentStringPositionLigament.setAngle(180 - calculateStringAngle(currentClimberAngle, currentStringLengthMeters).getDegrees());
         update();
     }
 
@@ -85,8 +85,8 @@ public class ClimberMechanism2d {
      * @param targetStringLengthMeters the current string length in meters used to calculate the target string angle
      */
     public void setTargetPosition(Rotation2d targetClimberAngle, double targetStringLengthMeters) {
-        targetClimberPositionLigament.setAngle(targetClimberAngle);
-        targetStringPositionLigament.setAngle(calculateStringAngle(targetClimberAngle, targetStringLengthMeters + ClimberConstants.STRING_LENGTH_ADDITION_METERS));
+        targetClimberPositionLigament.setAngle(180 - targetClimberAngle.getDegrees());
+        targetStringPositionLigament.setAngle(180 - calculateStringAngle(targetClimberAngle, targetStringLengthMeters + ClimberConstants.STRING_LENGTH_ADDITION_METERS).getDegrees());
     }
 
 
