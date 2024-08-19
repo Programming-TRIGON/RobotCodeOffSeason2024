@@ -108,7 +108,7 @@ public class ClimberVisualization {
     }
 
     private Pose3d getClimberSecondJointPose(Pose3d firstJointPose, ClimberConstants.ClimberState currentState) {
-        if (currentState != ClimberConstants.ClimberState.RESTING) {
+        if (currentState.affectedByRobotWeight) {
             Transform3d climberTransform = new Transform3d(
                     new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0),
                     new Rotation3d(0, 90, 0)

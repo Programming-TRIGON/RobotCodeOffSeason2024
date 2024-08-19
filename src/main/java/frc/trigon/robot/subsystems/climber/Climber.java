@@ -2,7 +2,6 @@ package frc.trigon.robot.subsystems.climber;
 
 import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -94,20 +93,18 @@ public class Climber extends MotorSubsystem {
     void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByRobotWeight) {
         rightMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetRightPositionMeters)
-                .withFeedForward(calculateFeedforward(ClimberConstants.RIGHT_MECHANISM.getClimberCurrentPitch(), affectedByRobotWeight)));
+                .withFeedForward(calculateFeedforward(rightMotor)));
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionMeters)
-                .withFeedForward(calculateFeedforward(ClimberConstants.LEFT_MECHANISM.getClimberCurrentPitch(), affectedByRobotWeight)));
+                .withFeedForward(calculateFeedforward(leftMotor)));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
         return affectedByRobotWeight ? climbingPositionRequest : nonClimbingPositionRequest;
     }
 
-    private double calculateFeedforward(Rotation2d firstJointPitch, boolean affectedByRobotWeight) {
-        return affectedByRobotWeight ?
-                ClimberConstants.ON_CHAIN_KG * Math.cos(firstJointPitch.getRadians()) :
-                ClimberConstants.GROUNDED_KG * Math.cos(firstJointPitch.getRadians());
+    private double calculateFeedforward(TalonFXMotor motor) {
+        return ClimberConstants.A * Math.pow(motor.getSignal(TalonFXSignal.POSITION), 2) + ClimberConstants.B * motor.getSignal(TalonFXSignal.POSITION) + ClimberConstants.C;
     }
 
     private void updateMechanisms() {
