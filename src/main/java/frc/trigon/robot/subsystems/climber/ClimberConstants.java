@@ -3,6 +3,7 @@ package frc.trigon.robot.subsystems.climber;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
@@ -73,16 +74,8 @@ public class ClimberConstants {
             LEFT_GEARBOX = DCMotor.getFalcon500Foc(LEFT_MOTOR_AMOUNT);
     private static final double MOMENT_OF_INERTIA = 0.003;
     private static final SimpleMotorSimulation
-            RIGHT_MOTOR_SIMULATION = new SimpleMotorSimulation(
-            RIGHT_GEARBOX,
-            GEAR_RATIO,
-            MOMENT_OF_INERTIA
-    ),
-            LEFT_MOTOR_SIMULATION = new SimpleMotorSimulation(
-                    LEFT_GEARBOX,
-                    GEAR_RATIO,
-                    MOMENT_OF_INERTIA
-            );
+            RIGHT_MOTOR_SIMULATION = new SimpleMotorSimulation(RIGHT_GEARBOX, GEAR_RATIO, MOMENT_OF_INERTIA),
+            LEFT_MOTOR_SIMULATION = new SimpleMotorSimulation(LEFT_GEARBOX, GEAR_RATIO, MOMENT_OF_INERTIA);
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
             Units.Volts.of(1.5).per(Units.Second.of(1)),
@@ -97,19 +90,25 @@ public class ClimberConstants {
     static final double FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS = 0.312;
     static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.35;
     static final double STRING_LENGTH_ADDITION_METERS = 0.143655638521;
-    static final double ANGLE_ADDITION_DEGREES = 57.87 + 7.37 - 90;
+    static final Rotation2d
+            FIRST_JOINT_ANGLE_ADDITION = Rotation2d.fromDegrees(57.87 + 7.37 - 90),
+            STRING_ANGLE_ADDITION = Rotation2d.fromDegrees(90 - 57.87);
     static final double DISTANCE_BETWEEN_JOINTS_METERS = 0.42;
     static final double CLOSED_STRING_LENGTH_METERS = 0.168;
     static final double CLOSED_STRING_ANGLE_DEGREES = 63.32;
-    static final double DRUM_TO_CLIMBER_FIRST_JOINT_Z_DISTANCE_METERS = 0.197;
-    static final Color8Bit
-            RED = new Color8Bit(Color.kRed),
-            YELLOW = new Color8Bit(Color.kYellow),
-            GRAY = new Color8Bit(Color.kGray);
+    private static final Color8Bit
+            BLUE = new Color8Bit(Color.kBlue),
+            LIGHT_BLUE = new Color8Bit(Color.kLightBlue),
+            GREEN = new Color8Bit(Color.kGreen),
+            LIGHT_GREEN = new Color8Bit(Color.kLightGreen);
+    static final Color8Bit GRAY = new Color8Bit(Color.kGray);
     static final double MECHANISM_LINE_WIDTH = 5;
+    static final double MECHANISM_STARTING_ANGLE = 180;
+    static final double STRING_CONNECTION_LIGAMENT_LENGTH = 0.07;
+    static final double STRING_CONNECTION_LIGAMENT_ANGLE = -50;
     static final ClimberMechanism2d
-            RIGHT_MECHANISM = new ClimberMechanism2d("RightClimberMechanism", RED),
-            LEFT_MECHANISM = new ClimberMechanism2d("LeftClimberMechanism", YELLOW);
+            RIGHT_MECHANISM = new ClimberMechanism2d("RightClimberMechanism", BLUE, LIGHT_BLUE),
+            LEFT_MECHANISM = new ClimberMechanism2d("LeftClimberMechanism", GREEN, LIGHT_GREEN);
 
     static final double DRUM_DIAMETER_METERS = 0.04;
 
@@ -155,8 +154,8 @@ public class ClimberConstants {
 
     public enum ClimberState {
         RESTING(0, false),
-        PREPARE_FOR_CLIMBING(0.2, false), //TODO: calibrate
-        CLIMBING(0.7, true); //TODO: calibrate
+        PREPARE_FOR_CLIMBING(0.5, false), //TODO: calibrate
+        CLIMBING(0.1, true); //TODO: calibrate
 
         public final double positionMeters;
         public final boolean affectedByRobotWeight;
