@@ -1,6 +1,6 @@
 package frc.trigon.robot.subsystems.climber;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -10,7 +10,7 @@ import org.littletonrobotics.junction.Logger;
 /**
  * A 2D representation of the climber mechanism.
  */
-public class ClimberMechanism2d {
+public class ClimberVisualization {
     // sin(a)/A = sin(b)/B       * B
     // sin(a)*B/A = sin(b)
     // sin^-1(sin(a)*B/A) = b
@@ -19,7 +19,10 @@ public class ClimberMechanism2d {
     // b = angle of string
     // A = length of the arm // constant
     // B = length of the string // param
-    private final String key;
+    private final String
+            name,
+            key;
+    private final Translation3d firstJointOriginPoint;
     private final Mechanism2d mechanism;
     private final MechanismLigament2d
             currentFirstJointLigament,
@@ -33,7 +36,9 @@ public class ClimberMechanism2d {
      * @param name            the name of the mechanism
      * @param firstJointColor the firstJointColor of the mechanism
      */
-    public ClimberMechanism2d(String name, Color8Bit firstJointColor, Color8Bit stringColor) {
+    public ClimberVisualization(String name, Color8Bit firstJointColor, Color8Bit stringColor, Translation3d firstJointOriginPoint) {
+        this.name = name;
+        this.firstJointOriginPoint = firstJointOriginPoint;
         this.key = "Mechanisms/" + name;
         this.mechanism = new Mechanism2d(2 * ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 2 * ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS);
         // stringAngleAddition.getCos * FIRST_JOINT_TO_STRING_CONNECTION = x
@@ -60,9 +65,10 @@ public class ClimberMechanism2d {
      * @param targetClimberAngle        the target climber arm angle
      * @param currentStringLengthMeters the current string length in meters used to calculate the string angle
      * @param targetStringLengthMeters  the target string length in meters used to calculate the target string angle
+     * @param currentState              the current climber state
      */
-    public void update(Rotation2d currentClimberAngle, Rotation2d targetClimberAngle, double currentStringLengthMeters, double targetStringLengthMeters) {
-        update(currentClimberAngle, currentStringLengthMeters);
+    public void update(Rotation2d currentClimberAngle, Rotation2d targetClimberAngle, double currentStringLengthMeters, double targetStringLengthMeters, ClimberConstants.ClimberState currentState) {
+        update(currentClimberAngle, currentStringLengthMeters, currentState);
         setTargetPosition(targetClimberAngle, targetStringLengthMeters);
     }
 
@@ -71,11 +77,14 @@ public class ClimberMechanism2d {
      *
      * @param currentClimberAngle       the current climber arm angle
      * @param currentStringLengthMeters the current string length in meters used to calculate the string angle
+     * @param currentState              the current climber state
      */
-    public void update(Rotation2d currentClimberAngle, double currentStringLengthMeters) {
+    public void update(Rotation2d currentClimberAngle, double currentStringLengthMeters, ClimberConstants.ClimberState currentState) {
         currentFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - currentClimberAngle.getDegrees());
         currentStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(currentClimberAngle.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), currentStringLengthMeters).getDegrees());
         currentStringPositionLigament.setLength(currentStringLengthMeters);
+        Logger.recordOutput("Poses/Components/" + name + "FirstJointPose", currentClimberAngle);
+        Logger.recordOutput("Poses/Components/" + name + "secondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(firstJointOriginPoint, currentClimberAngle), currentState));
         update();
     }
 
@@ -98,6 +107,27 @@ public class ClimberMechanism2d {
         targetStringPositionLigament.setLength(targetStringLengthMeters);
     }
 
+    private Pose3d getClimberSecondJointPose(Pose3d firstJointPose, ClimberConstants.ClimberState currentState) {
+        if (currentState != ClimberConstants.ClimberState.RESTING) {
+            Transform3d climberTransform = new Transform3d(
+                    new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0),
+                    new Rotation3d(0, 90, 0)
+            );
+            return firstJointPose.transformBy(climberTransform);
+        }
+        Transform3d climberTransform = new Transform3d(
+                new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0),
+                new Rotation3d(0, 0, 0)
+        );
+        return firstJointPose.transformBy(climberTransform);
+    }
+
+    private Pose3d getClimberFirstJointPose(Translation3d originPoint, Rotation2d firstJointPitch) {
+        return new Pose3d(
+                originPoint,
+                new Rotation3d(0, firstJointPitch.getRadians(), 0)
+        );
+    }
 
     private Rotation2d calculateStringAngle(Rotation2d climberAngle, double stringLengthMeters) {
         return Rotation2d.fromRadians(

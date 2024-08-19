@@ -2,14 +2,13 @@ package frc.trigon.robot.subsystems.climber;
 
 import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
-import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.subsystems.MotorSubsystem;
-import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.utilities.Conversions;
@@ -126,40 +125,15 @@ public class Climber extends MotorSubsystem {
                 rightClimberCurrentPitch,
                 rightClimberTargetPitch,
                 getStringLengthMeters(rightMotor, TalonFXSignal.POSITION),
-                getStringLengthMeters(rightMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE)
+                getStringLengthMeters(rightMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE),
+                currentState
         );
         ClimberConstants.LEFT_MECHANISM.update(
                 leftClimberCurrentPitch,
                 leftClimberTargetPitch,
                 getStringLengthMeters(leftMotor, TalonFXSignal.POSITION),
-                getStringLengthMeters(leftMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE)
-        );
-
-        Logger.recordOutput("Poses/Components/RightClimberFirstJointPose", rightClimberCurrentPitch);
-        Logger.recordOutput("Poses/Components/LeftClimberFirstJointPose", leftClimberCurrentPitch);
-        Logger.recordOutput("Poses/Components/RightClimberSecondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(ClimberConstants.RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, rightClimberCurrentPitch)));
-        Logger.recordOutput("Poses/Components/LeftClimberSecondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(ClimberConstants.LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT, leftClimberCurrentPitch)));
-    }
-
-    private Pose3d getClimberSecondJointPose(Pose3d firstJointPose) {
-        if (currentState != ClimberConstants.ClimberState.RESTING) {
-            Transform3d climberTransform = new Transform3d(
-                    new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0),
-                    new Rotation3d(0, 90, 0)
-            );
-            return firstJointPose.transformBy(climberTransform);
-        }
-        Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0),
-                new Rotation3d(0, 0, 0)
-        );
-        return firstJointPose.transformBy(climberTransform);
-    }
-
-    private Pose3d getClimberFirstJointPose(Translation3d originPoint, Rotation2d firstJointPitch) {
-        return new Pose3d(
-                originPoint,
-                new Rotation3d(0, firstJointPitch.getRadians(), 0)
+                getStringLengthMeters(leftMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE),
+                currentState
         );
     }
 

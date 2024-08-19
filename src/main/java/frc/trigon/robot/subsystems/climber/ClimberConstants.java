@@ -106,9 +106,9 @@ public class ClimberConstants {
     static final double MECHANISM_STARTING_ANGLE = 180;
     static final double STRING_CONNECTION_LIGAMENT_LENGTH = 0.07;
     static final double STRING_CONNECTION_LIGAMENT_ANGLE = -50;
-    static final ClimberMechanism2d
-            RIGHT_MECHANISM = new ClimberMechanism2d("RightClimberMechanism", BLUE, LIGHT_BLUE),
-            LEFT_MECHANISM = new ClimberMechanism2d("LeftClimberMechanism", GREEN, LIGHT_GREEN);
+    static final ClimberVisualization
+            RIGHT_MECHANISM = new ClimberVisualization("RightClimberMechanism", BLUE, LIGHT_BLUE, RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT),
+            LEFT_MECHANISM = new ClimberVisualization("LeftClimberMechanism", GREEN, LIGHT_GREEN, LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT);
 
     static final double DRUM_DIAMETER_METERS = 0.04;
 

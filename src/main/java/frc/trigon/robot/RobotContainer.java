@@ -12,6 +12,8 @@ import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.climber.Climber;
+import frc.trigon.robot.subsystems.climber.ClimberCommands;
+import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -40,6 +42,7 @@ public class RobotContainer {
 
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+        CLIMBER.setDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.RESTING));
     }
 
     private void bindControllerCommands() {
