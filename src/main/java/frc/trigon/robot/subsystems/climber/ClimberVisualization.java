@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
+import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.utilities.Conversions;
 
 /**
  * A 2D representation of the climber mechanism.
@@ -29,14 +32,22 @@ public class ClimberVisualization {
             targetFirstJointLigament,
             currentStringPositionLigament,
             targetStringPositionLigament;
+    private Rotation2d
+            climberCurrentPitch,
+            climberTargetPitch;
+    private final TalonFXMotor motor;
+    private ClimberConstants.ClimberState currentState;
 
     /**
-     * Constructs a ClimberMechanism2d object.
+     * Constructs a ClimberVisualization object.
      *
-     * @param name            the name of the mechanism
-     * @param firstJointColor the firstJointColor of the mechanism
+     * @param name                  the name of the mechanism
+     * @param firstJointColor       the color of the first joint of the climber in the mechanism
+     * @param stringColor           the color of the string in the mechanism
+     * @param firstJointOriginPoint the first joint origin point
+     * @param motor                 the motor
      */
-    public ClimberVisualization(String name, Color8Bit firstJointColor, Color8Bit stringColor, Translation3d firstJointOriginPoint) {
+    public ClimberVisualization(String name, Color8Bit firstJointColor, Color8Bit stringColor, Translation3d firstJointOriginPoint, TalonFXMotor motor) {
         this.name = name;
         this.firstJointOriginPoint = firstJointOriginPoint;
         this.key = "Mechanisms/" + name;
@@ -56,35 +67,23 @@ public class ClimberVisualization {
         currentStringPositionLigament.append(new MechanismLigament2d("CurrentStringConnectionLigament", ClimberConstants.STRING_CONNECTION_LIGAMENT_LENGTH, ClimberConstants.STRING_CONNECTION_LIGAMENT_ANGLE, ClimberConstants.MECHANISM_LINE_WIDTH, stringColor));
         targetStringPositionLigament.append(new MechanismLigament2d("TargetStringConnectionLigament", ClimberConstants.STRING_CONNECTION_LIGAMENT_LENGTH, ClimberConstants.STRING_CONNECTION_LIGAMENT_ANGLE, ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
 
-    }
-
-    /**
-     * Updates the current climber arm angle, the target climber arm angle, the string angle, and the target string angle, then logs the mechanism.
-     *
-     * @param currentClimberAngle       the current climber arm angle
-     * @param targetClimberAngle        the target climber arm angle
-     * @param currentStringLengthMeters the current string length in meters used to calculate the string angle
-     * @param targetStringLengthMeters  the target string length in meters used to calculate the target string angle
-     * @param currentState              the current climber state
-     */
-    public void update(Rotation2d currentClimberAngle, Rotation2d targetClimberAngle, double currentStringLengthMeters, double targetStringLengthMeters, ClimberConstants.ClimberState currentState) {
-        update(currentClimberAngle, currentStringLengthMeters, currentState);
-        setTargetPosition(targetClimberAngle, targetStringLengthMeters);
+        this.motor = motor;
+        this.climberCurrentPitch = getClimberFirstJointPitch(getStringLengthMeters(motor, TalonFXSignal.POSITION));
+        this.climberTargetPitch = getClimberFirstJointPitch(getStringLengthMeters(motor, TalonFXSignal.CLOSED_LOOP_REFERENCE));
+        this.currentState = ClimberConstants.ClimberState.RESTING;
     }
 
     /**
      * Updates the current climber arm angle and the string angle, then logs the mechanism.
      *
-     * @param currentClimberAngle       the current climber arm angle
-     * @param currentStringLengthMeters the current string length in meters used to calculate the string angle
-     * @param currentState              the current climber state
+     * @param currentState the current climber state
      */
-    public void update(Rotation2d currentClimberAngle, double currentStringLengthMeters, ClimberConstants.ClimberState currentState) {
-        currentFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - currentClimberAngle.getDegrees());
-        currentStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(currentClimberAngle.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), currentStringLengthMeters).getDegrees());
-        currentStringPositionLigament.setLength(currentStringLengthMeters);
-        Logger.recordOutput("Poses/Components/" + name + "FirstJointPose", currentClimberAngle);
-        Logger.recordOutput("Poses/Components/" + name + "secondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(firstJointOriginPoint, currentClimberAngle), currentState));
+    public void update(ClimberConstants.ClimberState currentState) {
+        this.currentState = currentState;
+        currentFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - climberCurrentPitch.getDegrees());
+        currentStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(climberCurrentPitch.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), getStringLengthMeters(motor, TalonFXSignal.POSITION)).getDegrees());
+        currentStringPositionLigament.setLength(getStringLengthMeters(motor, TalonFXSignal.POSITION));
+        setTargetPosition();
         update();
     }
 
@@ -92,19 +91,20 @@ public class ClimberVisualization {
      * Logs the mechanism.
      */
     public void update() {
+        climberCurrentPitch = getClimberFirstJointPitch(getStringLengthMeters(motor, TalonFXSignal.POSITION));
+        climberTargetPitch = getClimberFirstJointPitch(getStringLengthMeters(motor, TalonFXSignal.CLOSED_LOOP_REFERENCE));
         Logger.recordOutput(key, mechanism);
+        Logger.recordOutput("Poses/Components/" + name + "FirstJointPose", climberCurrentPitch);
+        Logger.recordOutput("Poses/Components/" + name + "secondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(firstJointOriginPoint, climberCurrentPitch), currentState));
     }
 
     /**
      * Sets the target climber arm angle and the target string angle but doesn't log the mechanism.
-     *
-     * @param targetClimberAngle       the target climber arm angle
-     * @param targetStringLengthMeters the current string length in meters used to calculate the target string angle
      */
-    public void setTargetPosition(Rotation2d targetClimberAngle, double targetStringLengthMeters) {
-        targetFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - targetClimberAngle.getDegrees());
-        targetStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(targetClimberAngle.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), targetStringLengthMeters).getDegrees());
-        targetStringPositionLigament.setLength(targetStringLengthMeters);
+    public void setTargetPosition() {
+        targetFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - climberTargetPitch.getDegrees());
+        targetStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(climberTargetPitch.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), getStringLengthMeters(motor, TalonFXSignal.CLOSED_LOOP_REFERENCE)).getDegrees());
+        targetStringPositionLigament.setLength(getStringLengthMeters(motor, TalonFXSignal.CLOSED_LOOP_REFERENCE));
     }
 
     private Pose3d getClimberSecondJointPose(Pose3d firstJointPose, ClimberConstants.ClimberState currentState) {
@@ -133,5 +133,28 @@ public class ClimberVisualization {
         return Rotation2d.fromRadians(
                 Math.asin(climberAngle.getSin() * stringLengthMeters / ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS) + ClimberConstants.STRING_ANGLE_ADDITION.getRadians()
         );
+    }
+
+    Rotation2d getClimberCurrentPitch() {
+        return climberCurrentPitch;
+    }
+
+    private Rotation2d getClimberFirstJointPitch(double stringLength) {
+        final double numeratorCalculation =
+                Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS, 2)
+                        + Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS, 2)
+                        - Math.pow(stringLength, 2);
+        final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
+        final double division = numeratorCalculation / denominatorCalculation;
+        final double angle = Math.acos(division) + ClimberConstants.FIRST_JOINT_ANGLE_ADDITION.getRadians();
+        return Rotation2d.fromRadians(angle);
+    }
+
+    private double getStringLengthMeters(TalonFXMotor motor, TalonFXSignal signal) {
+        return toMeters(motor.getSignal(signal)) + ClimberConstants.STRING_LENGTH_ADDITION_METERS;
+    }
+
+    private double toMeters(double rotations) {
+        return Conversions.rotationsToDistance(rotations, ClimberConstants.DRUM_DIAMETER_METERS);
     }
 }

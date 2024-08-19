@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-import org.trigon.utilities.Conversions;
 
 public class Climber extends MotorSubsystem {
     private final TalonFXMotor
@@ -32,11 +31,6 @@ public class Climber extends MotorSubsystem {
             ).withSlot(ClimberConstants.ON_CHAIN_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private ClimberConstants.ClimberState currentState = ClimberConstants.ClimberState.RESTING;
-    private Rotation2d
-            rightClimberCurrentPitch,
-            rightClimberTargetPitch,
-            leftClimberCurrentPitch,
-            leftClimberTargetPitch;
 
     public Climber() {
         setName("Climber");
@@ -46,10 +40,6 @@ public class Climber extends MotorSubsystem {
     public void periodic() {
         rightMotor.update();
         leftMotor.update();
-        rightClimberCurrentPitch = getClimberFirstJointPitch(getStringLengthMeters(rightMotor, TalonFXSignal.POSITION));
-        rightClimberTargetPitch = getClimberFirstJointPitch(getStringLengthMeters(rightMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE));
-        leftClimberCurrentPitch = getClimberFirstJointPitch(getStringLengthMeters(leftMotor, TalonFXSignal.POSITION));
-        leftClimberTargetPitch = getClimberFirstJointPitch(getStringLengthMeters(leftMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE));
         updateMechanisms();
     }
 
@@ -104,10 +94,10 @@ public class Climber extends MotorSubsystem {
     void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByRobotWeight) {
         rightMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetRightPositionMeters)
-                .withFeedForward(calculateFeedforward(rightClimberCurrentPitch, affectedByRobotWeight)));
+                .withFeedForward(calculateFeedforward(ClimberConstants.RIGHT_MECHANISM.getClimberCurrentPitch(), affectedByRobotWeight)));
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionMeters)
-                .withFeedForward(calculateFeedforward(leftClimberCurrentPitch, affectedByRobotWeight)));
+                .withFeedForward(calculateFeedforward(ClimberConstants.LEFT_MECHANISM.getClimberCurrentPitch(), affectedByRobotWeight)));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
@@ -121,38 +111,7 @@ public class Climber extends MotorSubsystem {
     }
 
     private void updateMechanisms() {
-        ClimberConstants.RIGHT_MECHANISM.update(
-                rightClimberCurrentPitch,
-                rightClimberTargetPitch,
-                getStringLengthMeters(rightMotor, TalonFXSignal.POSITION),
-                getStringLengthMeters(rightMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE),
-                currentState
-        );
-        ClimberConstants.LEFT_MECHANISM.update(
-                leftClimberCurrentPitch,
-                leftClimberTargetPitch,
-                getStringLengthMeters(leftMotor, TalonFXSignal.POSITION),
-                getStringLengthMeters(leftMotor, TalonFXSignal.CLOSED_LOOP_REFERENCE),
-                currentState
-        );
-    }
-
-    Rotation2d getClimberFirstJointPitch(double stringLength) {
-        final double numeratorCalculation =
-                Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS, 2)
-                        + Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS, 2)
-                        - Math.pow(stringLength, 2);
-        final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
-        final double division = numeratorCalculation / denominatorCalculation;
-        final double angle = Math.acos(division) + ClimberConstants.FIRST_JOINT_ANGLE_ADDITION.getRadians();
-        return Rotation2d.fromRadians(angle);
-    }
-
-    private double getStringLengthMeters(TalonFXMotor motor, TalonFXSignal signal) {
-        return toMeters(motor.getSignal(signal)) + ClimberConstants.STRING_LENGTH_ADDITION_METERS;
-    }
-
-    private double toMeters(double rotations) {
-        return Conversions.rotationsToDistance(rotations, ClimberConstants.DRUM_DIAMETER_METERS);
+        ClimberConstants.RIGHT_MECHANISM.update(currentState);
+        ClimberConstants.LEFT_MECHANISM.update(currentState);
     }
 }
