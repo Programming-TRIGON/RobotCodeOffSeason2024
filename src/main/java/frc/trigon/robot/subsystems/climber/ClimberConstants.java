@@ -46,23 +46,23 @@ public class ClimberConstants {
             MAX_CLIMBING_VELOCITY = 1,
             MAX_CLIMBING_ACCELERATION = 1;
     private static final double //TODO: calibrate
-            GROUNDED_P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_P = RobotHardwareStats.isSimulation() ? 500 : 0,
             GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0046109 : 0,
+            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.7858 : 0,
+            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17776 : 0;
     static final double
             GROUNDED_A = 0,
             GROUNDED_B = 0,
             GROUNDED_C = 0;
     private static final double //TODO: calibrate
-            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 500 : 0,
             ON_CHAIN_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? 0.0046109 : 0,
+            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? 8.7858 : 0,
+            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? 0.17776 : 0;
     static final double
             ON_CHAIN_A = 0,
             ON_CHAIN_B = 0,
