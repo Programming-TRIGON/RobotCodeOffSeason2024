@@ -93,18 +93,20 @@ public class Climber extends MotorSubsystem {
     void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByRobotWeight) {
         rightMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetRightPositionMeters)
-                .withFeedForward(calculateFeedforward(rightMotor)));
+                .withFeedForward(calculateFeedforward(rightMotor, affectedByRobotWeight)));
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionMeters)
-                .withFeedForward(calculateFeedforward(leftMotor)));
+                .withFeedForward(calculateFeedforward(leftMotor, affectedByRobotWeight)));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
         return affectedByRobotWeight ? climbingPositionRequest : nonClimbingPositionRequest;
     }
 
-    private double calculateFeedforward(TalonFXMotor motor) {
-        return ClimberConstants.A * Math.pow(motor.getSignal(TalonFXSignal.POSITION), 2) + ClimberConstants.B * motor.getSignal(TalonFXSignal.POSITION) + ClimberConstants.C;
+    private double calculateFeedforward(TalonFXMotor motor, boolean affectedByRobotWeight) {
+        return affectedByRobotWeight ?
+                ClimberConstants.GROUNDED_A * Math.pow(motor.getSignal(TalonFXSignal.POSITION), 2) + ClimberConstants.GROUNDED_B * motor.getSignal(TalonFXSignal.POSITION) + ClimberConstants.GROUNDED_C
+                : ClimberConstants.ON_CHAIN_A * Math.pow(motor.getSignal(TalonFXSignal.POSITION), 2) + ClimberConstants.ON_CHAIN_B * motor.getSignal(TalonFXSignal.POSITION) + ClimberConstants.ON_CHAIN_C;
     }
 
     private void updateMechanisms() {

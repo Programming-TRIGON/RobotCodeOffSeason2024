@@ -52,6 +52,10 @@ public class ClimberConstants {
             GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double
+            GROUNDED_A = 0,
+            GROUNDED_B = 0,
+            GROUNDED_C = 0;
     private static final double //TODO: calibrate
             ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_I = RobotHardwareStats.isSimulation() ? 0 : 0,
@@ -59,6 +63,10 @@ public class ClimberConstants {
             ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double
+            ON_CHAIN_A = 0,
+            ON_CHAIN_B = 0,
+            ON_CHAIN_C = 0;
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;
@@ -104,10 +112,6 @@ public class ClimberConstants {
     static final double MECHANISM_STARTING_ANGLE = 180;
     static final double STRING_CONNECTION_LIGAMENT_LENGTH = 0.07;
     static final double STRING_CONNECTION_LIGAMENT_ANGLE = -50;
-    static final double
-            A = 0,
-            B = 0,
-            C = 0;
     static final ClimberVisualization
             RIGHT_MECHANISM = new ClimberVisualization(
             "RightClimberMechanism",
