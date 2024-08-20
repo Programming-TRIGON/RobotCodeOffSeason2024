@@ -41,6 +41,7 @@ public class AmpAlignerConstants {
     private static final Rotation2d
             AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
             AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(180 - 24);
+    private static final boolean SIMULATE_GRAVITY = true;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
             GEAR_RATIO,
@@ -48,7 +49,7 @@ public class AmpAlignerConstants {
             AMP_ALIGNER_MASS_KILOGRAMS,
             AMP_ALIGNER_MINIMUM_ANGLE,
             AMP_ALIGNER_MAXIMUM_ANGLE,
-            true
+            SIMULATE_GRAVITY
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
