@@ -6,9 +6,7 @@
 package frc.trigon.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.Commands;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
@@ -61,16 +59,6 @@ public class RobotContainer {
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
-
-        OperatorConstants.OPERATOR_CONTROLLER.s().whileTrue(ShooterCommands.getSetTargetVelocity(50, 50));
-        OperatorConstants.OPERATOR_CONTROLLER.p().whileTrue(PitcherCommands.getSetTargetPitchCommand(Rotation2d.fromDegrees(50)));
-        OperatorConstants.OPERATOR_CONTROLLER.t().whileTrue(AmpAlignerCommands.getSetTargetAngleCommand(Rotation2d.fromDegrees(90)));
-        OperatorConstants.OPERATOR_CONTROLLER.y().whileTrue(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN));
-
-        OperatorConstants.OPERATOR_CONTROLLER.z().whileTrue(AMP_ALIGNER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kForward));
-        OperatorConstants.OPERATOR_CONTROLLER.x().whileTrue(AMP_ALIGNER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kReverse));
-        OperatorConstants.OPERATOR_CONTROLLER.c().whileTrue(AMP_ALIGNER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kForward));
-        OperatorConstants.OPERATOR_CONTROLLER.v().whileTrue(AMP_ALIGNER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kReverse));
     }
 
     private void buildAutoChooser() {
