@@ -2,11 +2,20 @@ package frc.trigon.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
+import org.trigon.commands.NetworkTablesCommand;
 
 public class IntakeCommands {
-    public static Command getSetTargetStateAndWaitCommand(IntakeConstants.IntakeState intakeState) {
+    public static Command getDebuggingCommand() {
+        return new NetworkTablesCommand(
+                IntakeCommands::getSetTargetVoltageCommand,
+                false,
+                "Debugging/TargetDebuggingIntakeVoltage"
+        );
+    }
+    
+    public static Command getCollectionCommand() {
         return new SequentialCommandGroup(
-                getSetTargetStateCommand(intakeState),
+                getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECTING),
                 getWaitCommand().andThen(getStopIntakeCommand())
         );
     }
@@ -15,9 +24,10 @@ public class IntakeCommands {
         if (targetState == IntakeConstants.IntakeState.COLLECTING) {
             return new FunctionalCommand(
                     () -> RobotContainer.INTAKE.setTargetState(targetState),
-                    () -> RobotContainer.INTAKE.setBrake(true),
+                    () -> {
+                    },
                     (interrupted) -> {
-                        RobotContainer.INTAKE.stop();
+                        RobotContainer.INTAKE.sendStaticBrakeRequest();
                         RobotContainer.INTAKE.indicateCollection();
                     },
                     RobotContainer.INTAKE::hasNote,
@@ -43,7 +53,6 @@ public class IntakeCommands {
     }
 
     private static Command getWaitCommand() {
-        RobotContainer.INTAKE.setBrake(true);
-        return new WaitCommand(IntakeConstants.WAIT_COMMAND_SECONDS);
+        return new WaitCommand(IntakeConstants.COLLECTION_CONFERMATION_SECONDS);
     }
 }

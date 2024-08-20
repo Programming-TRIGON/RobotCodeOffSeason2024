@@ -1,5 +1,6 @@
 package frc.trigon.robot.subsystems.intake;
 
+import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.controls.VoltageOut;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -7,11 +8,12 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
 public class Intake extends MotorSubsystem {
-    private IntakeConstants.IntakeState targetState;
     private final TalonFXMotor
             masterMotor = IntakeConstants.MASTER_MOTOR,
             followerMotor = IntakeConstants.FOLLOWER_MOTOR;
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(IntakeConstants.FOC_ENABLED);
+    private final StaticBrake staticBrakeRequest = new StaticBrake();
+    private IntakeConstants.IntakeState targetState;
 
     public Intake() {
         setName("Intake");
@@ -40,6 +42,11 @@ public class Intake extends MotorSubsystem {
         return targetState;
     }
 
+    void sendStaticBrakeRequest() {
+        masterMotor.setControl(staticBrakeRequest);
+        followerMotor.setControl(staticBrakeRequest);
+    }
+
     void setTargetState(IntakeConstants.IntakeState targetState) {
         this.targetState = targetState;
         setTargetVoltage(targetState.voltage);
@@ -51,7 +58,7 @@ public class Intake extends MotorSubsystem {
     }
 
     boolean hasNote() {
-        return IntakeConstants.BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS).getAsBoolean();
+        return IntakeConstants.BOOLEAN_EVENT.getAsBoolean();
     }
 
     /**

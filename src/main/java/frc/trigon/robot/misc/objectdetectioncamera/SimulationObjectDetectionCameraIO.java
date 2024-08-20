@@ -108,7 +108,7 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
     }
 
     private boolean isEjecting() {
-        return RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.EJECTING;
+        return RobotContainer.INTAKE.getTargetState() != IntakeConstants.IntakeState.COLLECTING;
     }
 
     private boolean isCollecting() {
