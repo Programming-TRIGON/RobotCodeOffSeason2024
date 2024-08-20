@@ -25,24 +25,22 @@ public class AmpAlignerConstants {
             P = RobotHardwareStats.isSimulation() ? 5 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0.13729 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 5.7088 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0.13025 : 0;
-    static final double KG = RobotHardwareStats.isSimulation() ? 0.007923 : 0;
+            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double KG = 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 52;
     static final boolean FOC_ENABLED = true;
-    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(24);
-    static final double LIMIT_SWITCH_REPEAT_TIME_THRESHOLD_SECONDS = 0.1;
 
     private static final int MOTOR_AMOUNT = 1;
     private static final DCMotor GEARBOX = DCMotor.getFalcon500Foc(MOTOR_AMOUNT);
     private static final double AMP_ALIGNER_MASS_KILOGRAMS = 1.1;
     public static final double AMP_ALIGNER_LENGTH_METERS = 0.52;
     private static final Rotation2d
-            AMP_ALIGNER_MINIMUM_ANGLE = LIMIT_SWITCH_PRESSED_ANGLE,
-            AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(180);
+            AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
+            AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(180 - 24);
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
             GEAR_RATIO,
@@ -58,6 +56,9 @@ public class AmpAlignerConstants {
             Units.Volts.of(3),
             Units.Second.of(1000)
     );
+
+    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);//180 - 24
+    static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
 
     static {
         configureMotor();
@@ -101,8 +102,8 @@ public class AmpAlignerConstants {
     }
 
     public enum AmpAlignerState {
-        OPENED(AMP_ALIGNER_MAXIMUM_ANGLE),
-        CLOSED(AMP_ALIGNER_MINIMUM_ANGLE);
+        OPEN(Rotation2d.fromDegrees(0)),
+        CLOSE(Rotation2d.fromDegrees(156));
 
         public final Rotation2d targetAngle;
 

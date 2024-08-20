@@ -20,7 +20,7 @@ public class AmpAligner extends MotorSubsystem {
     private final TalonFXMotor motor = AmpAlignerConstants.MOTOR;
     private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
-    private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSED;
+    private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSE;
 
     public AmpAligner() {
         setName("AmpAligner");
@@ -71,19 +71,14 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     void setTargetAngle(Rotation2d targetAngle) {
-        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointTargetAngle(targetAngle);
         motor.setControl(positionRequest
                 .withPosition(targetAngle.getRotations())
-                .withFeedForward(calculateFeedForward())
+                .withFeedForward(calculateKGOutput())
         );
     }
 
-    void setMotorFeedForwardFromCurrentAngle() {
-        motor.setControl(positionRequest.withFeedForward(calculateFeedForward()));
-    }
-
     private void configureLimitSwitchTrigger() {
-        final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitReverseLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_REPEAT_TIME_THRESHOLD_SECONDS);
+        final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitReverseLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
         hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())));
     }
 
@@ -91,7 +86,7 @@ public class AmpAligner extends MotorSubsystem {
         return motor.getSignal(TalonFXSignal.REVERSE_LIMIT) == 1;
     }
 
-    private double calculateFeedForward() {
+    private double calculateKGOutput() {
         return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
     }
 
@@ -100,6 +95,7 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private void updateMechanism() {
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointTargetAngle(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
         PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointCurrentAngle(getCurrentAngle());
     }
 }

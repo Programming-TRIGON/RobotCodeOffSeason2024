@@ -15,6 +15,7 @@ import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
@@ -25,8 +26,8 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
     public static final Swerve SWERVE = new Swerve();
-    public static final Shooter SHOOTER = new Shooter();
     public static final Pitcher PITCHER = new Pitcher();
+    public static final Shooter SHOOTER = new Shooter();
     public static final AmpAligner AMP_ALIGNER = new AmpAligner();
     public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator();
     private LoggedDashboardChooser<Command> autoChooser;
@@ -50,7 +51,9 @@ public class RobotContainer {
 
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+        AMP_ALIGNER.setDefaultCommand(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE));
         PITCHER.setDefaultCommand(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.DEFAULT_PITCH));
+        SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
     }
 
     private void bindControllerCommands() {
@@ -62,6 +65,8 @@ public class RobotContainer {
         OperatorConstants.OPERATOR_CONTROLLER.s().whileTrue(ShooterCommands.getSetTargetVelocity(50, 50));
         OperatorConstants.OPERATOR_CONTROLLER.p().whileTrue(PitcherCommands.getSetTargetPitchCommand(Rotation2d.fromDegrees(50)));
         OperatorConstants.OPERATOR_CONTROLLER.t().whileTrue(AmpAlignerCommands.getSetTargetAngleCommand(Rotation2d.fromDegrees(90)));
+        OperatorConstants.OPERATOR_CONTROLLER.y().whileTrue(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN));
+
         OperatorConstants.OPERATOR_CONTROLLER.z().whileTrue(AMP_ALIGNER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kForward));
         OperatorConstants.OPERATOR_CONTROLLER.x().whileTrue(AMP_ALIGNER.getQuasistaticCharacterizationCommand(SysIdRoutine.Direction.kReverse));
         OperatorConstants.OPERATOR_CONTROLLER.c().whileTrue(AMP_ALIGNER.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kForward));

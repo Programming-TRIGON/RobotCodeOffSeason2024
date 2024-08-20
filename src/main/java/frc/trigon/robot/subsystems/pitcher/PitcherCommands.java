@@ -2,7 +2,6 @@ package frc.trigon.robot.subsystems.pitcher;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import org.trigon.commands.ExecuteEndCommand;
@@ -34,8 +33,10 @@ public class PitcherCommands {
     }
 
     public static Command getStopCommand() {
-        return new InstantCommand(
+        return new StartEndCommand(
                 RobotContainer.PITCHER::stop,
+                () -> {
+                },
                 RobotContainer.PITCHER
         );
     }

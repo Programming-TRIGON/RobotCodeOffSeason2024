@@ -36,7 +36,6 @@ public class ShooterConstants {
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0;
     private static final double GEAR_RATIO = 1;
-    static final boolean FOC_ENABLED = true;
 
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
@@ -55,12 +54,12 @@ public class ShooterConstants {
             Units.Second.of(1000)
     );
 
-    private static final double MAX_DISPLAYABLE_VELOCITY = 55;
+    private static final double MAX_DISPLAYABLE_VELOCITY = 100;
     static final SpeedMechanism2d
             RIGHT_MECHANISM = new SpeedMechanism2d("RightShooterMechanism", MAX_DISPLAYABLE_VELOCITY),
             LEFT_MECHANISM = new SpeedMechanism2d("LeftShooterMechanism", MAX_DISPLAYABLE_VELOCITY);
 
-    public static final double WHEEL_DIAMETER_METERS = Units.Meters.convertFrom(4, Units.Inch);
+    public static final double WHEEL_DIAMETER_METERS = edu.wpi.first.math.util.Units.inchesToMeters(4);
     static final double LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO = 1.3;
 
     static {

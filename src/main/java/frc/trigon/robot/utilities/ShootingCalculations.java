@@ -174,36 +174,36 @@ public class ShootingCalculations {
      * @return the pitch the pitcher should reach in order to shoot to the shooting target
      */
     private Rotation2d calculateTargetPitch(double noteTangentialVelocity, boolean reachFromAbove, Translation2d currentTranslation, MirrorableRotation2d targetRobotAngle, MirrorableTranslation3d shootingTarget) {
-        final Pose3d endEffectorFieldRelativePose = calculateShooterEndEffectorFieldRelativePose(RobotContainer.PITCHER.getTargetPitch(), currentTranslation, targetRobotAngle);
-        final double endEffectorXYDistanceFromShootingTarget = endEffectorFieldRelativePose.getTranslation().toTranslation2d().getDistance(shootingTarget.get().toTranslation2d());
-        final double endEffectorHeightDifferenceFromTarget = shootingTarget.get().getZ() - endEffectorFieldRelativePose.getZ();
-        return calculateTargetPitchUsingProjectileMotion(noteTangentialVelocity, endEffectorXYDistanceFromShootingTarget, endEffectorHeightDifferenceFromTarget, reachFromAbove);
+        final Pose3d noteExitPointFieldRelativePose = calculateShooterNoteExitPointFieldRelativePose(RobotContainer.PITCHER.getTargetPitch(), currentTranslation, targetRobotAngle);
+        final double noteExitPointXYDistanceFromShootingTarget = noteExitPointFieldRelativePose.getTranslation().toTranslation2d().getDistance(shootingTarget.get().toTranslation2d());
+        final double noteExitPointHeightDifferenceFromTarget = shootingTarget.get().getZ() - noteExitPointFieldRelativePose.getZ();
+        return calculateTargetPitchUsingProjectileMotion(noteTangentialVelocity, noteExitPointXYDistanceFromShootingTarget, noteExitPointHeightDifferenceFromTarget, reachFromAbove);
     }
 
     /**
      * Calculates the pitch the pitcher should reach in order to shoot at the shooting target using projectile motion.
      * This will fully calculate the target pitch using physics.
      *
-     * @param noteTangentialVelocity                         the tangential velocity of the shooter
-     * @param shooterEndEffectorXYDistanceFromShootingTarget the xy distance from the shooting target to the shooter's end effector on the xy plane
-     * @param endEffectorHeightDifferenceFromTarget          the height difference between the shooter's end effector and the shooting target
-     * @param reachFromAbove                                 should we reach to point from above, with an arch, or from below, as fast as possible
-     *                                                       Shooting from above is useful for actions like delivery, whereas shooting from below is useful when we don't want to come from above, and in our case touch the upper speaker
+     * @param noteTangentialVelocity                           the tangential velocity of the shooter
+     * @param shooterNoteExitPointXYDistanceFromShootingTarget the xy distance from the shooting target to the shooter's end effector on the xy plane
+     * @param noteExitPointHeightDifferenceFromTarget          the height difference between the shooter's end effector and the shooting target
+     * @param reachFromAbove                                   should we reach to point from above, with an arch, or from below, as fast as possible
+     *                                                         Shooting from above is useful for actions like delivery, whereas shooting from below is useful when we don't want to come from above, and in our case touch the upper speaker
      * @return the pitch the robot should reach in order to shoot at the shooting target
      * @link <a href="https://en.wikipedia.org/wiki/Projectile_motion#Angle_%CE%B8_required_to_hit_coordinate_(x,_y)">Projectile Motion</a>
      */
-    private Rotation2d calculateTargetPitchUsingProjectileMotion(double noteTangentialVelocity, double shooterEndEffectorXYDistanceFromShootingTarget, double endEffectorHeightDifferenceFromTarget, boolean reachFromAbove) {
+    private Rotation2d calculateTargetPitchUsingProjectileMotion(double noteTangentialVelocity, double shooterNoteExitPointXYDistanceFromShootingTarget, double noteExitPointHeightDifferenceFromTarget, boolean reachFromAbove) {
         Logger.recordOutput("ShootingCalculations/NoteTangentialVelocity", noteTangentialVelocity);
-        Logger.recordOutput("ShootingCalculations/ShooterEndEffectorHeight", endEffectorHeightDifferenceFromTarget);
+        Logger.recordOutput("ShootingCalculations/ShooterNoteExitPointHeight", noteExitPointHeightDifferenceFromTarget);
         final double gForce = ShootingConstants.G_FORCE;
         final double velocitySquared = Math.pow(noteTangentialVelocity, 2);
         final double velocity4thPower = Math.pow(noteTangentialVelocity, 4);
-        final double distanceSquared = Math.pow(shooterEndEffectorXYDistanceFromShootingTarget, 2);
+        final double distanceSquared = Math.pow(shooterNoteExitPointXYDistanceFromShootingTarget, 2);
         final double squareRoot = Math.sqrt(
-                velocity4thPower - (gForce * ((gForce * distanceSquared) + (2 * velocitySquared * endEffectorHeightDifferenceFromTarget)))
+                velocity4thPower - (gForce * ((gForce * distanceSquared) + (2 * velocitySquared * noteExitPointHeightDifferenceFromTarget)))
         );
         final double numerator = reachFromAbove ? velocitySquared + squareRoot : velocitySquared - squareRoot;
-        final double denominator = gForce * shooterEndEffectorXYDistanceFromShootingTarget;
+        final double denominator = gForce * shooterNoteExitPointXYDistanceFromShootingTarget;
         final double fraction = numerator / denominator;
         double angleRadians = Math.atan(fraction);
         if (Double.isNaN(angleRadians) || Double.isInfinite(angleRadians) || angleRadians < 0)
@@ -222,11 +222,11 @@ public class ShootingCalculations {
      * @param robotAngle         the robot angle, to base off from
      * @return the shooter's end effector's 3d pose on the field
      */
-    public Pose3d calculateShooterEndEffectorFieldRelativePose(Rotation2d pitcherAngle, Translation2d currentTranslation, MirrorableRotation2d robotAngle) {
-        final Pose3d endEffectorSelfRelativePose = calculateShooterEndEffectorSelfRelativePose(pitcherAngle);
-        final Transform3d robotToEndEffector = endEffectorSelfRelativePose.minus(new Pose3d());
+    public Pose3d calculateShooterNoteExitPointFieldRelativePose(Rotation2d pitcherAngle, Translation2d currentTranslation, MirrorableRotation2d robotAngle) {
+        final Pose3d noteExitPointSelfRelativePose = calculateShooterNoteExitPointSelfRelativePose(pitcherAngle);
+        final Transform3d robotToNoteExitPoint = noteExitPointSelfRelativePose.minus(new Pose3d());
         final Pose3d currentPose = new Pose3d(new Pose2d(currentTranslation, robotAngle.get()));
-        return currentPose.transformBy(robotToEndEffector);
+        return currentPose.transformBy(robotToNoteExitPoint);
     }
 
     /**
@@ -237,9 +237,9 @@ public class ShootingCalculations {
      * @param pitcherAngle the pitcher angle, to base off from
      * @return the shooter's end effector's 3d pose relative to the robot
      */
-    private Pose3d calculateShooterEndEffectorSelfRelativePose(Rotation2d pitcherAngle) {
-        final Pose3d pivotPoint = ShootingConstants.ROBOT_RELATIVE_PIVOT_POINT.transformBy(new Transform3d(new Translation3d(), new Rotation3d(0, -pitcherAngle.getRadians(), 0)));
-        return pivotPoint.plus(ShootingConstants.PIVOT_POINT_TO_NOTE_EXIT_POSITION);
+    private Pose3d calculateShooterNoteExitPointSelfRelativePose(Rotation2d pitcherAngle) {
+        final Pose3d pivotPoint = ShootingConstants.ROBOT_RELATIVE_SHOOTING_PIVOT_POINT.transformBy(new Transform3d(new Translation3d(), new Rotation3d(0, -pitcherAngle.getRadians(), 0)));
+        return pivotPoint.plus(ShootingConstants.SHOOTING_PIVOT_POINT_TO_NOTE_EXIT_POSITION);
     }
 
     /**

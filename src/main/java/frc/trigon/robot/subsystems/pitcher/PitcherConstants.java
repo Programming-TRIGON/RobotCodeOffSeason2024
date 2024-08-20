@@ -49,8 +49,8 @@ public class PitcherConstants {
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double
-            MOTION_MAGIC_ACCELERATION = 1000,
-            MOTION_MAGIC_CRUISE_VELOCITY = 100;
+            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 5 : 0,
+            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 5 : 0;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
     private static final double GEAR_RATIO = 200;
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
@@ -66,6 +66,7 @@ public class PitcherConstants {
     private static final Rotation2d
             PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(12),
             PITCHER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(73);
+    private static final boolean SIMULATE_GRAVITY = true;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
             GEAR_RATIO,
@@ -73,7 +74,7 @@ public class PitcherConstants {
             PITCHER_MASS_KILOGRAMS,
             PITCHER_MINIMUM_ANGLE,
             PITCHER_MAXIMUM_ANGLE,
-            true
+            SIMULATE_GRAVITY
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
@@ -104,8 +105,8 @@ public class PitcherConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-//        config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED_VALUE;
-//        config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
+        config.MotorOutput.Inverted = MASTER_MOTOR_INVERTED_VALUE;
+        config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
         config.Slot0.kP = P;
         config.Slot0.kI = I;
@@ -120,9 +121,9 @@ public class PitcherConstants {
         config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
 
-//        config.Feedback.FeedbackRemoteSensorID = ENCODER_ID;
-//        config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
-//        config.Feedback.RotorToSensorRatio = GEAR_RATIO;
+        config.Feedback.FeedbackRemoteSensorID = ENCODER_ID;
+        config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
+        config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
         MASTER_MOTOR.applyConfiguration(config);
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);

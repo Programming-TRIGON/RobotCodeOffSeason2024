@@ -1,7 +1,7 @@
 package frc.trigon.robot.subsystems.shooter;
 
+import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -18,7 +18,7 @@ public class Shooter extends MotorSubsystem {
             rightMotor = ShooterConstants.RIGHT_MOTOR,
             leftMotor = ShooterConstants.LEFT_MOTOR;
     private final VelocityTorqueCurrentFOC velocityRequest = new VelocityTorqueCurrentFOC(0);
-    private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ShooterConstants.FOC_ENABLED);
+    private final TorqueCurrentFOC torqueRequest = new TorqueCurrentFOC(0);
 
     public Shooter() {
         setName("Shooter");
@@ -29,17 +29,11 @@ public class Shooter extends MotorSubsystem {
         log.motor("RightShooter")
                 .angularPosition(Units.Rotations.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
                 .angularVelocity(Units.RotationsPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
         log.motor("LeftShooter")
                 .angularPosition(Units.Rotations.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
                 .angularVelocity(Units.RotationsPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
                 .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
-    }
-
-    @Override
-    public void setBrake(boolean brake) {
-        rightMotor.setBrake(brake);
-        leftMotor.setBrake(brake);
     }
 
     @Override
@@ -59,8 +53,8 @@ public class Shooter extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
-        leftMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+        rightMotor.setControl(torqueRequest.withOutput(voltageMeasure.in(Units.Volts)));
+        leftMotor.setControl(torqueRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
     @Override
@@ -69,7 +63,8 @@ public class Shooter extends MotorSubsystem {
     }
 
     void reachTargetShootingVelocityFromShootingCalculations() {
-        final double targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond(),
+        final double
+                targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond(),
                 targetLeftVelocityRotationsPerSecond = targetRightVelocityRotationsPerSecond * ShooterConstants.LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO;
         setTargetVelocity(targetRightVelocityRotationsPerSecond, targetLeftVelocityRotationsPerSecond);
     }
