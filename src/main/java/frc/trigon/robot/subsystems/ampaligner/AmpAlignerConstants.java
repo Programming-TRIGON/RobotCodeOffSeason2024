@@ -59,6 +59,7 @@ public class AmpAlignerConstants {
 
     static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);//180 - 24
     static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
+    static final double ANGLE_TOLERANCE_DEGREES = 0.3;
 
     static {
         configureMotor();

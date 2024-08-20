@@ -19,6 +19,9 @@ public class Shooter extends MotorSubsystem {
             leftMotor = ShooterConstants.LEFT_MOTOR;
     private final VelocityTorqueCurrentFOC velocityRequest = new VelocityTorqueCurrentFOC(0);
     private final TorqueCurrentFOC torqueRequest = new TorqueCurrentFOC(0);
+    private double
+            targetRightVelocityRotationsPerSecond = 0,
+            targetLeftVelocityRotationsPerSecond = 0;
 
     public Shooter() {
         setName("Shooter");
@@ -62,6 +65,18 @@ public class Shooter extends MotorSubsystem {
         return ShooterConstants.SYSID_CONFIG;
     }
 
+    public boolean bothMotorsAtTargetVelocity() {
+        return atTargetRightVelocity() && atTargetLeftVelocity();
+    }
+
+    public boolean atTargetRightVelocity() {
+        return Math.abs(rightMotor.getSignal(TalonFXSignal.VELOCITY) - targetRightVelocityRotationsPerSecond) < ShooterConstants.VELOCITY_TOLERANCE;
+    }
+
+    public boolean atTargetLeftVelocity() {
+        return Math.abs(leftMotor.getSignal(TalonFXSignal.VELOCITY) - targetLeftVelocityRotationsPerSecond) < ShooterConstants.VELOCITY_TOLERANCE;
+    }
+
     void reachTargetShootingVelocityFromShootingCalculations() {
         final double
                 targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond(),
@@ -75,11 +90,13 @@ public class Shooter extends MotorSubsystem {
     }
 
     private void setTargetRightVelocity(double targetVelocityRotationsPerSecond) {
+        targetRightVelocityRotationsPerSecond = targetVelocityRotationsPerSecond;
         ShooterConstants.RIGHT_MECHANISM.setTargetVelocity(targetVelocityRotationsPerSecond);
         rightMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }
 
     private void setTargetLeftVelocity(double targetVelocityRotationsPerSecond) {
+        targetLeftVelocityRotationsPerSecond = targetVelocityRotationsPerSecond;
         ShooterConstants.LEFT_MECHANISM.setTargetVelocity(targetVelocityRotationsPerSecond);
         leftMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
     }

@@ -21,6 +21,7 @@ public class AmpAligner extends MotorSubsystem {
     private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(AmpAlignerConstants.FOC_ENABLED);
     private AmpAlignerConstants.AmpAlignerState targetState = AmpAlignerConstants.AmpAlignerState.CLOSE;
+    private Rotation2d targetAngle = Rotation2d.fromDegrees(0);
 
     public AmpAligner() {
         setName("AmpAligner");
@@ -65,12 +66,21 @@ public class AmpAligner extends MotorSubsystem {
         return targetState;
     }
 
+    public boolean atTargetState() {
+        return Math.abs(getCurrentAngle().getDegrees() - targetState.targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE_DEGREES;
+    }
+
+    public boolean atTargetAngle() {
+        return Math.abs(getCurrentAngle().getDegrees() - targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE_DEGREES;
+    }
+
     void setTargetState(AmpAlignerConstants.AmpAlignerState targetState) {
         this.targetState = targetState;
         setTargetAngle(targetState.targetAngle);
     }
 
     void setTargetAngle(Rotation2d targetAngle) {
+        this.targetAngle = targetAngle;
         motor.setControl(positionRequest
                 .withPosition(targetAngle.getRotations())
                 .withFeedForward(calculateKGOutput())

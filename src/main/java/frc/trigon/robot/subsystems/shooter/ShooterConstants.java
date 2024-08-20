@@ -61,6 +61,7 @@ public class ShooterConstants {
 
     public static final double WHEEL_DIAMETER_METERS = edu.wpi.first.math.util.Units.inchesToMeters(4);
     static final double LEFT_MOTOR_TO_RIGHT_MOTOR_RATIO = 1.3;
+    static final double VELOCITY_TOLERANCE = 0.3;
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION);
