@@ -22,9 +22,6 @@ public class ClimberVisualization {
             targetFirstJointLigament,
             currentStringPositionLigament,
             targetStringPositionLigament;
-    private Rotation2d
-            climberCurrentPitch,
-            climberTargetPitch;
     private ClimberConstants.ClimberState currentState;
 
     /**
@@ -54,8 +51,6 @@ public class ClimberVisualization {
         currentStringPositionLigament.append(new MechanismLigament2d("CurrentStringConnectionLigament", ClimberConstants.STRING_CONNECTION_LIGAMENT_LENGTH, ClimberConstants.STRING_CONNECTION_LIGAMENT_ANGLE, ClimberConstants.MECHANISM_LINE_WIDTH, stringColor));
         targetStringPositionLigament.append(new MechanismLigament2d("TargetStringConnectionLigament", ClimberConstants.STRING_CONNECTION_LIGAMENT_LENGTH, ClimberConstants.STRING_CONNECTION_LIGAMENT_ANGLE, ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
 
-        this.climberCurrentPitch = getClimberFirstJointPitch(getStringLengthMeters(0));
-        this.climberTargetPitch = getClimberFirstJointPitch(getStringLengthMeters(0));
         this.currentState = ClimberConstants.ClimberState.RESTING;
     }
 
@@ -68,35 +63,35 @@ public class ClimberVisualization {
      */
     public void update(ClimberConstants.ClimberState currentState, double currentPosition, double targetPosition) {
         this.currentState = currentState;
-        currentFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - climberCurrentPitch.getDegrees());
-        currentStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(climberCurrentPitch.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), getStringLengthMeters(currentPosition)).getDegrees());
+        Rotation2d currentPitch = getClimberFirstJointPitch(getStringLengthMeters(currentPosition));
+        Rotation2d targetPitch = getClimberFirstJointPitch(getStringLengthMeters(targetPosition));
+        currentFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - currentPitch.getDegrees());
+        currentStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(currentPitch.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), getStringLengthMeters(currentPosition)).getDegrees());
         currentStringPositionLigament.setLength(getStringLengthMeters(currentPosition));
-        setTargetPosition(targetPosition);
-        update(currentPosition, targetPosition);
+        setTargetPosition(targetPosition, targetPitch);
+        logMechanism(currentPitch);
     }
 
     /**
-     * Logs the mechanism, and updates the current pitch and target pitch.
+     * Logs the mechanism, and the poses.
      *
-     * @param currentPosition the current position of the climber
-     * @param targetPosition  the target position of the climber
+     * @param currentPitch the current pitch or the climber
      */
-    public void update(double currentPosition, double targetPosition) {
-        climberCurrentPitch = getClimberFirstJointPitch(getStringLengthMeters(currentPosition));
-        climberTargetPitch = getClimberFirstJointPitch(getStringLengthMeters(targetPosition));
+    public void logMechanism(Rotation2d currentPitch) {
         Logger.recordOutput(key, mechanism);
-        Logger.recordOutput("Poses/Components/" + name + "FirstJointPose", climberCurrentPitch);
-        Logger.recordOutput("Poses/Components/" + name + "secondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(firstJointOriginPoint, climberCurrentPitch), currentState));
+        Logger.recordOutput("Poses/Components/" + name + "FirstJointPose", getClimberFirstJointPose(firstJointOriginPoint, currentPitch));
+        Logger.recordOutput("Poses/Components/" + name + "secondJointPose", getClimberSecondJointPose(getClimberFirstJointPose(firstJointOriginPoint, currentPitch), currentState));
     }
 
     /**
      * Sets the target climber arm angle and the target string angle but doesn't log the mechanism.
      *
      * @param targetPosition the target position of the climber
+     * @param targetPitch    the target pitch of the climber
      */
-    public void setTargetPosition(double targetPosition) {
-        targetFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - climberTargetPitch.getDegrees());
-        targetStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(climberTargetPitch.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), getStringLengthMeters(targetPosition)).getDegrees());
+    public void setTargetPosition(double targetPosition, Rotation2d targetPitch) {
+        targetFirstJointLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - targetPitch.getDegrees());
+        targetStringPositionLigament.setAngle(ClimberConstants.MECHANISM_STARTING_ANGLE - calculateStringAngle(targetPitch.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION), getStringLengthMeters(targetPosition)).getDegrees());
         targetStringPositionLigament.setLength(getStringLengthMeters(targetPosition));
     }
 
@@ -126,10 +121,6 @@ public class ClimberVisualization {
         return Rotation2d.fromRadians(
                 Math.asin(climberAngle.getSin() * stringLengthMeters / ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS) + ClimberConstants.STRING_ANGLE_ADDITION.getRadians()
         );
-    }
-
-    Rotation2d getClimberCurrentPitch() {
-        return climberCurrentPitch;
     }
 
     private Rotation2d getClimberFirstJointPitch(double stringLength) {
