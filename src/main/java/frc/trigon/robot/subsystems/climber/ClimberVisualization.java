@@ -55,7 +55,7 @@ public class ClimberVisualization {
     }
 
     /**
-     * Updates the current climber arm angle and the string angle and the string length, then logs the mechanism.
+     * Updates the current climber arm angle, string angle, and string length, then logs the mechanism.
      *
      * @param currentState    the current climber state used to determine the second joint pose
      * @param currentPosition the current position of the climber
