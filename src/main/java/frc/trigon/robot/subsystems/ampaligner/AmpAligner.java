@@ -75,6 +75,10 @@ public class AmpAligner extends MotorSubsystem {
         return Math.abs(getCurrentAngle().getDegrees() - targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE.getDegrees();
     }
 
+    public Rotation2d getCurrentAngle() {
+        return Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION));
+    }
+
     void setTargetState(AmpAlignerConstants.AmpAlignerState targetState) {
         this.targetState = targetState;
         setTargetAngle(targetState.targetAngle);
@@ -101,10 +105,6 @@ public class AmpAligner extends MotorSubsystem {
         if (!RobotHardwareStats.isSimulation())
             return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
         return 0;
-    }
-
-    private Rotation2d getCurrentAngle() {
-        return Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.POSITION));
     }
 
     private void updateMechanism() {

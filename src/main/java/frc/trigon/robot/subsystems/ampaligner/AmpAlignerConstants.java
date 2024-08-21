@@ -3,6 +3,8 @@ package frc.trigon.robot.subsystems.ampaligner;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -59,6 +61,8 @@ public class AmpAlignerConstants {
             Units.Volts.of(4),
             Units.Second.of(1000)
     );
+
+    public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(0.5039, 0, 0.0434, new Rotation3d());
 
     static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(156);
     static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
