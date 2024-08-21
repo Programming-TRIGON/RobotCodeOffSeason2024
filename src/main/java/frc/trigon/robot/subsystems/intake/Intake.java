@@ -27,14 +27,9 @@ public class Intake extends MotorSubsystem {
     }
 
     @Override
-    public void setBrake(boolean brake) {
-        masterMotor.setBrake(brake);
-        followerMotor.setBrake(brake);
-    }
-
-    @Override
     public void stop() {
         masterMotor.stopMotor();
+        targetState = IntakeConstants.IntakeState.STOPPING;
         IntakeConstants.MECHANISM.setTargetVelocity(0);
     }
 

@@ -13,6 +13,7 @@ import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -41,7 +42,7 @@ public class RobotContainer {
 
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
-        INTAKE.setDefaultCommand(IntakeCommands.getSetTargetVoltageCommand(0));
+        INTAKE.setDefaultCommand(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOPPING));
     }
 
     private void bindControllerCommands() {

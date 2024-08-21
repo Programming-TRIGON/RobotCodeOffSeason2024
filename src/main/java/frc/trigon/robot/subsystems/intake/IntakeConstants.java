@@ -73,7 +73,7 @@ public class IntakeConstants {
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
-    static final double COLLECTION_CONFERMATION_SECONDS = 1;
+    static final double NOTE_STOPPING_SECONDS = 1;
 
     static {
         configureMasterMotor();
@@ -120,6 +120,7 @@ public class IntakeConstants {
     public enum IntakeState {
         COLLECTING(10), //TODO: calibrate
         EJECTING(-4), //TODO: calibrate
+        STOPPING(0),
         SHOT_FEEDING(8), //TODO: calibrate
         AMP_FEEDING(4); //TODO: calibrate
 

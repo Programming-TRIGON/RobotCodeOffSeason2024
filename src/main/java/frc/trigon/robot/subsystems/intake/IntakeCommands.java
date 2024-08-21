@@ -12,29 +12,16 @@ public class IntakeCommands {
                 "Debugging/TargetDebuggingIntakeVoltage"
         );
     }
-    
-    public static Command getCollectionCommand() {
-        return new SequentialCommandGroup(
-                getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECTING),
-                getWaitCommand().andThen(getStopIntakeCommand())
-        );
-    }
 
     public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
         if (targetState == IntakeConstants.IntakeState.COLLECTING) {
-            return new FunctionalCommand(
-                    () -> RobotContainer.INTAKE.setTargetState(targetState),
-                    () -> {
-                    },
-                    (interrupted) -> {
-                        RobotContainer.INTAKE.sendStaticBrakeRequest();
-                        RobotContainer.INTAKE.indicateCollection();
-                    },
-                    RobotContainer.INTAKE::hasNote,
-                    RobotContainer.INTAKE
-            );
+            return getCollectionCommand();
         }
-        return getSetTargetVoltageCommand(targetState.voltage);
+        return new StartEndCommand(
+                () -> RobotContainer.INTAKE.setTargetState(targetState),
+                RobotContainer.INTAKE::stop,
+                RobotContainer.INTAKE
+        );
     }
 
     public static Command getSetTargetVoltageCommand(double targetVoltage) {
@@ -45,14 +32,32 @@ public class IntakeCommands {
         );
     }
 
-    public static Command getStopIntakeCommand() {
+    private static Command getStopIntakeCommand() {
         return new InstantCommand(
                 RobotContainer.INTAKE::stop,
                 RobotContainer.INTAKE
         );
     }
 
-    private static Command getWaitCommand() {
-        return new WaitCommand(IntakeConstants.COLLECTION_CONFERMATION_SECONDS);
+    private static Command getCollectionCommand() {
+        return new SequentialCommandGroup(
+                new FunctionalCommand(
+                        () -> RobotContainer.INTAKE.setTargetState(IntakeConstants.IntakeState.COLLECTING),
+                        () -> {
+                        },
+                        (interrupted) -> {
+                            RobotContainer.INTAKE.sendStaticBrakeRequest();
+                            RobotContainer.INTAKE.indicateCollection();
+                        },
+                        RobotContainer.INTAKE::hasNote,
+                        RobotContainer.INTAKE
+                ),
+                getWaitForNoteToStopCommand().andThen(getStopIntakeCommand())
+        );
+    }
+
+
+    private static Command getWaitForNoteToStopCommand() {
+        return new WaitCommand(IntakeConstants.NOTE_STOPPING_SECONDS);
     }
 }
