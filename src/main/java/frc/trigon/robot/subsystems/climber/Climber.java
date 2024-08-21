@@ -10,26 +10,27 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.utilities.Conversions;
 
 public class Climber extends MotorSubsystem {
     private final TalonFXMotor
             rightMotor = ClimberConstants.RIGHT_MOTOR,
             leftMotor = ClimberConstants.LEFT_MOTOR;
     private final DynamicMotionMagicVoltage
-            nonClimbingPositionRequest = new DynamicMotionMagicVoltage(
+            groundedPositionRequest = new DynamicMotionMagicVoltage(
             0,
-            ClimberConstants.MAX_NON_CLIMBING_VELOCITY,
-            ClimberConstants.MAX_NON_CLIMBING_ACCELERATION,
+            ClimberConstants.MAX_GROUNDED_VELOCITY,
+            ClimberConstants.MAX_GROUNDED_ACCELERATION,
             0
     ).withSlot(ClimberConstants.GROUNDED_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC),
-            climbingPositionRequest = new DynamicMotionMagicVoltage(
+            onChainPositionRequest = new DynamicMotionMagicVoltage(
                     0,
-                    ClimberConstants.MAX_CLIMBING_VELOCITY,
-                    ClimberConstants.MAX_CLIMBING_ACCELERATION,
+                    ClimberConstants.MAX_ON_CHAIN_VELOCITY,
+                    ClimberConstants.MAX_ON_CHAIN_ACCELERATION,
                     0
             ).withSlot(ClimberConstants.ON_CHAIN_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
-    private ClimberConstants.ClimberState currentState = ClimberConstants.ClimberState.RESTING;
+    private ClimberConstants.ClimberState targetState = ClimberConstants.ClimberState.RESTING;
 
     public Climber() {
         setName("Climber");
@@ -44,8 +45,8 @@ public class Climber extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        driveRightMotor(voltageMeasure);
-        driveLeftMotor(voltageMeasure);
+        driveRightMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceVoltage(rightMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight))));
+        driveLeftMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceVoltage(leftMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight))));
     }
 
     @Override
@@ -53,11 +54,11 @@ public class Climber extends MotorSubsystem {
         log.motor("RightClimberMotor")
                 .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
                 .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceVoltage(rightMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight)));
         log.motor("LeftClimberMotor")
                 .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
                 .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceVoltage(leftMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight)));
     }
 
     @Override
@@ -77,6 +78,11 @@ public class Climber extends MotorSubsystem {
         leftMotor.stopMotor();
     }
 
+    public boolean atTargetState() {
+        return Math.abs(toMeters(rightMotor.getSignal(TalonFXSignal.POSITION)) - targetState.positionMeters) < ClimberConstants.CLIMBER_TOLERANCE_METERS &&
+                Math.abs(toMeters(leftMotor.getSignal(TalonFXSignal.POSITION)) - targetState.positionMeters) < ClimberConstants.CLIMBER_TOLERANCE_METERS;
+    }
+
     void driveRightMotor(Measure<Voltage> voltageMeasure) {
         rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
@@ -86,7 +92,7 @@ public class Climber extends MotorSubsystem {
     }
 
     void setTargetState(ClimberConstants.ClimberState targetState) {
-        currentState = targetState;
+        this.targetState = targetState;
         setTargetPosition(targetState.positionMeters, targetState.positionMeters, targetState.affectedByRobotWeight);
     }
 
@@ -100,7 +106,7 @@ public class Climber extends MotorSubsystem {
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
-        return affectedByRobotWeight ? climbingPositionRequest : nonClimbingPositionRequest;
+        return affectedByRobotWeight ? onChainPositionRequest : groundedPositionRequest;
     }
 
     private double calculateStayingInPlaceVoltage(double positionRotations, boolean affectedByRobotWeight) {
@@ -114,7 +120,11 @@ public class Climber extends MotorSubsystem {
     }
 
     private void updateMechanisms() {
-        ClimberConstants.RIGHT_MECHANISM.update(currentState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
-        ClimberConstants.LEFT_MECHANISM.update(currentState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
+        ClimberConstants.RIGHT_MECHANISM.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
+        ClimberConstants.LEFT_MECHANISM.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
+    }
+
+    double toMeters(double rotations) {
+        return Conversions.rotationsToDistance(rotations, ClimberConstants.DRUM_DIAMETER_METERS);
     }
 }

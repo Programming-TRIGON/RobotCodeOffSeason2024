@@ -41,10 +41,10 @@ public class ClimberConstants {
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
     static final double //TODO: calibrate
-            MAX_NON_CLIMBING_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 1,
-            MAX_NON_CLIMBING_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 1,
-            MAX_CLIMBING_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 1,
-            MAX_CLIMBING_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 1;
+            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 1,
+            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 1,
+            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 1,
+            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 1;
     private static final double //TODO: calibrate
             GROUNDED_P = RobotHardwareStats.isSimulation() ? 500 : 0,
             GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
@@ -53,9 +53,9 @@ public class ClimberConstants {
             GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.7858 : 0,
             GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17776 : 0;
     static final double
-            GROUNDED_A = 0,
-            GROUNDED_B = 0,
-            GROUNDED_C = 0;
+            GROUNDED_A = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_B = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_C = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double //TODO: calibrate
             ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 500 : 0,
             ON_CHAIN_I = RobotHardwareStats.isSimulation() ? 0 : 0,
@@ -64,9 +64,9 @@ public class ClimberConstants {
             ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? 8.7858 : 0,
             ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? 0.17776 : 0;
     static final double
-            ON_CHAIN_A = 0,
-            ON_CHAIN_B = 0,
-            ON_CHAIN_C = 0;
+            ON_CHAIN_A = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_B = RobotHardwareStats.isSimulation() ? 0 : 0,
+            ON_CHAIN_C = RobotHardwareStats.isSimulation() ? 0 : 0;
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;
@@ -101,7 +101,7 @@ public class ClimberConstants {
             STRING_ANGLE_ADDITION = Rotation2d.fromDegrees(90 - 57.87);
     static final double DISTANCE_BETWEEN_JOINTS_METERS = 0.42;
     static final double CLOSED_STRING_LENGTH_METERS = 0.168;
-    static final double CLOSED_STRING_ANGLE_DEGREES = 63.32;
+    static final Rotation2d CLOSED_STRING_ANGLE = Rotation2d.fromDegrees(63.32);
     private static final Color8Bit
             BLUE = new Color8Bit(Color.kBlue),
             LIGHT_BLUE = new Color8Bit(Color.kLightBlue),
@@ -109,11 +109,10 @@ public class ClimberConstants {
             LIGHT_GREEN = new Color8Bit(Color.kLightGreen);
     static final Color8Bit GRAY = new Color8Bit(Color.kGray);
     static final double MECHANISM_LINE_WIDTH = 5;
-    static final double MECHANISM_STARTING_ANGLE = 180;
+    static final Rotation2d MECHANISM_STARTING_ANGLE = Rotation2d.fromDegrees(180);
     static final double STRING_CONNECTION_LIGAMENT_LENGTH = 0.07;
-    static final double STRING_CONNECTION_LIGAMENT_ANGLE = -50;
+    static final double STRING_CONNECTION_LIGAMENT_ANGLE_DEGREES = -50;
     static final double DRUM_DIAMETER_METERS = 0.04;
-
     static final ClimberVisualization
             RIGHT_MECHANISM = new ClimberVisualization(
             "RightClimberMechanism",
@@ -127,6 +126,8 @@ public class ClimberConstants {
                     LIGHT_GREEN,
                     LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
             );
+
+    static final double CLIMBER_TOLERANCE_METERS = 0.01;
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
@@ -168,7 +169,7 @@ public class ClimberConstants {
 
     public enum ClimberState {
         RESTING(0, false),
-        PREPARE_FOR_CLIMBING(0.5, false), //TODO: calibrate
+        PREPARING_FOR_CLIMBING(0.5, false), //TODO: calibrate
         CLIMBING(0.1, true); //TODO: calibrate
 
         public final double positionMeters;
