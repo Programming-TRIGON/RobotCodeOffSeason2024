@@ -21,7 +21,7 @@ public class AmpAlignerConstants {
     private static final ForwardLimitTypeValue FORWARD_LIMIT_TYPE_VALUE = ForwardLimitTypeValue.NormallyOpen;
     private static final ForwardLimitSourceValue FORWARD_LIMIT_SOURCE_VALUE = ForwardLimitSourceValue.LimitSwitchPin;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 5 : 0,
+            P = RobotHardwareStats.isSimulation() ? 80 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
             KS = RobotHardwareStats.isSimulation() ? 0.16165 : 0,
@@ -29,8 +29,8 @@ public class AmpAlignerConstants {
             KA = RobotHardwareStats.isSimulation() ? 0.13315 : 0;
     static final double KG = RobotHardwareStats.isSimulation() ? 0.072271 : 0;
     private static final double
-            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 5 : 0,
-            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 5 : 0;
+            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0,
+            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 52;
