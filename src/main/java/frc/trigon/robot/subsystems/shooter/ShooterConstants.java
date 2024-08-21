@@ -6,7 +6,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.trigon.robot.constants.RobotConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
@@ -21,8 +20,8 @@ public class ShooterConstants {
             RIGHT_MOTOR_NAME = "RightShootingMotor",
             LEFT_MOTOR_NAME = "LeftShootingMotor";
     static final TalonFXMotor
-            RIGHT_MOTOR = new TalonFXMotor(RIGHT_MOTOR_ID, RIGHT_MOTOR_NAME, RobotConstants.CANIVORE_NAME),
-            LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME, RobotConstants.CANIVORE_NAME);
+            RIGHT_MOTOR = new TalonFXMotor(RIGHT_MOTOR_ID, RIGHT_MOTOR_NAME),
+            LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME);
 
     private static final InvertedValue
             RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,

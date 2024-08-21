@@ -89,12 +89,12 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private void configurePositionResettingTrigger() {
-        final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitReverseLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
+        final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitForwardLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
         hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())));
     }
 
-    private boolean hasHitReverseLimit() {
-        return motor.getSignal(TalonFXSignal.REVERSE_LIMIT) == 1;
+    private boolean hasHitForwardLimit() {
+        return motor.getSignal(TalonFXSignal.FORWARD_LIMIT) == 0;
     }
 
     private double calculateKGOutput() {
