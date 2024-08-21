@@ -7,7 +7,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.trigon.robot.constants.RobotConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.SimulationObjectDetectionCameraIO;
 import org.trigon.hardware.misc.simplesensor.SimpleSensor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
@@ -27,16 +26,8 @@ public class IntakeConstants {
             FOLLOWER_MOTOR_NAME = "FollowerIntakeMotor",
             DISTANCE_SENSOR_NAME = "IntakeDistanceSensor";
     static final TalonFXMotor
-            MASTER_MOTOR = new TalonFXMotor(
-            MASTER_MOTOR_ID,
-            MASTER_MOTOR_NAME,
-            RobotConstants.CANIVORE_NAME
-    ),
-            FOLLOWER_MOTOR = new TalonFXMotor(
-                    FOLLOWER_MOTOR_ID,
-                    FOLLOWER_MOTOR_NAME,
-                    RobotConstants.CANIVORE_NAME
-            );
+            MASTER_MOTOR = new TalonFXMotor(MASTER_MOTOR_ID, MASTER_MOTOR_NAME),
+            FOLLOWER_MOTOR = new TalonFXMotor(FOLLOWER_MOTOR_ID, FOLLOWER_MOTOR_NAME);
     static final SimpleSensor DISTANCE_SENSOR = SimpleSensor.createDutyCycleSensor(DISTANCE_SENSOR_CHANNEL, DISTANCE_SENSOR_NAME);
 
     private static final InvertedValue
