@@ -21,16 +21,16 @@ public class AmpAlignerConstants {
     private static final ForwardLimitTypeValue FORWARD_LIMIT_TYPE_VALUE = ForwardLimitTypeValue.NormallyOpen;
     private static final ForwardLimitSourceValue FORWARD_LIMIT_SOURCE_VALUE = ForwardLimitSourceValue.LimitSwitchPin;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 80 : 0,
+            P = RobotHardwareStats.isSimulation() ? 50 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0.16165 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 5.5726 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0.13315 : 0;
-    static final double KG = RobotHardwareStats.isSimulation() ? 0.072271 : 0;
+            KS = RobotHardwareStats.isSimulation() ? 0.055582 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 6 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0.12886 : 0;
+    static final double KG = RobotHardwareStats.isSimulation() ? 0.11971 : 0;
     private static final double
-            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0,
-            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0;
+            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 0,
+            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 52;
@@ -56,7 +56,7 @@ public class AmpAlignerConstants {
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
             Units.Volts.of(2).per(Units.Second.of(1)),
-            Units.Volts.of(3),
+            Units.Volts.of(4),
             Units.Second.of(1000)
     );
 
@@ -88,12 +88,16 @@ public class AmpAlignerConstants {
         config.Slot0.kA = KA;
         if (RobotHardwareStats.isSimulation())
             config.Slot0.kG = KG;
+        config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
+        config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
 
+//        config.MotionMagic.MotionMagicExpo_kV = KV;
+//        config.MotionMagic.MotionMagicExpo_kA = KA;
         config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
 
-        config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
-        config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = AMP_ALIGNER_MAXIMUM_ANGLE.getRotations();
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = AMP_ALIGNER_MINIMUM_ANGLE.getRotations();
 
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 

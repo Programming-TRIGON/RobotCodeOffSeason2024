@@ -124,6 +124,9 @@ public class PitcherConstants {
         config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = PITCHER_MAXIMUM_ANGLE.getRotations();
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = PITCHER_MINIMUM_ANGLE.getRotations();
+
         MASTER_MOTOR.applyConfiguration(config);
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
