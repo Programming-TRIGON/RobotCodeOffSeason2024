@@ -89,6 +89,7 @@ public class ShooterConstants {
 
         motor.registerSignal(TalonFXSignal.VELOCITY, 100);
         motor.registerSignal(TalonFXSignal.POSITION, 100);
+        motor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         motor.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
     }
 }

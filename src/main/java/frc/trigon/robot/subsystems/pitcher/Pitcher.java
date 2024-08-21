@@ -86,7 +86,7 @@ public class Pitcher extends MotorSubsystem {
     private void updateMechanism() {
         PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.updateFirstJoint(
                 getCurrentPitch(),
-                Rotation2d.fromRotations(targetPitch.getRotations())
+                Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
     }
 }

@@ -9,7 +9,7 @@ import org.trigon.commands.NetworkTablesCommand;
 public class ShooterCommands {
     public static Command getDebuggingCommand() {
         return new NetworkTablesCommand(
-                ShooterCommands::getSetTargetVelocity,
+                ShooterCommands::getSetTargetVelocityCommand,
                 false,
                 "Debugging/TargetRightMotorDebuggingShootingVelocity",
                 "Debugging/TargetLeftMotorDebuggingShootingVelocity"
@@ -24,7 +24,7 @@ public class ShooterCommands {
         );
     }
 
-    public static Command getSetTargetVelocity(double targetRightVelocityRotationsPerSecond, double targetLeftVelocityRotationsPerSecond) {
+    public static Command getSetTargetVelocityCommand(double targetRightVelocityRotationsPerSecond, double targetLeftVelocityRotationsPerSecond) {
         return new StartEndCommand(
                 () -> RobotContainer.SHOOTER.setTargetVelocity(targetRightVelocityRotationsPerSecond, targetLeftVelocityRotationsPerSecond),
                 RobotContainer.SHOOTER::stop,

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
+import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -25,7 +26,7 @@ public class AmpAligner extends MotorSubsystem {
 
     public AmpAligner() {
         setName("AmpAligner");
-        configureLimitSwitchTrigger();
+        configurePositionResettingTrigger();
     }
 
     @Override
@@ -67,11 +68,11 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     public boolean atTargetState() {
-        return Math.abs(getCurrentAngle().getDegrees() - targetState.targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE_DEGREES;
+        return Math.abs(getCurrentAngle().getDegrees() - targetState.targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE.getDegrees();
     }
 
     public boolean atTargetAngle() {
-        return Math.abs(getCurrentAngle().getDegrees() - targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE_DEGREES;
+        return Math.abs(getCurrentAngle().getDegrees() - targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE.getDegrees();
     }
 
     void setTargetState(AmpAlignerConstants.AmpAlignerState targetState) {
@@ -87,7 +88,7 @@ public class AmpAligner extends MotorSubsystem {
         );
     }
 
-    private void configureLimitSwitchTrigger() {
+    private void configurePositionResettingTrigger() {
         final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitReverseLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
         hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())));
     }
@@ -97,7 +98,9 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private double calculateKGOutput() {
-        return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
+        if (!RobotHardwareStats.isSimulation())
+            return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
+        return 0;
     }
 
     private Rotation2d getCurrentAngle() {

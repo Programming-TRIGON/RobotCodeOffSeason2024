@@ -28,7 +28,7 @@ public class AmpAlignerConstants {
             KS = RobotHardwareStats.isSimulation() ? 0 : 0,
             KV = RobotHardwareStats.isSimulation() ? 0 : 0,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0;
-    static final double KG = 0;
+    static final double KG = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 52;
@@ -58,9 +58,9 @@ public class AmpAlignerConstants {
             Units.Second.of(1000)
     );
 
-    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);//180 - 24
+    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(0);
     static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
-    static final double ANGLE_TOLERANCE_DEGREES = 0.3;
+    static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.3);
 
     static {
         configureMotor();

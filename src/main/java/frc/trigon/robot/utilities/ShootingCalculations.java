@@ -168,8 +168,8 @@ public class ShootingCalculations {
      * @param noteTangentialVelocity the exit velocity of the note, as tangential velocity
      * @param reachFromAbove         should we reach to point from above, with an arch, or from below, as fast as possible
      *                               Shooting from above is useful for actions like delivery, whereas shooting from below is useful when we don't want to come from above, and in our case touch the upper speaker
-     * @param currentTranslation     the current translation of the robot, to find the end effector's pose with
-     * @param targetRobotAngle       the previously calculated target robot angle, to find the end effector's pose with
+     * @param currentTranslation     the current translation of the robot, to find the note exit point's pose with
+     * @param targetRobotAngle       the previously calculated target robot angle, to find the note exit point's pose with
      * @param shootingTarget         the point we want the note reach
      * @return the pitch the pitcher should reach in order to shoot to the shooting target
      */
@@ -185,8 +185,8 @@ public class ShootingCalculations {
      * This will fully calculate the target pitch using physics.
      *
      * @param noteTangentialVelocity                           the tangential velocity of the shooter
-     * @param shooterNoteExitPointXYDistanceFromShootingTarget the xy distance from the shooting target to the shooter's end effector on the xy plane
-     * @param noteExitPointHeightDifferenceFromTarget          the height difference between the shooter's end effector and the shooting target
+     * @param shooterNoteExitPointXYDistanceFromShootingTarget the xy distance from the shooting target to the shooter's note exit point on the xy plane
+     * @param noteExitPointHeightDifferenceFromTarget          the height difference between the shooter's note exit point and the shooting target
      * @param reachFromAbove                                   should we reach to point from above, with an arch, or from below, as fast as possible
      *                                                         Shooting from above is useful for actions like delivery, whereas shooting from below is useful when we don't want to come from above, and in our case touch the upper speaker
      * @return the pitch the robot should reach in order to shoot at the shooting target
@@ -213,14 +213,14 @@ public class ShootingCalculations {
     }
 
     /**
-     * Calculates the shooter's end effector's 3d pose on the field from the given parameters.
-     * The end effector is the furthest point of the shooter from the pivot point,
+     * Calculates the shooter's note exit point's 3d pose on the field from the given parameters.
+     * The note exit point is the furthest point of the shooter from the pivot point,
      * and where the note leaves the shooter.
      *
      * @param pitcherAngle       the pitcher angle, to base off from
      * @param currentTranslation the field relative current translation, to base off from
      * @param robotAngle         the robot angle, to base off from
-     * @return the shooter's end effector's 3d pose on the field
+     * @return the shooter's note exit point's 3d pose on the field
      */
     public Pose3d calculateShooterNoteExitPointFieldRelativePose(Rotation2d pitcherAngle, Translation2d currentTranslation, MirrorableRotation2d robotAngle) {
         final Pose3d noteExitPointSelfRelativePose = calculateShooterNoteExitPointSelfRelativePose(pitcherAngle);
@@ -230,12 +230,12 @@ public class ShootingCalculations {
     }
 
     /**
-     * Calculates the shooter's end effector's 3d pose relative to the robot.
-     * The end effector is the furthest point of the shooter from the pivot point,
+     * Calculates the shooter's note exit point's 3d pose relative to the robot.
+     * The note exit point is the furthest point of the shooter from the pivot point,
      * and where the note leaves the shooter.
      *
      * @param pitcherAngle the pitcher angle, to base off from
-     * @return the shooter's end effector's 3d pose relative to the robot
+     * @return the shooter's note exit point's 3d pose relative to the robot
      */
     private Pose3d calculateShooterNoteExitPointSelfRelativePose(Rotation2d pitcherAngle) {
         final Pose3d pivotPoint = ShootingConstants.ROBOT_RELATIVE_SHOOTING_PIVOT_POINT.transformBy(new Transform3d(new Translation3d(), new Rotation3d(0, -pitcherAngle.getRadians(), 0)));
