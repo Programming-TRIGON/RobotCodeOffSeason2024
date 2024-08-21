@@ -24,10 +24,13 @@ public class AmpAlignerConstants {
             P = RobotHardwareStats.isSimulation() ? 5 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0;
-    static final double KG = RobotHardwareStats.isSimulation() ? 0 : 0;
+            KS = RobotHardwareStats.isSimulation() ? 0.16165 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 5.5726 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0.13315 : 0;
+    static final double KG = RobotHardwareStats.isSimulation() ? 0.072271 : 0;
+    private static final double
+            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 5 : 0,
+            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 5 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 52;
@@ -85,6 +88,9 @@ public class AmpAlignerConstants {
         config.Slot0.kA = KA;
         if (RobotHardwareStats.isSimulation())
             config.Slot0.kG = KG;
+
+        config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
+        config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
 
         config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
         config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
