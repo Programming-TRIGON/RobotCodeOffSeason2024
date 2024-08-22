@@ -19,6 +19,9 @@ import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.climber.ClimberCommands;
 import frc.trigon.robot.subsystems.climber.ClimberConstants;
+import frc.trigon.robot.subsystems.intake.Intake;
+import frc.trigon.robot.subsystems.intake.IntakeCommands;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
@@ -29,6 +32,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
     public static final Swerve SWERVE = new Swerve();
+    public static final Intake INTAKE = new Intake();
     public static final Climber CLIMBER = new Climber();
     public static final Pitcher PITCHER = new Pitcher();
     public static final Shooter SHOOTER = new Shooter();
@@ -55,6 +59,7 @@ public class RobotContainer {
 
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+        INTAKE.setDefaultCommand(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP));
         CLIMBER.setDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
         AMP_ALIGNER.setDefaultCommand(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE));
         PITCHER.setDefaultCommand(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.DEFAULT_PITCH));
