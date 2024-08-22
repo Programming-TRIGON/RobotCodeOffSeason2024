@@ -14,9 +14,8 @@ public class IntakeCommands {
     }
 
     public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
-        if (targetState == IntakeConstants.IntakeState.COLLECTING) {
+        if (targetState == IntakeConstants.IntakeState.COLLECTING)
             return getCollectionCommand();
-        }
         return new StartEndCommand(
                 () -> RobotContainer.INTAKE.setTargetState(targetState),
                 RobotContainer.INTAKE::stop,
@@ -27,13 +26,6 @@ public class IntakeCommands {
     public static Command getSetTargetVoltageCommand(double targetVoltage) {
         return new StartEndCommand(
                 () -> RobotContainer.INTAKE.setTargetVoltage(targetVoltage),
-                RobotContainer.INTAKE::stop,
-                RobotContainer.INTAKE
-        );
-    }
-
-    private static Command getStopIntakeCommand() {
-        return new InstantCommand(
                 RobotContainer.INTAKE::stop,
                 RobotContainer.INTAKE
         );
@@ -53,6 +45,13 @@ public class IntakeCommands {
                         RobotContainer.INTAKE
                 ),
                 getWaitForNoteToStopCommand().andThen(getStopIntakeCommand())
+        );
+    }
+
+    private static Command getStopIntakeCommand() {
+        return new InstantCommand(
+                RobotContainer.INTAKE::stop,
+                RobotContainer.INTAKE
         );
     }
 

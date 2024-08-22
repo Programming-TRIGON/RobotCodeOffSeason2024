@@ -8,9 +8,7 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
 public class Intake extends MotorSubsystem {
-    private final TalonFXMotor
-            masterMotor = IntakeConstants.MASTER_MOTOR,
-            followerMotor = IntakeConstants.FOLLOWER_MOTOR;
+    private final TalonFXMotor masterMotor = IntakeConstants.MASTER_MOTOR;
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(IntakeConstants.FOC_ENABLED);
     private final StaticBrake staticBrakeRequest = new StaticBrake();
     private IntakeConstants.IntakeState targetState;
@@ -39,7 +37,6 @@ public class Intake extends MotorSubsystem {
 
     void sendStaticBrakeRequest() {
         masterMotor.setControl(staticBrakeRequest);
-        followerMotor.setControl(staticBrakeRequest);
     }
 
     void setTargetState(IntakeConstants.IntakeState targetState) {
