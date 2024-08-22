@@ -80,7 +80,7 @@ public class ClimberConstants {
             null,
             null
     );
-    static final boolean IS_ON_CHAIN = true;
+    static final boolean SYSID_IS_ON_CHAIN = true;
 
     static final Translation3d
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -254.5, 274.45),
