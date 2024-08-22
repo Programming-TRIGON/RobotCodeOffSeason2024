@@ -47,13 +47,16 @@ public class PitcherConstants {
             KV = RobotHardwareStats.isSimulation() ? 19.611 : 0,
             KA = RobotHardwareStats.isSimulation() ? 0.48644 : 0,
             KG = RobotHardwareStats.isSimulation() ? 0.2 : 0;
+    private static final double
+            EXPO_KV = KV,
+            EXPO_KA = KA;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
-    private static final double
-            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 5 : 0,
-            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 5 : 0;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
     private static final double GEAR_RATIO = 200;
+    private static final Rotation2d
+            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
+            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
     private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
@@ -117,18 +120,19 @@ public class PitcherConstants {
         config.Slot0.kV = KV;
         config.Slot0.kA = KA;
         config.Slot0.kG = KG;
+
+        config.MotionMagic.MotionMagicExpo_kV = EXPO_KV;
+        config.MotionMagic.MotionMagicExpo_kA = EXPO_KA;
+
         config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
         config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
-
-        config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
-        config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
 
         config.Feedback.FeedbackRemoteSensorID = ENCODER_ID;
         config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
-        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = PITCHER_MAXIMUM_ANGLE.getRotations();
-        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = PITCHER_MINIMUM_ANGLE.getRotations();
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT_THRESHOLD.getRotations();
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_THRESHOLD.getRotations();
 
         MASTER_MOTOR.applyConfiguration(config);
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);

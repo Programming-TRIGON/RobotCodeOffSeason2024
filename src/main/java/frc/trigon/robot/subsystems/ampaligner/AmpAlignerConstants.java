@@ -31,8 +31,8 @@ public class AmpAlignerConstants {
             KA = RobotHardwareStats.isSimulation() ? 0.12886 : 0;
     static final double KG = RobotHardwareStats.isSimulation() ? 0.11971 : 0;
     private static final double
-            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 0,
-            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 0;
+            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 6 : 0,
+            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 6 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 52;
@@ -45,6 +45,7 @@ public class AmpAlignerConstants {
     private static final Rotation2d
             AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
             AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(156);
+    private static final Rotation2d REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(0);
     private static final boolean SIMULATE_GRAVITY = true;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
@@ -95,13 +96,10 @@ public class AmpAlignerConstants {
         config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
         config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
 
-//        config.MotionMagic.MotionMagicExpo_kV = KV;
-//        config.MotionMagic.MotionMagicExpo_kA = KA;
         config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
 
-        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = AMP_ALIGNER_MAXIMUM_ANGLE.getRotations();
-        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = AMP_ALIGNER_MINIMUM_ANGLE.getRotations();
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_THRESHOLD.getRotations();
 
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 

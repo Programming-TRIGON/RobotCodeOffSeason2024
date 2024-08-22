@@ -1,8 +1,10 @@
 package frc.trigon.robot.subsystems.pitcher;
 
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
-import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -21,7 +23,7 @@ public class Pitcher extends MotorSubsystem {
     private final TalonFXMotor
             masterMotor = PitcherConstants.MASTER_MOTOR,
             followerMotor = PitcherConstants.FOLLOWER_MOTOR;
-    private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
+    private final MotionMagicExpoVoltage positionRequest = new MotionMagicExpoVoltage(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
     private Rotation2d targetPitch = PitcherConstants.DEFAULT_PITCH;
 
@@ -91,24 +93,23 @@ public class Pitcher extends MotorSubsystem {
                 getCurrentPitch(),
                 Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
         );
-        final Pose3d pitcherPose = calculatePitcherComponentPose();
-        Logger.recordOutput("Poses/Components/PitcherPose", pitcherPose);
-        Logger.recordOutput("Poses/Components/AmpAlignerPose", calculateAmpAlignerComponentPose(pitcherPose));
+        final Pose3d pitcherComponentPose = calculatePitcherComponentPose();
+        Logger.recordOutput("Poses/Components/PitcherPose", pitcherComponentPose);
+        Logger.recordOutput("Poses/Components/AmpAlignerPose", calculateAmpAlignerComponentPose(pitcherComponentPose));
     }
 
     private Pose3d calculatePitcherComponentPose() {
-        final Transform3d pitcherTransform = new Transform3d(
-                new Translation3d(),
-                new Rotation3d(0, getCurrentPitch().getRadians(), 0)
-        );
-        return PitcherConstants.PITCHER_VISUALIZATION_ORIGIN_POINT.transformBy(pitcherTransform);
+        return addPitch(PitcherConstants.PITCHER_VISUALIZATION_ORIGIN_POINT, getCurrentPitch());
     }
 
-    private Pose3d calculateAmpAlignerComponentPose(Pose3d pitcherPose) {
-        final Transform3d ampAlignerTransform = new Transform3d(
-                new Translation3d(),
-                new Rotation3d(0, RobotContainer.AMP_ALIGNER.getCurrentAngle().getRadians(), 0)
+    private Pose3d calculateAmpAlignerComponentPose(Pose3d pitcherComponentPose) {
+        return addPitch(pitcherComponentPose.transformBy(AmpAlignerConstants.PITCHER_TO_AMP_ALIGNER), RobotContainer.AMP_ALIGNER.getCurrentAngle());
+    }
+
+    private Pose3d addPitch(Pose3d component, Rotation2d addedPitch) {
+        return new Pose3d(
+                component.getTranslation(),
+                new Rotation3d(component.getRotation().getX(), targetPitch.getRadians(), component.getRotation().getZ())
         );
-        return pitcherPose.transformBy(ampAlignerTransform).transformBy(AmpAlignerConstants.PITCHER_TO_AMP_ALIGNER);
     }
 }

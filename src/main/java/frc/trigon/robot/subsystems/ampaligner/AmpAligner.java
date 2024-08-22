@@ -68,10 +68,14 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     public boolean atTargetState() {
-        return Math.abs(getCurrentAngle().getDegrees() - targetState.targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE.getDegrees();
+        return atAngle(targetState.targetAngle);
     }
 
     public boolean atTargetAngle() {
+        return atAngle(targetAngle);
+    }
+
+    public boolean atAngle(Rotation2d targetAngle) {
         return Math.abs(getCurrentAngle().getDegrees() - targetAngle.getDegrees()) < AmpAlignerConstants.ANGLE_TOLERANCE.getDegrees();
     }
 
