@@ -32,10 +32,10 @@ public abstract class SwerveConstants {
             REAR_LEFT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(108.369141),
             REAR_RIGHT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(-36.035156);
     private static final int
-            FRONT_LEFT_ID = 0,
-            FRONT_RIGHT_ID = 1,
-            REAR_LEFT_ID = 2,
-            REAR_RIGHT_ID = 3;
+            FRONT_LEFT_ID = 1,
+            FRONT_RIGHT_ID = 2,
+            REAR_LEFT_ID = 3,
+            REAR_RIGHT_ID = 4;
     static final SwerveModule[] SWERVE_MODULES = {
             new SwerveModule(FRONT_LEFT_ID, FRONT_LEFT_STEER_ENCODER_OFFSET),
             new SwerveModule(FRONT_RIGHT_ID, FRONT_RIGHT_STEER_ENCODER_OFFSET),
