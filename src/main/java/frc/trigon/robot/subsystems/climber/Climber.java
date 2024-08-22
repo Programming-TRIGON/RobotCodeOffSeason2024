@@ -117,8 +117,8 @@ public class Climber extends MotorSubsystem {
 
     private double calculateStayingInPlaceFeedback(double positionRotations, boolean affectedByRobotWeight) {
         return affectedByRobotWeight ?
-                calculateParabola(positionRotations, ClimberConstants.ON_CHAIN_A, ClimberConstants.ON_CHAIN_B, ClimberConstants.ON_CHAIN_C)
-                : calculateParabola(positionRotations, ClimberConstants.GROUNDED_A, ClimberConstants.GROUNDED_B, ClimberConstants.GROUNDED_C);
+                calculateParabola(positionRotations, ClimberConstants.ON_CHAIN_A, ClimberConstants.ON_CHAIN_B, ClimberConstants.ON_CHAIN_C) :
+                calculateParabola(positionRotations, ClimberConstants.GROUNDED_A, ClimberConstants.GROUNDED_B, ClimberConstants.GROUNDED_C);
     }
 
     private double calculateParabola(double x, double a, double b, double c) {

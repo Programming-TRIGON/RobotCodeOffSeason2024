@@ -86,7 +86,7 @@ public class ClimberVisualization {
     }
 
     /**
-     * Sets the target state of the mechanism, but doesn't log the mechanism.
+     * Sets the target state of the 2d mechanism.
      *
      * @param targetFirstJointPitch the target pitch of the first joint
      * @param targetStringAngle     the target string angle
