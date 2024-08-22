@@ -161,9 +161,9 @@ public class ClimberConstants {
     }
 
     public enum ClimberState {
-        RESTING(0, false),
-        PREPARING_FOR_CLIMBING(0.5, false), //TODO: calibrate
-        CLIMBING(0.1, true); //TODO: calibrate
+        REST(0, false),
+        PREPARE_FOR_CLIMB(0.5, false), //TODO: calibrate
+        CLIMB(0.1, true); //TODO: calibrate
 
         public final double positionRotations;
         public final boolean affectedByRobotWeight;
