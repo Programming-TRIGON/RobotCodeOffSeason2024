@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-import org.trigon.utilities.Conversions;
 
 public class Climber extends MotorSubsystem {
     private final TalonFXMotor
@@ -45,8 +44,8 @@ public class Climber extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        driveRightMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight))));
-        driveLeftMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight))));
+        driveRightMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN))));
+        driveLeftMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN))));
     }
 
     @Override
@@ -54,11 +53,11 @@ public class Climber extends MotorSubsystem {
         log.motor("RightClimberMotor")
                 .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
                 .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight)));
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN)));
         log.motor("LeftClimberMotor")
                 .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
                 .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), targetState.affectedByRobotWeight)));
+                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN)));
     }
 
     @Override
@@ -83,11 +82,11 @@ public class Climber extends MotorSubsystem {
     }
 
     public boolean atTargetRightState() {
-        return Math.abs(toMeters(rightMotor.getSignal(TalonFXSignal.POSITION)) - targetState.positionMeters) < ClimberConstants.CLIMBER_TOLERANCE_METERS;
+        return Math.abs(rightMotor.getSignal(TalonFXSignal.POSITION) - targetState.positionRotations) < ClimberConstants.CLIMBER_TOLERANCE_ROTATIONS;
     }
 
     public boolean atTargetLeftState() {
-        return Math.abs(toMeters(leftMotor.getSignal(TalonFXSignal.POSITION)) - targetState.positionMeters) < ClimberConstants.CLIMBER_TOLERANCE_METERS;
+        return Math.abs(leftMotor.getSignal(TalonFXSignal.POSITION) - targetState.positionRotations) < ClimberConstants.CLIMBER_TOLERANCE_ROTATIONS;
     }
 
     void driveRightMotor(Measure<Voltage> voltageMeasure) {
@@ -100,15 +99,15 @@ public class Climber extends MotorSubsystem {
 
     void setTargetState(ClimberConstants.ClimberState targetState) {
         this.targetState = targetState;
-        setTargetPosition(targetState.positionMeters, targetState.positionMeters, targetState.affectedByRobotWeight);
+        setTargetPosition(targetState.positionRotations, targetState.positionRotations, targetState.affectedByRobotWeight);
     }
 
-    void setTargetPosition(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByRobotWeight) {
+    void setTargetPosition(double targetRightPositionRotations, double targetLeftPositionRotations, boolean affectedByRobotWeight) {
         rightMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetRightPositionMeters)
+                .withPosition(targetRightPositionRotations)
                 .withFeedForward(calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), affectedByRobotWeight)));
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetLeftPositionMeters)
+                .withPosition(targetLeftPositionRotations)
                 .withFeedForward(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), affectedByRobotWeight)));
     }
 
@@ -129,9 +128,5 @@ public class Climber extends MotorSubsystem {
     private void updateMechanisms() {
         ClimberConstants.RIGHT_MECHANISM.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
         ClimberConstants.LEFT_MECHANISM.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
-    }
-
-    double toMeters(double rotations) {
-        return Conversions.rotationsToDistance(rotations, ClimberConstants.DRUM_DIAMETER_METERS);
     }
 }

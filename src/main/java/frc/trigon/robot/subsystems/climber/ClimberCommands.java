@@ -17,9 +17,9 @@ public class ClimberCommands {
         );
     }
 
-    public static Command getSetTargetPositionCommand(double targetRightPositionMeters, double targetLeftPositionMeters, boolean affectedByRobotWeight) {
+    public static Command getSetTargetPositionCommand(double targetRightPositionRotations, double targetLeftPositionRotations, boolean affectedByRobotWeight) {
         return new ExecuteEndCommand(
-                () -> RobotContainer.CLIMBER.setTargetPosition(targetRightPositionMeters, targetLeftPositionMeters, affectedByRobotWeight),
+                () -> RobotContainer.CLIMBER.setTargetPosition(targetRightPositionRotations, targetLeftPositionRotations, affectedByRobotWeight),
                 RobotContainer.CLIMBER::stop,
                 RobotContainer.CLIMBER
         );

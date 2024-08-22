@@ -32,12 +32,12 @@ public class ClimberConstants {
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
     static final double //TODO: calibrate
-            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 1,
-            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 1,
-            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? 1 : 1,
-            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? 1 : 1;
+            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 100 : 100,
+            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 100 : 100,
+            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? 100 : 100,
+            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? 100 : 100;
     private static final double //TODO: calibrate
-            GROUNDED_P = RobotHardwareStats.isSimulation() ? 500 : 0,
+            GROUNDED_P = RobotHardwareStats.isSimulation() ? 700 : 0,
             GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0046109 : 0,
@@ -48,7 +48,7 @@ public class ClimberConstants {
             GROUNDED_B = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_C = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double //TODO: calibrate
-            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 500 : 0,
+            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 700 : 0,
             ON_CHAIN_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? 0.0046109 : 0,
@@ -80,6 +80,7 @@ public class ClimberConstants {
             null,
             null
     );
+    static final boolean IS_SYSID_ON_CHAIN = true;
 
     static final Translation3d
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -254.5, 274.45),
@@ -102,7 +103,8 @@ public class ClimberConstants {
     static final double MECHANISM_LINE_WIDTH = 5;
     static final Rotation2d MECHANISM_STARTING_ANGLE = Rotation2d.fromDegrees(180);
     static final double STRING_CONNECTION_LIGAMENT_LENGTH = 0.07;
-    static final double STRING_CONNECTION_LIGAMENT_ANGLE_DEGREES = -50;
+    static final Rotation2d STRING_CONNECTION_LIGAMENT_ANGLE = Rotation2d.fromDegrees(-50);
+    static final Rotation2d SECOND_JOINT_ON_CHAIN_PITCH = Rotation2d.fromDegrees(90);
     static final double DRUM_DIAMETER_METERS = 0.04;
     static final ClimberVisualization
             RIGHT_MECHANISM = new ClimberVisualization(
@@ -118,7 +120,7 @@ public class ClimberConstants {
                     LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
             );
 
-    static final double CLIMBER_TOLERANCE_METERS = 0.01;
+    static final double CLIMBER_TOLERANCE_ROTATIONS = 0.01;
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
@@ -163,11 +165,11 @@ public class ClimberConstants {
         PREPARING_FOR_CLIMBING(0.5, false), //TODO: calibrate
         CLIMBING(0.1, true); //TODO: calibrate
 
-        public final double positionMeters;
+        public final double positionRotations;
         public final boolean affectedByRobotWeight;
 
-        ClimberState(double positionMeters, boolean affectedByRobotWeight) {
-            this.positionMeters = positionMeters;
+        ClimberState(double positionRotations, boolean affectedByRobotWeight) {
+            this.positionRotations = positionRotations;
             this.affectedByRobotWeight = affectedByRobotWeight;
         }
     }
