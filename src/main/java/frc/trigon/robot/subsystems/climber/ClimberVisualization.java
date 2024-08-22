@@ -9,7 +9,7 @@ import org.littletonrobotics.junction.Logger;
 import org.trigon.utilities.Conversions;
 
 /**
- * A class that visualizes the climber in the simulation, using a mechanism2d and calculating the poses of the climber joints for Advantage scope.
+ * A class that visualizes the climber, using a Mechanism2d, and calculating the 3d poses of the climber's joints for Advantage scope.
  */
 public class ClimberVisualization {
     private final String
@@ -26,9 +26,9 @@ public class ClimberVisualization {
     /**
      * Constructs a ClimberVisualization object.
      *
-     * @param name                  the name of the mechanism
-     * @param firstJointColor       the color of the first joint of the climber in the mechanism
-     * @param stringColor           the color of the string in the mechanism
+     * @param name                  the name of climber (left of right)
+     * @param firstJointColor       the color of the first joint of the climber in the 2d mechanism
+     * @param stringColor           the color of the string in the 2d mechanism
      * @param firstJointOriginPoint the first joint origin point
      */
     public ClimberVisualization(String name, Color8Bit firstJointColor, Color8Bit stringColor, Translation3d firstJointOriginPoint) {
@@ -52,9 +52,9 @@ public class ClimberVisualization {
     }
 
     /**
-     * Updates the current climber arm angle, string angle, and string length, then logs the mechanism.
+     * Updates the 2d mechanism's current climber arm angle, string angle, and string length. Then calculates the 3d Advantage Scope poses, and logs 2d mechanism and 3d poses.
      *
-     * @param targetState              the current climber state used to determine the second joint pose
+     * @param targetState              the target climber state used to determine the second joint's 3d pose
      * @param currentPositionRotations the current position of the climber
      * @param targetPositionRotations  the target position of the climber
      */
@@ -72,7 +72,7 @@ public class ClimberVisualization {
     }
 
     /**
-     * Sets the current state of the mechanism.
+     * Sets the current state of the 2d mechanism.
      *
      * @param currentFistJointPitch the current pitch of the first joint
      * @param currentStringAngle    the current string angle
@@ -99,7 +99,7 @@ public class ClimberVisualization {
     }
 
     /**
-     * Logs the 2d mechanism, and the poses for Advantage scope.
+     * Logs the 2d mechanism and the 3d Advantage scope poses.
      *
      * @param currentFirstJointPitch the current pitch of the first joint
      * @param targetState            the target state
