@@ -33,7 +33,7 @@ public class IntakeConstants {
     private static final InvertedValue
             MASTER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive,
             FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
-    private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
+    private static final boolean FOLLOWER_OPPOSES_MASTER = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double GEAR_RATIO = 1.5;
     private static final double
