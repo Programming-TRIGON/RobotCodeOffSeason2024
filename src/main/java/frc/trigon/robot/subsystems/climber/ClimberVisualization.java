@@ -26,9 +26,9 @@ public class ClimberVisualization {
     /**
      * Constructs a ClimberVisualization object.
      *
-     * @param name                  the name of the mechanism
-     * @param firstJointColor       the color of the first joint of the climber in the mechanism
-     * @param stringColor           the color of the string in the mechanism
+     * @param name                  the name of climber (left of right)
+     * @param firstJointColor       the color of the first joint of the climber in the 2d mechanism
+     * @param stringColor           the color of the string in the 2d mechanism
      * @param firstJointOriginPoint the first joint origin point
      */
     public ClimberVisualization(String name, Color8Bit firstJointColor, Color8Bit stringColor, Translation3d firstJointOriginPoint) {
