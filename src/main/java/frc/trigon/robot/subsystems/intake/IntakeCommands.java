@@ -14,7 +14,7 @@ public class IntakeCommands {
     }
 
     public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
-        if (targetState == IntakeConstants.IntakeState.COLLECTING)
+        if (targetState == IntakeConstants.IntakeState.COLLECT)
             return getCollectionCommand();
         return new StartEndCommand(
                 () -> RobotContainer.INTAKE.setTargetState(targetState),
@@ -34,7 +34,7 @@ public class IntakeCommands {
     private static Command getCollectionCommand() {
         return new SequentialCommandGroup(
                 new FunctionalCommand(
-                        () -> RobotContainer.INTAKE.setTargetState(IntakeConstants.IntakeState.COLLECTING),
+                        () -> RobotContainer.INTAKE.setTargetState(IntakeConstants.IntakeState.COLLECT),
                         () -> {
                         },
                         (interrupted) -> {

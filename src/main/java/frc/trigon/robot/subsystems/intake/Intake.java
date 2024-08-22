@@ -27,7 +27,7 @@ public class Intake extends MotorSubsystem {
     @Override
     public void stop() {
         masterMotor.stopMotor();
-        targetState = IntakeConstants.IntakeState.STOPPING;
+        targetState = IntakeConstants.IntakeState.STOP;
         IntakeConstants.MECHANISM.setTargetVelocity(0);
     }
 

@@ -108,13 +108,13 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
     }
 
     private boolean isEjecting() {
-        return RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.EJECTING
-                || RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.AMP_FEEDING
-                || RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.SHOT_FEEDING;
+        return RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.EJECT
+                || RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.FEED_AMP
+                || RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.FEED_SHOOTING;
     }
 
     private boolean isCollecting() {
-        return RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.COLLECTING;
+        return RobotContainer.INTAKE.getTargetState() == IntakeConstants.IntakeState.COLLECT;
     }
 
     private Rotation2d getClosestVisibleObjectYaw(Pose2d robotPose) {
