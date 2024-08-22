@@ -61,6 +61,9 @@ public class ClimberConstants {
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;
+    private static final double
+            REVERSE_SOFT_LIMIT_POSITION_ROTATIONS = 0,
+            FORWARD_SOFT_LIMIT_POSITION_ROTATIONS = 3.183;
     static final double GEAR_RATIO = 74.67;
 
     private static final int
@@ -148,6 +151,11 @@ public class ClimberConstants {
         config.Slot1.kS = ON_CHAIN_KS;
         config.Slot1.kV = ON_CHAIN_KV;
         config.Slot1.kA = ON_CHAIN_KA;
+
+        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_POSITION_ROTATIONS;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT_POSITION_ROTATIONS;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
