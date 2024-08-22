@@ -83,6 +83,8 @@ public class ShooterConstants {
         config.Slot0.kV = KV;
         config.Slot0.kA = KA;
 
+        config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
+
         motor.applyConfiguration(config);
         motor.setPhysicsSimulation(simulation);
 

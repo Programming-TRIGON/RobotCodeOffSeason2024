@@ -102,7 +102,7 @@ public class AmpAlignerConstants {
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_THRESHOLD.getRotations();
 
-        config.Feedback.RotorToSensorRatio = GEAR_RATIO;
+        config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
         MOTOR.applyConfiguration(config);
         MOTOR.setPhysicsSimulation(SIMULATION);

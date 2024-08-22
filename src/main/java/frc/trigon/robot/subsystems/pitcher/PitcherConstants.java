@@ -37,7 +37,7 @@ public class PitcherConstants {
     private static final InvertedValue
             MASTER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
             FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
-    private static final boolean FOLLOWER_MOTOR_OPPOSITE_DIRECTION = false;
+    private static final boolean FOLLOWER_OPPOSES_MASTER = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
             P = RobotHardwareStats.isSimulation() ? 500 : 0,
@@ -157,7 +157,7 @@ public class PitcherConstants {
 
         FOLLOWER_MOTOR.applyConfiguration(config);
 
-        final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_MOTOR_OPPOSITE_DIRECTION);
+        final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_OPPOSES_MASTER);
         FOLLOWER_MOTOR.setControl(followerRequest);
     }
 
