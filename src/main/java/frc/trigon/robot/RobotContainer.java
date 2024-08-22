@@ -12,20 +12,24 @@ import frc.trigon.robot.commands.Commands;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
+import frc.trigon.robot.subsystems.climber.Climber;
+import frc.trigon.robot.subsystems.climber.ClimberCommands;
+import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
-import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
     public static final Swerve SWERVE = new Swerve();
+    public static final Climber CLIMBER = new Climber();
     public static final Pitcher PITCHER = new Pitcher();
     public static final Shooter SHOOTER = new Shooter();
     public static final AmpAligner AMP_ALIGNER = new AmpAligner();
@@ -51,6 +55,7 @@ public class RobotContainer {
 
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+        CLIMBER.setDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
         AMP_ALIGNER.setDefaultCommand(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE));
         PITCHER.setDefaultCommand(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.DEFAULT_PITCH));
         SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
