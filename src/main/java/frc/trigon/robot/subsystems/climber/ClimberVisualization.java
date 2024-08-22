@@ -72,7 +72,7 @@ public class ClimberVisualization {
     }
 
     /**
-     * Sets the current state of the mechanism.
+     * Sets the current state of the 2d mechanism.
      *
      * @param currentFistJointPitch the current pitch of the first joint
      * @param currentStringAngle    the current string angle
