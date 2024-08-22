@@ -99,7 +99,7 @@ public class ClimberVisualization {
     }
 
     /**
-     * Logs the 2d mechanism, and the poses for Advantage scope.
+     * Logs the 2d mechanism and the 3d Advantage scope poses.
      *
      * @param currentFirstJointPitch the current pitch of the first joint
      * @param targetState            the target state
