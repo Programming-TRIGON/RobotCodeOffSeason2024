@@ -99,7 +99,7 @@ public class IntakeConstants {
 
         FOLLOWER_MOTOR.applyConfiguration(config);
 
-        final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_MOTOR_OPPOSITE_DIRECTION);
+        final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_OPPOSES_MASTER);
         FOLLOWER_MOTOR.setControl(followerRequest);
     }
 
