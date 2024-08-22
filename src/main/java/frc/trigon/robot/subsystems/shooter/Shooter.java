@@ -65,7 +65,7 @@ public class Shooter extends MotorSubsystem {
         return ShooterConstants.SYSID_CONFIG;
     }
 
-    public boolean bothMotorsAtTargetVelocity() {
+    public boolean atTargetVelocity() {
         return atTargetRightVelocity() && atTargetLeftVelocity();
     }
 
