@@ -70,15 +70,15 @@ public class Shooter extends MotorSubsystem {
     }
 
     public boolean atTargetRightVelocity() {
-        return atVelocity(targetRightVelocityRotationsPerSecond);
+        return atVelocity(rightMotor.getSignal(TalonFXSignal.VELOCITY), targetRightVelocityRotationsPerSecond);
     }
 
     public boolean atTargetLeftVelocity() {
-        return atVelocity(targetLeftVelocityRotationsPerSecond);
+        return atVelocity(leftMotor.getSignal(TalonFXSignal.VELOCITY), targetLeftVelocityRotationsPerSecond);
     }
 
-    public boolean atVelocity(double targetVelocity) {
-        return Math.abs(leftMotor.getSignal(TalonFXSignal.VELOCITY) - targetVelocity) < ShooterConstants.VELOCITY_TOLERANCE;
+    public boolean atVelocity(double currentVelocty, double targetVelocity) {
+        return Math.abs(currentVelocty - targetVelocity) < ShooterConstants.VELOCITY_TOLERANCE;
     }
 
     void reachTargetShootingVelocityFromShootingCalculations() {
