@@ -10,9 +10,9 @@ import org.trigon.commands.NetworkTablesCommand;
 public class ClimberCommands {
     public static Command getDebuggingCommand() {
         return new NetworkTablesCommand(
-                (positionMeters, affectedByRobotWeight) -> ClimberCommands.getSetTargetPositionCommand(positionMeters, positionMeters, affectedByRobotWeight == 1),
+                (positionRotations, affectedByRobotWeight) -> ClimberCommands.getSetTargetPositionCommand(positionRotations, positionRotations, affectedByRobotWeight == 1),
                 true,
-                "Debugging/TargetDebuggingClimberPositionMeters",
+                "Debugging/TargetDebuggingClimberPositionRotations",
                 "Debugging/TargetDebuggingClimberPositionAffectedByRobotWeight"
         );
     }

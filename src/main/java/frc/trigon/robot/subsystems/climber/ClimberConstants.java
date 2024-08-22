@@ -31,11 +31,11 @@ public class ClimberConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
-    static final double //TODO: calibrate
-            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 100 : 100,
-            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 100 : 100,
-            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? 100 : 100,
-            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? 100 : 100;
+    static final double
+            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0,
+            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0,
+            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0,
+            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0;
     private static final double //TODO: calibrate
             GROUNDED_P = RobotHardwareStats.isSimulation() ? 700 : 0,
             GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
@@ -80,7 +80,7 @@ public class ClimberConstants {
             null,
             null
     );
-    static final boolean IS_SYSID_ON_CHAIN = true;
+    static final boolean IS_ON_CHAIN = true;
 
     static final Translation3d
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -254.5, 274.45),

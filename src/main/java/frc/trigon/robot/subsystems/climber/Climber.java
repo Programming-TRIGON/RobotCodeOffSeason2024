@@ -44,8 +44,8 @@ public class Climber extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        driveRightMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN))));
-        driveLeftMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN))));
+        driveRightMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_ON_CHAIN))));
+        driveLeftMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_ON_CHAIN))));
     }
 
     @Override
@@ -53,11 +53,11 @@ public class Climber extends MotorSubsystem {
         log.motor("RightClimberMotor")
                 .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
                 .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN)));
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_ON_CHAIN)));
         log.motor("LeftClimberMotor")
                 .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
                 .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_SYSID_ON_CHAIN)));
+                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.IS_ON_CHAIN)));
     }
 
     @Override
