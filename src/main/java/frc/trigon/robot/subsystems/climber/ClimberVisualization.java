@@ -9,7 +9,7 @@ import org.littletonrobotics.junction.Logger;
 import org.trigon.utilities.Conversions;
 
 /**
- * A class that visualizes the climber in the simulation, using a mechanism2d and calculating the poses of the climber joints for Advantage scope.
+ * A class that visualizes the climber, using a Mechanism2d, and calculating the 3d poses of the climber's joints for Advantage scope.
  */
 public class ClimberVisualization {
     private final String
