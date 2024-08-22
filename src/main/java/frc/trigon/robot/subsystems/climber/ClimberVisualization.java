@@ -52,9 +52,9 @@ public class ClimberVisualization {
     }
 
     /**
-     * Updates the current climber arm angle, string angle, and string length, then logs the mechanism.
+     * Updates the 2d mechanism's current climber arm angle, string angle, and string length. Then calculates the 3d Advantage Scope poses, and logs 2d mechanism and 3d poses.
      *
-     * @param targetState              the current climber state used to determine the second joint pose
+     * @param targetState              the target climber state used to determine the second joint's 3d pose
      * @param currentPositionRotations the current position of the climber
      * @param targetPositionRotations  the target position of the climber
      */
