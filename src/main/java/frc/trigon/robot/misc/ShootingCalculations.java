@@ -1,4 +1,4 @@
-package frc.trigon.robot.utilities;
+package frc.trigon.robot.misc;
 
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
