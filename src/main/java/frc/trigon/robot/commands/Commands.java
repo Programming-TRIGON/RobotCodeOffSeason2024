@@ -2,8 +2,19 @@ package frc.trigon.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CommandConstants;
+import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
+import frc.trigon.robot.subsystems.intake.IntakeCommands;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
+import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
+import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
+import frc.trigon.robot.subsystems.shooter.ShooterCommands;
+import frc.trigon.robot.subsystems.shooter.ShooterConstants;
+import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 
 import java.util.function.BooleanSupplier;
 
@@ -69,5 +80,39 @@ public class Commands {
                 command::isFinished,
                 command.getRequirements().toArray(Subsystem[]::new)
         );
+    }
+
+    public static Command getAutonomousScoreInAmpCommand() {
+        return new ParallelCommandGroup(
+                getPrepareForAmpCommand(),
+                getPathfindToAmpCommand(),
+                getScoreInAmpCommand()
+        );
+    }
+
+    public static Command getPrepareForAmpCommand() {
+        return new ParallelCommandGroup(
+                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
+                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCTY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCTY_ROTATIONS_PER_SECOND)
+        );
+    }
+
+    public static Command getPathfindToAmpCommand() {
+        return SwerveCommands.getDriveToPoseCommand(
+                () -> FieldConstants.IN_FRONT_OF_AMP_POSE,
+                AutonomousConstants.REAL_TIME_CONSTRAINTS
+        );
+    }
+
+    public static Command getScoreInAmpCommand() {
+        if (
+                RobotContainer.SHOOTER.atTargetVelocity(ShooterConstants.AMP_SHOOTING_VELOCTY_ROTATIONS_PER_SECOND)
+                        && RobotContainer.PITCHER.atTargetPitch(PitcherConstants.AMP_PITCH)
+                        && RobotContainer.AMP_ALIGNER.getTargetState() == AmpAlignerConstants.AmpAlignerState.OPEN
+                        && RobotContainer.AMP_ALIGNER.atTargetState()
+        )
+            return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP);
+        return null;
     }
 }

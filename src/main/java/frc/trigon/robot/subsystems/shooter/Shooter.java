@@ -69,16 +69,24 @@ public class Shooter extends MotorSubsystem {
         return atTargetRightVelocity() && atTargetLeftVelocity();
     }
 
+    public boolean atTargetVelocity(double targetVelocity) {
+        return atTargetRightVelocity(targetVelocity) && atTargetLeftVelocity(targetVelocity);
+    }
+
     public boolean atTargetRightVelocity() {
-        return atVelocity(rightMotor.getSignal(TalonFXSignal.VELOCITY), targetRightVelocityRotationsPerSecond);
+        return atTargetRightVelocity(targetRightVelocityRotationsPerSecond);
     }
 
     public boolean atTargetLeftVelocity() {
-        return atVelocity(leftMotor.getSignal(TalonFXSignal.VELOCITY), targetLeftVelocityRotationsPerSecond);
+        return atTargetLeftVelocity(targetLeftVelocityRotationsPerSecond);
     }
 
-    public boolean atVelocity(double currentVelocty, double targetVelocity) {
-        return Math.abs(currentVelocty - targetVelocity) < ShooterConstants.VELOCITY_TOLERANCE;
+    public boolean atTargetRightVelocity(double targetVelocity) {
+        return atVelocity(rightMotor.getSignal(TalonFXSignal.VELOCITY), targetVelocity);
+    }
+
+    public boolean atTargetLeftVelocity(double targetVelocity) {
+        return atVelocity(leftMotor.getSignal(TalonFXSignal.VELOCITY), targetVelocity);
     }
 
     void reachTargetShootingVelocityFromShootingCalculations() {
@@ -91,6 +99,10 @@ public class Shooter extends MotorSubsystem {
     void setTargetVelocity(double targetRightVelocityRotationsPerSecond, double targetLeftVelocityRotationsPerSecond) {
         setTargetRightVelocity(targetRightVelocityRotationsPerSecond);
         setTargetLeftVelocity(targetLeftVelocityRotationsPerSecond);
+    }
+
+    private boolean atVelocity(double currentVelocity, double targetVelocity) {
+        return Math.abs(currentVelocity - targetVelocity) < ShooterConstants.VELOCITY_TOLERANCE;
     }
 
     private void setTargetRightVelocity(double targetVelocityRotationsPerSecond) {

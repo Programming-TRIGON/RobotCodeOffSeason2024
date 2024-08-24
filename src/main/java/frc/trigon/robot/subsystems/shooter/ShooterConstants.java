@@ -59,6 +59,7 @@ public class ShooterConstants {
             LEFT_MECHANISM = new SpeedMechanism2d("LeftShooterMechanism", MAX_DISPLAYABLE_VELOCITY);
 
     public static final double WHEEL_DIAMETER_METERS = edu.wpi.first.math.util.Units.inchesToMeters(4);
+    public static final double AMP_SHOOTING_VELOCTY_ROTATIONS_PER_SECOND = 5;//TODO: Calibrate on real robot
     static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1.3;
     static final double VELOCITY_TOLERANCE = 0.3;
 
