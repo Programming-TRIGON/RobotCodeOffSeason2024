@@ -4,7 +4,12 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.intake.IntakeCommands;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 
+import java.awt.*;
 import java.util.function.BooleanSupplier;
 
 public class Commands {
@@ -69,5 +74,13 @@ public class Commands {
                 command::isFinished,
                 command.getRequirements().toArray(Subsystem[]::new)
         );
+    }
+
+    public static Command getNoteCollectionCommand() {
+        return new ParallelCommandGroup(
+                new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                LEDStripCommands.getStaticColorCommand(Color.RED, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
+        ).unless(RobotContainer.INTAKE::hasNote);
     }
 }

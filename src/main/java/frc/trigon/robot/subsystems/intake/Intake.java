@@ -35,6 +35,10 @@ public class Intake extends MotorSubsystem {
         return targetState;
     }
 
+    public boolean hasNote() {
+        return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
+    }
+
     void sendStaticBrakeRequest() {
         masterMotor.setControl(staticBrakeRequest);
     }
@@ -49,15 +53,15 @@ public class Intake extends MotorSubsystem {
         IntakeConstants.MECHANISM.setTargetVelocity(targetVoltage);
     }
 
-    boolean hasNote() {
-        return IntakeConstants.BOOLEAN_EVENT.getAsBoolean();
-    }
-
     /**
      * Indicates to the driver that a note has been collected by rumbling the controller.
      */
     void indicateCollection() {
         OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
+    }
+
+    public boolean isEarlyNoteCollectionDetected() {
+        return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_COLLECTION_TIME_THRESHOLD_SECONDS).getAsBoolean();
     }
 
     private void updateMechanism() {

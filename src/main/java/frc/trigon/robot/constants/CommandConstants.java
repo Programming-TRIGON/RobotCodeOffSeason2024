@@ -14,6 +14,7 @@ import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import java.awt.*;
 
 public class CommandConstants {
+    public static boolean SHOULD_ALIGN_TO_NOTE = true;
     private static final XboxController DRIVER_CONTROLLER = OperatorConstants.DRIVER_CONTROLLER;
     private static final double
             MINIMUM_TRANSLATION_SHIFT_POWER = 0.18,
@@ -37,6 +38,10 @@ public class CommandConstants {
                     () -> 0
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS);
+
+    public static double calculateDriveStickAxisValue(double axisValue) {
+        return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);
+    }
 
     /**
      * The shift mode is a mode of the robot that slows down the robot relative to how much the right trigger axis is pressed.
