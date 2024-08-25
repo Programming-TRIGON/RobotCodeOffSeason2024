@@ -5,6 +5,7 @@ import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.FieldConstants;
+import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
@@ -81,9 +82,10 @@ public class Commands {
     }
 
     public static Command getAutonomousScoreInAmpCommand() {
-        return new ParallelCommandGroup(
-                getPrepareForAmpCommand(),
-                getPathfindToAmpCommand().andThen(getScoreInAmpCommand()).repeatedly()
+        return new SequentialCommandGroup(
+                getPrepareForAmpCommand().withTimeout(1)
+                        .alongWith(runWhenContinueCommandTriggerPressed(getScoreInAmpCommand())),
+                getPathfindToAmpCommand()
         );
     }
 
@@ -105,10 +107,14 @@ public class Commands {
     public static Command getScoreInAmpCommand() {
         if (
                 RobotContainer.SHOOTER.atTargetVelocity()
-//                        && RobotContainer.PITCHER.atTargetPitch()
+                        && RobotContainer.PITCHER.atTargetPitch()
                         && RobotContainer.AMP_ALIGNER.atTargetState()
         )
             return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP).alongWith(new PrintCommand("Feed"));
         return new InstantCommand().alongWith(new PrintCommand(RobotContainer.AMP_ALIGNER.getCurrentAngle() + " " + RobotContainer.AMP_ALIGNER.getTargetState()));
+    }
+
+    private static Command runWhenContinueCommandTriggerPressed(Command command) {
+        return runWhen(command, OperatorConstants.CONTINUE_COMMAND_TRIGGER);
     }
 }
