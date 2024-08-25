@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
-import frc.trigon.robot.subsystems.intake.IntakeCommands;
-import frc.trigon.robot.subsystems.intake.IntakeConstants;
 
 import java.util.function.BooleanSupplier;
 
@@ -70,13 +68,6 @@ public class Commands {
                 command::end,
                 command::isFinished,
                 command.getRequirements().toArray(Subsystem[]::new)
-        );
-    }
-
-    public static Command getEjectCommand() {
-        return new InstantCommand(
-                () -> IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
-                RobotContainer.INTAKE
         );
     }
 }
