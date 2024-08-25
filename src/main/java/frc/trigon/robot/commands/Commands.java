@@ -11,9 +11,7 @@ import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
-import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
-import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 
 import java.util.function.BooleanSupplier;
@@ -85,16 +83,15 @@ public class Commands {
     public static Command getAutonomousScoreInAmpCommand() {
         return new ParallelCommandGroup(
                 getPrepareForAmpCommand(),
-                getPathfindToAmpCommand(),
-                getScoreInAmpCommand()
+                getPathfindToAmpCommand().andThen(getScoreInAmpCommand()).repeatedly()
         );
     }
 
     public static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCTY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCTY_ROTATIONS_PER_SECOND)
+                PitcherCommands.getPitchToAmpCommand(),
+                ShooterCommands.getShootAmpCommand()
         );
     }
 
@@ -107,12 +104,11 @@ public class Commands {
 
     public static Command getScoreInAmpCommand() {
         if (
-                RobotContainer.SHOOTER.atTargetVelocity(ShooterConstants.AMP_SHOOTING_VELOCTY_ROTATIONS_PER_SECOND)
-                        && RobotContainer.PITCHER.atTargetPitch(PitcherConstants.AMP_PITCH)
-                        && RobotContainer.AMP_ALIGNER.getTargetState() == AmpAlignerConstants.AmpAlignerState.OPEN
+                RobotContainer.SHOOTER.atTargetVelocity()
+//                        && RobotContainer.PITCHER.atTargetPitch()
                         && RobotContainer.AMP_ALIGNER.atTargetState()
         )
-            return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP);
-        return null;
+            return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP).alongWith(new PrintCommand("Feed"));
+        return new InstantCommand().alongWith(new PrintCommand(RobotContainer.AMP_ALIGNER.getCurrentAngle() + " " + RobotContainer.AMP_ALIGNER.getTargetState()));
     }
 }

@@ -74,12 +74,12 @@ public class Pitcher extends MotorSubsystem {
         return targetPitch;
     }
 
-    public boolean atTargetPitch(Rotation2d targetPitch) {
+    public boolean atTargetPitch() {
         return Math.abs(masterMotor.getSignal(TalonFXSignal.POSITION) - targetPitch.getRotations()) < PitcherConstants.PITCH_TOLERANCE.getRotations();
     }
 
-    public boolean atTargetPitch() {
-        return atTargetPitch(targetPitch);
+    void pitchToAmp() {
+        setTargetPitch(PitcherConstants.AMP_PITCH);
     }
 
     void reachTargetPitchFromShootingCalculations() {

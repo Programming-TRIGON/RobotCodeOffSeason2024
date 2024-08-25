@@ -16,6 +16,14 @@ public class ShooterCommands {
         );
     }
 
+    public static Command getShootAmpCommand() {
+        return new ExecuteEndCommand(
+                RobotContainer.SHOOTER::shootAmp,
+                RobotContainer.SHOOTER::stop,
+                RobotContainer.SHOOTER
+        );
+    }
+
     public static Command getReachTargetShootingVelocityFromShootingCalculations() {
         return new ExecuteEndCommand(
                 RobotContainer.SHOOTER::reachTargetShootingVelocityFromShootingCalculations,
