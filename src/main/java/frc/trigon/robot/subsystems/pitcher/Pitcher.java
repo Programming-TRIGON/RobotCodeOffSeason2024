@@ -113,7 +113,7 @@ public class Pitcher extends MotorSubsystem {
     private Pose3d addPitch(Pose3d component, Rotation2d addedPitch) {
         return new Pose3d(
                 component.getTranslation(),
-                new Rotation3d(component.getRotation().getX(), targetPitch.getRadians(), component.getRotation().getZ())
+                new Rotation3d(component.getRotation().getX(), component.getRotation().getY() + addedPitch.getRadians(), component.getRotation().getZ())
         );
     }
 }

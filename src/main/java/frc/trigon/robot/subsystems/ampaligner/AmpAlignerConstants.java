@@ -63,7 +63,7 @@ public class AmpAlignerConstants {
             Units.Second.of(1000)
     );
 
-    public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(0.5039, 0, 0.0434, new Rotation3d());
+    public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(-0.4838, 0, 0.1472, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(24), 0));
 
     static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(156);
     static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;

@@ -40,7 +40,7 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_OPPOSES_MASTER = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 500 : 0,
+            P = RobotHardwareStats.isSimulation() ? 200 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
             KS = RobotHardwareStats.isSimulation() ? 0.46583 : 0,
@@ -133,10 +133,10 @@ public class PitcherConstants {
         config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
-        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT_THRESHOLD.getRotations();
-        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_THRESHOLD.getRotations();
+//        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+//        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+//        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT_THRESHOLD.getRotations();
+//        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_THRESHOLD.getRotations();
 
         MASTER_MOTOR.applyConfiguration(config);
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
