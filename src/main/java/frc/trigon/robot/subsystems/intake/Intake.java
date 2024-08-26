@@ -39,6 +39,10 @@ public class Intake extends MotorSubsystem {
         return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
     }
 
+    public boolean isEarlyNoteCollectionDetected() {
+        return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_COLLECTION_TIME_THRESHOLD_SECONDS).getAsBoolean();
+    }
+
     void sendStaticBrakeRequest() {
         masterMotor.setControl(staticBrakeRequest);
     }
@@ -58,10 +62,6 @@ public class Intake extends MotorSubsystem {
      */
     void indicateCollection() {
         OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
-    }
-
-    public boolean isEarlyNoteCollectionDetected() {
-        return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_COLLECTION_TIME_THRESHOLD_SECONDS).getAsBoolean();
     }
 
     private void updateMechanism() {

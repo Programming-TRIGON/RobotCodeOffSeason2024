@@ -79,7 +79,7 @@ public class Commands {
     public static Command getNoteCollectionCommand() {
         return new ParallelCommandGroup(
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
-                LEDStripCommands.getStaticColorCommand(Color.RED, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
         ).unless(RobotContainer.INTAKE::hasNote);
     }
