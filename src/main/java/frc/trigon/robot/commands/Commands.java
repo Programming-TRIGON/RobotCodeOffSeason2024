@@ -122,7 +122,7 @@ public class Commands {
     public static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getPitchToAmpCommand(),
+                PitcherCommands.getSetPitchToAmpCommand(),
                 ShooterCommands.getShootAmpCommand()
         );
     }
