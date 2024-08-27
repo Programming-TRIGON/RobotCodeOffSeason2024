@@ -139,9 +139,15 @@ public class Commands {
 
     public static Command getAutonomousScoreInAmpCommand() {
         return new ParallelCommandGroup(
+                getScoreInAmpCommand(),
+                getPathfindToAmpCommand()
+        );
+    }
+
+    public static Command getScoreInAmpCommand() {
+        return new ParallelCommandGroup(
                 getPrepareForAmpCommand(),
-                getPathfindToAmpCommand(),
-                runWhenContinueTriggerPressed(getScoreInAmpCommand())
+                runWhenContinueTriggerPressed(getFeedForAmpCommand())
         );
     }
 
@@ -160,7 +166,7 @@ public class Commands {
         );
     }
 
-    public static Command getScoreInAmpCommand() {
+    public static Command getFeedForAmpCommand() {
         return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 
