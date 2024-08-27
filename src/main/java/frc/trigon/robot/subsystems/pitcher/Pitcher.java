@@ -82,6 +82,10 @@ public class Pitcher extends MotorSubsystem {
         setTargetPitch(PitcherConstants.AMP_PITCH);
     }
 
+    void setPitchForCloseShot() {
+        setTargetPitch(PitcherConstants.CLOSE_SHOT_PITCH);
+    }
+
     void reachTargetPitchFromShootingCalculations() {
         targetPitch = shootingCalculations.getTargetShootingState().targetPitch();
         setTargetPitch(targetPitch);

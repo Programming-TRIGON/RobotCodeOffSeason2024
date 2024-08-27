@@ -115,6 +115,24 @@ public class Commands {
         );
     }
 
+    public static Command getShootCloseShotCommand() {
+        return new ParallelCommandGroup(
+                getPrepareShooterForCloseShotCommand(),
+                getFeedNoteForCloseShotCommand()
+        );
+    }
+
+    public static Command getPrepareShooterForCloseShotCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getSetPitchForCloseShot(),
+                ShooterCommands.getShootCloseShotCommand()
+        );
+    }
+
+    public static Command getFeedNoteForCloseShotCommand() {
+        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
+    }
+
     public static Command getFeedNoteForShooterCommand() {
         return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()));
     }
