@@ -14,11 +14,13 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import frc.trigon.robot.utilities.ShootingCalculations;
 
 import java.util.function.BooleanSupplier;
 
 public class Commands {
     public static boolean IS_BRAKING = true;
+    private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
 
     public static Command withoutRequirements(Command command) {
         return new FunctionalCommand(
@@ -81,11 +83,39 @@ public class Commands {
         );
     }
 
+    public static Command getShootAtShootingTargetCommand(boolean isDelivery) {
+        return new ParallelCommandGroup(
+                getPrepareSpeakerShotCommand(isDelivery),
+                getShootSpeakerCommand()
+        );
+    }
+
     public static Command getAutonomousScoreInAmpCommand() {
-        return new SequentialCommandGroup(
-                getPrepareForAmpCommand().withTimeout(1)
-                        .alongWith(runWhenContinueCommandTriggerPressed(getScoreInAmpCommand())),
-                getPathfindToAmpCommand()
+        return new ParallelCommandGroup(
+                getPrepareForAmpCommand(),
+                getPathfindToAmpCommand(),
+                runWhenContinueCommandTriggerPressed(getScoreInAmpCommand())
+        );
+    }
+
+    public static Command getPrepareSpeakerShotCommand(boolean isDelivery) {
+        return new ParallelCommandGroup(
+                getUpdateShootingCalculationsCommand(isDelivery),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
+                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand(),
+                SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                        () -> SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()
+                )
+        );
+    }
+
+    public static Command getWarmForSpeakerShotCommand() {
+        return new ParallelCommandGroup(
+                getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
+                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand()
         );
     }
 
@@ -105,16 +135,18 @@ public class Commands {
     }
 
     public static Command getScoreInAmpCommand() {
-        if (
-                RobotContainer.SHOOTER.atTargetVelocity()
-                        && RobotContainer.PITCHER.atTargetPitch()
-                        && RobotContainer.AMP_ALIGNER.atTargetState()
-        )
-            return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP).alongWith(new PrintCommand("Feed"));
-        return new InstantCommand().alongWith(new PrintCommand(RobotContainer.AMP_ALIGNER.getCurrentAngle() + " " + RobotContainer.AMP_ALIGNER.getTargetState()));
+        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
+    }
+
+    public static Command getShootSpeakerCommand() {
+        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
     private static Command runWhenContinueCommandTriggerPressed(Command command) {
         return runWhen(command, OperatorConstants.CONTINUE_COMMAND_TRIGGER);
+    }
+
+    private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
+        return new RunCommand(isDelivery ? SHOOTING_CALCULATIONS::updateCalculationsForDelivery : SHOOTING_CALCULATIONS::updateCalculationsForSpeakerShot);
     }
 }

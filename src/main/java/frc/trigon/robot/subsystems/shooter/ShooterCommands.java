@@ -24,7 +24,7 @@ public class ShooterCommands {
         );
     }
 
-    public static Command getReachTargetShootingVelocityFromShootingCalculations() {
+    public static Command getReachTargetShootingVelocityFromShootingCalculationsCommand() {
         return new ExecuteEndCommand(
                 RobotContainer.SHOOTER::reachTargetShootingVelocityFromShootingCalculations,
                 RobotContainer.SHOOTER::stop,

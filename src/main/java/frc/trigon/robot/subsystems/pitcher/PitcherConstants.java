@@ -97,7 +97,7 @@ public class PitcherConstants {
 
     public static final Rotation2d
             DEFAULT_PITCH = PITCHER_MINIMUM_ANGLE,
-            AMP_PITCH = Rotation2d.fromDegrees(40);//TODO:Ask for proper pitch / calibrate on real robot
+            AMP_PITCH = Rotation2d.fromDegrees(30);
     static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(0.6);
 
     static {
