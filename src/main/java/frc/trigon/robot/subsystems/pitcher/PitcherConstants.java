@@ -55,8 +55,8 @@ public class PitcherConstants {
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
     private static final double GEAR_RATIO = 200;
     private static final Rotation2d
-            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
-            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
+            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73),
+            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12);
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
     private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
@@ -133,10 +133,10 @@ public class PitcherConstants {
         config.Feedback.FeedbackSensorSource = ENCODER_TYPE;
         config.Feedback.RotorToSensorRatio = GEAR_RATIO;
 
-//        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-//        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-//        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT_THRESHOLD.getRotations();
-//        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_THRESHOLD.getRotations();
+        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT_THRESHOLD.getRotations();
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_THRESHOLD.getRotations();
 
         MASTER_MOTOR.applyConfiguration(config);
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
