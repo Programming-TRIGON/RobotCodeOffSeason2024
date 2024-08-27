@@ -63,7 +63,7 @@ public class AmpAlignerConstants {
             Units.Second.of(1000)
     );
 
-    public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(-0.4838, 0, 0.1472, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(24), 0));
+    public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(-0.4838, 0, 0.1472, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(6.3), 0));
 
     static final Rotation2d READY_FOR_DEFAULT_PITCHER_MOVEMENT_ANGLE = Rotation2d.fromDegrees(80);
     static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(173.7);
