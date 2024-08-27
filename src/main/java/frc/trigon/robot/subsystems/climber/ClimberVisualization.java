@@ -108,7 +108,7 @@ public class ClimberVisualization {
         final Pose3d firstJointPose = calculateFirstJointPose(firstJointOriginPoint, currentFirstJointPitch);
         Logger.recordOutput(key, mechanism);
         Logger.recordOutput("Poses/Components/" + name + "FirstJointPose", firstJointPose);
-        Logger.recordOutput("Poses/Components/" + name + "secondJointPose", calculateSecondJointPose(firstJointPose, targetState, currentFirstJointPitch));
+        Logger.recordOutput("Poses/Components/" + name + "SecondJointPose", calculateSecondJointPose(firstJointPose, targetState, currentFirstJointPitch));
     }
 
 
