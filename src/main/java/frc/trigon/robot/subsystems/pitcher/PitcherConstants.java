@@ -98,7 +98,7 @@ public class PitcherConstants {
     public static final Rotation2d DEFAULT_PITCH = PITCHER_MINIMUM_ANGLE;
     static final Rotation2d
             AMP_PITCH = Rotation2d.fromDegrees(30),
-            CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(70);
+            CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(50);
     static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(0.6);
 
     static {
