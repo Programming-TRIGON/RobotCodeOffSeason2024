@@ -43,9 +43,9 @@ public class AmpAlignerConstants {
     private static final double AMP_ALIGNER_MASS_KILOGRAMS = 1.1;
     public static final double AMP_ALIGNER_LENGTH_METERS = 0.52;
     private static final Rotation2d
-            AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(0),
-            AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(156);
-    private static final Rotation2d REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(0);
+            AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(173.7 - 156),
+            AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(173.7);
+    private static final Rotation2d REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(173.7 - 156);
     private static final boolean SIMULATE_GRAVITY = true;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
@@ -65,7 +65,8 @@ public class AmpAlignerConstants {
 
     public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(-0.4838, 0, 0.1472, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(24), 0));
 
-    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(156);
+    static final Rotation2d READY_FOR_DEFAULT_PITCHER_MOVEMENT_ANGLE = Rotation2d.fromDegrees(80);
+    static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(173.7);
     static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
     static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.3);
 
@@ -116,8 +117,8 @@ public class AmpAlignerConstants {
     }
 
     public enum AmpAlignerState {
-        OPEN(Rotation2d.fromDegrees(0)),
-        CLOSE(Rotation2d.fromDegrees(156));
+        OPEN(Rotation2d.fromDegrees(173.7 - 156)),
+        CLOSE(Rotation2d.fromDegrees(173.7));
 
         public final Rotation2d targetAngle;
 

@@ -87,7 +87,7 @@ public class PitcherConstants {
             Units.Second.of(1000)
     );
 
-    static final Pose3d PITCHER_VISUALIZATION_ORIGIN_POINT = new Pose3d(0.2521, 0, 0.15545, new Rotation3d());
+    static final Pose3d PITCHER_VISUALIZATION_ORIGIN_POINT = new Pose3d(0.2521, 0, 0.15545, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-12), 0));
     public static final DoubleJointedArmMechanism2d PITCHER_AND_AMP_ALIGNER_MECHANISM = new DoubleJointedArmMechanism2d(
             "PitcherAndAmpAlignerMechanism",
             PITCHER_LENGTH_METERS,

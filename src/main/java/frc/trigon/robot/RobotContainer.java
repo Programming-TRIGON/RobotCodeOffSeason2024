@@ -24,10 +24,10 @@ import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
-import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.Swerve;
+import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -61,8 +61,8 @@ public class RobotContainer {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
         INTAKE.setDefaultCommand(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP));
         CLIMBER.setDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
-        AMP_ALIGNER.setDefaultCommand(AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE));
-        PITCHER.setDefaultCommand(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.DEFAULT_PITCH));
+        AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
+        PITCHER.setDefaultCommand(Commands.getDefaultPitcherCommand());
         SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
     }
 
