@@ -83,22 +83,18 @@ public class Commands {
         );
     }
 
+    /**
+     * @param isDelivery if the robot is shooting the note for a delivery or for a shot
+     * @return a command that sets the robot to shoot at the given target
+     */
     public static Command getShootAtShootingTargetCommand(boolean isDelivery) {
         return new ParallelCommandGroup(
-                getPrepareSpeakerShotCommand(isDelivery),
-                getShootSpeakerCommand()
+                getPrepareShooterCommand(isDelivery),
+                getFeedNoteForShooterCommand()
         );
     }
 
-    public static Command getAutonomousScoreInAmpCommand() {
-        return new ParallelCommandGroup(
-                getPrepareForAmpCommand(),
-                getPathfindToAmpCommand(),
-                runWhenContinueCommandTriggerPressed(getScoreInAmpCommand())
-        );
-    }
-
-    public static Command getPrepareSpeakerShotCommand(boolean isDelivery) {
+    public static Command getPrepareShooterCommand(boolean isDelivery) {
         return new ParallelCommandGroup(
                 getUpdateShootingCalculationsCommand(isDelivery),
                 PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
@@ -119,11 +115,23 @@ public class Commands {
         );
     }
 
+    public static Command getFeedNoteForShooterCommand() {
+        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()));
+    }
+
+    public static Command getAutonomousScoreInAmpCommand() {
+        return new ParallelCommandGroup(
+                getPrepareForAmpCommand(),
+                getPathfindToAmpCommand(),
+                runWhenContinueTriggerPressed(getScoreInAmpCommand())
+        );
+    }
+
     public static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getSetPitchToAmpCommand(),
-                ShooterCommands.getShootAmpCommand()
+                PitcherCommands.getPitchToAmpCommand(),
+                ShooterCommands.getShootToAmpCommand()
         );
     }
 
@@ -138,12 +146,8 @@ public class Commands {
         return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 
-    public static Command getShootSpeakerCommand() {
-        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
-    }
-
-    private static Command runWhenContinueCommandTriggerPressed(Command command) {
-        return runWhen(command, OperatorConstants.CONTINUE_COMMAND_TRIGGER);
+    private static Command runWhenContinueTriggerPressed(Command command) {
+        return runWhen(command, OperatorConstants.CONTINUE_TRIGGER);
     }
 
     private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {

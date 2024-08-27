@@ -16,9 +16,9 @@ public class PitcherCommands {
         );
     }
 
-    public static Command getSetPitchToAmpCommand() {
+    public static Command getPitchToAmpCommand() {
         return new StartEndCommand(
-                RobotContainer.PITCHER::setPitchToAmp,
+                RobotContainer.PITCHER::pitchToAmp,
                 RobotContainer.PITCHER::stop,
                 RobotContainer.PITCHER
         );

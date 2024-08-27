@@ -16,9 +16,9 @@ public class ShooterCommands {
         );
     }
 
-    public static Command getShootAmpCommand() {
+    public static Command getShootToAmpCommand() {
         return new ExecuteEndCommand(
-                RobotContainer.SHOOTER::shootAmp,
+                RobotContainer.SHOOTER::shootToAmp,
                 RobotContainer.SHOOTER::stop,
                 RobotContainer.SHOOTER
         );
