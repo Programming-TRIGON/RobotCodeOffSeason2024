@@ -14,6 +14,7 @@ import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import java.awt.*;
 
 public class CommandConstants {
+    public static boolean IS_CLIMBING = false;
     private static final XboxController DRIVER_CONTROLLER = OperatorConstants.DRIVER_CONTROLLER;
     private static final double
             MINIMUM_TRANSLATION_SHIFT_POWER = 0.18,

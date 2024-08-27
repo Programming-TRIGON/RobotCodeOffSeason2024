@@ -71,6 +71,7 @@ public class RobotContainer {
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
+        OperatorConstants.CLIMB_TRIGGER.whileTrue(Commands.getClimbCommand());
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {

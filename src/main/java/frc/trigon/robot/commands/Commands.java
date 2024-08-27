@@ -3,7 +3,11 @@ package frc.trigon.robot.commands;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CommandConstants;
+import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.climber.ClimberCommands;
+import frc.trigon.robot.subsystems.climber.ClimberConstants;
+import org.littletonrobotics.junction.Logger;
 
 import java.util.function.BooleanSupplier;
 
@@ -68,6 +72,19 @@ public class Commands {
                 command::end,
                 command::isFinished,
                 command.getRequirements().toArray(Subsystem[]::new)
+        );
+    }
+
+    public static Command getClimbCommand() {
+        return new SequentialCommandGroup(
+                new InstantCommand(
+                        () -> {
+                            CommandConstants.IS_CLIMBING = true;
+                            Logger.recordOutput("IsClimbing", CommandConstants.IS_CLIMBING);
+                        }
+                ),
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB).until(OperatorConstants.CONTINUE_TRIGGER),
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB)
         );
     }
 }
