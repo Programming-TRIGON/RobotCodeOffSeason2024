@@ -86,7 +86,7 @@ public class Commands {
     }
 
     /**
-     * Creates a command that sets the robot to shoot at the given target
+     * Creates a command that sets the shooting mechanism to shoot at the given target
      *
      * @param isDelivery if the robot is shooting the note for a delivery or for a speaker shot
      * @return the command
@@ -143,15 +143,17 @@ public class Commands {
 
     public static Command getAutonomousScoreInAmpCommand() {
         return new ParallelCommandGroup(
-                getScoreInAmpCommand(),
-                getPathfindToAmpCommand()
+                getPrepareForAmpCommand(),
+                runWhenContinueTriggerPressed(getFeedToAmpCommand()),
+                getPathfindToAmpCommand().andThen(duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND))
         );
     }
 
     public static Command getScoreInAmpCommand() {
         return new ParallelCommandGroup(
                 getPrepareForAmpCommand(),
-                runWhenContinueTriggerPressed(getFeedForAmpCommand())
+                runWhenContinueTriggerPressed(getFeedToAmpCommand()),
+                duplicate(CommandConstants.FACE_AMP_COMMAND)
         );
     }
 
@@ -163,7 +165,7 @@ public class Commands {
         );
     }
 
-    public static Command getFeedForAmpCommand() {
+    public static Command getFeedToAmpCommand() {
         return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 

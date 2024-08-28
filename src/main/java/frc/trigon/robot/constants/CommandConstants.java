@@ -39,7 +39,12 @@ public class CommandConstants {
                     () -> 0
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS),
-            DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE);
+            DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
+            FACE_AMP_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                    FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
+            );
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);
