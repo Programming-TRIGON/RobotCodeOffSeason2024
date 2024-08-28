@@ -111,7 +111,7 @@ public class Commands {
         );
     }
 
-    public static Command getWarmForSpeakerShotCommand() {
+    public static Command getWarmSpeakerShotCommand() {
         return new ParallelCommandGroup(
                 getUpdateShootingCalculationsCommand(false),
                 PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
