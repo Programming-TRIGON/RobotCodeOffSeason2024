@@ -77,14 +77,6 @@ public class Shooter extends MotorSubsystem {
         return atVelocity(leftMotor.getSignal(TalonFXSignal.VELOCITY), targetLeftVelocityRotationsPerSecond);
     }
 
-    void shootCloseShot() {
-        setTargetVelocity(ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO);
-    }
-
-    void shootToAmp() {
-        setTargetVelocity(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND);
-    }
-
     void reachTargetShootingVelocityFromShootingCalculations() {
         final double
                 targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond(),

@@ -16,22 +16,6 @@ public class PitcherCommands {
         );
     }
 
-    public static Command getPitchToAmpCommand() {
-        return new StartEndCommand(
-                RobotContainer.PITCHER::pitchToAmp,
-                RobotContainer.PITCHER::stop,
-                RobotContainer.PITCHER
-        );
-    }
-
-    public static Command getSetPitchForCloseShot() {
-        return new StartEndCommand(
-                RobotContainer.PITCHER::setPitchForCloseShot,
-                RobotContainer.PITCHER::stop,
-                RobotContainer.PITCHER
-        );
-    }
-
     public static Command getReachTargetPitchFromShootingCalculationsCommand() {
         return new ExecuteEndCommand(
                 RobotContainer.PITCHER::reachTargetPitchFromShootingCalculations,

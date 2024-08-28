@@ -14,6 +14,7 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
+import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import frc.trigon.robot.utilities.ShootingCalculations;
 
@@ -85,17 +86,19 @@ public class Commands {
     }
 
     /**
+     * Creates a command that sets the robot to shoot at the given target
+     *
      * @param isDelivery if the robot is shooting the note for a delivery or for a shot
-     * @return a command that sets the robot to shoot at the given target
+     * @return the command
      */
     public static Command getShootAtShootingTargetCommand(boolean isDelivery) {
         return new ParallelCommandGroup(
-                getPrepareShooterCommand(isDelivery),
-                getFeedNoteForShooterCommand()
+                getPrepareForShootingCommand(isDelivery),
+                getFeedNoteForShootingCommand()
         );
     }
 
-    public static Command getPrepareShooterCommand(boolean isDelivery) {
+    public static Command getPrepareForShootingCommand(boolean isDelivery) {
         return new ParallelCommandGroup(
                 getUpdateShootingCalculationsCommand(isDelivery),
                 PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
@@ -116,26 +119,26 @@ public class Commands {
         );
     }
 
-    public static Command getShootCloseShotCommand() {
-        return new ParallelCommandGroup(
-                getPrepareShooterForCloseShotCommand(),
-                getFeedNoteForCloseShotCommand()
-        );
-    }
-
-    public static Command getPrepareShooterForCloseShotCommand() {
-        return new ParallelCommandGroup(
-                PitcherCommands.getSetPitchForCloseShot(),
-                ShooterCommands.getShootCloseShotCommand()
-        );
-    }
-
-    public static Command getFeedNoteForCloseShotCommand() {
-        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
-    }
-
-    public static Command getFeedNoteForShooterCommand() {
+    public static Command getFeedNoteForShootingCommand() {
         return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()));
+    }
+
+    public static Command getCloseSpeakerShotCommand() {
+        return new ParallelCommandGroup(
+                getPrepareCloseSpeakerShotCommand(),
+                getFeedNoteForCloseSpeakerShotCommand()
+        );
+    }
+
+    public static Command getPrepareCloseSpeakerShotCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.CLOSE_SHOT_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO)
+        );
+    }
+
+    public static Command getFeedNoteForCloseSpeakerShotCommand() {
+        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
     public static Command getAutonomousScoreInAmpCommand() {
@@ -155,9 +158,13 @@ public class Commands {
     public static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getPitchToAmpCommand(),
-                ShooterCommands.getShootToAmpCommand()
+                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
+    }
+
+    public static Command getFeedForAmpCommand() {
+        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 
     public static Command getPathfindToAmpCommand() {
@@ -165,10 +172,6 @@ public class Commands {
                 () -> FieldConstants.IN_FRONT_OF_AMP_POSE,
                 AutonomousConstants.REAL_TIME_CONSTRAINTS
         );
-    }
-
-    public static Command getFeedForAmpCommand() {
-        return runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 
     /**
