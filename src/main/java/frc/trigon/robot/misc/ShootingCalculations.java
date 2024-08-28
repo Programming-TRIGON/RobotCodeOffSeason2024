@@ -197,7 +197,7 @@ public class ShootingCalculations {
         Logger.recordOutput("ShootingCalculations/ShooterNoteExitPointHeight", noteExitPointHeightDifferenceFromTarget);
         final double gForce = ShootingConstants.G_FORCE;
         final double velocitySquared = noteTangentialVelocity * noteTangentialVelocity;
-        final double velocity4thPower = noteTangentialVelocity * noteTangentialVelocity * noteTangentialVelocity * noteTangentialVelocity;
+        final double velocity4thPower = velocitySquared * velocitySquared;
         final double distanceSquared = shooterNoteExitPointXYDistanceFromShootingTarget * shooterNoteExitPointXYDistanceFromShootingTarget;
         final double squareRoot = Math.sqrt(
                 velocity4thPower - (gForce * ((gForce * distanceSquared) + (2 * velocitySquared * noteExitPointHeightDifferenceFromTarget)))
