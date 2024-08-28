@@ -23,6 +23,7 @@ public class FieldConstants {
             SPEAKER_TRANSLATION = new MirrorableTranslation3d(TAG_ID_TO_POSE.get(SPEAKER_TAG_ID).getTranslation().plus(SPEAKER_TAG_TO_SPEAKER), true),
             TARGET_DELIVERY_POSITION = new MirrorableTranslation3d(2.5, 7, 0, true);
     public static final MirrorablePose2d IN_FRONT_OF_AMP_POSE = new MirrorablePose2d(1.842, 8.204 - 0.405, Rotation2d.fromDegrees(-90), true);
+    public static final double MINIMUM_DISTANCE_FROM_AMP_FOR_AMP_PREPARATION_METERS = 2.5;
 
     private static HashMap<Integer, Pose3d> fieldLayoutToTagIdToPoseMap() {
         final HashMap<Integer, Pose3d> tagIdToPose = new HashMap<>();

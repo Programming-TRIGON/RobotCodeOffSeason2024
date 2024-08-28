@@ -159,8 +159,12 @@ public class Commands {
 
     public static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
-                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
+                runWhen(
+                        AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
+                                .alongWith(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH)),
+                        () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation().getDistance(
+                                FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MINIMUM_DISTANCE_FROM_AMP_FOR_AMP_PREPARATION_METERS
+                ),
                 ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
