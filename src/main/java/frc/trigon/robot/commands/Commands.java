@@ -88,7 +88,7 @@ public class Commands {
     /**
      * Creates a command that sets the robot to shoot at the given target
      *
-     * @param isDelivery if the robot is shooting the note for a delivery or for a shot
+     * @param isDelivery if the robot is shooting the note for a delivery or for a speaker shot
      * @return the command
      */
     public static Command getShootAtShootingTargetCommand(boolean isDelivery) {

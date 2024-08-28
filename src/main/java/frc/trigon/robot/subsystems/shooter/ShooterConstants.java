@@ -60,8 +60,8 @@ public class ShooterConstants {
 
     public static final double WHEEL_DIAMETER_METERS = edu.wpi.first.math.util.Units.inchesToMeters(4);
     public static final double
-            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 5,//TODO: Calibrate on real robot
-            CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 25;//TODO: Calibrate on real robot
+            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 10,//TODO: Calibrate on real robot
+            CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 45;
     public static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1.3;
     static final double VELOCITY_TOLERANCE = 0.3;
 
