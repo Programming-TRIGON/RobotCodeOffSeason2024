@@ -86,8 +86,8 @@ public class ClimberConstants {
     static final boolean SYSID_IS_ON_CHAIN = true;
 
     static final Translation3d
-            RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -254.5, 274.45),
-            LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, 254.5, 274.45);
+            RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -0.2545, 0.27445),
+            LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, 0.2545, 0.27445);
     static final double FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS = 0.312;
     static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.35;
     static final double STRING_LENGTH_ADDITION_METERS = 0.143655638521;
