@@ -114,7 +114,7 @@ public class ClimberVisualization {
 
     private Pose3d calculateSecondJointPose(Pose3d firstJointPose, ClimberConstants.ClimberState currentState, Rotation2d firstJointPitch) {
         final Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0),
+                new Translation3d(-ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0, 0),
                 new Rotation3d(0, currentState.affectedByRobotWeight ? ClimberConstants.SECOND_JOINT_ON_CHAIN_PITCH.minus(firstJointPitch).getRadians() : 0, 0)
         );
         return firstJointPose.transformBy(climberTransform);
