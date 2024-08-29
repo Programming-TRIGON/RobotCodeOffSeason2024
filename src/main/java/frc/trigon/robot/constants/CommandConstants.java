@@ -49,7 +49,7 @@ public class CommandConstants {
      * @return the power to apply to the robot
      */
     public static double calculateShiftModeValue(double minimumPower) {
-        final double squaredShiftModeValue = Math.pow(DRIVER_CONTROLLER.getRightTriggerAxis(), 2);
+        final double squaredShiftModeValue = DRIVER_CONTROLLER.getRightTriggerAxis() * DRIVER_CONTROLLER.getRightTriggerAxis();
         final double minimumShiftValueCoefficient = 1 - (1 / minimumPower);
 
         return 1 - squaredShiftModeValue * minimumShiftValueCoefficient;
