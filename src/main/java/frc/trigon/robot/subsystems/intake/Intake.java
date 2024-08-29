@@ -39,6 +39,11 @@ public class Intake extends MotorSubsystem {
         return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
     }
 
+    /**
+     * Checks if a note has been collected early by using the current.
+     *
+     * @return whether a note has been collected early
+     */
     public boolean isEarlyNoteCollectionDetected() {
         return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_COLLECTION_TIME_THRESHOLD_SECONDS).getAsBoolean();
     }

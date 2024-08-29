@@ -26,11 +26,11 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private double trackedNoteYaw = 0;
 
     public AlignToNoteCommand() {
-        configureNoteCollectionDetectionTrigger();
         addCommands(
                 new InstantCommand(() -> {
                     didCollect = false;
                     wasVisible = false;
+                    earlyNoteCollectionDetectionCheck();
                 }),
                 getCurrentLEDColorCommand().asProxy(),
                 Commands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), Commands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
@@ -76,9 +76,9 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
         return new MirrorableRotation2d(currentRotation.plus(Rotation2d.fromDegrees(trackedNoteYaw)), false);
     }
 
-    private void configureNoteCollectionDetectionTrigger() {
+    private void earlyNoteCollectionDetectionCheck() {
         if (RobotContainer.INTAKE.isEarlyNoteCollectionDetected())
-            new InstantCommand(() -> didCollect = true);
+            new InstantCommand(() -> didCollect = true).schedule();
     }
 
     private boolean hasTarget() {
