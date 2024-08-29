@@ -111,13 +111,13 @@ public class ClimberConstants {
     static final double DRUM_DIAMETER_METERS = 0.04;
     static final ClimberVisualization
             RIGHT_VISUALIZATION = new ClimberVisualization(
-            "RightClimberVisualization",
+            "RightClimber",
             BLUE,
             LIGHT_BLUE,
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
     ),
             LEFT_VISUALIZATION = new ClimberVisualization(
-                    "LeftClimberVisualization",
+                    "LeftClimber",
                     GREEN,
                     LIGHT_GREEN,
                     LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
