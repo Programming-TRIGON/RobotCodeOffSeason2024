@@ -143,9 +143,9 @@ public class Commands {
 
     public static Command getAutonomousScoreInAmpCommand() {
         return new ParallelCommandGroup(
-                getPrepareForAmpCommand(),
+                getAutonomousPrepareForAmp(),
                 runWhenContinueTriggerPressed(getFeedToAmpCommand()),
-                getPathfindToAmpCommand().andThen(duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND))
+                getPathfindToAmpCommand().andThen(duplicate(CommandConstants.FACE_AMP_COMMAND))
         );
     }
 
@@ -157,7 +157,7 @@ public class Commands {
         );
     }
 
-    public static Command getPrepareForAmpCommand() {
+    public static Command getAutonomousPrepareForAmp() {
         return new ParallelCommandGroup(
                 runWhen(
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
@@ -165,6 +165,14 @@ public class Commands {
                         () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation().getDistance(
                                 FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MINIMUM_DISTANCE_FROM_AMP_FOR_AMP_PREPARATION_METERS
                 ),
+                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
+        );
+    }
+
+    public static Command getPrepareForAmpCommand() {
+        return new ParallelCommandGroup(
+                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
+                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
                 ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
