@@ -80,7 +80,7 @@ public class Commands {
                 new InstantCommand(
                         () -> {
                             CommandConstants.IS_CLIMBING = true;
-                            Logger.recordOutput("IsClimbing", CommandConstants.IS_CLIMBING);
+                            Logger.recordOutput("IsClimbing", true);
                         }
                 ),
                 ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB).until(OperatorConstants.CONTINUE_TRIGGER),

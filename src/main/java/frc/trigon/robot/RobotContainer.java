@@ -7,6 +7,7 @@ package frc.trigon.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.Commands;
 import frc.trigon.robot.constants.CommandConstants;
@@ -72,6 +73,10 @@ public class RobotContainer {
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
         OperatorConstants.CLIMB_TRIGGER.whileTrue(Commands.getClimbCommand());
+
+        OperatorConstants.MOVE_CLIMBER_DOWN_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_DOWN_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_CLIMBER_UP_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_UP_MANUALLY_COMMAND.alongWith(new InstantCommand(() -> CommandConstants.IS_CLIMBING = true)));
+        OperatorConstants.OVERRIDE_IS_CLIMBING_TRIGGER.onTrue(CommandConstants.OVERRIDE_IS_CLIMBING_COMMAND);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
