@@ -1,4 +1,4 @@
-package frc.trigon.robot.commands;
+package frc.trigon.robot.commands.factories;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
@@ -11,8 +11,21 @@ import org.littletonrobotics.junction.Logger;
 
 import java.util.function.BooleanSupplier;
 
-public class Commands {
+public class GeneralCommands {
     public static boolean IS_BRAKING = true;
+
+    public static Command getClimbCommand() {
+        return new SequentialCommandGroup(
+                new InstantCommand(
+                        () -> {
+                            CommandConstants.IS_CLIMBING = true;
+                            Logger.recordOutput("IsClimbing", true);
+                        }
+                ),
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB).until(() -> OperatorConstants.CONTINUE_TRIGGER.getAsBoolean() && RobotContainer.CLIMBER.atTargetState()),
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB)
+        );
+    }
 
     public static Command withoutRequirements(Command command) {
         return new FunctionalCommand(
@@ -61,10 +74,6 @@ public class Commands {
         ).repeatedly();
     }
 
-    public static Command runWhenContinueTriggerPressed(Command command) {
-        return runWhen(command, OperatorConstants.CONTINUE_TRIGGER);
-    }
-
     public static Command runWhen(Command command, BooleanSupplier condition) {
         return new WaitUntilCommand(condition).andThen(command);
     }
@@ -76,19 +85,6 @@ public class Commands {
                 command::end,
                 command::isFinished,
                 command.getRequirements().toArray(Subsystem[]::new)
-        );
-    }
-
-    public static Command getClimbCommand() {
-        return new SequentialCommandGroup(
-                new InstantCommand(
-                        () -> {
-                            CommandConstants.IS_CLIMBING = true;
-                            Logger.recordOutput("IsClimbing", true);
-                        }
-                ),
-                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB),
-                runWhenContinueTriggerPressed(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB))
         );
     }
 }

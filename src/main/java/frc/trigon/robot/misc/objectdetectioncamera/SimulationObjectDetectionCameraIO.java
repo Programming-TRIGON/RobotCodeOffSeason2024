@@ -2,7 +2,7 @@ package frc.trigon.robot.misc.objectdetectioncamera;
 
 import edu.wpi.first.math.geometry.*;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.commands.Commands;
+import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import org.littletonrobotics.junction.Logger;
 
@@ -68,7 +68,7 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
         if (heldObject.length == 0 || !isEjecting() || isDelayingEjection)
             return;
         isDelayingEjection = true;
-        Commands.getDelayedCommand(0.04, () -> {
+        GeneralCommands.getDelayedCommand(0.04, () -> {
             heldObject = new Pose3d[0];
             isDelayingEjection = false;
         }).schedule();
@@ -83,7 +83,7 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
             if (objectPlacement.getDistance(robotTranslation) <= PICKING_UP_TOLERANCE_METERS) {
                 heldObject = new Pose3d[]{getHeldObjectPose(robotPose)};
                 objectsOnField.remove(objectPlacement);
-                Commands.getDelayedCommand(10, () -> objectsOnField.add(objectPlacement)).schedule();
+                GeneralCommands.getDelayedCommand(10, () -> objectsOnField.add(objectPlacement)).schedule();
                 break;
             }
         }

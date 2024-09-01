@@ -6,7 +6,11 @@ import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.commands.factories.GeneralCommands;
+import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
@@ -33,6 +37,7 @@ public class Climber extends MotorSubsystem {
 
     public Climber() {
         setName("Climber");
+        GeneralCommands.getDelayedCommand(3, this::configureChangingDefaultCommand).schedule();
     }
 
     @Override
@@ -123,6 +128,20 @@ public class Climber extends MotorSubsystem {
 
     private double calculateParabola(double x, double a, double b, double c) {
         return a * Math.pow(x, 2) + b * x + c;
+    }
+
+    private void configureChangingDefaultCommand() {
+        final Trigger climbingTrigger = new Trigger(() -> CommandConstants.IS_CLIMBING);
+        climbingTrigger.onTrue(new InstantCommand(this::defaultToClimbing));
+        climbingTrigger.onFalse(new InstantCommand(this::defaultToResting));
+    }
+
+    private void defaultToResting() {
+        changeDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
+    }
+
+    private void defaultToClimbing() {
+        changeDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB));
     }
 
     private void updateMechanisms() {
