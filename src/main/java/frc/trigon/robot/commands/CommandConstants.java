@@ -51,7 +51,7 @@ public class CommandConstants {
                     FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
             ),
             EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
-            SHOOT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
+            SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
             DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true);
 
     public static double calculateDriveStickAxisValue(double axisValue) {

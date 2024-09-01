@@ -70,7 +70,7 @@ public class RobotContainer {
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
-        OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(CommandConstants.SHOOT_SPEAKER_COMMAND);
+        OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(CommandConstants.SHOOT_AT_SPEAKER_COMMAND);
         OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getCloseSpeakerShotCommand());
         OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getWarmSpeakerShotCommand());
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
