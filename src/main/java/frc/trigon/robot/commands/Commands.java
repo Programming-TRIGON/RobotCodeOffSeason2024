@@ -86,7 +86,7 @@ public class Commands {
     }
 
     /**
-     * Creates a command that sets the shooting mechanism to shoot at the given target
+     * Creates a command that adjusts the shooting mechanism to aim at a target (either delivery target or speaker target), and feeds the note once the shooting mechanism is ready to shoot (all setpoints were reached).
      *
      * @param isDelivery if the robot is shooting the note for a delivery or for a speaker shot
      * @return the command
@@ -157,15 +157,20 @@ public class Commands {
         );
     }
 
+    /**
+     * Creates a command that prepares all the components to shoot into the amp for the autonomous amp scoring command
+     *
+     * @return the command
+     */
     public static Command getAutonomousPrepareForAmp() {
         return new ParallelCommandGroup(
                 runWhen(
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
                                 .alongWith(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH)),
                         () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation().getDistance(
-                                FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MINIMUM_DISTANCE_FROM_AMP_FOR_AMP_PREPARATION_METERS
+                                FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MINIMUM_DISTANCE_FROM_AMP_FOR_AUTONOMOUS_AMP_PREPARATION_METERS
                 ),
-                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
+                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
 
@@ -173,7 +178,7 @@ public class Commands {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
                 PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
+                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
 
