@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.trigon.robot.Robot;
-import frc.trigon.robot.commands.Commands;
+import frc.trigon.robot.commands.GeneralCommands;
 
 import java.awt.*;
 import java.util.function.Function;
@@ -22,7 +22,7 @@ public class LEDStrip extends SubsystemBase {
     private final boolean inverted;
 
     static {
-        Commands.getDelayedCommand(1, () -> LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getAnimateSingleFadeCommand(Color.red, LEDStripConstants.LOW_BATTERY_FLASHING_SPEED, LEDStripConstants.LED_STRIPS))).schedule();
+        GeneralCommands.getDelayedCommand(1, () -> LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getAnimateSingleFadeCommand(Color.red, LEDStripConstants.LOW_BATTERY_FLASHING_SPEED, LEDStripConstants.LED_STRIPS))).schedule();
     }
 
     /**

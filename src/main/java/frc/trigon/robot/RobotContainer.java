@@ -8,7 +8,9 @@ package frc.trigon.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.trigon.robot.commands.Commands;
+import frc.trigon.robot.commands.AmpCommands;
+import frc.trigon.robot.commands.GeneralCommands;
+import frc.trigon.robot.commands.ShootingCommands;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
@@ -58,22 +60,22 @@ public class RobotContainer {
         INTAKE.setDefaultCommand(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP));
         CLIMBER.setDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
         AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
-        PITCHER.setDefaultCommand(Commands.getDefaultPitcherCommand());
+        PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
         SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
     }
 
     private void bindControllerCommands() {
         OperatorConstants.RESET_HEADING_TRIGGER.onTrue(CommandConstants.RESET_HEADING_COMMAND);
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
-        OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
-        OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
+        OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
+        OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
-        OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(Commands.getShootAtShootingTargetCommand(false));
-        OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(Commands.getCloseSpeakerShotCommand());
-        OperatorConstants.AMP_TRIGGER.whileTrue(Commands.getScoreInAmpCommand());
-        OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(Commands.getAutonomousScoreInAmpCommand());
-        OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(Commands.getWarmSpeakerShotCommand());
-        OperatorConstants.DELIVERY_TRIGGER.whileTrue(Commands.getShootAtShootingTargetCommand(true));
+        OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getShootAtShootingTargetCommand(false));
+        OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getCloseSpeakerShotCommand());
+        OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getWarmSpeakerShotCommand());
+        OperatorConstants.DELIVERY_TRIGGER.whileTrue(ShootingCommands.getShootAtShootingTargetCommand(true));
+        OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
+        OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
