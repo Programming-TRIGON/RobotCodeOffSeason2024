@@ -1,7 +1,8 @@
-package frc.trigon.robot.commands;
+package frc.trigon.robot.commands.factories;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.AlignToNoteCommand;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
@@ -12,7 +13,7 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import java.awt.*;
 import java.util.function.BooleanSupplier;
 
-public class Commands {
+public class GeneralCommands {
     public static boolean IS_BRAKING = true;
 
     public static Command withoutRequirements(Command command) {

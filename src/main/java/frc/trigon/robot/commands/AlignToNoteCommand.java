@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
@@ -33,7 +34,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                     earlyNoteCollectionDetectionCheck();
                 }),
                 getCurrentLEDColorCommand().asProxy(),
-                Commands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), Commands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
+                GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
                 new RunCommand(this::trackObject)
         );
     }
@@ -56,7 +57,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private Command getCurrentLEDColorCommand() {
-        return Commands.getContinuousConditionalCommand(
+        return GeneralCommands.getContinuousConditionalCommand(
                 LEDStripCommands.getStaticColorCommand(Color.green, LEDStripConstants.LED_STRIPS),
                 LEDStripCommands.getStaticColorCommand(Color.red, LEDStripConstants.LED_STRIPS),
                 CAMERA::hasTargets
@@ -77,8 +78,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private void earlyNoteCollectionDetectionCheck() {
-        if (RobotContainer.INTAKE.isEarlyNoteCollectionDetected())
-            new InstantCommand(() -> didCollect = true).schedule();
+        didCollect = RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
     }
 
     private boolean hasTarget() {
