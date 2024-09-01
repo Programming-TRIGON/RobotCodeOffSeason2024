@@ -99,7 +99,7 @@ public class PitcherConstants {
     public static final Rotation2d
             AMP_PITCH = Rotation2d.fromDegrees(45),
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57);
-    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(0.6);
+    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(1);
 
     static {
         configureMasterMotor();
