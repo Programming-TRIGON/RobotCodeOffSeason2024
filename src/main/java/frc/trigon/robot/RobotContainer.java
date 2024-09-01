@@ -9,7 +9,9 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.CommandConstants;
+import frc.trigon.robot.commands.factories.AmpCommands;
 import frc.trigon.robot.commands.factories.GeneralCommands;
+import frc.trigon.robot.commands.factories.ShootingCommands;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -69,11 +71,11 @@ public class RobotContainer {
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
         OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(CommandConstants.SHOOT_SPEAKER_COMMAND);
-        OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(CommandConstants.CLOSE_SPEAKER_SHOT_COMMAND);
-        OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(CommandConstants.WARM_SPEAKER_SHOT_COMMAND);
+        OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getCloseSpeakerShotCommand());
+        OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getWarmSpeakerShotCommand());
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
-        OperatorConstants.AMP_TRIGGER.whileTrue(CommandConstants.SCORE_AMP_COMMAND);
-        OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(CommandConstants.AUTONOMOUS_SCORE_AMP_COMMAND);
+        OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
+        OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {

@@ -34,8 +34,9 @@ public class AmpCommands {
     }
 
     /**
-     * Creates a command that prepares to score in the amp.
+     * Creates a command that prepares to score in the amp for the autonomous score in amp command.
      * This command only activates if you are within a certain distance from the amp to ensure that the robot doesn't hit the stage.
+     * This command is not used for the autonomous period.
      *
      * @return the command
      */
