@@ -2,7 +2,7 @@ package frc.trigon.robot.misc.objectdetectioncamera;
 
 import edu.wpi.first.math.geometry.*;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.commands.GeneralCommands;
+import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import org.littletonrobotics.junction.Logger;
 

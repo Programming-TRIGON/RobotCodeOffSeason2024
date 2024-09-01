@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.trigon.robot.Robot;
-import frc.trigon.robot.commands.GeneralCommands;
+import frc.trigon.robot.commands.factories.GeneralCommands;
 
 import java.awt.*;
 import java.util.function.Function;

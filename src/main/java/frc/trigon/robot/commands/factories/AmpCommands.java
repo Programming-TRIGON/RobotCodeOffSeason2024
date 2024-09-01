@@ -3,7 +3,6 @@ package frc.trigon.robot.commands.factories;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.commands.GeneralCommands;
 import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.FieldConstants;
@@ -35,7 +34,7 @@ public class AmpCommands {
     }
 
     /**
-     * Creates a command that prepares all the components to shoot into the amp for the autonomous amp scoring command
+     * Creates a command that prepares all the components but only if it is close enough to the amp.
      *
      * @return the command
      */
