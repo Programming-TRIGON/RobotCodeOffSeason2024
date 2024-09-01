@@ -40,7 +40,7 @@ public class Intake extends MotorSubsystem {
     }
 
     /**
-     * Checks if a note has been collected early, using the motor's current. It's quicker than hasNote() because it updates from the change in current instead of the distance sensor.
+     * Checks if a note has been collected early using the motor's current. It's quicker than hasNote() because it updates from the change in current instead of the distance sensor.
      *
      * @return whether a note has been collected early
      */
