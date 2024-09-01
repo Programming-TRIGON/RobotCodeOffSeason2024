@@ -6,6 +6,7 @@ import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.constants.OperatorConstants;
+import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
@@ -16,7 +17,6 @@ import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
-import frc.trigon.robot.utilities.ShootingCalculations;
 
 import java.util.function.BooleanSupplier;
 
