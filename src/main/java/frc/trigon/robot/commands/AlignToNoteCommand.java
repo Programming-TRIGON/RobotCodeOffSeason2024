@@ -31,7 +31,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                 new InstantCommand(() -> {
                     didCollect = false;
                     wasVisible = false;
-                    earlyNoteCollectionDetectionCheck();
+                    didCollect = RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
                 }),
                 getCurrentLEDColorCommand().asProxy(),
                 GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
@@ -75,10 +75,6 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private MirrorableRotation2d getTargetAngle() {
         final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
         return new MirrorableRotation2d(currentRotation.plus(Rotation2d.fromDegrees(trackedNoteYaw)), false);
-    }
-
-    private void earlyNoteCollectionDetectionCheck() {
-        didCollect = RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
     }
 
     private boolean hasTarget() {
