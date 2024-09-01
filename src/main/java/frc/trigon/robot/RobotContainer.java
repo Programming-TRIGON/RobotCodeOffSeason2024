@@ -14,8 +14,6 @@ import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
-import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
-import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.climber.ClimberCommands;
 import frc.trigon.robot.subsystems.climber.ClimberConstants;
@@ -23,11 +21,9 @@ import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
-import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.Swerve;
-import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -72,6 +68,12 @@ public class RobotContainer {
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
+        OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(Commands.getShootAtShootingTargetCommand(false));
+        OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(Commands.getCloseSpeakerShotCommand());
+        OperatorConstants.AMP_TRIGGER.whileTrue(Commands.getScoreInAmpCommand());
+        OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(Commands.getAutonomousScoreInAmpCommand());
+        OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(Commands.getWarmSpeakerShotCommand());
+        OperatorConstants.DELIVERY_TRIGGER.whileTrue(Commands.getShootAtShootingTargetCommand(true));
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
