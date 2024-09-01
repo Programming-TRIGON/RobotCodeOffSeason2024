@@ -10,6 +10,7 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
@@ -40,7 +41,15 @@ public class CommandConstants {
                     () -> 0
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS),
-            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT);
+            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
+            TURN_AUTOMATIC_NOTE_ALIGNING_ON_COMMAND = new InstantCommand(() -> {
+                SHOULD_ALIGN_TO_NOTE = true;
+                Logger.recordOutput("ShouldAlignToNote", true);
+            }).ignoringDisable(true),
+            TURN_AUTOMATIC_NOTE_ALIGNING_OFF_COMMAND = new InstantCommand(() -> {
+                SHOULD_ALIGN_TO_NOTE = false;
+                Logger.recordOutput("ShouldAlignToNote", false);
+            }).ignoringDisable(true);
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);
