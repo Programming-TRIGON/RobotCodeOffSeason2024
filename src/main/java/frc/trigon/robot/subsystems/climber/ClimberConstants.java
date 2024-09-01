@@ -110,14 +110,14 @@ public class ClimberConstants {
     static final Rotation2d SECOND_JOINT_ON_CHAIN_PITCH = Rotation2d.fromDegrees(90);
     static final double DRUM_DIAMETER_METERS = 0.04;
     static final ClimberVisualization
-            RIGHT_MECHANISM = new ClimberVisualization(
-            "RightClimberMechanism",
+            RIGHT_VISUALIZATION = new ClimberVisualization(
+            "RightClimber",
             BLUE,
             LIGHT_BLUE,
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
     ),
-            LEFT_MECHANISM = new ClimberVisualization(
-                    "LeftClimberMechanism",
+            LEFT_VISUALIZATION = new ClimberVisualization(
+                    "LeftClimber",
                     GREEN,
                     LIGHT_GREEN,
                     LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
