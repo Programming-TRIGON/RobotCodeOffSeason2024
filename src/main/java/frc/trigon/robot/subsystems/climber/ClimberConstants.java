@@ -123,6 +123,9 @@ public class ClimberConstants {
                     LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
             );
 
+    public static final double
+            MOVE_CLIMBER_DOWN_VOLTAGE = -4,
+            MOVE_CLIMBER_UP_VOLTAGE = 4;
     static final double CLIMBER_TOLERANCE_ROTATIONS = 0.01;
 
     static {

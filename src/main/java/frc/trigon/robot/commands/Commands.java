@@ -61,6 +61,10 @@ public class Commands {
         ).repeatedly();
     }
 
+    public static Command runWhenContinueTriggerPressed(Command command) {
+        return runWhen(command, OperatorConstants.CONTINUE_TRIGGER);
+    }
+
     public static Command runWhen(Command command, BooleanSupplier condition) {
         return new WaitUntilCommand(condition).andThen(command);
     }
@@ -83,8 +87,8 @@ public class Commands {
                             Logger.recordOutput("IsClimbing", true);
                         }
                 ),
-                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB).until(() -> OperatorConstants.CONTINUE_TRIGGER.getAsBoolean() && RobotContainer.CLIMBER.atTargetState()),
-                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB)
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB),
+                runWhenContinueTriggerPressed(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB))
         );
     }
 }
