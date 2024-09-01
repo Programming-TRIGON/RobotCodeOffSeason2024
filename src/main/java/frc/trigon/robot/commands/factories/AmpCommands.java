@@ -3,8 +3,8 @@ package frc.trigon.robot.commands.factories;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.AutonomousConstants;
-import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
@@ -19,7 +19,7 @@ import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 public class AmpCommands {
     public static Command getAutonomousScoreInAmpCommand() {
         return new ParallelCommandGroup(
-                getAutonomousPrepareForAmp(),
+                getAutonomousPrepareForAmpCommand(),
                 GeneralCommands.runWhenContinueTriggerPressed(getFeedToAmpCommand()),
                 getPathfindToAmpCommand().andThen(GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND))
         );
@@ -34,11 +34,12 @@ public class AmpCommands {
     }
 
     /**
-     * Creates a command that prepares all the components but only if it is close enough to the amp.
+     * Creates a command that prepares to score in the amp.
+     * This command only activates if you are within a certain distance from the amp to ensure that the robot doesn't hit the stage.
      *
      * @return the command
      */
-    private static Command getAutonomousPrepareForAmp() {
+    private static Command getAutonomousPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 GeneralCommands.runWhen(
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)

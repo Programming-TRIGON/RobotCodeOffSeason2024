@@ -1,10 +1,14 @@
-package frc.trigon.robot.constants;
+package frc.trigon.robot.commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.factories.AmpCommands;
+import frc.trigon.robot.commands.factories.ShootingCommands;
+import frc.trigon.robot.constants.FieldConstants;
+import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
@@ -47,8 +51,14 @@ public class CommandConstants {
                     () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
                     FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
             ),
-            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT);
-  
+            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
+            SHOOT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
+            CLOSE_SPEAKER_SHOT_COMMAND = ShootingCommands.getCloseSpeakerShotCommand(),
+            WARM_SPEAKER_SHOT_COMMAND = ShootingCommands.getWarmSpeakerShotCommand(),
+            DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true),
+            SCORE_AMP_COMMAND = AmpCommands.getScoreInAmpCommand(),
+            AUTONOMOUS_SCORE_AMP_COMMAND = AmpCommands.getAutonomousScoreInAmpCommand();
+
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);
     }
