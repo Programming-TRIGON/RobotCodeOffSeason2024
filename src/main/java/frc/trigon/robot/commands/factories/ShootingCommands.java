@@ -1,12 +1,15 @@
 package frc.trigon.robot.commands.factories;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.CommandConstants;
+import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
+import frc.trigon.robot.misc.objectdetectioncamera.SimulationObjectDetectionCameraIO;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
@@ -14,6 +17,7 @@ import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import org.trigon.hardware.RobotHardwareStats;
 
 public class ShootingCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
@@ -53,7 +57,7 @@ public class ShootingCommands {
     }
 
     private static Command getFeedNoteForShootingCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()));
+        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()));
     }
 
     public static Command getCloseSpeakerShotCommand() {
@@ -71,7 +75,11 @@ public class ShootingCommands {
     }
 
     private static Command getFeedNoteForCloseSpeakerShotCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
+        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
+    }
+
+    private static Command getVisualizeNoteShootingCommand() {
+        return new InstantCommand(() -> GeneralCommands.runWhen(new VisualizeNoteShootingCommand(), () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS).schedule()).onlyIf(RobotHardwareStats::isSimulation);
     }
 
     private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {

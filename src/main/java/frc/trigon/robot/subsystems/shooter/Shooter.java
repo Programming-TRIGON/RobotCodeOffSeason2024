@@ -31,11 +31,11 @@ public class Shooter extends MotorSubsystem {
     public void updateLog(SysIdRoutineLog log) {
         log.motor("RightShooter")
                 .angularPosition(Units.Rotations.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
-                .angularVelocity(Units.RotationsPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularVelocity(Units.RotationsPerSecond.of(getCurrentRightMotorVelocityRotationsPerSecond()))
                 .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
         log.motor("LeftShooter")
                 .angularPosition(Units.Rotations.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
-                .angularVelocity(Units.RotationsPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularVelocity(Units.RotationsPerSecond.of(getCurrentLeftMotorVelocityRotationsPerSecond()))
                 .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.TORQUE_CURRENT)));
     }
 
@@ -65,16 +65,24 @@ public class Shooter extends MotorSubsystem {
         return ShooterConstants.SYSID_CONFIG;
     }
 
+    public double getCurrentRightMotorVelocityRotationsPerSecond() {
+        return rightMotor.getSignal(TalonFXSignal.VELOCITY);
+    }
+
+    public double getCurrentLeftMotorVelocityRotationsPerSecond() {
+        return leftMotor.getSignal(TalonFXSignal.VELOCITY);
+    }
+
     public boolean atTargetVelocity() {
         return atTargetRightVelocity() && atTargetLeftVelocity();
     }
 
     public boolean atTargetRightVelocity() {
-        return atVelocity(rightMotor.getSignal(TalonFXSignal.VELOCITY), targetRightVelocityRotationsPerSecond);
+        return atVelocity(getCurrentRightMotorVelocityRotationsPerSecond(), targetRightVelocityRotationsPerSecond);
     }
 
     public boolean atTargetLeftVelocity() {
-        return atVelocity(leftMotor.getSignal(TalonFXSignal.VELOCITY), targetLeftVelocityRotationsPerSecond);
+        return atVelocity(getCurrentLeftMotorVelocityRotationsPerSecond(), targetLeftVelocityRotationsPerSecond);
     }
 
     void reachTargetShootingVelocityFromShootingCalculations() {
@@ -106,7 +114,7 @@ public class Shooter extends MotorSubsystem {
     }
 
     private void updateMechanism() {
-        ShooterConstants.RIGHT_MECHANISM.update(rightMotor.getSignal(TalonFXSignal.VELOCITY));
-        ShooterConstants.LEFT_MECHANISM.update(leftMotor.getSignal(TalonFXSignal.VELOCITY));
+        ShooterConstants.RIGHT_MECHANISM.update(getCurrentRightMotorVelocityRotationsPerSecond());
+        ShooterConstants.LEFT_MECHANISM.update(getCurrentLeftMotorVelocityRotationsPerSecond());
     }
 }
