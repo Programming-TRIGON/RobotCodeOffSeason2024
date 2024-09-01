@@ -40,7 +40,7 @@ public class Intake extends MotorSubsystem {
     }
 
     /**
-     * Checks if a note has been collected early by using the current.
+     * Checks if a note has been collected early, using the motor's current.
      *
      * @return whether a note has been collected early
      */
