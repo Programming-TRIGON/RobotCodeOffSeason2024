@@ -86,8 +86,8 @@ public class ClimberConstants {
     static final boolean SYSID_IS_ON_CHAIN = true;
 
     static final Translation3d
-            RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -254.5, 274.45),
-            LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, 254.5, 274.45);
+            RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -0.2545, 0.27445),
+            LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, 0.2545, 0.27445);
     static final double FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS = 0.312;
     static final double FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS = 0.35;
     static final double STRING_LENGTH_ADDITION_METERS = 0.143655638521;
@@ -110,14 +110,14 @@ public class ClimberConstants {
     static final Rotation2d SECOND_JOINT_ON_CHAIN_PITCH = Rotation2d.fromDegrees(90);
     static final double DRUM_DIAMETER_METERS = 0.04;
     static final ClimberVisualization
-            RIGHT_MECHANISM = new ClimberVisualization(
-            "RightClimberMechanism",
+            RIGHT_VISUALIZATION = new ClimberVisualization(
+            "RightClimber",
             BLUE,
             LIGHT_BLUE,
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
     ),
-            LEFT_MECHANISM = new ClimberVisualization(
-                    "LeftClimberMechanism",
+            LEFT_VISUALIZATION = new ClimberVisualization(
+                    "LeftClimber",
                     GREEN,
                     LIGHT_GREEN,
                     LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT

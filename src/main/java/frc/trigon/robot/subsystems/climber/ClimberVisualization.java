@@ -108,13 +108,13 @@ public class ClimberVisualization {
         final Pose3d firstJointPose = calculateFirstJointPose(firstJointOriginPoint, currentFirstJointPitch);
         Logger.recordOutput(key, mechanism);
         Logger.recordOutput("Poses/Components/" + name + "FirstJointPose", firstJointPose);
-        Logger.recordOutput("Poses/Components/" + name + "secondJointPose", calculateSecondJointPose(firstJointPose, targetState, currentFirstJointPitch));
+        Logger.recordOutput("Poses/Components/" + name + "SecondJointPose", calculateSecondJointPose(firstJointPose, targetState, currentFirstJointPitch));
     }
 
 
     private Pose3d calculateSecondJointPose(Pose3d firstJointPose, ClimberConstants.ClimberState currentState, Rotation2d firstJointPitch) {
         final Transform3d climberTransform = new Transform3d(
-                new Translation3d(0, ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0),
+                new Translation3d(-ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0, 0),
                 new Rotation3d(0, currentState.affectedByRobotWeight ? ClimberConstants.SECOND_JOINT_ON_CHAIN_PITCH.minus(firstJointPitch).getRadians() : 0, 0)
         );
         return firstJointPose.transformBy(climberTransform);
@@ -135,9 +135,9 @@ public class ClimberVisualization {
 
     private Rotation2d calculateFirstJointPitch(double stringLength) {
         final double numeratorCalculation =
-                Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS, 2)
-                        + Math.pow(ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS, 2)
-                        - Math.pow(stringLength, 2);
+                (ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS)
+                        + (ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS)
+                        - (stringLength * stringLength);
         final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
         final double angle = Math.acos(division) + ClimberConstants.FIRST_JOINT_ANGLE_ADDITION.getRadians();
