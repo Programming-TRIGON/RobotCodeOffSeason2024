@@ -78,10 +78,6 @@ public class RobotContainer {
         OperatorConstants.MOVE_CLIMBER_UP_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_UP_MANUALLY_COMMAND.alongWith(new InstantCommand(() -> CommandConstants.IS_CLIMBING = true)));
         OperatorConstants.OVERRIDE_IS_CLIMBING_TRIGGER.onTrue(CommandConstants.OVERRIDE_IS_CLIMBING_COMMAND);
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
-        OperatorConstants.OPERATOR_CONTROLLER.a().whileTrue(ClimberCommands.getStopCommand());
-        OperatorConstants.OPERATOR_CONTROLLER.s().whileTrue(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB));
-        OperatorConstants.OPERATOR_CONTROLLER.d().whileTrue(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB));
-        OperatorConstants.OPERATOR_CONTROLLER.f().whileTrue(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
