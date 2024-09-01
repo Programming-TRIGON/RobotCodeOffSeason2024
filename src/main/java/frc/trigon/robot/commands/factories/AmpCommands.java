@@ -35,8 +35,9 @@ public class AmpCommands {
 
     /**
      * Creates a command that prepares to score in the amp for the autonomous score in amp command.
-     * This command only activates if you are within a certain distance from the amp to ensure that the robot doesn't hit the stage.
-     * This command is not used for the autonomous period.
+     * This command waits until we're within a certain distance from the amp to ensure that the robot doesn't hit the stage.
+     * We're only waiting for the autonomous placement to allow for driver judgment in the normal placement, and so it won't interfere in a case where pose estimation isn't working.
+     * This command is not used for the autonomous period, but rather for the real-time autonomous amp placement.
      *
      * @return the command
      */
