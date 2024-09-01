@@ -16,9 +16,17 @@ public class ShooterCommands {
         );
     }
 
-    public static Command getReachTargetShootingVelocityFromShootingCalculations() {
+    public static Command getReachTargetShootingVelocityFromShootingCalculationsCommand() {
         return new ExecuteEndCommand(
                 RobotContainer.SHOOTER::reachTargetShootingVelocityFromShootingCalculations,
+                RobotContainer.SHOOTER::stop,
+                RobotContainer.SHOOTER
+        );
+    }
+
+    public static Command getSetTargetVelocityCommand(double targetVelocityBothMotors) {
+        return new StartEndCommand(
+                () -> RobotContainer.SHOOTER.setTargetVelocity(targetVelocityBothMotors, targetVelocityBothMotors),
                 RobotContainer.SHOOTER::stop,
                 RobotContainer.SHOOTER
         );

@@ -67,12 +67,18 @@ public class AmpAligner extends MotorSubsystem {
         return targetState;
     }
 
-    public boolean atTargetState() {
-        return atAngle(targetState.targetAngle);
+    /**
+     * If the pitcher closes before the amp aligner is closed, the amp aligner hits the amp.
+     * This function should be used to ensure that the pitcher closes after the amp is closed enough.
+     *
+     * @return if the pitcher is ready to close
+     */
+    public boolean isReadyForDefaultPitcherMovement() {
+        return getCurrentAngle().getRotations() > AmpAlignerConstants.READY_FOR_DEFAULT_PITCHER_MOVEMENT_ANGLE.getRotations();
     }
 
-    public boolean atTargetAngle() {
-        return atAngle(targetAngle);
+    public boolean atTargetState() {
+        return atAngle(targetState.targetAngle);
     }
 
     public boolean atAngle(Rotation2d targetAngle) {

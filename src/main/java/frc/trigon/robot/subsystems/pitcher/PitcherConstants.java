@@ -40,7 +40,7 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_OPPOSES_MASTER = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 500 : 0,
+            P = RobotHardwareStats.isSimulation() ? 200 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
             KS = RobotHardwareStats.isSimulation() ? 0.46583 : 0,
@@ -55,8 +55,8 @@ public class PitcherConstants {
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
     private static final double GEAR_RATIO = 200;
     private static final Rotation2d
-            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
-            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
+            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73),
+            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12);
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
     private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
@@ -87,7 +87,7 @@ public class PitcherConstants {
             Units.Second.of(1000)
     );
 
-    static final Pose3d PITCHER_VISUALIZATION_ORIGIN_POINT = new Pose3d(0.2521, 0, 0.15545, new Rotation3d());
+    static final Pose3d PITCHER_VISUALIZATION_ORIGIN_POINT = new Pose3d(0.2521, 0, 0.15545, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-12), 0));
     public static final DoubleJointedArmMechanism2d PITCHER_AND_AMP_ALIGNER_MECHANISM = new DoubleJointedArmMechanism2d(
             "PitcherAndAmpAlignerMechanism",
             PITCHER_LENGTH_METERS,
@@ -96,6 +96,9 @@ public class PitcherConstants {
     );
 
     public static final Rotation2d DEFAULT_PITCH = PITCHER_MINIMUM_ANGLE;
+    public static final Rotation2d
+            AMP_PITCH = Rotation2d.fromDegrees(45),
+            CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57);
     static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(0.6);
 
     static {

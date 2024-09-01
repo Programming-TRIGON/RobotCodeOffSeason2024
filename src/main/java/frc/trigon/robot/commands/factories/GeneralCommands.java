@@ -1,14 +1,27 @@
-package frc.trigon.robot.commands;
+package frc.trigon.robot.commands.factories;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.constants.CommandConstants;
+import frc.trigon.robot.commands.CommandConstants;
+import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
+import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 
 import java.util.function.BooleanSupplier;
 
-public class Commands {
+public class GeneralCommands {
     public static boolean IS_BRAKING = true;
+
+    /**
+     * If the pitcher closes before the amp aligner is closed, the amp aligner hits the amp.
+     * This command ensures that the pitcher closes after the amp is closed enough.
+     *
+     * @return the default pitcher command
+     */
+    public static Command getDefaultPitcherCommand() {
+        return runWhen(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.DEFAULT_PITCH), RobotContainer.AMP_ALIGNER::isReadyForDefaultPitcherMovement);
+    }
 
     public static Command withoutRequirements(Command command) {
         return new FunctionalCommand(
@@ -69,5 +82,9 @@ public class Commands {
                 command::isFinished,
                 command.getRequirements().toArray(Subsystem[]::new)
         );
+    }
+
+    public static Command runWhenContinueTriggerPressed(Command command) {
+        return runWhen(command, OperatorConstants.CONTINUE_TRIGGER);
     }
 }
