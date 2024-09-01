@@ -1,9 +1,10 @@
-package frc.trigon.robot.commands;
+package frc.trigon.robot.commands.factories;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.GeneralCommands;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
@@ -52,7 +53,7 @@ public class ShootingCommands {
         );
     }
 
-    public static Command getFeedNoteForShootingCommand() {
+    private static Command getFeedNoteForShootingCommand() {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()));
     }
 
@@ -63,14 +64,14 @@ public class ShootingCommands {
         );
     }
 
-    public static Command getPrepareCloseSpeakerShotCommand() {
+    private static Command getPrepareCloseSpeakerShotCommand() {
         return new ParallelCommandGroup(
                 PitcherCommands.getSetTargetPitchCommand(PitcherConstants.CLOSE_SHOT_PITCH),
                 ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO)
         );
     }
 
-    public static Command getFeedNoteForCloseSpeakerShotCommand() {
+    private static Command getFeedNoteForCloseSpeakerShotCommand() {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 

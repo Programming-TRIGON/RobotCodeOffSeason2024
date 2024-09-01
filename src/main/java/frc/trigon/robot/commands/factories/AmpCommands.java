@@ -1,8 +1,9 @@
-package frc.trigon.robot.commands;
+package frc.trigon.robot.commands.factories;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.GeneralCommands;
 import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CommandConstants;
 import frc.trigon.robot.constants.FieldConstants;
@@ -38,7 +39,7 @@ public class AmpCommands {
      *
      * @return the command
      */
-    public static Command getAutonomousPrepareForAmp() {
+    private static Command getAutonomousPrepareForAmp() {
         return new ParallelCommandGroup(
                 GeneralCommands.runWhen(
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
@@ -50,7 +51,7 @@ public class AmpCommands {
         );
     }
 
-    public static Command getPrepareForAmpCommand() {
+    private static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
                 PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
@@ -58,11 +59,11 @@ public class AmpCommands {
         );
     }
 
-    public static Command getFeedToAmpCommand() {
+    private static Command getFeedToAmpCommand() {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 
-    public static Command getPathfindToAmpCommand() {
+    private static Command getPathfindToAmpCommand() {
         return SwerveCommands.getDriveToPoseCommand(
                 () -> FieldConstants.IN_FRONT_OF_AMP_POSE,
                 AutonomousConstants.REAL_TIME_CONSTRAINTS
