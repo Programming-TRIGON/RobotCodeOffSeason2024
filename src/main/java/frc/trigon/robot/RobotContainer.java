@@ -72,6 +72,7 @@ public class RobotContainer {
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(Commands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(Commands.getToggleBrakeCommand());
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
+        OperatorConstants.COLLECT_NOTE_TRIGGER.whileTrue(Commands.getNoteCollectionCommand());
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
