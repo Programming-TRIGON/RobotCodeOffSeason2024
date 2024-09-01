@@ -126,7 +126,7 @@ public class Climber extends MotorSubsystem {
     }
 
     private void updateMechanisms() {
-        ClimberConstants.RIGHT_MECHANISM.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
-        ClimberConstants.LEFT_MECHANISM.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
+        ClimberConstants.RIGHT_VISUALIZATION.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
+        ClimberConstants.LEFT_VISUALIZATION.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
     }
 }
