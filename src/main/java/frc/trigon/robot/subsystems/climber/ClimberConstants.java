@@ -173,7 +173,7 @@ public class ClimberConstants {
 
     public enum ClimberState {
         REST(0, false),
-        PREPARE_FOR_CLIMB(0.5, false), //TODO: calibrate
+        PREPARE_FOR_CLIMB(2, false), //TODO: calibrate
         CLIMB(0.1, true); //TODO: calibrate
 
         public final double positionRotations;

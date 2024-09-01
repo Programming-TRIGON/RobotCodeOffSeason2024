@@ -127,25 +127,26 @@ public class ClimberVisualization {
         );
     }
 
-    private Rotation2d calculateStringAngle(Rotation2d climberAngle, double stringLengthMeters) {
-        return Rotation2d.fromRadians(
-                Math.asin(climberAngle.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION).getSin() * stringLengthMeters / ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS) + ClimberConstants.STRING_ANGLE_ADDITION.getRadians()
-        );
+    private Rotation2d calculateStringAngle(Rotation2d firstJointAngle, double stringLengthMeters) {
+        final double firstJointSin = firstJointAngle.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION).getSin();
+        final double division = ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS / stringLengthMeters;
+        final double asin = Math.asin(firstJointSin * division);
+        return Rotation2d.fromRadians(asin + ClimberConstants.STRING_ANGLE_ADDITION.getRadians());
     }
 
-    private Rotation2d calculateFirstJointPitch(double stringLength) {
+    private Rotation2d calculateFirstJointPitch(double stringLengthMeters) {
         final double numeratorCalculation =
                 (ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS)
                         + (ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS)
-                        - (stringLength * stringLength);
+                        - (stringLengthMeters * stringLengthMeters);
         final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
         final double angle = Math.acos(division) + ClimberConstants.FIRST_JOINT_ANGLE_ADDITION.getRadians();
         return Rotation2d.fromRadians(angle);
     }
 
-    private double calculateStringLengthMeters(double position) {
-        return toMeters(position) + ClimberConstants.STRING_LENGTH_ADDITION_METERS;
+    private double calculateStringLengthMeters(double positionRotations) {
+        return toMeters(positionRotations) + ClimberConstants.STRING_LENGTH_ADDITION_METERS;
     }
 
     /**
