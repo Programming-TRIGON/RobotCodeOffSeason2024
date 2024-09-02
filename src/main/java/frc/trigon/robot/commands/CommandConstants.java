@@ -1,10 +1,15 @@
-package frc.trigon.robot.constants;
+package frc.trigon.robot.commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.factories.ShootingCommands;
+import frc.trigon.robot.constants.FieldConstants;
+import frc.trigon.robot.constants.OperatorConstants;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
@@ -41,7 +46,6 @@ public class CommandConstants {
                     () -> 0
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS),
-            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
             TURN_AUTOMATIC_NOTE_ALIGNING_ON_COMMAND = new InstantCommand(() -> {
                 SHOULD_ALIGN_TO_NOTE = true;
                 Logger.recordOutput("ShouldAlignToNote", true);
@@ -49,7 +53,16 @@ public class CommandConstants {
             TURN_AUTOMATIC_NOTE_ALIGNING_OFF_COMMAND = new InstantCommand(() -> {
                 SHOULD_ALIGN_TO_NOTE = false;
                 Logger.recordOutput("ShouldAlignToNote", false);
-            }).ignoringDisable(true);
+            }).ignoringDisable(true),
+            DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
+            FACE_AMP_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                    FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
+            ),
+            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
+            SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
+            DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true);
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);
