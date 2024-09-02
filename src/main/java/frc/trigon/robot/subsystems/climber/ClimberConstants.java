@@ -95,7 +95,6 @@ public class ClimberConstants {
             FIRST_JOINT_ANGLE_ADDITION = Rotation2d.fromDegrees(57.87 + 7.37 - 90),
             STRING_ANGLE_ADDITION = Rotation2d.fromDegrees(90 - 57.87);
     static final double DISTANCE_BETWEEN_JOINTS_METERS = 0.42;
-    static final double CLOSED_STRING_LENGTH_METERS = 0.168;
     static final Rotation2d CLOSED_STRING_ANGLE = Rotation2d.fromDegrees(63.32);
     private static final Color8Bit
             BLUE = new Color8Bit(Color.kBlue),
@@ -173,7 +172,7 @@ public class ClimberConstants {
 
     public enum ClimberState {
         REST(0, false),
-        PREPARE_FOR_CLIMB(2, false), //TODO: calibrate
+        PREPARE_FOR_CLIMB(3.183, false), //TODO: calibrate
         CLIMB(0.1, true); //TODO: calibrate
 
         public final double positionRotations;
