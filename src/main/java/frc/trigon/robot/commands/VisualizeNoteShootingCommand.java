@@ -16,7 +16,7 @@ import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 public class VisualizeNoteShootingCommand extends Command {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
     private double startingTimeSeconds;
-    private Translation3d startingEndEffectorFieldRelativeTranslation;
+    private Translation3d fieldRelativeNoteExitPointTranslation;
     private Rotation2d startingPitch;
     private Translation2d initialXYVelocity;
     private double initialZVelocity;
@@ -28,8 +28,8 @@ public class VisualizeNoteShootingCommand extends Command {
         startingPitch = RobotContainer.PITCHER.getCurrentPitch();
         final Pose2d currentRobotPose = RobotContainer.POSE_ESTIMATOR.getCurrentPose();
         final Rotation2d currentRobotAngle = currentRobotPose.getRotation();
-        final Pose3d startingEndEffectorFieldRelativePose = SHOOTING_CALCULATIONS.calculateShooterNoteExitPointFieldRelativePose(startingPitch, currentRobotPose.getTranslation(), new MirrorableRotation2d(currentRobotAngle, false));
-        startingEndEffectorFieldRelativeTranslation = startingEndEffectorFieldRelativePose.getTranslation();
+        final Pose3d fieldRelativeNoteExitPointPose = SHOOTING_CALCULATIONS.calculateShooterNoteExitPointFieldRelativePose(startingPitch, currentRobotPose.getTranslation(), new MirrorableRotation2d(currentRobotAngle, false));
+        fieldRelativeNoteExitPointTranslation = fieldRelativeNoteExitPointPose.getTranslation();
         final double startingTangentialVelocity = SHOOTING_CALCULATIONS.angularVelocityToTangentialVelocity(RobotContainer.SHOOTER.getCurrentRightMotorVelocityRotationsPerSecond());
         initialXYVelocity = calculateInitialXYVelocityWithRobotVelocity(startingPitch, startingTangentialVelocity, currentRobotAngle);
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
@@ -40,9 +40,9 @@ public class VisualizeNoteShootingCommand extends Command {
         final double t = Timer.getFPGATimestamp() - startingTimeSeconds;
         final double xPosition = initialXYVelocity.getX() * t;
         final double yPosition = initialXYVelocity.getY() * t;
-        final double zPosition = (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * Math.pow(t, 2));
+        final double zPosition = (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * t * t);
         final Transform3d transform = new Transform3d(xPosition, yPosition, zPosition, new Rotation3d(0, -startingPitch.getRadians(), 0));
-        final Pose3d notePose = new Pose3d(startingEndEffectorFieldRelativeTranslation, new Rotation3d()).plus(transform);
+        final Pose3d notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(transform);
         noteZ = notePose.getTranslation().getZ();
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
     }
