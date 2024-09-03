@@ -35,9 +35,8 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         motor.update();
-        super.periodic();
     }
 
     @Override

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import org.littletonrobotics.junction.networktables.LoggedDashboardBoolean;
+import org.trigon.hardware.RobotHardwareStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +45,11 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
 
     @Override
     public void periodic() {
-        if (SHOULD_UPDATE_MECHANISMS.get())
+        if (RobotHardwareStats.isReplay())
             updateMechanisms();
+        else if (SHOULD_UPDATE_MECHANISMS.get())
+            updateMechanisms();
+        updatePeriodically();
         super.periodic();
     }
 
@@ -120,6 +124,9 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
     }
 
     public void updateMechanisms() {
+    }
+
+    public void updatePeriodically() {
     }
 
     public SysIdRoutine.Config getSysIdConfig() {

@@ -36,10 +36,9 @@ public class Climber extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         rightMotor.update();
         leftMotor.update();
-        super.periodic();
     }
 
     @Override

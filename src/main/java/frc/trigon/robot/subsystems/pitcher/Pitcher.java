@@ -51,9 +51,8 @@ public class Pitcher extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         masterMotor.update();
-        super.periodic();
     }
 
     @Override

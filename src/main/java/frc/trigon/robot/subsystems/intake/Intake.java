@@ -18,10 +18,9 @@ public class Intake extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         masterMotor.update();
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
-        super.periodic();
     }
 
     @Override
