@@ -31,7 +31,7 @@ public class Intake extends MotorSubsystem {
     }
 
     @Override
-    public void updateMechanisms() {
+    public void updateMechanism() {
         IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
     }
 

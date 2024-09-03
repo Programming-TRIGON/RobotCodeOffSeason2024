@@ -65,7 +65,7 @@ public class Shooter extends MotorSubsystem {
     }
 
     @Override
-    public void updateMechanisms() {
+    public void updateMechanism() {
         ShooterConstants.RIGHT_MECHANISM.update(getCurrentRightMotorVelocityRotationsPerSecond());
         ShooterConstants.LEFT_MECHANISM.update(getCurrentLeftMotorVelocityRotationsPerSecond());
     }

@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.SubsystemBase {
     private static final List<MotorSubsystem> REGISTERED_SUBSYSTEMS = new ArrayList<>();
     private static final Trigger DISABLED_TRIGGER = new Trigger(DriverStation::isDisabled);
-    private static final LoggedDashboardBoolean SHOULD_UPDATE_MECHANISMS = new LoggedDashboardBoolean("ShouldUpdateMechanisms", true);
+    private static final LoggedDashboardBoolean ENABLE_EXTENSIVE_LOGGING = new LoggedDashboardBoolean("ShouldUpdateMechanisms", true);
 
     static {
         DISABLED_TRIGGER.onTrue(new InstantCommand(() -> forEach(MotorSubsystem::stop)).ignoringDisable(true));
@@ -43,14 +43,16 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
         REGISTERED_SUBSYSTEMS.add(this);
     }
 
+    /**
+     * Runs periodically. Only updated the mechanism if the robot is in replay mode or extensive logging is enabled.
+     */
     @Override
     public void periodic() {
-        if (RobotHardwareStats.isReplay())
-            updateMechanisms();
-        else if (SHOULD_UPDATE_MECHANISMS.get())
-            updateMechanisms();
         updatePeriodically();
-        super.periodic();
+        if (RobotHardwareStats.isReplay())
+            updateMechanism();
+        else if (ENABLE_EXTENSIVE_LOGGING.get())
+            updateMechanism();
     }
 
     /**
@@ -123,9 +125,15 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
     public void updateLog(SysIdRoutineLog log) {
     }
 
-    public void updateMechanisms() {
+    /**
+     * Updates the mechanism of the subsystem periodically unless ENABLE_EXTENSIVE_LOGGING is false.
+     */
+    public void updateMechanism() {
     }
 
+    /**
+     * Updates periodically. Anything that should be updated periodically but isn't related to the mechanism should be put here.
+     */
     public void updatePeriodically() {
     }
 
