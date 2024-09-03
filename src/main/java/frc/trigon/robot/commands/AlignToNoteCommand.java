@@ -14,13 +14,14 @@ import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 import java.awt.*;
 
 public class AlignToNoteCommand extends ParallelCommandGroup {
     private static final ObjectDetectionCamera CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
-    private static final PIDController Y_PID_CONTROLLER = new PIDController(0.005, 0, 0);
+    private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ? new PIDController(0, 0, 0) : new PIDController(0, 0, 0);
     private boolean didCollect = false;
     private boolean wasVisible = false;
     private double trackedNoteYaw = 0;
@@ -66,7 +67,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
-                () -> Y_PID_CONTROLLER.calculate(-trackedNoteYaw),
+                () -> Y_PID_CONTROLLER.calculate(trackedNoteYaw),
                 this::getTargetAngle
         );
     }
