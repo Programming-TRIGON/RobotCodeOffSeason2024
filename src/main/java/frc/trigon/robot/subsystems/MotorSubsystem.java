@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
+import org.littletonrobotics.junction.networktables.LoggedDashboardBoolean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.function.Consumer;
 public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.SubsystemBase {
     private static final List<MotorSubsystem> REGISTERED_SUBSYSTEMS = new ArrayList<>();
     private static final Trigger DISABLED_TRIGGER = new Trigger(DriverStation::isDisabled);
+    private static final LoggedDashboardBoolean SHOULD_UPDATE_MECHANISMS = new LoggedDashboardBoolean("ShouldUpdateMechanisms", true);
 
     static {
         DISABLED_TRIGGER.onTrue(new InstantCommand(() -> forEach(MotorSubsystem::stop)).ignoringDisable(true));
@@ -38,6 +40,13 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
 
     public MotorSubsystem() {
         REGISTERED_SUBSYSTEMS.add(this);
+    }
+
+    @Override
+    public void periodic() {
+        if (SHOULD_UPDATE_MECHANISMS.get())
+            updateMechanisms();
+        super.periodic();
     }
 
     /**
@@ -108,6 +117,9 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
      * @param log the log to update
      */
     public void updateLog(SysIdRoutineLog log) {
+    }
+
+    public void updateMechanisms() {
     }
 
     public SysIdRoutine.Config getSysIdConfig() {

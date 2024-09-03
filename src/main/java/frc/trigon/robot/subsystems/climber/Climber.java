@@ -39,7 +39,7 @@ public class Climber extends MotorSubsystem {
     public void periodic() {
         rightMotor.update();
         leftMotor.update();
-        updateMechanisms();
+        super.periodic();
     }
 
     @Override
@@ -75,6 +75,12 @@ public class Climber extends MotorSubsystem {
     public void stop() {
         rightMotor.stopMotor();
         leftMotor.stopMotor();
+    }
+
+    @Override
+    public void updateMechanisms() {
+        ClimberConstants.RIGHT_VISUALIZATION.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
+        ClimberConstants.LEFT_VISUALIZATION.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
     }
 
     public boolean atTargetState() {
@@ -123,10 +129,5 @@ public class Climber extends MotorSubsystem {
 
     private double calculateParabola(double x, double a, double b, double c) {
         return a * Math.pow(x, 2) + b * x + c;
-    }
-
-    private void updateMechanisms() {
-        ClimberConstants.RIGHT_VISUALIZATION.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
-        ClimberConstants.LEFT_VISUALIZATION.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
     }
 }

@@ -37,7 +37,7 @@ public class AmpAligner extends MotorSubsystem {
     @Override
     public void periodic() {
         motor.update();
-        updateMechanism();
+        super.periodic();
     }
 
     @Override
@@ -61,6 +61,12 @@ public class AmpAligner extends MotorSubsystem {
     @Override
     public SysIdRoutine.Config getSysIdConfig() {
         return AmpAlignerConstants.SYSID_CONFIG;
+    }
+
+    @Override
+    public void updateMechanisms() {
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointTargetAngle(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointCurrentAngle(getCurrentAngle());
     }
 
     public AmpAlignerConstants.AmpAlignerState getTargetState() {
@@ -115,10 +121,5 @@ public class AmpAligner extends MotorSubsystem {
         if (!RobotHardwareStats.isSimulation())
             return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
         return 0;
-    }
-
-    private void updateMechanism() {
-        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointTargetAngle(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
-        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointCurrentAngle(getCurrentAngle());
     }
 }

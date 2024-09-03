@@ -21,7 +21,7 @@ public class Intake extends MotorSubsystem {
     public void periodic() {
         masterMotor.update();
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
-        updateMechanism();
+        super.periodic();
     }
 
     @Override
@@ -29,6 +29,11 @@ public class Intake extends MotorSubsystem {
         masterMotor.stopMotor();
         targetState = IntakeConstants.IntakeState.STOP;
         IntakeConstants.MECHANISM.setTargetVelocity(0);
+    }
+
+    @Override
+    public void updateMechanisms() {
+        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
     }
 
     public IntakeConstants.IntakeState getTargetState() {
@@ -58,9 +63,5 @@ public class Intake extends MotorSubsystem {
      */
     void indicateCollection() {
         OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
-    }
-
-    private void updateMechanism() {
-        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
     }
 }
