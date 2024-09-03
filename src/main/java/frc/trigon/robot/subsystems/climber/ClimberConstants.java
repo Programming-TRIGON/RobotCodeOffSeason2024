@@ -31,33 +31,33 @@ public class ClimberConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
-    static final double
-            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0,
-            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0,
-            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0,
-            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0;
     private static final double //TODO: calibrate
-            GROUNDED_P = RobotHardwareStats.isSimulation() ? 0 : 0,
+            GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 0,
             GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.010545 : 0,
-            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.7624 : 0,
-            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17774 : 0;
+            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0,
+            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 0,
+            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0;
     static final double
             GROUNDED_A = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_B = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_C = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double //TODO: calibrate
-            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? 0.010545 : 0,
-            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? 8.7624 : 0,
-            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? 0.17774 : 0;
+            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? GROUNDED_P : 0,
+            ON_CHAIN_I = RobotHardwareStats.isSimulation() ? GROUNDED_I : 0,
+            ON_CHAIN_D = RobotHardwareStats.isSimulation() ? GROUNDED_D : 0,
+            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? GROUNDED_KS : 0,
+            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? GROUNDED_KV : 0,
+            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? GROUNDED_KA : 0;
     static final double
             ON_CHAIN_A = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_B = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_C = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double
+            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KV : 0,
+            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KA : 0,
+            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KV) - 0.5 : 0,
+            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KA) - 40 : 0;
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;

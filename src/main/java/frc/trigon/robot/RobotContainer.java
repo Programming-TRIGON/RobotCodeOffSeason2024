@@ -81,8 +81,6 @@ public class RobotContainer {
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
-
-        configureSysIdBindings(CLIMBER);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
