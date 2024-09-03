@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -28,7 +29,6 @@ public class Swerve extends MotorSubsystem {
     private final Pigeon2Gyro gyro = SwerveConstants.GYRO;
     private final SwerveModule[] swerveModules = SwerveConstants.SWERVE_MODULES;
     private final Phoenix6SignalThread phoenix6SignalThread = Phoenix6SignalThread.getInstance();
-    private final String targetSysIDMotor = "Drive";
     private double lastTimestamp = Timer.getFPGATimestamp();
 
     public Swerve() {
@@ -63,28 +63,21 @@ public class Swerve extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        if (targetSysIDMotor.equals("Drive")) {
-            SwerveConstants.SWERVE_MODULES[0].driveMotorDrive(voltageMeasure);
-            return;
+        for (SwerveModule swerveModule : swerveModules) {
+            swerveModule.driveMotorDrive(voltageMeasure);
+            swerveModule.setTargetAngle(new Rotation2d());
         }
-        SwerveConstants.SWERVE_MODULES[0].steerMotorDrive(voltageMeasure);
     }
 
     @Override
     public void updateLog(SysIdRoutineLog log) {
-        if (targetSysIDMotor.equals("Drive")) {
-            SwerveConstants.SWERVE_MODULES[0].driveMotorUpdateLog(log);
-            return;
-        }
-        SwerveConstants.SWERVE_MODULES[0].steerMotorUpdateLog(log);
+        for (SwerveModule swerveModule : swerveModules)
+            swerveModule.driveMotorUpdateLog(log);
     }
 
     @Override
     public SysIdRoutine.Config getSysIdConfig() {
-        if (targetSysIDMotor.equals("Drive")) {
-            return SwerveConstants.SWERVE_MODULES[0].getDriveMotorSysIdConfig();
-        }
-        return SwerveConstants.SWERVE_MODULES[0].getSteerMotorSysIdConfig();
+        return SwerveModuleConstants.DRIVE_MOTOR_SYSID_CONFIG;
     }
 
     public Rotation2d getHeading() {

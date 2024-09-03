@@ -40,23 +40,23 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_OPPOSES_MASTER = false;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 200 : 0,
+            P = RobotHardwareStats.isSimulation() ? 100 : 0,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0.46583 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 19.611 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0.48644 : 0,
+            D = RobotHardwareStats.isSimulation() ? 20 : 0,
+            KS = RobotHardwareStats.isSimulation() ? 0.2 : 0,
+            KV = RobotHardwareStats.isSimulation() ? 32 : 0,
+            KA = RobotHardwareStats.isSimulation() ? 0 : 0,
             KG = RobotHardwareStats.isSimulation() ? 0.2 : 0;
     private static final double
-            EXPO_KV = KV,
-            EXPO_KA = KA;
+            EXPO_KV = KV + 5,
+            EXPO_KA = 0.2;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
     private static final double GEAR_RATIO = 200;
     private static final Rotation2d
-            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73),
-            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12);
+            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
+            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
     private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
@@ -82,8 +82,8 @@ public class PitcherConstants {
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(2).per(Units.Second.of(1)),
-            Units.Volts.of(3),
+            Units.Volts.of(5).per(Units.Second.of(1)),
+            Units.Volts.of(9),
             Units.Second.of(1000)
     );
 
@@ -95,11 +95,11 @@ public class PitcherConstants {
             new Color8Bit(Color.kGreen)
     );
 
-    public static final Rotation2d DEFAULT_PITCH = PITCHER_MINIMUM_ANGLE;
+    public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(12);
     public static final Rotation2d
             AMP_PITCH = Rotation2d.fromDegrees(45),
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57);
-    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(1);
+    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(2);
 
     static {
         configureMasterMotor();

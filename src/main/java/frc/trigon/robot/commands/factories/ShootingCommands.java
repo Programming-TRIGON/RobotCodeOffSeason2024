@@ -1,9 +1,6 @@
 package frc.trigon.robot.commands.factories;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
@@ -29,7 +26,7 @@ public class ShootingCommands {
      * @return the command
      */
     public static Command getShootAtShootingTargetCommand(boolean isDelivery) {
-        return new ParallelCommandGroup(
+        return new ParallelRaceGroup(
                 getPrepareForShootingCommand(isDelivery),
                 getFeedNoteForShootingCommand()
         );
@@ -59,7 +56,7 @@ public class ShootingCommands {
     private static Command getFeedNoteForShootingCommand() {
         return GeneralCommands.runWhen(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
-                        .alongWith(getVisualizeNoteShootingCommand()),
+                        .alongWith(getVisualizeNoteShootingCommand()).withTimeout(0.5),
                 () -> RobotContainer.SHOOTER.atTargetVelocity() &&
                         RobotContainer.PITCHER.atTargetPitch() &&
                         RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())

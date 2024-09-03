@@ -30,17 +30,14 @@ public class SwerveModuleConstants {
     private static final double
             STEER_MOTOR_P = RobotHardwareStats.isSimulation() ? 75 : 75,
             STEER_MOTOR_I = 0,
-            STEER_MOTOR_D = 0,
-            STEER_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.0044874 : 0,
-            STEER_MOTOR_KV = RobotHardwareStats.isSimulation() ? 1.5006 : 0,
-            STEER_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0.03064 : 0;
+            STEER_MOTOR_D = 0;
     private static final double
-            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 50 : 50,
+            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 100 : 50,
             DRIVE_MOTOR_I = 0,
             DRIVE_MOTOR_D = 0,
-            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.0018538 : 0,
-            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0.75439 : 0,
-            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0.04121 : 0;
+            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.34746 : 0,
+            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 15.913 : 0,
+            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0.91053 : 0;
     static final boolean ENABLE_FOC = true;
     static final TalonFXConfiguration
             DRIVE_MOTOR_CONFIGURATION = generateDriveConfiguration(),
@@ -69,14 +66,8 @@ public class SwerveModuleConstants {
     }
 
     static final SysIdRoutine.Config DRIVE_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(1).per(Units.Second),
-            Units.Volts.of(5),
-            Units.Second.of(1000)
-    );
-
-    static final SysIdRoutine.Config STEER_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(1).per(Units.Second),
-            Units.Volts.of(4),
+            Units.Volts.of(20).per(Units.Second),
+            Units.Volts.of(50),
             Units.Second.of(1000)
     );
 
@@ -124,9 +115,6 @@ public class SwerveModuleConstants {
         config.Slot0.kP = STEER_MOTOR_P;
         config.Slot0.kI = STEER_MOTOR_I;
         config.Slot0.kD = STEER_MOTOR_D;
-        config.Slot0.kS = STEER_MOTOR_KS;
-        config.Slot0.kV = STEER_MOTOR_KV;
-        config.Slot0.kA = STEER_MOTOR_KA;
         config.ClosedLoopGeneral.ContinuousWrap = true;
 
         return config;

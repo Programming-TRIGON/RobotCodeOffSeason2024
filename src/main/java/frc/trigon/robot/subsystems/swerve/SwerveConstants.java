@@ -76,7 +76,7 @@ public abstract class SwerveConstants {
             new PIDConstants(5, 0, 0) :
             new PIDConstants(5, 0, 0),
             PROFILED_ROTATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
-                    new PIDConstants(8, 0, 0) :
+                    new PIDConstants(5, 0, 0.05) :
                     new PIDConstants(5, 0, 0),
             AUTO_TRANSLATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
                     new PIDConstants(9, 0, 0) :
@@ -121,6 +121,5 @@ public abstract class SwerveConstants {
         GYRO.setSimulationYawVelocitySupplier(SIMULATION_YAW_VELOCITY_SUPPLIER);
 
         GYRO.registerThreadedSignal(Pigeon2Signal.YAW, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
-        GYRO.registerThreadedSignal(Pigeon2Signal.ANGULAR_VELOCITY_Z_WORLD, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
     }
 }

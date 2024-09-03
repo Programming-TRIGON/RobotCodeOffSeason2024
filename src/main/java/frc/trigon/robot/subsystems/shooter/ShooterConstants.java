@@ -62,8 +62,8 @@ public class ShooterConstants {
     public static final double
             AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 10,//TODO: Calibrate on real robot
             CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 45;
-    public static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1.3;
-    static final double VELOCITY_TOLERANCE = 1;
+    public static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1;
+    static final double VELOCITY_TOLERANCE = 3;
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION);
