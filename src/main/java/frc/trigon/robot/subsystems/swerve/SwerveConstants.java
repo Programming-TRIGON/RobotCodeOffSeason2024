@@ -120,6 +120,6 @@ public abstract class SwerveConstants {
         GYRO.applyConfiguration(config);
         GYRO.setSimulationYawVelocitySupplier(SIMULATION_YAW_VELOCITY_SUPPLIER);
 
-        GYRO.registerThreadedSignal(Pigeon2Signal.YAW, Pigeon2Signal.ANGULAR_VELOCITY_Z_WORLD, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
+        GYRO.registerThreadedSignal(Pigeon2Signal.YAW, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
     }
 }

@@ -45,7 +45,7 @@ public class Intake extends MotorSubsystem {
      * @return whether an early note collection has been detected
      */
     public boolean isEarlyNoteCollectionDetected() {
-        return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_COLLECTION_TIME_THRESHOLD_SECONDS).getAsBoolean();
+        return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.getAsBoolean();
     }
 
     void sendStaticBrakeRequest() {

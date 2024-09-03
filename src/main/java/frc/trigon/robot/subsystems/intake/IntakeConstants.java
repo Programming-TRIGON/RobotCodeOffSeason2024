@@ -70,7 +70,7 @@ public class IntakeConstants {
     static final BooleanEvent EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> Math.abs(MASTER_MOTOR.getSignal(TalonFXSignal.TORQUE_CURRENT)) > IntakeConstants.NOTE_COLLECTION_CURRENT
-    );
+    ).debounce(NOTE_COLLECTION_TIME_THRESHOLD_SECONDS);
 
     static {
         configureMasterMotor();
