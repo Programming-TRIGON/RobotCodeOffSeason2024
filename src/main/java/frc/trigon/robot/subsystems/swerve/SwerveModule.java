@@ -6,7 +6,9 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
@@ -36,6 +38,14 @@ public class SwerveModule {
         steerMotor = new TalonFXMotor(moduleID + 4, "Module" + moduleID + "Steer", RobotConstants.CANIVORE_NAME);
         steerEncoder = new CANcoderEncoder(moduleID, "Module" + moduleID + "SteerEncoder", RobotConstants.CANIVORE_NAME);
         configureHardware(offsetRotations);
+    }
+
+    public void driveMotorDrive(Measure<Voltage> voltageMeasure) {
+        driveMotor.setControl(driveVoltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
+    }
+
+    public void steerMotorDrive(Measure<Voltage> voltageMeasure) {
+        steerMotor.setControl(driveVoltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
     public void driveMotorUpdateLog(SysIdRoutineLog log) {

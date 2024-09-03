@@ -7,6 +7,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -59,13 +61,18 @@ public class Swerve extends MotorSubsystem {
     }
 
     @Override
+    public void drive(Measure<Voltage> voltageMeasure) {
+        SwerveConstants.SWERVE_MODULES[0].driveMotorDrive(voltageMeasure);
+    }
+
+    @Override
     public void updateLog(SysIdRoutineLog log) {
-        swerveModules[0].driveMotorUpdateLog(log);
+        SwerveConstants.SWERVE_MODULES[0].driveMotorUpdateLog(log);
     }
 
     @Override
     public SysIdRoutine.Config getSysIdConfig() {
-        return swerveModules[0].getDriveMotorSysIdConfig();
+        return SwerveConstants.SWERVE_MODULES[0].getDriveMotorSysIdConfig();
     }
 
     public Rotation2d getHeading() {
