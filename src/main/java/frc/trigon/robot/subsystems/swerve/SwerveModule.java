@@ -6,6 +6,9 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.constants.RobotConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import org.trigon.hardware.phoenix6.cancoder.CANcoderEncoder;
@@ -25,12 +28,36 @@ public class SwerveModule {
             latestOdometryDrivePositions = new double[0],
             latestOdometrySteerPositions = new double[0];
     private SwerveModuleState targetState = new SwerveModuleState();
+    private final int moduleID;
 
     public SwerveModule(int moduleID, double offsetRotations) {
+        this.moduleID = moduleID;
         driveMotor = new TalonFXMotor(moduleID, "Module" + moduleID + "Drive", RobotConstants.CANIVORE_NAME);
         steerMotor = new TalonFXMotor(moduleID + 4, "Module" + moduleID + "Steer", RobotConstants.CANIVORE_NAME);
         steerEncoder = new CANcoderEncoder(moduleID, "Module" + moduleID + "SteerEncoder", RobotConstants.CANIVORE_NAME);
         configureHardware(offsetRotations);
+    }
+
+    public void driveMotorUpdateLog(SysIdRoutineLog log) {
+        log.motor("Module" + moduleID + "Drive")
+                .angularPosition(Units.Rotations.of(driveMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularVelocity(Units.RotationsPerSecond.of(driveMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .voltage(Units.Volts.of(driveMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+    }
+
+    public void steerMotorUpdateLog(SysIdRoutineLog log) {
+        log.motor("Module" + moduleID + "Steer")
+                .angularPosition(Units.Rotations.of(steerMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularVelocity(Units.RotationsPerSecond.of(steerMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .voltage(Units.Volts.of(steerMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
+    }
+
+    public SysIdRoutine.Config getDriveMotorSysIdConfig() {
+        return SwerveModuleConstants.DRIVE_MOTOR_SYSID_CONFIG;
+    }
+
+    public SysIdRoutine.Config getSteerMotorSysIdConfig() {
+        return SwerveModuleConstants.STEER_MOTOR_SYSID_CONFIG;
     }
 
     void stop() {
@@ -155,10 +182,12 @@ public class SwerveModule {
     }
 
     private void configureSignals() {
-        driveMotor.registerThreadedSignal(TalonFXSignal.POSITION, TalonFXSignal.VELOCITY, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
+        driveMotor.registerThreadedSignal(TalonFXSignal.POSITION, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
+        driveMotor.registerThreadedSignal(TalonFXSignal.VELOCITY, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
         driveMotor.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
         driveMotor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
-        steerMotor.registerThreadedSignal(TalonFXSignal.POSITION, TalonFXSignal.VELOCITY, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
+        steerMotor.registerThreadedSignal(TalonFXSignal.POSITION, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
+        steerMotor.registerThreadedSignal(TalonFXSignal.VELOCITY, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
         steerMotor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         steerEncoder.registerSignal(CANcoderSignal.POSITION, 100);
         steerEncoder.registerSignal(CANcoderSignal.VELOCITY, 100);

@@ -8,6 +8,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -54,6 +56,16 @@ public class Swerve extends MotorSubsystem {
     public void setBrake(boolean brake) {
         for (SwerveModule currentModule : swerveModules)
             currentModule.setBrake(brake);
+    }
+
+    @Override
+    public void updateLog(SysIdRoutineLog log) {
+        swerveModules[0].driveMotorUpdateLog(log);
+    }
+
+    @Override
+    public SysIdRoutine.Config getSysIdConfig() {
+        return swerveModules[0].getDriveMotorSysIdConfig();
     }
 
     public Rotation2d getHeading() {

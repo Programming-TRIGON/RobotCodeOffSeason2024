@@ -4,6 +4,8 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.simulation.SimpleMotorSimulation;
 
@@ -59,6 +61,18 @@ public class SwerveModuleConstants {
     static SimpleMotorSimulation createSteerSimulation() {
         return new SimpleMotorSimulation(STEER_MOTOR_GEARBOX, STEER_GEAR_RATIO, STEER_MOMENT_OF_INERTIA);
     }
+
+    static final SysIdRoutine.Config DRIVE_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
+            Units.Volts.of(1).per(Units.Second),
+            Units.Volts.of(5),
+            Units.Second.of(1000)
+    );
+
+    static final SysIdRoutine.Config STEER_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
+            Units.Volts.of(3).per(Units.Second),
+            Units.Volts.of(5),
+            Units.Second.of(1000)
+    );
 
     private static TalonFXConfiguration generateDriveConfiguration() {
         final TalonFXConfiguration config = new TalonFXConfiguration();
