@@ -100,6 +100,10 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
         return sysIdRoutine.dynamic(direction);
     }
 
+    public boolean isExtensiveLoggingEnabled() {
+        return ENABLE_EXTENSIVE_LOGGING.get();
+    }
+
     /**
      * Sets whether the subsystem's motors should brake or coast.
      * If a subsystem doesn't need to ever brake (i.e. shooter, flywheel, etc.), don't implement this method.
