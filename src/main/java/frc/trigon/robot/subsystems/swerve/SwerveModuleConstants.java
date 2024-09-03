@@ -30,11 +30,17 @@ public class SwerveModuleConstants {
     private static final double
             STEER_MOTOR_P = RobotHardwareStats.isSimulation() ? 75 : 75,
             STEER_MOTOR_I = 0,
-            STEER_MOTOR_D = 0;
+            STEER_MOTOR_D = 0,
+            STEER_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            STEER_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            STEER_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double
             DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 50 : 50,
             DRIVE_MOTOR_I = 0,
-            DRIVE_MOTOR_D = 0;
+            DRIVE_MOTOR_D = 0,
+            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
+            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
     static final boolean ENABLE_FOC = true;
     static final TalonFXConfiguration
             DRIVE_MOTOR_CONFIGURATION = generateDriveConfiguration(),
@@ -94,6 +100,9 @@ public class SwerveModuleConstants {
         config.Slot0.kP = DRIVE_MOTOR_P;
         config.Slot0.kI = DRIVE_MOTOR_I;
         config.Slot0.kD = DRIVE_MOTOR_D;
+        config.Slot0.kS = DRIVE_MOTOR_KS;
+        config.Slot0.kV = DRIVE_MOTOR_KV;
+        config.Slot0.kA = DRIVE_MOTOR_KA;
 
         return config;
     }
@@ -115,6 +124,9 @@ public class SwerveModuleConstants {
         config.Slot0.kP = STEER_MOTOR_P;
         config.Slot0.kI = STEER_MOTOR_I;
         config.Slot0.kD = STEER_MOTOR_D;
+        config.Slot0.kS = STEER_MOTOR_KS;
+        config.Slot0.kV = STEER_MOTOR_KV;
+        config.Slot0.kA = STEER_MOTOR_KA;
         config.ClosedLoopGeneral.ContinuousWrap = true;
 
         return config;
