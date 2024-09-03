@@ -57,7 +57,13 @@ public class ShootingCommands {
     }
 
     private static Command getFeedNoteForShootingCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()));
+        return GeneralCommands.runWhen(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
+                        .alongWith(getVisualizeNoteShootingCommand()),
+                () -> RobotContainer.SHOOTER.atTargetVelocity() &&
+                        RobotContainer.PITCHER.atTargetPitch() &&
+                        RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+        );
     }
 
     public static Command getCloseSpeakerShotCommand() {
