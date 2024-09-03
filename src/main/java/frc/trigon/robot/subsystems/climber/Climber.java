@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
@@ -34,6 +33,7 @@ public class Climber extends MotorSubsystem {
             ).withSlot(ClimberConstants.ON_CHAIN_SLOT).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(ClimberConstants.ENABLE_FOC);
     private ClimberConstants.ClimberState targetState = ClimberConstants.ClimberState.REST;
+    private boolean isClimbing = false;
 
     public Climber() {
         setName("Climber");
@@ -99,6 +99,14 @@ public class Climber extends MotorSubsystem {
         return Math.abs(leftMotor.getSignal(TalonFXSignal.POSITION) - targetState.positionRotations) < ClimberConstants.CLIMBER_TOLERANCE_ROTATIONS;
     }
 
+    public void setIsClimbing(boolean isClimbing) {
+        this.isClimbing = isClimbing;
+    }
+
+    public boolean isClimbing() {
+        return isClimbing;
+    }
+
     void driveRightMotor(Measure<Voltage> voltageMeasure) {
         rightMotor.setControl(voltageRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
@@ -123,7 +131,7 @@ public class Climber extends MotorSubsystem {
 
     private void configurePositionResettingTrigger(TalonFXMotor motor) {
         final Trigger positionResettingTrigger = new Trigger(() -> hasHitReverseLimit(motor)).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
-        positionResettingTrigger.onTrue(new InstantCommand(() -> motor.setPosition(ClimberConstants.LIMIT_SWITCH_PRESSED_POSITION)));
+        positionResettingTrigger.onFalse(new InstantCommand(() -> motor.setPosition(ClimberConstants.LIMIT_SWITCH_PRESSED_POSITION)));
     }
 
     private boolean hasHitReverseLimit(TalonFXMotor motor) {
@@ -145,7 +153,7 @@ public class Climber extends MotorSubsystem {
     }
 
     private void configureChangingDefaultCommand() {
-        final Trigger climbingTrigger = new Trigger(() -> CommandConstants.IS_CLIMBING);
+        final Trigger climbingTrigger = new Trigger(() -> isClimbing);
         climbingTrigger.onTrue(new InstantCommand(this::defaultToClimbing));
         climbingTrigger.onFalse(new InstantCommand(this::defaultToResting));
     }

@@ -24,7 +24,6 @@ import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import java.awt.*;
 
 public class CommandConstants {
-    public static boolean IS_CLIMBING = false;
     private static final XboxController DRIVER_CONTROLLER = OperatorConstants.DRIVER_CONTROLLER;
     private static final double
             MINIMUM_TRANSLATION_SHIFT_POWER = 0.18,
@@ -49,9 +48,9 @@ public class CommandConstants {
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
-            MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> CommandConstants.IS_CLIMBING = true)),
+            MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
             OVERRIDE_IS_CLIMBING_COMMAND = new InstantCommand(() -> {
-                IS_CLIMBING = false;
+                RobotContainer.CLIMBER.setIsClimbing(false);
                 Logger.recordOutput("IsClimbing", false);
             }).ignoringDisable(true),
             EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),

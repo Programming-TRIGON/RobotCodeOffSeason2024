@@ -20,7 +20,7 @@ public class GeneralCommands {
         return new SequentialCommandGroup(
                 new InstantCommand(
                         () -> {
-                            CommandConstants.IS_CLIMBING = true;
+                            RobotContainer.CLIMBER.setIsClimbing(true);
                             Logger.recordOutput("IsClimbing", true);
                         }
                 ),

@@ -56,8 +56,8 @@ public class ClimberConstants {
     static final double
             MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KV : 0,
             MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KA : 0,
-            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KV) - 0.5 : 0,
-            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KA) - 40 : 0;
+            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KV) - 0.75 : 0,
+            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KA) - 50 : 0;
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;
@@ -169,7 +169,6 @@ public class ClimberConstants {
         motor.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         motor.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
         motor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
-        motor.registerSignal(TalonFXSignal.FORWARD_LIMIT, 100);
         motor.registerSignal(TalonFXSignal.REVERSE_LIMIT, 100);
     }
 
