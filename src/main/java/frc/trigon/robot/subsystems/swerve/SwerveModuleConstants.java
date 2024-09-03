@@ -31,16 +31,16 @@ public class SwerveModuleConstants {
             STEER_MOTOR_P = RobotHardwareStats.isSimulation() ? 75 : 75,
             STEER_MOTOR_I = 0,
             STEER_MOTOR_D = 0,
-            STEER_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            STEER_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            STEER_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+            STEER_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.0044874 : 0,
+            STEER_MOTOR_KV = RobotHardwareStats.isSimulation() ? 1.5006 : 0,
+            STEER_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0.03064 : 0;
     private static final double
             DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 50 : 50,
             DRIVE_MOTOR_I = 0,
             DRIVE_MOTOR_D = 0,
-            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0 : 0,
-            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0 : 0;
+            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.0018538 : 0,
+            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0.75439 : 0,
+            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0.04121 : 0;
     static final boolean ENABLE_FOC = true;
     static final TalonFXConfiguration
             DRIVE_MOTOR_CONFIGURATION = generateDriveConfiguration(),
@@ -75,8 +75,8 @@ public class SwerveModuleConstants {
     );
 
     static final SysIdRoutine.Config STEER_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(3).per(Units.Second),
-            Units.Volts.of(5),
+            Units.Volts.of(1).per(Units.Second),
+            Units.Volts.of(4),
             Units.Second.of(1000)
     );
 

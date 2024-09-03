@@ -28,6 +28,7 @@ public class Swerve extends MotorSubsystem {
     private final Pigeon2Gyro gyro = SwerveConstants.GYRO;
     private final SwerveModule[] swerveModules = SwerveConstants.SWERVE_MODULES;
     private final Phoenix6SignalThread phoenix6SignalThread = Phoenix6SignalThread.getInstance();
+    private final String targetSysIDMotor = "Drive";
     private double lastTimestamp = Timer.getFPGATimestamp();
 
     public Swerve() {
@@ -62,17 +63,28 @@ public class Swerve extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        SwerveConstants.SWERVE_MODULES[0].driveMotorDrive(voltageMeasure);
+        if (targetSysIDMotor.equals("Drive")) {
+            SwerveConstants.SWERVE_MODULES[0].driveMotorDrive(voltageMeasure);
+            return;
+        }
+        SwerveConstants.SWERVE_MODULES[0].steerMotorDrive(voltageMeasure);
     }
 
     @Override
     public void updateLog(SysIdRoutineLog log) {
-        SwerveConstants.SWERVE_MODULES[0].driveMotorUpdateLog(log);
+        if (targetSysIDMotor.equals("Drive")) {
+            SwerveConstants.SWERVE_MODULES[0].driveMotorUpdateLog(log);
+            return;
+        }
+        SwerveConstants.SWERVE_MODULES[0].steerMotorUpdateLog(log);
     }
 
     @Override
     public SysIdRoutine.Config getSysIdConfig() {
-        return SwerveConstants.SWERVE_MODULES[0].getDriveMotorSysIdConfig();
+        if (targetSysIDMotor.equals("Drive")) {
+            return SwerveConstants.SWERVE_MODULES[0].getDriveMotorSysIdConfig();
+        }
+        return SwerveConstants.SWERVE_MODULES[0].getSteerMotorSysIdConfig();
     }
 
     public Rotation2d getHeading() {
