@@ -87,7 +87,7 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    implementation 'com.google.code.gson:gson:2.10.1
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.github.Programming-TRIGON:TRIGONLib:2024.2.7'
 
     def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
