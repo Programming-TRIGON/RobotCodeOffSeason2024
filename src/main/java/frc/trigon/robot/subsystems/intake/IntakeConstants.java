@@ -92,6 +92,7 @@ public class IntakeConstants {
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
     }
 
