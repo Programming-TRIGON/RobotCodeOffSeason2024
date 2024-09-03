@@ -38,6 +38,8 @@ public class Climber extends MotorSubsystem {
     public Climber() {
         setName("Climber");
         GeneralCommands.getDelayedCommand(3, this::configureChangingDefaultCommand).schedule();
+        configurePositionResettingTrigger(rightMotor);
+        configurePositionResettingTrigger(leftMotor);
     }
 
     @Override
@@ -55,14 +57,17 @@ public class Climber extends MotorSubsystem {
 
     @Override
     public void updateLog(SysIdRoutineLog log) {
+        final double rightMotorPosition = rightMotor.getSignal(TalonFXSignal.POSITION);
+        final double leftMotorPosition = leftMotor.getSignal(TalonFXSignal.POSITION);
+
         log.motor("RightClimberMotor")
-                .linearPosition(Units.Meters.of(rightMotor.getSignal(TalonFXSignal.POSITION)))
-                .linearVelocity(Units.MetersPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.SYSID_IS_ON_CHAIN)));
+                .angularPosition(Units.Rotations.of(rightMotorPosition))
+                .angularVelocity(Units.RotationsPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(rightMotorPosition, ClimberConstants.SYSID_IS_ON_CHAIN)));
         log.motor("LeftClimberMotor")
-                .linearPosition(Units.Meters.of(leftMotor.getSignal(TalonFXSignal.POSITION)))
-                .linearVelocity(Units.MetersPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.SYSID_IS_ON_CHAIN)));
+                .angularPosition(Units.Rotations.of(leftMotorPosition))
+                .angularVelocity(Units.RotationsPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(leftMotorPosition, ClimberConstants.SYSID_IS_ON_CHAIN)));
     }
 
     @Override
@@ -114,6 +119,15 @@ public class Climber extends MotorSubsystem {
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionRotations)
                 .withFeedForward(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), affectedByRobotWeight)));
+    }
+
+    private void configurePositionResettingTrigger(TalonFXMotor motor) {
+        final Trigger positionResettingTrigger = new Trigger(() -> hasHitReverseLimit(motor)).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
+        positionResettingTrigger.onTrue(new InstantCommand(() -> motor.setPosition(ClimberConstants.LIMIT_SWITCH_PRESSED_POSITION)));
+    }
+
+    private boolean hasHitReverseLimit(TalonFXMotor motor) {
+        return motor.getSignal(TalonFXSignal.REVERSE_LIMIT) == 0;
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
