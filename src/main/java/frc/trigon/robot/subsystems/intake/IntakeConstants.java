@@ -66,7 +66,7 @@ public class IntakeConstants {
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
     static final double NOTE_STOPPING_SECONDS = 1;
     private static final double NOTE_COLLECTION_CURRENT = 10; //TODO: calibrate
-    static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.25; //TODO: calibrate
+    private static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.25; //TODO: calibrate
     static final BooleanEvent EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> Math.abs(MASTER_MOTOR.getSignal(TalonFXSignal.TORQUE_CURRENT)) > IntakeConstants.NOTE_COLLECTION_CURRENT
