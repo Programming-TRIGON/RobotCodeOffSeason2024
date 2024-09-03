@@ -46,11 +46,11 @@ public class CommandConstants {
                     () -> 0
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS),
-            TURN_AUTOMATIC_NOTE_ALIGNING_ON_COMMAND = new InstantCommand(() -> {
+            TURN_AUTONOMOUS_NOTE_ALIGNING_ON_COMMAND = new InstantCommand(() -> {
                 SHOULD_ALIGN_TO_NOTE = true;
                 Logger.recordOutput("ShouldAlignToNote", true);
             }).ignoringDisable(true),
-            TURN_AUTOMATIC_NOTE_ALIGNING_OFF_COMMAND = new InstantCommand(() -> {
+            TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND = new InstantCommand(() -> {
                 SHOULD_ALIGN_TO_NOTE = false;
                 Logger.recordOutput("ShouldAlignToNote", false);
             }).ignoringDisable(true),

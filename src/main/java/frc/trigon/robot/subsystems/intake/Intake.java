@@ -40,9 +40,9 @@ public class Intake extends MotorSubsystem {
     }
 
     /**
-     * Checks if a note has been collected early using the motor's current. It's quicker than hasNote() because it updates from the change in current instead of the distance sensor.
+     * Checks if a note has been collected early using the motor's current. This is quicker than `hasNote()` since it updates from the change in current (which happens right when we hit the note), instead of the distance sensor which is positioned later on the system.     *
      *
-     * @return whether a note has been collected early
+     * @return whether an early note collection has been detected
      */
     public boolean isEarlyNoteCollectionDetected() {
         return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.debounce(IntakeConstants.NOTE_COLLECTION_TIME_THRESHOLD_SECONDS).getAsBoolean();
