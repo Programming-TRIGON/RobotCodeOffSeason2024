@@ -6,14 +6,13 @@ import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.FieldConstants;
+import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
-import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
-import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 
 public class AmpCommands {
@@ -45,19 +44,19 @@ public class AmpCommands {
         return new ParallelCommandGroup(
                 GeneralCommands.runWhen(
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
-                                .alongWith(PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH)),
+                                .alongWith(PitcherCommands.getSetTargetPitchCommand(ShootingConstants.AMP_PITCH)),
                         () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation().getDistance(
                                 FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MINIMUM_DISTANCE_FROM_AMP_FOR_AUTONOMOUS_AMP_PREPARATION_METERS
                 ),
-                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
 
     private static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.AMP_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.AMP_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
 

@@ -46,8 +46,8 @@ public class SwerveConstants {
     private static final DoubleSupplier SIMULATION_YAW_VELOCITY_SUPPLIER = () -> RobotContainer.SWERVE.getSelfRelativeVelocity().omegaRadiansPerSecond;
 
     private static final double
-            MODULE_X_DISTANCE_FROM_CENTER = 0.6457 / 2,
-            MODULE_Y_DISTANCE_FROM_CENTER = 0.5357 / 2;
+            MODULE_X_DISTANCE_FROM_CENTER = 0.415 / 2,
+            MODULE_Y_DISTANCE_FROM_CENTER = 0.5457 / 2;
     private static final Translation2d[] LOCATIONS = {
             new Translation2d(MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER),
             new Translation2d(MODULE_X_DISTANCE_FROM_CENTER, -MODULE_Y_DISTANCE_FROM_CENTER),
@@ -76,7 +76,7 @@ public class SwerveConstants {
             new PIDConstants(5, 0, 0) :
             new PIDConstants(5, 0, 0),
             PROFILED_ROTATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
-                    new PIDConstants(8, 0, 0) :
+                    new PIDConstants(4, 0, 0.05) :
                     new PIDConstants(5, 0, 0),
             AUTO_TRANSLATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
                     new PIDConstants(9, 0, 0) :
