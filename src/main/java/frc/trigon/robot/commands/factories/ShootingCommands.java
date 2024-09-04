@@ -5,11 +5,11 @@ import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
+import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
-import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
@@ -71,8 +71,8 @@ public class ShootingCommands {
 
     private static Command getPrepareCloseSpeakerShotCommand() {
         return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.CLOSE_SHOT_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShooterConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO)
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_SHOT_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO)
         );
     }
 
