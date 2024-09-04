@@ -97,9 +97,6 @@ public class PitcherConstants {
     );
 
     public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(12);
-    public static final Rotation2d
-            AMP_PITCH = Rotation2d.fromDegrees(45),
-            CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57);
     static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(2);
     public static final Transform3d VISUALIZATION_PITCHER_PIVOT_POINT_TO_HELD_NOTE = new Transform3d(0.24, 0, 0.02, new Rotation3d());
 
