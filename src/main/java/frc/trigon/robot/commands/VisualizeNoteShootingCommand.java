@@ -24,15 +24,14 @@ public class VisualizeNoteShootingCommand extends Command {
 
     @Override
     public void initialize() {
-        startingTimeSeconds = Timer.getFPGATimestamp();
-        configureNoteShootingVisualization();
+        configureStartingStats();
     }
 
     @Override
     public void execute() {
         final double timeDifference = Timer.getFPGATimestamp() - startingTimeSeconds;
 
-        final Transform3d noteTransform = getNoteTransform(timeDifference);
+        final Transform3d noteTransform = calculateNoteTransform(timeDifference);
         final Pose3d notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
         noteZ = notePose.getTranslation().getZ();
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
@@ -54,7 +53,7 @@ public class VisualizeNoteShootingCommand extends Command {
         return robotFieldRelativeVelocity.plus(new Translation2d(noteXYVelocityRelativeToRobot, currentRobotAngle.minus(new Rotation2d(Math.PI))));
     }
 
-    private Transform3d getNoteTransform(double timeDifference) {
+    private Transform3d calculateNoteTransform(double timeDifference) {
         return new Transform3d(calculateNoteXDifference(timeDifference), calculateNoteYDifference(timeDifference), calculateNoteZDifference(timeDifference), new Rotation3d(0, -startingPitch.getRadians(), 0));
     }
 
@@ -70,14 +69,23 @@ public class VisualizeNoteShootingCommand extends Command {
         return (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * t * t);
     }
 
-    private void configureNoteShootingVisualization() {
+    private Pose3d calculateFieldRelativeNotExitPointPose(Pose2d currentRobotPose, Rotation2d currentRobotAngle) {
+        return SHOOTING_CALCULATIONS.calculateShooterNoteExitPointFieldRelativePose(startingPitch, currentRobotPose.getTranslation(), new MirrorableRotation2d(currentRobotAngle, false));
+    }
+
+    private double getStartingTangentialVelocity() {
+        return SHOOTING_CALCULATIONS.angularVelocityToTangentialVelocity(RobotContainer.SHOOTER.getCurrentRightMotorVelocityRotationsPerSecond());
+    }
+
+    private void configureStartingStats() {
         startingPitch = RobotContainer.PITCHER.getCurrentPitch();
         final Pose2d currentRobotPose = RobotContainer.POSE_ESTIMATOR.getCurrentPose();
         final Rotation2d currentRobotAngle = currentRobotPose.getRotation();
-        final Pose3d fieldRelativeNoteExitPointPose = SHOOTING_CALCULATIONS.calculateShooterNoteExitPointFieldRelativePose(startingPitch, currentRobotPose.getTranslation(), new MirrorableRotation2d(currentRobotAngle, false));
-        final double startingTangentialVelocity = SHOOTING_CALCULATIONS.angularVelocityToTangentialVelocity(RobotContainer.SHOOTER.getCurrentRightMotorVelocityRotationsPerSecond());
+        final Pose3d fieldRelativeNoteExitPointPose = calculateFieldRelativeNotExitPointPose(currentRobotPose, currentRobotAngle);
+        final double startingTangentialVelocity = getStartingTangentialVelocity();
         fieldRelativeNoteExitPointTranslation = fieldRelativeNoteExitPointPose.getTranslation();
         initialXYVelocity = calculateInitialXYVelocityWithRobotVelocity(startingPitch, startingTangentialVelocity, currentRobotAngle);
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
+        startingTimeSeconds = Timer.getFPGATimestamp();
     }
 }

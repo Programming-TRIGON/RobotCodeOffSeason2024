@@ -172,9 +172,7 @@ public class SwerveModule {
     }
 
     private void configureSignals() {
-        steerMotor.registerThreadedSignal(TalonFXSignal.POSITION, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
-        steerMotor.registerSignal(TalonFXSignal.VELOCITY, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
-
+        driveMotor.registerThreadedSignal(TalonFXSignal.POSITION, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
         driveMotor.registerSignal(TalonFXSignal.VELOCITY, 100);
         driveMotor.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
         driveMotor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);

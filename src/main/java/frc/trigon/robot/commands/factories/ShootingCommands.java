@@ -6,7 +6,6 @@ import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
-import frc.trigon.robot.misc.objectdetectioncamera.SimulationObjectDetectionCameraIO;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
@@ -83,7 +82,7 @@ public class ShootingCommands {
 
     public static Command getVisualizeNoteShootingCommand() {
         return new InstantCommand(
-                () -> GeneralCommands.runWhen(new VisualizeNoteShootingCommand(), () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS)
+                () -> new VisualizeNoteShootingCommand()
                         .schedule()).onlyIf(() -> RobotHardwareStats.isReplay()/* || RobotHardwareStats.isExtensiveLoggingEnabled*/);
     }
 
