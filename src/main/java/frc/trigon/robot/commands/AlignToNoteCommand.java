@@ -21,7 +21,9 @@ import java.awt.*;
 
 public class AlignToNoteCommand extends ParallelCommandGroup {
     private static final ObjectDetectionCamera CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
-    private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ? new PIDController(0, 0, 0) : new PIDController(0, 0, 0);
+    private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ?
+            new PIDController(0.0075, 0, 0) :
+            new PIDController(0, 0, 0);
     private boolean didCollect = false;
     private boolean wasVisible = false;
     private double trackedNoteYaw = 0;

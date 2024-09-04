@@ -91,6 +91,8 @@ public class GeneralCommands {
     }
 
     public static Command getNoteCollectionCommand() {
+        if (RobotContainer.INTAKE.hasNote())
+            OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
         return new ParallelCommandGroup(
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),

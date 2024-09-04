@@ -17,11 +17,7 @@ import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.climber.Climber;
-import frc.trigon.robot.subsystems.climber.ClimberCommands;
-import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.intake.Intake;
-import frc.trigon.robot.subsystems.intake.IntakeCommands;
-import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
@@ -57,8 +53,8 @@ public class RobotContainer {
 
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
-        INTAKE.setDefaultCommand(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP));
-        CLIMBER.setDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
+        INTAKE.setDefaultCommand(CommandConstants.DEFAULT_INTAKE_COMMAND);
+        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
         AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
         PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
         SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
@@ -79,7 +75,7 @@ public class RobotContainer {
         OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getCloseSpeakerShotCommand());
         OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getWarmSpeakerShotCommand());
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
-        
+
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
     }

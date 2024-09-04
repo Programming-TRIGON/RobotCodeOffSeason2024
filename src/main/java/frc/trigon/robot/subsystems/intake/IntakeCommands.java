@@ -38,7 +38,8 @@ public class IntakeCommands {
                         () -> {
                         },
                         (interrupted) -> {
-                            RobotContainer.INTAKE.sendStaticBrakeRequest();
+                            if (interrupted)
+                                RobotContainer.INTAKE.sendStaticBrakeRequest();
                             if (!interrupted)
                                 RobotContainer.INTAKE.indicateCollection();
                         },

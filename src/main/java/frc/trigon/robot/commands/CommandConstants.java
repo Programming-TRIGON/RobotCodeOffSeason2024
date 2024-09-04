@@ -10,6 +10,8 @@ import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
+import frc.trigon.robot.subsystems.climber.ClimberCommands;
+import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
@@ -54,6 +56,8 @@ public class CommandConstants {
                 SHOULD_ALIGN_TO_NOTE = false;
                 Logger.recordOutput("ShouldAlignToNote", false);
             }).ignoringDisable(true),
+            DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
+            DEFAULT_CLIMBER_COMMAND = ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST),
             DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
             FACE_AMP_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
                     () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
