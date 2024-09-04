@@ -96,7 +96,7 @@ public class ShootingCalculations {
      * @param shootingTarget                             the point we want the note reach
      * @param standingShootingVelocityRotationsPerSecond the shooting velocity to calculate optimal pitch from, when the robot isn't moving.
      *                                                   This may change if the robot's velocity is not 0, but will act as a starting point
-     * @param reachFromAbove                             should we reach to point from above, with an arch, or from below, as fast as possible
+     * @param reachFromAbove                             should we reach to point from above, with an arch, or from below, as fast as possible.
      *                                                   Shooting from above is useful for actions like delivery, whereas shooting from below is useful when we don't want to come from above, and in our case touch the upper speaker
      * @return the target state of the robot so the note will reach the shooting target, as a {@linkplain ShootingCalculations.TargetShootingState}
      */

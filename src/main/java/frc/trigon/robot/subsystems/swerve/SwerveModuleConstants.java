@@ -4,6 +4,8 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.simulation.SimpleMotorSimulation;
 
@@ -30,9 +32,12 @@ public class SwerveModuleConstants {
             STEER_MOTOR_I = 0,
             STEER_MOTOR_D = 0;
     private static final double
-            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 50 : 50,
+            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 20 : 50,
             DRIVE_MOTOR_I = 0,
-            DRIVE_MOTOR_D = 0;
+            DRIVE_MOTOR_D = 0,
+            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.14031 : 0,
+            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0.55781 : 0,
+            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 1.1359 : 0;
     static final boolean ENABLE_FOC = true;
     static final TalonFXConfiguration
             DRIVE_MOTOR_CONFIGURATION = generateDriveConfiguration(),
@@ -48,6 +53,12 @@ public class SwerveModuleConstants {
     private static final DCMotor
             DRIVE_MOTOR_GEARBOX = DCMotor.getKrakenX60Foc(DRIVE_MOTOR_AMOUNT),
             STEER_MOTOR_GEARBOX = DCMotor.getFalcon500Foc(STEER_MOTOR_AMOUNT);
+
+    static final SysIdRoutine.Config DRIVE_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
+            Units.Volts.of(5).per(Units.Second),
+            Units.Volts.of(20),
+            Units.Second.of(1000)
+    );
 
     static final double WHEEL_DIAMETER_METERS = RobotHardwareStats.isSimulation() ? 0.1016 : 0.049149 * 2;
     static final double VOLTAGE_COMPENSATION_SATURATION = 12;
@@ -80,6 +91,9 @@ public class SwerveModuleConstants {
         config.Slot0.kP = DRIVE_MOTOR_P;
         config.Slot0.kI = DRIVE_MOTOR_I;
         config.Slot0.kD = DRIVE_MOTOR_D;
+        config.Slot0.kS = DRIVE_MOTOR_KS;
+        config.Slot0.kV = DRIVE_MOTOR_KV;
+        config.Slot0.kA = DRIVE_MOTOR_KA;
 
         return config;
     }
