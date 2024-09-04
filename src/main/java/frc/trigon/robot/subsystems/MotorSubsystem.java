@@ -44,20 +44,6 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
     }
 
     /**
-     * Runs periodically, to update the subsystem, and update the mechanism of the subsystem (if there is one).
-     * This only updates the mechanism if the robot is in replay mode or extensive logging is enabled.
-     * This function cannot be overridden. Use {@linkplain MotorSubsystem#updatePeriodically} or {@linkplain MotorSubsystem#updateMechanism} (depending on the usage) instead.
-     */
-    @Override
-    public final void periodic() {
-        updatePeriodically();
-        if (RobotHardwareStats.isReplay())
-            updateMechanism();
-        else if (ENABLE_EXTENSIVE_LOGGING.get())
-            updateMechanism();
-    }
-
-    /**
      * Runs the given consumer on all the subsystem instances.
      *
      * @param toRun the consumer to run on each registered subsystem
@@ -78,6 +64,18 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
 
     public static boolean isExtensiveLoggingEnabled() {
         return ENABLE_EXTENSIVE_LOGGING.get();
+    }
+
+    /**
+     * Runs periodically, to update the subsystem, and update the mechanism of the subsystem (if there is one).
+     * This only updates the mechanism if the robot is in replay mode or extensive logging is enabled.
+     * This function cannot be overridden. Use {@linkplain MotorSubsystem#updatePeriodically} or {@linkplain MotorSubsystem#updateMechanism} (depending on the usage) instead.
+     */
+    @Override
+    public final void periodic() {
+        updatePeriodically();
+        if (RobotHardwareStats.isReplay() || isExtensiveLoggingEnabled())
+            updateMechanism();
     }
 
     /**
