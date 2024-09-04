@@ -3,6 +3,8 @@ package frc.trigon.robot.misc.objectdetectioncamera;
 import edu.wpi.first.math.geometry.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.factories.GeneralCommands;
+import frc.trigon.robot.constants.ShootingConstants;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import org.littletonrobotics.junction.Logger;
 
@@ -90,8 +92,18 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
     }
 
     private Pose3d getHeldObjectPose(Pose2d robotPose) {
-        //todo: get the pose of the object held by the robot
-        return new Pose3d();
+        final Transform3d robotRelativeNotePoseToHeldNotePose;
+        final Rotation3d heldNoteRotation = new Rotation3d(0, 0 - RobotContainer.PITCHER.getCurrentPitch().getRadians(), 0);
+        if (RobotContainer.AMP_ALIGNER.getTargetState() == AmpAlignerConstants.AmpAlignerState.CLOSE)
+            robotRelativeNotePoseToHeldNotePose = new Transform3d(-0.2, 0, 0.05, heldNoteRotation);
+        else
+            robotRelativeNotePoseToHeldNotePose = new Transform3d(-0.21, 0, 0.2, heldNoteRotation);
+
+        Pose3d robotRelativeHeldNotePose = ShootingConstants.ROBOT_RELATIVE_PITCHER_PIVOT_POINT
+                .transformBy(ShootingConstants.PITCHER_PIVOT_POINT_TO_NOTE_EXIT_POSITION)
+                .transformBy(robotRelativeNotePoseToHeldNotePose);
+        Pose3d robotPose3d = new Pose3d(robotPose.getX(), robotPose.getY(), 0, new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+        return robotPose3d.plus(toTransform(robotRelativeHeldNotePose));
     }
 
     private Transform3d toTransform(Pose3d pose) {
