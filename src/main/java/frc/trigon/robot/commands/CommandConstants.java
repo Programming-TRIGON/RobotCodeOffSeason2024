@@ -10,11 +10,14 @@ import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
+import frc.trigon.robot.subsystems.climber.ClimberCommands;
+import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
@@ -44,13 +47,19 @@ public class CommandConstants {
                     () -> 0
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS),
+            MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
+            MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
+            OVERRIDE_IS_CLIMBING_COMMAND = new InstantCommand(() -> {
+                RobotContainer.CLIMBER.setIsClimbing(false);
+                Logger.recordOutput("IsClimbing", false);
+            }).ignoringDisable(true),
+            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
             DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
             FACE_AMP_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
                     () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
                     () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
                     FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
             ),
-            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
             SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
             DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true);
 

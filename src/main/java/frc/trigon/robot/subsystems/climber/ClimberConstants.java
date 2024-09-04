@@ -31,33 +31,33 @@ public class ClimberConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
-    static final double
-            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0,
-            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0,
-            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? 4 : 0,
-            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? 4 : 0;
     private static final double //TODO: calibrate
-            GROUNDED_P = RobotHardwareStats.isSimulation() ? 700 : 0,
+            GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 0,
             GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0046109 : 0,
-            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.7858 : 0,
-            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17776 : 0;
+            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0,
+            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 0,
+            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0;
     static final double
             GROUNDED_A = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_B = RobotHardwareStats.isSimulation() ? 0 : 0,
             GROUNDED_C = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double //TODO: calibrate
-            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? 700 : 0,
-            ON_CHAIN_I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? 0.0046109 : 0,
-            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? 8.7858 : 0,
-            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? 0.17776 : 0;
+            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? GROUNDED_P : 0,
+            ON_CHAIN_I = RobotHardwareStats.isSimulation() ? GROUNDED_I : 0,
+            ON_CHAIN_D = RobotHardwareStats.isSimulation() ? GROUNDED_D : 0,
+            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? GROUNDED_KS : 0,
+            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? GROUNDED_KV : 0,
+            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? GROUNDED_KA : 0;
     static final double
             ON_CHAIN_A = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_B = RobotHardwareStats.isSimulation() ? 0 : 0,
             ON_CHAIN_C = RobotHardwareStats.isSimulation() ? 0 : 0;
+    static final double
+            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KV : 0,
+            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KA : 0,
+            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KV) - 0.75 : 0,
+            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KA) - 50 : 0;
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;
@@ -83,7 +83,7 @@ public class ClimberConstants {
             null,
             null
     );
-    static final boolean SYSID_IS_ON_CHAIN = true;
+    static final boolean SYSID_IS_ON_CHAIN = false;
 
     static final Translation3d
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -0.2545, 0.27445),
@@ -95,7 +95,6 @@ public class ClimberConstants {
             FIRST_JOINT_ANGLE_ADDITION = Rotation2d.fromDegrees(57.87 + 7.37 - 90),
             STRING_ANGLE_ADDITION = Rotation2d.fromDegrees(90 - 57.87);
     static final double DISTANCE_BETWEEN_JOINTS_METERS = 0.42;
-    static final double CLOSED_STRING_LENGTH_METERS = 0.168;
     static final Rotation2d CLOSED_STRING_ANGLE = Rotation2d.fromDegrees(63.32);
     private static final Color8Bit
             BLUE = new Color8Bit(Color.kBlue),
@@ -105,8 +104,6 @@ public class ClimberConstants {
     static final Color8Bit GRAY = new Color8Bit(Color.kGray);
     static final double MECHANISM_LINE_WIDTH = 5;
     static final Rotation2d MECHANISM_STARTING_ANGLE = Rotation2d.fromDegrees(180);
-    static final double STRING_CONNECTION_LIGAMENT_LENGTH = 0.07;
-    static final Rotation2d STRING_CONNECTION_LIGAMENT_ANGLE = Rotation2d.fromDegrees(-50);
     static final Rotation2d SECOND_JOINT_ON_CHAIN_PITCH = Rotation2d.fromDegrees(90);
     static final double DRUM_DIAMETER_METERS = 0.04;
     static final ClimberVisualization
@@ -123,7 +120,12 @@ public class ClimberConstants {
                     LEFT_CLIMBER_FIRST_JOINT_ORIGIN_POINT
             );
 
+    public static final double
+            MOVE_CLIMBER_DOWN_VOLTAGE = -4,
+            MOVE_CLIMBER_UP_VOLTAGE = 4;
     static final double CLIMBER_TOLERANCE_ROTATIONS = 0.01;
+    static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
+    static final double LIMIT_SWITCH_PRESSED_POSITION = 0;
 
     static {
         configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
@@ -166,11 +168,13 @@ public class ClimberConstants {
         motor.registerSignal(TalonFXSignal.VELOCITY, 100);
         motor.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         motor.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        motor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
+        motor.registerSignal(TalonFXSignal.REVERSE_LIMIT, 100);
     }
 
     public enum ClimberState {
         REST(0, false),
-        PREPARE_FOR_CLIMB(0.5, false), //TODO: calibrate
+        PREPARE_FOR_CLIMB(3.183, false), //TODO: calibrate
         CLIMB(0.1, true); //TODO: calibrate
 
         public final double positionRotations;
