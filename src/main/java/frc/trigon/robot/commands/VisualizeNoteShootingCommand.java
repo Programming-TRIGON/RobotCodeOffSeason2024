@@ -47,12 +47,6 @@ public class VisualizeNoteShootingCommand extends Command {
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", new Pose3d(0, 0, 50, new Rotation3d()));
     }
 
-    private Translation2d calculateInitialXYVelocityWithRobotVelocity(Rotation2d startingPitch, double startingTangentialVelocity, Rotation2d currentRobotAngle) {
-        final Translation2d robotFieldRelativeVelocity = SHOOTING_CALCULATIONS.getRobotFieldRelativeVelocity().toTranslation2d();
-        final double noteXYVelocityRelativeToRobot = startingPitch.getCos() * startingTangentialVelocity;
-        return robotFieldRelativeVelocity.plus(new Translation2d(noteXYVelocityRelativeToRobot, currentRobotAngle.minus(new Rotation2d(Math.PI))));
-    }
-
     private Transform3d calculateNoteTransform(double timeDifference) {
         return new Transform3d(calculateNoteXDifference(timeDifference), calculateNoteYDifference(timeDifference), calculateNoteZDifference(timeDifference), new Rotation3d(0, -startingPitch.getRadians(), 0));
     }
@@ -63,6 +57,10 @@ public class VisualizeNoteShootingCommand extends Command {
 
     private double calculateNoteYDifference(double t) {
         return initialXYVelocity.getY() * t;
+    }
+
+    private double calculateNoteZDifference(double t) {
+        return (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * t * t);
     }
 
     private void configureStartingStats() {
@@ -88,7 +86,9 @@ public class VisualizeNoteShootingCommand extends Command {
         return fieldRelativeNoteExitPoint.getTranslation();
     }
 
-    private double calculateNoteZDifference(double t) {
-        return (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * t * t);
+    private Translation2d calculateInitialXYVelocityWithRobotVelocity(Rotation2d startingPitch, double startingTangentialVelocity, Rotation2d currentRobotAngle) {
+        final Translation2d robotFieldRelativeVelocity = SHOOTING_CALCULATIONS.getRobotFieldRelativeVelocity().toTranslation2d();
+        final double noteXYVelocityRelativeToRobot = startingPitch.getCos() * startingTangentialVelocity;
+        return robotFieldRelativeVelocity.plus(new Translation2d(noteXYVelocityRelativeToRobot, currentRobotAngle.minus(new Rotation2d(Math.PI))));
     }
 }
