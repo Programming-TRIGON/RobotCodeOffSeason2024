@@ -37,7 +37,7 @@ public class SwerveModule {
         configureHardware(offsetRotations);
     }
 
-    void setDriveMotorTargetCurrent(double targetCurrent) {
+    void setTargetDriveMotorCurrent(double targetCurrent) {
         driveMotor.setControl(driveTorqueCurrentFOCRequest.withOutput(targetCurrent));
     }
 

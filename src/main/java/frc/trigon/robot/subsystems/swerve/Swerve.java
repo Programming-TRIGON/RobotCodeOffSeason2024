@@ -63,7 +63,7 @@ public class Swerve extends MotorSubsystem {
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
         for (SwerveModule swerveModule : swerveModules) {
-            swerveModule.setDriveMotorTargetCurrent(voltageMeasure.in(edu.wpi.first.units.Units.Volts));
+            swerveModule.setTargetDriveMotorCurrent(voltageMeasure.in(edu.wpi.first.units.Units.Volts));
             swerveModule.setTargetAngle(new Rotation2d());
         }
     }
