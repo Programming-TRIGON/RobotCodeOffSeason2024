@@ -82,7 +82,9 @@ public class ShootingCommands {
     }
 
     public static Command getVisualizeNoteShootingCommand() {
-        return new InstantCommand(() -> GeneralCommands.runWhen(new VisualizeNoteShootingCommand(), () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS).schedule()).onlyIf(() -> RobotHardwareStats.isSimulation());
+        return new InstantCommand(
+                () -> GeneralCommands.runWhen(new VisualizeNoteShootingCommand(), () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS)
+                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay()/* || RobotHardwareStats.isExtensiveLoggingEnabled*/);
     }
 
     private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {

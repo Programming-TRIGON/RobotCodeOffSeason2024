@@ -32,12 +32,12 @@ public class SwerveModuleConstants {
             STEER_MOTOR_I = 0,
             STEER_MOTOR_D = 0;
     private static final double
-            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 100 : 50,
+            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 20 : 50,
             DRIVE_MOTOR_I = 0,
             DRIVE_MOTOR_D = 0,
-            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.34746 : 0,
-            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 15.913 : 0,
-            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 0.91053 : 0;
+            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.14031 : 0,
+            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0.55781 : 0,
+            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 1.1359 : 0;
     static final boolean ENABLE_FOC = true;
     static final TalonFXConfiguration
             DRIVE_MOTOR_CONFIGURATION = generateDriveConfiguration(),
@@ -54,6 +54,12 @@ public class SwerveModuleConstants {
             DRIVE_MOTOR_GEARBOX = DCMotor.getKrakenX60Foc(DRIVE_MOTOR_AMOUNT),
             STEER_MOTOR_GEARBOX = DCMotor.getFalcon500Foc(STEER_MOTOR_AMOUNT);
 
+    static final SysIdRoutine.Config DRIVE_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
+            Units.Volts.of(5).per(Units.Second),
+            Units.Volts.of(20),
+            Units.Second.of(1000)
+    );
+
     static final double WHEEL_DIAMETER_METERS = RobotHardwareStats.isSimulation() ? 0.1016 : 0.049149 * 2;
     static final double VOLTAGE_COMPENSATION_SATURATION = 12;
 
@@ -64,12 +70,6 @@ public class SwerveModuleConstants {
     static SimpleMotorSimulation createSteerSimulation() {
         return new SimpleMotorSimulation(STEER_MOTOR_GEARBOX, STEER_GEAR_RATIO, STEER_MOMENT_OF_INERTIA);
     }
-
-    static final SysIdRoutine.Config DRIVE_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(20).per(Units.Second),
-            Units.Volts.of(50),
-            Units.Second.of(1000)
-    );
 
     private static TalonFXConfiguration generateDriveConfiguration() {
         final TalonFXConfiguration config = new TalonFXConfiguration();

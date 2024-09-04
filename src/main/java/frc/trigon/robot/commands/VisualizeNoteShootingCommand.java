@@ -25,25 +25,14 @@ public class VisualizeNoteShootingCommand extends Command {
     @Override
     public void initialize() {
         startingTimeSeconds = Timer.getFPGATimestamp();
-        startingPitch = RobotContainer.PITCHER.getCurrentPitch();
-        final Pose2d currentRobotPose = RobotContainer.POSE_ESTIMATOR.getCurrentPose();
-        final Rotation2d currentRobotAngle = currentRobotPose.getRotation();
-        final Pose3d fieldRelativeNoteExitPointPose = SHOOTING_CALCULATIONS.calculateShooterNoteExitPointFieldRelativePose(startingPitch, currentRobotPose.getTranslation(), new MirrorableRotation2d(currentRobotAngle, false));
-        final double startingTangentialVelocity = SHOOTING_CALCULATIONS.angularVelocityToTangentialVelocity(RobotContainer.SHOOTER.getCurrentRightMotorVelocityRotationsPerSecond());
-        fieldRelativeNoteExitPointTranslation = fieldRelativeNoteExitPointPose.getTranslation();
-        initialXYVelocity = calculateInitialXYVelocityWithRobotVelocity(startingPitch, startingTangentialVelocity, currentRobotAngle);
-        initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
+        configureNoteShootingVisualization();
     }
 
     @Override
     public void execute() {
-        final double t = Timer.getFPGATimestamp() - startingTimeSeconds;
+        final double timeDifference = Timer.getFPGATimestamp() - startingTimeSeconds;
 
-        final double noteXPosition = calculateNoteXPosition(t);
-        final double noteYPosition = calculateNoteYPosition(t);
-        final double noteZPosition = calculateNoteZPosition(t);
-
-        final Transform3d noteTransform = new Transform3d(noteXPosition, noteYPosition, noteZPosition, new Rotation3d(0, -startingPitch.getRadians(), 0));
+        final Transform3d noteTransform = getNoteTransform(timeDifference);
         final Pose3d notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
         noteZ = notePose.getTranslation().getZ();
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
@@ -65,15 +54,30 @@ public class VisualizeNoteShootingCommand extends Command {
         return robotFieldRelativeVelocity.plus(new Translation2d(noteXYVelocityRelativeToRobot, currentRobotAngle.minus(new Rotation2d(Math.PI))));
     }
 
-    private double calculateNoteXPosition(double t) {
+    private Transform3d getNoteTransform(double timeDifference) {
+        return new Transform3d(calculateNoteXDifference(timeDifference), calculateNoteYDifference(timeDifference), calculateNoteZDifference(timeDifference), new Rotation3d(0, -startingPitch.getRadians(), 0));
+    }
+
+    private double calculateNoteXDifference(double t) {
         return initialXYVelocity.getX() * t;
     }
 
-    private double calculateNoteYPosition(double t) {
+    private double calculateNoteYDifference(double t) {
         return initialXYVelocity.getY() * t;
     }
 
-    private double calculateNoteZPosition(double t) {
+    private double calculateNoteZDifference(double t) {
         return (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * t * t);
+    }
+
+    private void configureNoteShootingVisualization() {
+        startingPitch = RobotContainer.PITCHER.getCurrentPitch();
+        final Pose2d currentRobotPose = RobotContainer.POSE_ESTIMATOR.getCurrentPose();
+        final Rotation2d currentRobotAngle = currentRobotPose.getRotation();
+        final Pose3d fieldRelativeNoteExitPointPose = SHOOTING_CALCULATIONS.calculateShooterNoteExitPointFieldRelativePose(startingPitch, currentRobotPose.getTranslation(), new MirrorableRotation2d(currentRobotAngle, false));
+        final double startingTangentialVelocity = SHOOTING_CALCULATIONS.angularVelocityToTangentialVelocity(RobotContainer.SHOOTER.getCurrentRightMotorVelocityRotationsPerSecond());
+        fieldRelativeNoteExitPointTranslation = fieldRelativeNoteExitPointPose.getTranslation();
+        initialXYVelocity = calculateInitialXYVelocityWithRobotVelocity(startingPitch, startingTangentialVelocity, currentRobotAngle);
+        initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
     }
 }
