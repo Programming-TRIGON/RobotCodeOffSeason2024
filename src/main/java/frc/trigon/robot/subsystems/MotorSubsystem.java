@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.SubsystemBase {
     private static final List<MotorSubsystem> REGISTERED_SUBSYSTEMS = new ArrayList<>();
     private static final Trigger DISABLED_TRIGGER = new Trigger(DriverStation::isDisabled);
-    private static final LoggedDashboardBoolean ENABLE_EXTENSIVE_LOGGING = new LoggedDashboardBoolean("ShouldUpdateMechanisms", true);
+    private static final LoggedDashboardBoolean ENABLE_EXTENSIVE_LOGGING = new LoggedDashboardBoolean("EnableExtensiveLogging", true);
 
     static {
         DISABLED_TRIGGER.onTrue(new InstantCommand(() -> forEach(MotorSubsystem::stop)).ignoringDisable(true));
@@ -44,10 +44,12 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
     }
 
     /**
-     * Runs periodically. Only updated the mechanism if the robot is in replay mode or extensive logging is enabled.
+     * Runs periodically, to update the subsystem, and update the mechanism of the subsystem (if there is one).
+     * This only updates the mechanism if the robot is in replay mode or extensive logging is enabled.
+     * This function cannot be overridden. Use {@linkplain MotorSubsystem#updatePeriodically} or {@linkplain MotorSubsystem#updateMechanism} (depending on the usage) instead.
      */
     @Override
-    public void periodic() {
+    public final void periodic() {
         updatePeriodically();
         if (RobotHardwareStats.isReplay())
             updateMechanism();
@@ -72,6 +74,10 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
      */
     public static void setAllSubsystemsBrakeAsync(boolean brake) {
         CompletableFuture.runAsync(() -> forEach((subsystem) -> subsystem.setBrake(brake)));
+    }
+
+    public static boolean isExtensiveLoggingEnabled() {
+        return ENABLE_EXTENSIVE_LOGGING.get();
     }
 
     /**
@@ -100,10 +106,6 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
         return sysIdRoutine.dynamic(direction);
     }
 
-    public boolean isExtensiveLoggingEnabled() {
-        return ENABLE_EXTENSIVE_LOGGING.get();
-    }
-
     /**
      * Sets whether the subsystem's motors should brake or coast.
      * If a subsystem doesn't need to ever brake (i.e. shooter, flywheel, etc.), don't implement this method.
@@ -130,13 +132,14 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
     }
 
     /**
-     * Updates the mechanism of the subsystem periodically unless ENABLE_EXTENSIVE_LOGGING is false.
+     * Updates the mechanism of the subsystem periodically if the robot is in replay mode, or if {@linkplain MotorSubsystem#ENABLE_EXTENSIVE_LOGGING) is true.
+     * This wouldn't always run, in order to save resources.
      */
     public void updateMechanism() {
     }
 
     /**
-     * Updates periodically. Anything that should be updated periodically but isn't related to the mechanism should be put here.
+     * Updates periodically. Anything that should be updated periodically but isn't related to the mechanism (or shouldn't always be logged, in order to save resources) should be put here.
      */
     public void updatePeriodically() {
     }
