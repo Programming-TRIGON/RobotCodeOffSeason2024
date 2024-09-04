@@ -80,7 +80,7 @@ public class ShootingCommands {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
-    public static Command getVisualizeNoteShootingCommand() {
+    private static Command getVisualizeNoteShootingCommand() {
         return new InstantCommand(
                 () -> new VisualizeNoteShootingCommand()
                         .schedule()).onlyIf(() -> RobotHardwareStats.isReplay()/* || RobotHardwareStats.isExtensiveLoggingEnabled*/);
