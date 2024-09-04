@@ -37,11 +37,10 @@ public class GeneralCommands {
 
     public static Command getNoteCollectionCommand() {
         return new ParallelCommandGroup(
-                new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER)).onlyIf(RobotContainer.INTAKE::hasNote),
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
-        ).unless(RobotContainer.INTAKE::hasNote);
+        ).unless(RobotContainer.INTAKE::hasNote).alongWith(new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER)).onlyIf(RobotContainer.INTAKE::hasNote));
     }
 
     /**
