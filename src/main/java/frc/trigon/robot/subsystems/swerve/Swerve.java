@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -64,7 +63,7 @@ public class Swerve extends MotorSubsystem {
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
         for (SwerveModule swerveModule : swerveModules) {
-            swerveModule.driveMotorDrive(voltageMeasure);
+            swerveModule.driveMotorSetVoltage(voltageMeasure);
             swerveModule.setTargetAngle(new Rotation2d());
         }
     }

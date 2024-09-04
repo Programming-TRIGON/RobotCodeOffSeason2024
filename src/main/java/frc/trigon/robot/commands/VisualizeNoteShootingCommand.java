@@ -87,8 +87,8 @@ public class VisualizeNoteShootingCommand extends Command {
     }
 
     private Translation2d calculateInitialXYVelocityWithRobotVelocity(Rotation2d startingPitch, double startingTangentialVelocity, Rotation2d currentRobotAngle) {
-        final Translation2d robotFieldRelativeVelocity = SHOOTING_CALCULATIONS.getRobotFieldRelativeVelocity().toTranslation2d();
-        final double noteXYVelocityRelativeToRobot = startingPitch.getCos() * startingTangentialVelocity;
-        return robotFieldRelativeVelocity.plus(new Translation2d(noteXYVelocityRelativeToRobot, currentRobotAngle.minus(new Rotation2d(Math.PI))));
+        final Translation2d robotFieldRelativeTangentialVelocity = SHOOTING_CALCULATIONS.getRobotFieldRelativeVelocity().toTranslation2d();
+        final double noteXYTangentialVelocityRelativeToRobot = startingPitch.getCos() * startingTangentialVelocity;
+        return robotFieldRelativeTangentialVelocity.plus(new Translation2d(noteXYTangentialVelocityRelativeToRobot, currentRobotAngle.minus(new Rotation2d(Math.PI))));
     }
 }

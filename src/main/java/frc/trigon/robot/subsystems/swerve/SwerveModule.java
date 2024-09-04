@@ -39,7 +39,7 @@ public class SwerveModule {
         configureHardware(offsetRotations);
     }
 
-    void driveMotorDrive(Measure<Voltage> voltageMeasure) {
+    void driveMotorSetVoltage(Measure<Voltage> voltageMeasure) {
         driveMotor.setControl(driveTorqueCurrentFOCRequest.withOutput(voltageMeasure.in(Units.Volts)));
     }
 
