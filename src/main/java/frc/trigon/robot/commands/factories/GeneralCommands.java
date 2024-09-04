@@ -6,18 +6,34 @@ import frc.trigon.robot.commands.AlignToNoteCommand;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.climber.ClimberCommands;
+import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
+import org.littletonrobotics.junction.Logger;
 
 import java.awt.*;
 import java.util.function.BooleanSupplier;
 
 public class GeneralCommands {
     public static boolean IS_BRAKING = true;
+
+    public static Command getClimbCommand() {
+        return new SequentialCommandGroup(
+                new InstantCommand(
+                        () -> {
+                            RobotContainer.CLIMBER.setIsClimbing(true);
+                            Logger.recordOutput("IsClimbing", true);
+                        }
+                ),
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB).until(() -> OperatorConstants.CONTINUE_TRIGGER.getAsBoolean() && RobotContainer.CLIMBER.atTargetState()),
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB)
+        );
+    }
 
     /**
      * If the pitcher closes before the amp aligner is closed, the amp aligner hits the amp.

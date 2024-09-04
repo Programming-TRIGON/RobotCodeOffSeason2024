@@ -9,7 +9,7 @@ import org.littletonrobotics.junction.Logger;
 import org.trigon.utilities.Conversions;
 
 /**
- * A class that visualizes the climber, using a Mechanism2d, and calculating the 3d poses of the climber's joints for Advantage scope.
+ * A class that visualizes the climber, using a Mechanism2d, and calculating the 3d poses of the climber's joints for Advantage Scope.
  */
 public class ClimberVisualization {
     private final String
@@ -37,18 +37,17 @@ public class ClimberVisualization {
         this.key = "Mechanisms/" + name;
         this.mechanism = new Mechanism2d(2 * ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 2 * ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS);
 
-        final MechanismRoot2d
-                firstJointRoot = mechanism.getRoot(
+        final MechanismRoot2d firstJointRoot = mechanism.getRoot(
                 "FirstJointRoot",
                 ClimberConstants.STRING_ANGLE_ADDITION.getCos() * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS + ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS,
-                ClimberConstants.STRING_ANGLE_ADDITION.getSin() * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS),
-                stringRoot = mechanism.getRoot("StringRoot", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0);
+                ClimberConstants.STRING_ANGLE_ADDITION.getSin() * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS
+        );
+        final MechanismRoot2d stringRoot = mechanism.getRoot("StringRoot", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, 0);
+
         this.currentFirstJointLigament = firstJointRoot.append(new MechanismLigament2d("ZCurrentFirstJointLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, ClimberConstants.MECHANISM_STARTING_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, firstJointColor));
         this.targetFirstJointLigament = firstJointRoot.append(new MechanismLigament2d("TargetFirstJointLigament", ClimberConstants.DISTANCE_BETWEEN_JOINTS_METERS, ClimberConstants.MECHANISM_STARTING_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
-        this.currentStringPositionLigament = stringRoot.append(new MechanismLigament2d("ZCurrentStringPositionLigament", ClimberConstants.CLOSED_STRING_LENGTH_METERS, ClimberConstants.CLOSED_STRING_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, stringColor));
-        this.targetStringPositionLigament = stringRoot.append(new MechanismLigament2d("TargetStringPositionLigament", ClimberConstants.CLOSED_STRING_LENGTH_METERS, ClimberConstants.CLOSED_STRING_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
-        currentStringPositionLigament.append(new MechanismLigament2d("CurrentStringConnectionLigament", ClimberConstants.STRING_CONNECTION_LIGAMENT_LENGTH, ClimberConstants.STRING_CONNECTION_LIGAMENT_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, stringColor));
-        targetStringPositionLigament.append(new MechanismLigament2d("TargetStringConnectionLigament", ClimberConstants.STRING_CONNECTION_LIGAMENT_LENGTH, ClimberConstants.STRING_CONNECTION_LIGAMENT_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
+        this.currentStringPositionLigament = stringRoot.append(new MechanismLigament2d("ZCurrentStringPositionLigament", ClimberConstants.STRING_LENGTH_ADDITION_METERS, ClimberConstants.CLOSED_STRING_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, stringColor));
+        this.targetStringPositionLigament = stringRoot.append(new MechanismLigament2d("TargetStringPositionLigament", ClimberConstants.STRING_LENGTH_ADDITION_METERS, ClimberConstants.CLOSED_STRING_ANGLE.getDegrees(), ClimberConstants.MECHANISM_LINE_WIDTH, ClimberConstants.GRAY));
     }
 
     /**
@@ -80,7 +79,7 @@ public class ClimberVisualization {
      */
     private void setCurrentMechanism2dState(Rotation2d currentFistJointPitch, Rotation2d currentStringAngle, double currentStringLength) {
         currentFirstJointLigament.setAngle(flipAngle(currentFistJointPitch));
-        currentStringPositionLigament.setAngle(flipAngle(currentStringAngle));
+        currentStringPositionLigament.setAngle(currentStringAngle);
         currentStringPositionLigament.setLength(currentStringLength);
 
     }
@@ -94,7 +93,7 @@ public class ClimberVisualization {
      */
     private void setTargetMechanism2dState(Rotation2d targetFirstJointPitch, Rotation2d targetStringAngle, double targetStringLength) {
         targetFirstJointLigament.setAngle(flipAngle(targetFirstJointPitch));
-        targetStringPositionLigament.setAngle(flipAngle(targetStringAngle));
+        targetStringPositionLigament.setAngle(targetStringAngle);
         targetStringPositionLigament.setLength(targetStringLength);
     }
 
@@ -127,25 +126,26 @@ public class ClimberVisualization {
         );
     }
 
-    private Rotation2d calculateStringAngle(Rotation2d climberAngle, double stringLengthMeters) {
-        return Rotation2d.fromRadians(
-                Math.asin(climberAngle.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION).getSin() * stringLengthMeters / ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS) + ClimberConstants.STRING_ANGLE_ADDITION.getRadians()
-        );
+    private Rotation2d calculateStringAngle(Rotation2d firstJointAngle, double stringLengthMeters) {
+        final double firstJointSin = firstJointAngle.minus(ClimberConstants.FIRST_JOINT_ANGLE_ADDITION).getSin();
+        final double division = (firstJointSin * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS) / stringLengthMeters;
+        final double asin = Math.asin(division);
+        return Rotation2d.fromRadians(asin + ClimberConstants.STRING_ANGLE_ADDITION.getRadians());
     }
 
-    private Rotation2d calculateFirstJointPitch(double stringLength) {
+    private Rotation2d calculateFirstJointPitch(double stringLengthMeters) {
         final double numeratorCalculation =
-                (ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS)
-                        + (ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS)
-                        - (stringLength * stringLength);
+                ((ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS)
+                        + (ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS))
+                        - (stringLengthMeters * stringLengthMeters);
         final double denominatorCalculation = 2 * ClimberConstants.FIRST_JOINT_POSE_TO_STRING_CONNECTION_DISTANCE_METERS * ClimberConstants.FIRST_JOINT_POSE_TO_DRUM_DISTANCE_METERS;
         final double division = numeratorCalculation / denominatorCalculation;
         final double angle = Math.acos(division) + ClimberConstants.FIRST_JOINT_ANGLE_ADDITION.getRadians();
         return Rotation2d.fromRadians(angle);
     }
 
-    private double calculateStringLengthMeters(double position) {
-        return toMeters(position) + ClimberConstants.STRING_LENGTH_ADDITION_METERS;
+    private double calculateStringLengthMeters(double positionRotations) {
+        return toMeters(positionRotations) + ClimberConstants.STRING_LENGTH_ADDITION_METERS;
     }
 
     /**
