@@ -5,6 +5,7 @@ import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
+import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import org.littletonrobotics.junction.Logger;
 
 import java.util.ArrayList;
@@ -91,12 +92,11 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
     }
 
     private Pose3d getHeldObjectPose(Pose2d robotPose) {
-        final Transform3d pitcherPivotPointToHeldNote = new Transform3d(0.24, 0, 0.02, new Rotation3d());
-        Pose3d robotPose3d = new Pose3d(robotPose.getX(), robotPose.getY(), 0, new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+        final Pose3d robotPose3d = new Pose3d(robotPose);
         final Pose3d pitcherPivotPoint = new Pose3d(
                 ShootingConstants.ROBOT_RELATIVE_PITCHER_PIVOT_POINT.getTranslation(),
                 new Rotation3d(0, RobotContainer.PITCHER.getCurrentPitch().getRadians() + Math.PI, 0));
-        final Pose3d robotRelativeHeldNotePose = pitcherPivotPoint.transformBy(pitcherPivotPointToHeldNote);
+        final Pose3d robotRelativeHeldNotePose = pitcherPivotPoint.transformBy(PitcherConstants.VISUALIZATION_PITCHER_PIVOT_POINT_TO_HELD_NOTE);
         return robotPose3d.plus(toTransform(robotRelativeHeldNotePose));
     }
 

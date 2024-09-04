@@ -65,10 +65,6 @@ public class VisualizeNoteShootingCommand extends Command {
         return initialXYVelocity.getY() * t;
     }
 
-    private double calculateNoteZDifference(double t) {
-        return (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * t * t);
-    }
-
     private void configureStartingStats() {
         startingTimeSeconds = Timer.getFPGATimestamp();
 
@@ -90,5 +86,9 @@ public class VisualizeNoteShootingCommand extends Command {
         final MirrorableRotation2d robotAngle = new MirrorableRotation2d(currentRobotAngle, false);
         final Pose3d fieldRelativeNoteExitPoint = SHOOTING_CALCULATIONS.calculateShooterNoteExitPointFieldRelativePose(startingPitch, currentRobotPose, robotAngle);
         return fieldRelativeNoteExitPoint.getTranslation();
+    }
+
+    private double calculateNoteZDifference(double t) {
+        return (initialZVelocity * t) + (-0.5 * ShootingConstants.G_FORCE * t * t);
     }
 }

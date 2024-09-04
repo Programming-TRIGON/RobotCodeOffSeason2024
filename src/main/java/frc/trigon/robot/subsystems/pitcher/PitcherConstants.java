@@ -7,6 +7,7 @@ import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -100,6 +101,7 @@ public class PitcherConstants {
             AMP_PITCH = Rotation2d.fromDegrees(45),
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57);
     static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(2);
+    public static final Transform3d VISUALIZATION_PITCHER_PIVOT_POINT_TO_HELD_NOTE = new Transform3d(0.24, 0, 0.02, new Rotation3d());
 
     static {
         configureMasterMotor();
