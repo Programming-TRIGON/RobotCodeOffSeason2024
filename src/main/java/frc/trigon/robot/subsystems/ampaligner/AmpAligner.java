@@ -104,7 +104,7 @@ public class AmpAligner extends MotorSubsystem {
 
     private void configurePositionResettingTrigger() {
         final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitForwardLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
-        hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())));
+        hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())).ignoringDisable(true));
     }
 
     private boolean hasHitForwardLimit() {
