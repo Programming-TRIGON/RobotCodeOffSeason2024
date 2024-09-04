@@ -7,9 +7,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import frc.trigon.robot.constants.RobotConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
@@ -39,8 +37,8 @@ public class SwerveModule {
         configureHardware(offsetRotations);
     }
 
-    void setDriveMotorTorque(Measure<Voltage> voltageMeasure) {
-        driveMotor.setControl(driveTorqueCurrentFOCRequest.withOutput(voltageMeasure.in(Units.Volts)));
+    void setDriveMotorCurrent(double targetCurrent) {
+        driveMotor.setControl(driveTorqueCurrentFOCRequest.withOutput(targetCurrent));
     }
 
     void driveMotorUpdateLog(SysIdRoutineLog log) {
