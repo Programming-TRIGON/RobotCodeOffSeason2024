@@ -100,13 +100,6 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
         return robotPose3d.plus(toTransform(robotRelativeHeldNotePose));
     }
 
-    private Pose3d addPitch(Pose3d component, Rotation2d addedPitch) {
-        return new Pose3d(
-                component.getTranslation(),
-                new Rotation3d(component.getRotation().getX(), -component.getRotation().getY() + addedPitch.getRadians(), component.getRotation().getZ())
-        );
-    }
-
     private Transform3d toTransform(Pose3d pose) {
         return new Transform3d(pose.getTranslation(), pose.getRotation());
     }
