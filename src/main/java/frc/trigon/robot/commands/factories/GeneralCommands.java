@@ -35,6 +35,15 @@ public class GeneralCommands {
         );
     }
 
+    public static Command getNoteCollectionCommand() {
+        return new ParallelCommandGroup(
+                new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER)).onlyIf(RobotContainer.INTAKE::hasNote),
+                new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
+        ).unless(RobotContainer.INTAKE::hasNote);
+    }
+
     /**
      * If the pitcher closes before the amp aligner is closed, the amp aligner hits the amp.
      * This command ensures that the pitcher closes after the amp is closed enough.
@@ -104,16 +113,6 @@ public class GeneralCommands {
                 command::isFinished,
                 command.getRequirements().toArray(Subsystem[]::new)
         );
-    }
-
-    public static Command getNoteCollectionCommand() {
-        if (RobotContainer.INTAKE.hasNote())
-            OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
-        return new ParallelCommandGroup(
-                new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
-                LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
-        ).unless(RobotContainer.INTAKE::hasNote);
     }
 
     public static Command runWhenContinueTriggerPressed(Command command) {
