@@ -131,7 +131,7 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
 
     /**
      * Updates the mechanism of the subsystem periodically if the robot is in replay mode, or if {@linkplain MotorSubsystem#ENABLE_EXTENSIVE_LOGGING) is true.
-     * This wouldn't always run, in order to save resources.
+     * This doesn't always run, in order to save resources.
      */
     public void updateMechanism() {
     }
