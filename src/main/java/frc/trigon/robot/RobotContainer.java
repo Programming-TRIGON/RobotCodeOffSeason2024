@@ -69,7 +69,7 @@ public class RobotContainer {
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
-        OperatorConstants.ALIGN_TO_AMP_TRIGGER.whileTrue(CommandConstants.FACE_AMP_COMMAND.unless(OperatorConstants.AMP_TRIGGER.or(OperatorConstants.AUTONOMOUS_AMP_TRIGGER)));
+        OperatorConstants.ALIGN_TO_AMP_TRIGGER.whileTrue(CommandConstants.FACE_AMP_COMMAND);
         OperatorConstants.ALIGN_TO_SPEAKER_TRIGGER.whileTrue(CommandConstants.FACE_SPEAKER_COMMAND);
         OperatorConstants.ALIGN_TO_RIGHT_STAGE.whileTrue(CommandConstants.ALIGN_TO_RIGHT_STAGE_COMMAND);
         OperatorConstants.ALIGN_TO_LEFT_STAGE.whileTrue(CommandConstants.ALIGN_TO_LEFT_STAGE_COMMAND);
