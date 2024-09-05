@@ -12,7 +12,6 @@ import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.AmpCommands;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
-import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -42,7 +41,6 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         buildAutoChooser();
-        CameraConstants.NOTE_DETECTION_CAMERA.periodic();
     }
 
     /**
