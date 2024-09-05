@@ -55,7 +55,7 @@ public class ShootingCommands {
     private static Command getFeedNoteForShootingCommand() {
         return GeneralCommands.runWhen(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
-                        .alongWith(getVisualizeNoteShootingCommand()).withTimeout(0.5),
+                        .alongWith(getVisualizeNoteShootingCommand()),
                 () -> RobotContainer.SHOOTER.atTargetVelocity() &&
                         RobotContainer.PITCHER.atTargetPitch() &&
                         RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())

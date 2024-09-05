@@ -83,6 +83,7 @@ public class RobotContainer {
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
         
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
+        OperatorConstants.ALIGN_TO_AMP_TRIGGER.whileTrue(CommandConstants.FACE_AMP_COMMAND);
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
     }
 
