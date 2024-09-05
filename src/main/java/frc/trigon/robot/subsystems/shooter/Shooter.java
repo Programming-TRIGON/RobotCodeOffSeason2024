@@ -48,10 +48,9 @@ public class Shooter extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         rightMotor.update();
         leftMotor.update();
-        updateMechanism();
     }
 
     @Override
@@ -63,6 +62,12 @@ public class Shooter extends MotorSubsystem {
     @Override
     public SysIdRoutine.Config getSysIdConfig() {
         return ShooterConstants.SYSID_CONFIG;
+    }
+
+    @Override
+    public void updateMechanism() {
+        ShooterConstants.RIGHT_MECHANISM.update(getCurrentRightMotorVelocityRotationsPerSecond());
+        ShooterConstants.LEFT_MECHANISM.update(getCurrentLeftMotorVelocityRotationsPerSecond());
     }
 
     public double getCurrentRightMotorVelocityRotationsPerSecond() {
@@ -111,10 +116,5 @@ public class Shooter extends MotorSubsystem {
         targetLeftVelocityRotationsPerSecond = targetVelocityRotationsPerSecond;
         ShooterConstants.LEFT_MECHANISM.setTargetVelocity(targetVelocityRotationsPerSecond);
         leftMotor.setControl(velocityRequest.withVelocity(targetVelocityRotationsPerSecond));
-    }
-
-    private void updateMechanism() {
-        ShooterConstants.RIGHT_MECHANISM.update(getCurrentRightMotorVelocityRotationsPerSecond());
-        ShooterConstants.LEFT_MECHANISM.update(getCurrentLeftMotorVelocityRotationsPerSecond());
     }
 }
