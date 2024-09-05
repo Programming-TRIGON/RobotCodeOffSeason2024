@@ -72,7 +72,8 @@ public class CommandConstants {
                     FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
             ),
             SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
-            DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true);
+            DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true),
+            RUMBLE_COMMAND = new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER));
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);
