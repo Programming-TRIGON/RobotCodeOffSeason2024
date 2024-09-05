@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
+import org.littletonrobotics.junction.networktables.LoggedDashboardBoolean;
+import org.trigon.hardware.RobotHardwareStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.function.Consumer;
 public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.SubsystemBase {
     private static final List<MotorSubsystem> REGISTERED_SUBSYSTEMS = new ArrayList<>();
     private static final Trigger DISABLED_TRIGGER = new Trigger(DriverStation::isDisabled);
+    private static final LoggedDashboardBoolean ENABLE_EXTENSIVE_LOGGING = new LoggedDashboardBoolean("EnableExtensiveLogging", true);
 
     static {
         DISABLED_TRIGGER.onTrue(new InstantCommand(() -> forEach(MotorSubsystem::stop)).ignoringDisable(true));
@@ -57,6 +60,22 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
      */
     public static void setAllSubsystemsBrakeAsync(boolean brake) {
         CompletableFuture.runAsync(() -> forEach((subsystem) -> subsystem.setBrake(brake)));
+    }
+
+    public static boolean isExtensiveLoggingEnabled() {
+        return ENABLE_EXTENSIVE_LOGGING.get();
+    }
+
+    /**
+     * Runs periodically, to update the subsystem, and update the mechanism of the subsystem (if there is one).
+     * This only updates the mechanism if the robot is in replay mode or extensive logging is enabled.
+     * This function cannot be overridden. Use {@linkplain MotorSubsystem#updatePeriodically} or {@linkplain MotorSubsystem#updateMechanism} (depending on the usage) instead.
+     */
+    @Override
+    public final void periodic() {
+        updatePeriodically();
+        if (RobotHardwareStats.isReplay() || isExtensiveLoggingEnabled())
+            updateMechanism();
     }
 
     /**
@@ -108,6 +127,19 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
      * @param log the log to update
      */
     public void updateLog(SysIdRoutineLog log) {
+    }
+
+    /**
+     * Updates the mechanism of the subsystem periodically if the robot is in replay mode, or if {@linkplain MotorSubsystem#ENABLE_EXTENSIVE_LOGGING) is true.
+     * This doesn't always run in order to save resources.
+     */
+    public void updateMechanism() {
+    }
+
+    /**
+     * Updates periodically. Anything that should be updated periodically but isn't related to the mechanism (or shouldn't always be logged, in order to save resources) should be put here.
+     */
+    public void updatePeriodically() {
     }
 
     public SysIdRoutine.Config getSysIdConfig() {

@@ -43,10 +43,9 @@ public class Climber extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         rightMotor.update();
         leftMotor.update();
-        updateMechanisms();
     }
 
     @Override
@@ -85,6 +84,12 @@ public class Climber extends MotorSubsystem {
     public void stop() {
         rightMotor.stopMotor();
         leftMotor.stopMotor();
+    }
+
+    @Override
+    public void updateMechanism() {
+        ClimberConstants.RIGHT_VISUALIZATION.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
+        ClimberConstants.LEFT_VISUALIZATION.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
     }
 
     public boolean atTargetState() {
