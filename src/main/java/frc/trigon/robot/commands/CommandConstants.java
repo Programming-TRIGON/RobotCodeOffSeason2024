@@ -17,6 +17,7 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import frc.trigon.robot.subsystems.swerve.SwerveConstants;
 import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
@@ -61,7 +62,14 @@ public class CommandConstants {
                     FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
             ),
             SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
-            DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true);
+            DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true),
+            WHEEL_RADIUS_CHARACTERIZATION_COMMAND = new WheelRadiusCharacterizationCommand(
+                    SwerveConstants.MODULE_LOCATIONS,
+                    RobotContainer.SWERVE::getDriveWheelPositionsRadians,
+                    () -> RobotContainer.SWERVE.getHeading().getRadians(),
+                    RobotContainer.SWERVE::runWheelRadiusCharacterization,
+                    RobotContainer.SWERVE
+            );
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);

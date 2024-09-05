@@ -80,6 +80,10 @@ public class SwerveModule {
         steerMotor.setControl(steerPositionRequest.withPosition(angle.getRotations()));
     }
 
+    double getDriveWheelPositionRadians() {
+        return edu.wpi.first.math.util.Units.rotationsToRadians(driveMotor.getSignal(TalonFXSignal.POSITION));
+    }
+
     /**
      * The odometry thread can update itself faster than the main code loop (which is 50 hertz).
      * Instead of using the latest odometry update, the accumulated odometry positions since the last loop to get a more accurate position.

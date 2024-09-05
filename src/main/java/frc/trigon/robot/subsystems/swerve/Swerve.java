@@ -2,7 +2,6 @@ package frc.trigon.robot.subsystems.swerve;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathfindingCommand;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
@@ -80,8 +79,7 @@ public class Swerve extends MotorSubsystem {
     }
 
     public Rotation2d getHeading() {
-        final double inputtedHeading = MathUtil.inputModulus(gyro.getSignal(Pigeon2Signal.YAW), -0.5, 0.5);
-        return Rotation2d.fromRotations(inputtedHeading);
+        return Rotation2d.fromDegrees(SwerveConstants.GYRO.getSignal(Pigeon2Signal.YAW));
     }
 
     public void setHeading(Rotation2d heading) {
@@ -125,15 +123,16 @@ public class Swerve extends MotorSubsystem {
         return atTargetAngle/* && isAngleStill*/;
     }
 
-    public SwerveModulePosition[] getWheelPositions() {
-        final SwerveModulePosition[] swerveModulePositions = new SwerveModulePosition[swerveModules.length];
-        for (int i = 0; i < swerveModules.length; i++)
-            swerveModulePositions[i] = swerveModules[i].getOdometryPosition(swerveModules[i].getLastOdometryUpdateIndex());
-        return swerveModulePositions;
+    public double[] getDriveWheelPositionsRadians() {
+        final double[] swerveModulesPositionsRadians = new double[swerveModules.length];
+        for (int i = 0; i < swerveModules.length; i++) {
+            swerveModulesPositionsRadians[i] = swerveModules[i].getDriveWheelPositionRadians();
+        }
+        return swerveModulesPositionsRadians;
     }
 
-    public void runWheelRadiusCharacterization(double omegaRadsPerSec) {
-        selfRelativeDrive(new ChassisSpeeds(0, 0, omegaRadsPerSec));
+    public void runWheelRadiusCharacterization(double omegaRadiansPerSecond) {
+        selfRelativeDrive(new ChassisSpeeds(0, 0, omegaRadiansPerSecond));
     }
 
     /**

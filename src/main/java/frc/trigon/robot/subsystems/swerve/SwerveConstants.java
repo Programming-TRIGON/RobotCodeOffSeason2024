@@ -49,14 +49,14 @@ public abstract class SwerveConstants {
             MODULE_Y_DISTANCE_FROM_CENTER = 0.27285,
             FRONT_MODULE_X_DISTANCE_FROM_CENTER = 0.17215,
             REAR_MODULE_X_DISTANCE_FROM_CENTER = -0.24285;
-    private static final Translation2d[] LOCATIONS = {
+    public static final Translation2d[] MODULE_LOCATIONS = {
             new Translation2d(FRONT_MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER),
             new Translation2d(FRONT_MODULE_X_DISTANCE_FROM_CENTER, -MODULE_Y_DISTANCE_FROM_CENTER),
             new Translation2d(REAR_MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER),
             new Translation2d(REAR_MODULE_X_DISTANCE_FROM_CENTER, -MODULE_Y_DISTANCE_FROM_CENTER)
     };
-    public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(LOCATIONS);
-    private static final double DRIVE_RADIUS_METERS = Math.hypot(
+    public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(MODULE_LOCATIONS);
+    private static final double FURTHEST_MODULE_DISTANCE_FROM_CENTER = Math.hypot(
             REAR_MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER
     );
 
@@ -109,7 +109,7 @@ public abstract class SwerveConstants {
             AUTO_TRANSLATION_PID_CONSTANTS,
             AUTO_ROTATION_PID_CONSTANTS,
             MAX_ROTATIONAL_SPEED_RADIANS_PER_SECOND,
-            SwerveConstants.DRIVE_RADIUS_METERS,
+            SwerveConstants.FURTHEST_MODULE_DISTANCE_FROM_CENTER,
             REPLANNING_CONFIG
     );
 
