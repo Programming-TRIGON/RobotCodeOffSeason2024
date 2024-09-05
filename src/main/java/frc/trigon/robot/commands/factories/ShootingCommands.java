@@ -7,6 +7,7 @@ import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
@@ -83,7 +84,7 @@ public class ShootingCommands {
     private static Command getVisualizeNoteShootingCommand() {
         return new InstantCommand(
                 () -> new VisualizeNoteShootingCommand()
-                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay()/* || RobotHardwareStats.isExtensiveLoggingEnabled*/);
+                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
     }
 
     private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {

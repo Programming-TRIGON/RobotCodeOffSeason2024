@@ -19,7 +19,7 @@ import org.trigon.utilities.Conversions;
 
 import java.util.function.DoubleSupplier;
 
-public abstract class SwerveConstants {
+public class SwerveConstants {
     private static final int PIGEON_ID = 0;
     static final Pigeon2Gyro GYRO = new Pigeon2Gyro(SwerveConstants.PIGEON_ID, "SwerveGyro", RobotConstants.CANIVORE_NAME);
     private static final double

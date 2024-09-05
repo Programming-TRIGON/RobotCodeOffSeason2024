@@ -25,6 +25,7 @@ import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import java.awt.*;
 
 public class CommandConstants {
+    public static boolean SHOULD_ALIGN_TO_NOTE = true;
     private static final XboxController DRIVER_CONTROLLER = OperatorConstants.DRIVER_CONTROLLER;
     private static final double
             MINIMUM_TRANSLATION_SHIFT_POWER = 0.18,
@@ -48,6 +49,16 @@ public class CommandConstants {
                     () -> 0
             ),
             STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.white, LEDStripConstants.LED_STRIPS),
+            TURN_AUTONOMOUS_NOTE_ALIGNING_ON_COMMAND = new InstantCommand(() -> {
+                SHOULD_ALIGN_TO_NOTE = true;
+                Logger.recordOutput("ShouldAlignToNote", true);
+            }).ignoringDisable(true),
+            TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND = new InstantCommand(() -> {
+                SHOULD_ALIGN_TO_NOTE = false;
+                Logger.recordOutput("ShouldAlignToNote", false);
+            }).ignoringDisable(true),
+            DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
+            DEFAULT_CLIMBER_COMMAND = ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
             MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
             OVERRIDE_IS_CLIMBING_COMMAND = new InstantCommand(() -> {
@@ -69,7 +80,8 @@ public class CommandConstants {
                     () -> RobotContainer.SWERVE.getHeading().getRadians(),
                     RobotContainer.SWERVE::runWheelRadiusCharacterization,
                     RobotContainer.SWERVE
-            );
+            ),
+            RUMBLE_COMMAND = new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER));
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);
