@@ -19,6 +19,7 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.misc.XboxController;
+import org.trigon.utilities.mirrorable.Mirrorable;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
@@ -54,17 +55,41 @@ public class CommandConstants {
                     FieldConstants.IN_FRONT_OF_AMP_POSE::getRotation
             ),
             FACE_SPEAKER_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
-                    () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
-                    () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
                     () -> MirrorableRotation2d.fromDegrees(0, true)
             ),
+            ALIGN_TO_RIGHT_STAGE_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                    () -> Mirrorable.isRedAlliance() ? MirrorableRotation2d.fromDegrees(60, false) : MirrorableRotation2d.fromDegrees(-120, false)
+            ),
+            ALIGN_TO_LEFT_STAGE_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                    () -> Mirrorable.isRedAlliance() ? MirrorableRotation2d.fromDegrees(-60, false) : MirrorableRotation2d.fromDegrees(120, false)
+            ),
+            ALIGN_TO_MIDDLE_STAGE_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                    () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                    () -> MirrorableRotation2d.fromDegrees(180, true)
+            ),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
-            MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
-            OVERRIDE_IS_CLIMBING_COMMAND = new InstantCommand(() -> {
+            MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).
+
+                    alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
+            OVERRIDE_IS_CLIMBING_COMMAND = new
+
+                    InstantCommand(() ->
+
+            {
                 RobotContainer.CLIMBER.setIsClimbing(false);
                 Logger.recordOutput("IsClimbing", false);
-            }).ignoringDisable(true),
-            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
+            }).
+
+                    ignoringDisable(true),
+
+    EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
             DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
             SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
             DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true);
