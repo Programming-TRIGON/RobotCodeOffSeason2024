@@ -80,6 +80,17 @@ public class ShootingCommands {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
+    public static Command getShootManualLowDelivery() {
+        return new ParallelCommandGroup(
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND),
+                getFeedNoteForManualLowDelivery()
+        );
+    }
+
+    private static Command getFeedNoteForManualLowDelivery() {
+        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), RobotContainer.SHOOTER::atTargetVelocity);
+    }
+
     private static Command getVisualizeNoteShootingCommand() {
         return new InstantCommand(
                 () -> new VisualizeNoteShootingCommand()
