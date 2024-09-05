@@ -39,6 +39,21 @@ public class Intake extends MotorSubsystem {
         return targetState;
     }
 
+    public boolean hasNote() {
+        return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
+    }
+
+    /**
+     * Checks if a note has been collected early using the motor's current.
+     * This is quicker than {@linkplain Intake#hasNote} since it updates from the change in current (which happens right when we hit the note),
+     * instead of the distance sensor which is positioned later on the system.
+     *
+     * @return whether an early note collection has been detected
+     */
+    public boolean isEarlyNoteCollectionDetected() {
+        return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.getAsBoolean();
+    }
+
     void sendStaticBrakeRequest() {
         masterMotor.setControl(staticBrakeRequest);
     }
@@ -51,10 +66,6 @@ public class Intake extends MotorSubsystem {
     void setTargetVoltage(double targetVoltage) {
         masterMotor.setControl(voltageRequest.withOutput(targetVoltage));
         IntakeConstants.MECHANISM.setTargetVelocity(targetVoltage);
-    }
-
-    boolean hasNote() {
-        return IntakeConstants.BOOLEAN_EVENT.getAsBoolean();
     }
 
     /**

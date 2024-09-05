@@ -57,14 +57,20 @@ public class IntakeConstants {
             "IntakeMechanism", MAX_DISPLAYABLE_VELOCITY
     );
 
-    static final double RUMBLE_DURATION_SECONDS = 0.6;
-    static final double RUMBLE_POWER = 1;
+    public static final double RUMBLE_DURATION_SECONDS = 0.6;
+    public static final double RUMBLE_POWER = 1;
     static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.6;
-    static final BooleanEvent BOOLEAN_EVENT = new BooleanEvent(
+    static final BooleanEvent HAS_NOTE_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
     static final double NOTE_STOPPING_SECONDS = 1;
+    private static final double NOTE_COLLECTION_CURRENT = 10; //TODO: calibrate
+    private static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.25; //TODO: calibrate
+    static final BooleanEvent EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT = new BooleanEvent(
+            CommandScheduler.getInstance().getActiveButtonLoop(),
+            () -> Math.abs(MASTER_MOTOR.getSignal(TalonFXSignal.TORQUE_CURRENT)) > IntakeConstants.NOTE_COLLECTION_CURRENT
+    ).debounce(NOTE_COLLECTION_TIME_THRESHOLD_SECONDS);
 
     static {
         configureMasterMotor();
@@ -86,6 +92,7 @@ public class IntakeConstants {
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
     }
 
