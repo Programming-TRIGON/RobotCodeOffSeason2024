@@ -17,6 +17,7 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import frc.trigon.robot.subsystems.swerve.SwerveConstants;
 import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.Mirrorable;
@@ -95,6 +96,13 @@ public class CommandConstants {
             DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
             SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
             DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true),
+            WHEEL_RADIUS_CHARACTERIZATION_COMMAND = new WheelRadiusCharacterizationCommand(
+                    SwerveConstants.MODULE_LOCATIONS,
+                    RobotContainer.SWERVE::getDriveWheelPositionsRadians,
+                    () -> RobotContainer.SWERVE.getHeading().getRadians(),
+                    RobotContainer.SWERVE::runWheelRadiusCharacterization,
+                    RobotContainer.SWERVE
+            ),
             RUMBLE_COMMAND = new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER));
 
     public static double calculateDriveStickAxisValue(double axisValue) {

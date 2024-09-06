@@ -46,17 +46,18 @@ public class SwerveConstants {
     private static final DoubleSupplier SIMULATION_YAW_VELOCITY_SUPPLIER = () -> RobotContainer.SWERVE.getSelfRelativeVelocity().omegaRadiansPerSecond;
 
     private static final double
-            MODULE_X_DISTANCE_FROM_CENTER = 0.415 / 2,
-            MODULE_Y_DISTANCE_FROM_CENTER = 0.5457 / 2;
-    private static final Translation2d[] LOCATIONS = {
-            new Translation2d(MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER),
-            new Translation2d(MODULE_X_DISTANCE_FROM_CENTER, -MODULE_Y_DISTANCE_FROM_CENTER),
-            new Translation2d(-MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER),
-            new Translation2d(-MODULE_X_DISTANCE_FROM_CENTER, -MODULE_Y_DISTANCE_FROM_CENTER)
+            MODULE_Y_DISTANCE_FROM_CENTER = 0.27285,
+            FRONT_MODULE_X_DISTANCE_FROM_CENTER = 0.17215,
+            REAR_MODULE_X_DISTANCE_FROM_CENTER = -0.24285;
+    public static final Translation2d[] MODULE_LOCATIONS = {
+            new Translation2d(FRONT_MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER),
+            new Translation2d(FRONT_MODULE_X_DISTANCE_FROM_CENTER, -MODULE_Y_DISTANCE_FROM_CENTER),
+            new Translation2d(REAR_MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER),
+            new Translation2d(REAR_MODULE_X_DISTANCE_FROM_CENTER, -MODULE_Y_DISTANCE_FROM_CENTER)
     };
-    public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(LOCATIONS);
-    public static final double DRIVE_RADIUS_METERS = Math.hypot(
-            MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER
+    public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(MODULE_LOCATIONS);
+    private static final double FURTHEST_MODULE_DISTANCE_FROM_CENTER = Math.hypot(
+            REAR_MODULE_X_DISTANCE_FROM_CENTER, MODULE_Y_DISTANCE_FROM_CENTER
     );
 
     static final double
@@ -108,7 +109,7 @@ public class SwerveConstants {
             AUTO_TRANSLATION_PID_CONSTANTS,
             AUTO_ROTATION_PID_CONSTANTS,
             MAX_ROTATIONAL_SPEED_RADIANS_PER_SECOND,
-            SwerveConstants.DRIVE_RADIUS_METERS,
+            SwerveConstants.FURTHEST_MODULE_DISTANCE_FROM_CENTER,
             REPLANNING_CONFIG
     );
 
