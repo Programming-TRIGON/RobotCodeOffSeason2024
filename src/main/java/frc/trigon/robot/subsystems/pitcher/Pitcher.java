@@ -51,9 +51,8 @@ public class Pitcher extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         masterMotor.update();
-        updateMechanism();
     }
 
     @Override
@@ -64,6 +63,17 @@ public class Pitcher extends MotorSubsystem {
     @Override
     public SysIdRoutine.Config getSysIdConfig() {
         return PitcherConstants.SYSID_CONFIG;
+    }
+
+    @Override
+    public void updateMechanism() {
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.updateFirstJoint(
+                getCurrentPitch(),
+                Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
+        );
+        final Pose3d pitcherComponentPose = calculatePitcherComponentPose();
+        Logger.recordOutput("Poses/Components/PitcherPose", pitcherComponentPose);
+        Logger.recordOutput("Poses/Components/AmpAlignerPose", calculateAmpAlignerComponentPose(pitcherComponentPose));
     }
 
     public Rotation2d getCurrentPitch() {
@@ -86,16 +96,6 @@ public class Pitcher extends MotorSubsystem {
     void setTargetPitch(Rotation2d targetPitch) {
         this.targetPitch = targetPitch;
         masterMotor.setControl(positionRequest.withPosition(targetPitch.getRotations()));
-    }
-
-    private void updateMechanism() {
-        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.updateFirstJoint(
-                getCurrentPitch(),
-                Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE))
-        );
-        final Pose3d pitcherComponentPose = calculatePitcherComponentPose();
-        Logger.recordOutput("Poses/Components/PitcherPose", pitcherComponentPose);
-        Logger.recordOutput("Poses/Components/AmpAlignerPose", calculateAmpAlignerComponentPose(pitcherComponentPose));
     }
 
     private Pose3d calculatePitcherComponentPose() {

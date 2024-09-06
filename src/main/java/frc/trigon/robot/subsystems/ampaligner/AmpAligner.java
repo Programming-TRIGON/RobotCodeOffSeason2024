@@ -35,9 +35,8 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         motor.update();
-        updateMechanism();
     }
 
     @Override
@@ -61,6 +60,12 @@ public class AmpAligner extends MotorSubsystem {
     @Override
     public SysIdRoutine.Config getSysIdConfig() {
         return AmpAlignerConstants.SYSID_CONFIG;
+    }
+
+    @Override
+    public void updateMechanism() {
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointTargetAngle(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
+        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointCurrentAngle(getCurrentAngle());
     }
 
     public AmpAlignerConstants.AmpAlignerState getTargetState() {
@@ -104,7 +109,7 @@ public class AmpAligner extends MotorSubsystem {
 
     private void configurePositionResettingTrigger() {
         final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitForwardLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
-        hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())));
+        hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())).ignoringDisable(true));
     }
 
     private boolean hasHitForwardLimit() {
@@ -115,10 +120,5 @@ public class AmpAligner extends MotorSubsystem {
         if (!RobotHardwareStats.isSimulation())
             return AmpAlignerConstants.KG * Math.cos(RobotContainer.PITCHER.getCurrentPitch().getRadians() + this.getCurrentAngle().getRadians());
         return 0;
-    }
-
-    private void updateMechanism() {
-        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointTargetAngle(Rotation2d.fromRotations(motor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE)));
-        PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointCurrentAngle(getCurrentAngle());
     }
 }

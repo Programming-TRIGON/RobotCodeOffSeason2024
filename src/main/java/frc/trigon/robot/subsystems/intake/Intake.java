@@ -18,10 +18,9 @@ public class Intake extends MotorSubsystem {
     }
 
     @Override
-    public void periodic() {
+    public void updatePeriodically() {
         masterMotor.update();
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
-        updateMechanism();
     }
 
     @Override
@@ -31,8 +30,28 @@ public class Intake extends MotorSubsystem {
         IntakeConstants.MECHANISM.setTargetVelocity(0);
     }
 
+    @Override
+    public void updateMechanism() {
+        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
+    }
+
     public IntakeConstants.IntakeState getTargetState() {
         return targetState;
+    }
+
+    public boolean hasNote() {
+        return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
+    }
+
+    /**
+     * Checks if a note has been collected early using the motor's current.
+     * This is quicker than {@linkplain Intake#hasNote} since it updates from the change in current (which happens right when we hit the note),
+     * instead of the distance sensor which is positioned later on the system.
+     *
+     * @return whether an early note collection has been detected
+     */
+    public boolean isEarlyNoteCollectionDetected() {
+        return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.getAsBoolean();
     }
 
     void sendStaticBrakeRequest() {
@@ -49,18 +68,10 @@ public class Intake extends MotorSubsystem {
         IntakeConstants.MECHANISM.setTargetVelocity(targetVoltage);
     }
 
-    boolean hasNote() {
-        return IntakeConstants.BOOLEAN_EVENT.getAsBoolean();
-    }
-
     /**
      * Indicates to the driver that a note has been collected by rumbling the controller.
      */
     void indicateCollection() {
         OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
-    }
-
-    private void updateMechanism() {
-        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
     }
 }
