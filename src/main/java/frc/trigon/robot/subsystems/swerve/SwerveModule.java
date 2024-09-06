@@ -80,8 +80,8 @@ public class SwerveModule {
         steerMotor.setControl(steerPositionRequest.withPosition(angle.getRotations()));
     }
 
-    double getDriveWheelPositionRadians() {
-        return edu.wpi.first.math.util.Units.rotationsToRadians(driveMotor.getSignal(TalonFXSignal.POSITION));
+    Rotation2d getDriveWheelPosition() {
+        return Rotation2d.fromRotations(driveMotor.getSignal(TalonFXSignal.POSITION));
     }
 
     /**
