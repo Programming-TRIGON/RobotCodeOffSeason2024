@@ -47,7 +47,7 @@ public class ShootingCommands {
         );
     }
 
-    public static Command getShootManualLowDeliveryCommand() {
+    public static Command getManualLowDeliveryCommand() {
         return new ParallelCommandGroup(
                 ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND),
                 getFeedNoteForManualLowDeliveryCommand()
@@ -67,6 +67,13 @@ public class ShootingCommands {
         );
     }
 
+    private static Command getPrepareCloseSpeakerShotCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_SHOT_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO)
+        );
+    }
+
     private static Command getFeedNoteForShootingCommand() {
         return GeneralCommands.runWhen(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
@@ -74,13 +81,6 @@ public class ShootingCommands {
                 () -> RobotContainer.SHOOTER.atTargetVelocity() &&
                         RobotContainer.PITCHER.atTargetPitch() &&
                         RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
-        );
-    }
-
-    private static Command getPrepareCloseSpeakerShotCommand() {
-        return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_SHOT_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO)
         );
     }
 

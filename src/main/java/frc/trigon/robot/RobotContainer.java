@@ -85,7 +85,7 @@ public class RobotContainer {
         OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getCloseSpeakerShotCommand());
         OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getWarmSpeakerShotCommand());
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
-        OperatorConstants.MANUAL_LOW_DELIVERY_TRIGGER.whileTrue(ShootingCommands.getShootManualLowDeliveryCommand());
+        OperatorConstants.MANUAL_LOW_DELIVERY_TRIGGER.whileTrue(ShootingCommands.getManualLowDeliveryCommand());
 
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
