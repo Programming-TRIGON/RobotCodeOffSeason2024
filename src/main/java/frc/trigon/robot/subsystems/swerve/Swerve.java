@@ -123,11 +123,11 @@ public class Swerve extends MotorSubsystem {
         return atTargetAngle/* && isAngleStill*/;
     }
 
-    public double[] getDriveWheelPositionsRadians() {
-        final double[] swerveModulesPositionsRadians = new double[swerveModules.length];
+    public Rotation2d[] getDriveWheelPositions() {
+        final Rotation2d[] swerveModulesPositions = new Rotation2d[swerveModules.length];
         for (int i = 0; i < swerveModules.length; i++)
-            swerveModulesPositionsRadians[i] = swerveModules[i].getDriveWheelPosition().getRadians();
-        return swerveModulesPositionsRadians;
+            swerveModulesPositions[i] = swerveModules[i].getDriveWheelPosition();
+        return swerveModulesPositions;
     }
 
     public void runWheelRadiusCharacterization(double omegaRadiansPerSecond) {
