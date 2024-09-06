@@ -50,6 +50,7 @@ public class ShootingCommands {
     public static Command getManualLowDeliveryCommand() {
         return new ParallelCommandGroup(
                 ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND),
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.MANUAL_LOW_DELIVERY_PITCH),
                 getFeedNoteForManualLowDeliveryCommand()
         );
     }
