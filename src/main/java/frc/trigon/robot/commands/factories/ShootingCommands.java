@@ -96,7 +96,7 @@ public class ShootingCommands {
     }
 
     private static Command getFeedNoteForManualLowDeliveryCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), RobotContainer.SHOOTER::atTargetVelocity);
+        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
     private static Command getVisualizeNoteShootingCommand() {
