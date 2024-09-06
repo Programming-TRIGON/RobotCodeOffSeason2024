@@ -43,14 +43,14 @@ public class ShootingCommands {
     public static Command getCloseSpeakerShotCommand() {
         return new ParallelCommandGroup(
                 getPrepareCloseSpeakerShotCommand(),
-                getFeedNoteForCloseSpeakerShotCommand()
+                getFeedNoteWhenPitcherAndShooterReadyCommand()
         );
     }
 
     public static Command getManualLowDeliveryCommand() {
         return new ParallelCommandGroup(
                 getPrepareManualLowDeliveryCommand(),
-                getFeedNoteForManualLowDeliveryCommand()
+                getFeedNoteWhenPitcherAndShooterReadyCommand()
         );
     }
 
@@ -91,11 +91,7 @@ public class ShootingCommands {
         );
     }
 
-    private static Command getFeedNoteForCloseSpeakerShotCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
-    }
-
-    private static Command getFeedNoteForManualLowDeliveryCommand() {
+    private static Command getFeedNoteWhenPitcherAndShooterReadyCommand() {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
