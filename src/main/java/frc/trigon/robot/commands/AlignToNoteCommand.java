@@ -69,7 +69,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
-                () -> Y_PID_CONTROLLER.calculate(trackedNoteYaw),
+                () -> -Y_PID_CONTROLLER.calculate(trackedNoteYaw),
                 this::getTargetAngle
         );
     }

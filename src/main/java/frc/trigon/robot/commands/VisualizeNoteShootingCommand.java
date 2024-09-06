@@ -17,7 +17,7 @@ public class VisualizeNoteShootingCommand extends Command {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
     private double startingTimeSeconds;
     private Translation3d fieldRelativeNoteExitPointTranslation;
-    private Rotation2d startingPitch;
+    private Rotation2d startingPitch, startingYaw;
     private Translation2d initialXYVelocity;
     private double initialZVelocity;
     private double noteZ;
@@ -48,7 +48,7 @@ public class VisualizeNoteShootingCommand extends Command {
     }
 
     private Transform3d calculateNoteTransform(double timeDifference) {
-        return new Transform3d(calculateNoteXDifference(timeDifference), calculateNoteYDifference(timeDifference), calculateNoteZDifference(timeDifference), new Rotation3d(0, -startingPitch.getRadians(), 0));
+        return new Transform3d(calculateNoteXDifference(timeDifference), calculateNoteYDifference(timeDifference), calculateNoteZDifference(timeDifference), new Rotation3d(0, -startingPitch.getRadians(), startingYaw.getRadians()));
     }
 
     private double calculateNoteXDifference(double t) {
@@ -71,6 +71,7 @@ public class VisualizeNoteShootingCommand extends Command {
         final double startingTangentialVelocity = getStartingTangentialVelocity();
 
         startingPitch = RobotContainer.PITCHER.getCurrentPitch();
+        startingYaw = currentRobotAngle.minus(new Rotation2d(Math.PI));
         fieldRelativeNoteExitPointTranslation = calculateFieldRelativeNoteExitPoint(currentRobotPose.getTranslation(), currentRobotAngle);
         initialXYVelocity = calculateInitialXYVelocityWithRobotVelocity(startingPitch, startingTangentialVelocity, currentRobotAngle);
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
