@@ -125,9 +125,8 @@ public class Swerve extends MotorSubsystem {
 
     public double[] getDriveWheelPositionsRadians() {
         final double[] swerveModulesPositionsRadians = new double[swerveModules.length];
-        for (int i = 0; i < swerveModules.length; i++) {
+        for (int i = 0; i < swerveModules.length; i++)
             swerveModulesPositionsRadians[i] = swerveModules[i].getDriveWheelPositionRadians();
-        }
         return swerveModulesPositionsRadians;
     }
 
