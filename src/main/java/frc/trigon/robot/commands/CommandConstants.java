@@ -25,7 +25,6 @@ import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class CommandConstants {
     public static boolean SHOULD_ALIGN_TO_NOTE = true;
@@ -99,7 +98,7 @@ public class CommandConstants {
             DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true),
             WHEEL_RADIUS_CHARACTERIZATION_COMMAND = new WheelRadiusCharacterizationCommand(
                     SwerveConstants.MODULE_LOCATIONS,
-                    () -> Arrays.stream(RobotContainer.SWERVE.getDriveWheelPositions()).mapToDouble(Rotation2d::getRadians).toArray(),
+                    RobotContainer.SWERVE::getDriveWheelPositionsRadians,
                     () -> RobotContainer.SWERVE.getHeading().getRadians(),
                     RobotContainer.SWERVE::runWheelRadiusCharacterization,
                     RobotContainer.SWERVE
