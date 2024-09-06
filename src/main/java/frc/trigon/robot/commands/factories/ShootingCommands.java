@@ -49,8 +49,7 @@ public class ShootingCommands {
 
     public static Command getManualLowDeliveryCommand() {
         return new ParallelCommandGroup(
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND),
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.MANUAL_LOW_DELIVERY_PITCH),
+                getPrepareManualLowDeliveryCommand(),
                 getFeedNoteForManualLowDeliveryCommand()
         );
     }
@@ -72,6 +71,13 @@ public class ShootingCommands {
         return new ParallelCommandGroup(
                 PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_SHOT_PITCH),
                 ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND, ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO)
+        );
+    }
+
+    private static Command getPrepareManualLowDeliveryCommand() {
+        return new ParallelCommandGroup(
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND),
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.MANUAL_LOW_DELIVERY_PITCH)
         );
     }
 
