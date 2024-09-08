@@ -9,7 +9,7 @@ public class OperatorConstants {
     private static final int
             DRIVER_CONTROLLER_PORT = 0;
     private static final int DRIVER_CONTROLLER_EXPONENT = 1;
-    private static final double DRIVER_CONTROLLER_DEADBAND = 0.1;
+    private static final double DRIVER_CONTROLLER_DEADBAND = 0;
     public static final XboxController DRIVER_CONTROLLER = new XboxController(
             DRIVER_CONTROLLER_PORT, DRIVER_CONTROLLER_EXPONENT, DRIVER_CONTROLLER_DEADBAND
     );
@@ -24,6 +24,10 @@ public class OperatorConstants {
             TOGGLE_BRAKE_TRIGGER = OPERATOR_CONTROLLER.g().or(RobotController::getUserButton),
             TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER = DRIVER_CONTROLLER.b(),
             DRIVE_FROM_DPAD_TRIGGER = new Trigger(() -> DRIVER_CONTROLLER.getPov() != -1),
+            ALIGN_TO_SPEAKER_TRIGGER = DRIVER_CONTROLLER.a(),
+            ALIGN_TO_RIGHT_STAGE = OPERATOR_CONTROLLER.j(),
+            ALIGN_TO_LEFT_STAGE = OPERATOR_CONTROLLER.h(),
+            ALIGN_TO_MIDDLE_STAGE = OPERATOR_CONTROLLER.u(),
             TURN_AUTONOMOUS_NOTE_ALIGNING_ON_TRIGGER = OPERATOR_CONTROLLER.o(),
             TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER = OPERATOR_CONTROLLER.p(),
             CLIMB_TRIGGER = OPERATOR_CONTROLLER.c(),
@@ -41,6 +45,8 @@ public class OperatorConstants {
             CLOSE_SPEAKER_SHOT_TRIGGER = OPERATOR_CONTROLLER.x(),
             WARM_SPEAKER_SHOT_TRIGGER = OPERATOR_CONTROLLER.w(),
             DELIVERY_TRIGGER = OPERATOR_CONTROLLER.d(),
-            AMP_TRIGGER = DRIVER_CONTROLLER.x().or(OPERATOR_CONTROLLER.a()),
-            AUTONOMOUS_AMP_TRIGGER = OPERATOR_CONTROLLER.z();
+            MANUAL_LOW_DELIVERY_TRIGGER = OPERATOR_CONTROLLER.m(),
+            AMP_TRIGGER = OPERATOR_CONTROLLER.a(),
+            AUTONOMOUS_AMP_TRIGGER = OPERATOR_CONTROLLER.z(),
+            ALIGN_TO_AMP_TRIGGER = DRIVER_CONTROLLER.x().and(OperatorConstants.AMP_TRIGGER.or(OperatorConstants.AUTONOMOUS_AMP_TRIGGER).negate());
 }

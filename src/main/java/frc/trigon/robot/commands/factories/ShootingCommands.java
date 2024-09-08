@@ -32,7 +32,29 @@ public class ShootingCommands {
         );
     }
 
-    public static Command getPrepareForShootingCommand(boolean isDelivery) {
+    public static Command getWarmSpeakerShotCommand() {
+        return new ParallelCommandGroup(
+                getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
+                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand()
+        );
+    }
+
+    public static Command getCloseSpeakerShotCommand() {
+        return new ParallelCommandGroup(
+                getPrepareCloseSpeakerShotCommand(),
+                getFeedNoteWhenPitcherAndShooterReadyCommand()
+        );
+    }
+
+    public static Command getManualLowDeliveryCommand() {
+        return new ParallelCommandGroup(
+                getPrepareManualLowDeliveryCommand(),
+                getFeedNoteWhenPitcherAndShooterReadyCommand()
+        );
+    }
+
+    private static Command getPrepareForShootingCommand(boolean isDelivery) {
         return new ParallelCommandGroup(
                 getUpdateShootingCalculationsCommand(isDelivery),
                 PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
@@ -45,31 +67,6 @@ public class ShootingCommands {
         );
     }
 
-    public static Command getWarmSpeakerShotCommand() {
-        return new ParallelCommandGroup(
-                getUpdateShootingCalculationsCommand(false),
-                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
-                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand()
-        );
-    }
-
-    private static Command getFeedNoteForShootingCommand() {
-        return GeneralCommands.runWhen(
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
-                        .alongWith(getVisualizeNoteShootingCommand()).withTimeout(0.5),
-                () -> RobotContainer.SHOOTER.atTargetVelocity() &&
-                        RobotContainer.PITCHER.atTargetPitch() &&
-                        RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
-        );
-    }
-
-    public static Command getCloseSpeakerShotCommand() {
-        return new ParallelCommandGroup(
-                getPrepareCloseSpeakerShotCommand(),
-                getFeedNoteForCloseSpeakerShotCommand()
-        );
-    }
-
     private static Command getPrepareCloseSpeakerShotCommand() {
         return new ParallelCommandGroup(
                 PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_SHOT_PITCH),
@@ -77,7 +74,24 @@ public class ShootingCommands {
         );
     }
 
-    private static Command getFeedNoteForCloseSpeakerShotCommand() {
+    private static Command getPrepareManualLowDeliveryCommand() {
+        return new ParallelCommandGroup(
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND),
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.MANUAL_LOW_DELIVERY_PITCH)
+        );
+    }
+
+    private static Command getFeedNoteForShootingCommand() {
+        return GeneralCommands.runWhen(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
+                        .alongWith(getVisualizeNoteShootingCommand()),
+                () -> RobotContainer.SHOOTER.atTargetVelocity() &&
+                        RobotContainer.PITCHER.atTargetPitch() &&
+                        RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+        );
+    }
+
+    private static Command getFeedNoteWhenPitcherAndShooterReadyCommand() {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 

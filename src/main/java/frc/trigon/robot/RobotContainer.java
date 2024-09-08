@@ -65,6 +65,11 @@ public class RobotContainer {
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
+        OperatorConstants.ALIGN_TO_AMP_TRIGGER.whileTrue(CommandConstants.FACE_AMP_COMMAND);
+        OperatorConstants.ALIGN_TO_SPEAKER_TRIGGER.whileTrue(CommandConstants.FACE_SPEAKER_COMMAND);
+        OperatorConstants.ALIGN_TO_RIGHT_STAGE.whileTrue(CommandConstants.ALIGN_TO_RIGHT_STAGE_COMMAND);
+        OperatorConstants.ALIGN_TO_LEFT_STAGE.whileTrue(CommandConstants.ALIGN_TO_LEFT_STAGE_COMMAND);
+        OperatorConstants.ALIGN_TO_MIDDLE_STAGE.whileTrue(CommandConstants.ALIGN_TO_MIDDLE_STAGE_COMMAND);
 
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
         OperatorConstants.COLLECT_NOTE_TRIGGER.whileTrue(GeneralCommands.getNoteCollectionCommand());
@@ -80,6 +85,7 @@ public class RobotContainer {
         OperatorConstants.CLOSE_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getCloseSpeakerShotCommand());
         OperatorConstants.WARM_SPEAKER_SHOT_TRIGGER.whileTrue(ShootingCommands.getWarmSpeakerShotCommand());
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
+        OperatorConstants.MANUAL_LOW_DELIVERY_TRIGGER.whileTrue(ShootingCommands.getManualLowDeliveryCommand());
 
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
