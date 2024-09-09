@@ -2,6 +2,7 @@ package frc.trigon.robot.subsystems.swerve;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathfindingCommand;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -22,6 +24,8 @@ import org.trigon.hardware.phoenix6.pigeon2.Pigeon2Signal;
 import org.trigon.utilities.mirrorable.Mirrorable;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
+
+import java.util.Optional;
 
 public class Swerve extends MotorSubsystem {
     private final Pigeon2Gyro gyro = SwerveConstants.GYRO;
@@ -34,6 +38,7 @@ public class Swerve extends MotorSubsystem {
         configurePathPlanner();
         phoenix6SignalThread.setOdometryFrequencyHertz(PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
         SwerveConstants.PROFILED_ROTATION_PID_CONTROLLER.enableContinuousInput(-180, 180);
+        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
     }
 
     @Override
@@ -229,6 +234,13 @@ public class Swerve extends MotorSubsystem {
         final ChassisSpeeds speeds = powersToSpeeds(xPower, yPower, 0);
         speeds.omegaRadiansPerSecond = calculateProfiledAngleSpeedToTargetAngle(targetAngle);
         selfRelativeDrive(speeds);
+    }
+
+    private Optional<Rotation2d> getRotationTargetOverride() {
+        if (!CameraConstants.NOTE_DETECTION_CAMERA.hasTargets())
+            return Optional.empty();
+        double targetAngle = CameraConstants.NOTE_DETECTION_CAMERA.getTrackedObjectYaw();
+        return Optional.of(Rotation2d.fromDegrees(targetAngle));
     }
 
     private void selfRelativeDrive(ChassisSpeeds chassisSpeeds) {
