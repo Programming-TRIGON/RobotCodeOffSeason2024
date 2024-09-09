@@ -1,0 +1,103 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.8937455058008714,
+        "y": 4.148007169253776
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.038275372325393,
+        "y": 4.148007169253776
+      },
+      "isLocked": false,
+      "linkedName": "firstNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 2.4023439596174967,
+        "y": 4.84175052857148
+      },
+      "prevControl": {
+        "x": 2.3888847201522134,
+        "y": 4.836483869650282
+      },
+      "nextControl": {
+        "x": 2.734762652623897,
+        "y": 4.971827408443549
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.8937455058008714,
+        "y": 5.549946874541637
+      },
+      "prevControl": {
+        "x": 3.0685533061206973,
+        "y": 5.195848701556558
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SecondNoteCollection"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 88.451842301022,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

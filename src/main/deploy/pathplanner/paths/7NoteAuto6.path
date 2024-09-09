@@ -1,0 +1,129 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.299162513817985,
+        "y": 5.781194660980872
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.576513181195377,
+        "y": 5.96908348746275
+      },
+      "isLocked": false,
+      "linkedName": "fifthNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 5.567548036504523,
+        "y": 6.344861140426506
+      },
+      "prevControl": {
+        "x": 6.565231729186051,
+        "y": 6.412885028563885
+      },
+      "nextControl": {
+        "x": 4.931616623796628,
+        "y": 6.301502180469148
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.299162513817985,
+        "y": 4.104648209296419
+      },
+      "prevControl": {
+        "x": 7.429391600821612,
+        "y": 4.930930576642975
+      },
+      "nextControl": {
+        "x": 8.588222246867028,
+        "y": 3.8300414628998274
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.599197930790228,
+        "y": 4.668314688742054
+      },
+      "prevControl": {
+        "x": 7.176066472078554,
+        "y": 3.9503246833775103
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 3.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -14.931417178137574,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
