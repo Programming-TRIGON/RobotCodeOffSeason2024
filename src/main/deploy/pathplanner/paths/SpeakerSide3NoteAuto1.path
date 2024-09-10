@@ -57,7 +57,7 @@
             {
               "type": "named",
               "data": {
-                "name": "EjectForShooter"
+                "name": "EjectFromShooter"
               }
             }
           ]

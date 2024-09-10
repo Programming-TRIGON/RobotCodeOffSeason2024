@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "FeedNote",
+      "name": "Shoot",
       "waypointRelativePos": 0.25,
       "command": {
         "type": "parallel",
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "FeedNote"
+                "name": "Shoot"
               }
             }
           ]
