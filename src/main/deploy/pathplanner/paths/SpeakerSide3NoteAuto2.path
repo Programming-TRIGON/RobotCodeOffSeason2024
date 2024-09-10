@@ -46,7 +46,59 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "FeedNote",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 5.0,
@@ -55,7 +107,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.9749340108820268,
+    "rotation": -64.98310652190003,
     "rotateFast": false
   },
   "reversed": false,

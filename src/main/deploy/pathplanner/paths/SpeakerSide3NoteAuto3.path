@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 5.032787530363793,
-        "y": 7.197587352921185
+        "x": 4.324591184393637,
+        "y": 7.457741112665324
       },
       "prevControl": {
-        "x": 5.191770383540767,
-        "y": 6.749544766695167
+        "x": 4.4835740375706115,
+        "y": 7.009698526439306
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,23 +47,6 @@
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "RecollectNote",
       "waypointRelativePos": 1.9,
@@ -98,6 +81,23 @@
               "type": "named",
               "data": {
                 "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "FeedNote",
+      "waypointRelativePos": 1.1,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
               }
             }
           ]

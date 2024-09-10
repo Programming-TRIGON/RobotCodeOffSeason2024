@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
+      "name": "FeedNote",
       "waypointRelativePos": 0.25,
       "command": {
         "type": "parallel",
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot"
+                "name": "FeedNote"
               }
             }
           ]
@@ -59,6 +59,23 @@
               "type": "named",
               "data": {
                 "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
               }
             }
           ]

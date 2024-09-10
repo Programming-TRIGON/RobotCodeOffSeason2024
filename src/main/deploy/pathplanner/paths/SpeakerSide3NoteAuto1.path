@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.032787530363793,
-        "y": 7.197587352921185
+        "x": 4.324591184393637,
+        "y": 7.457741112665324
       },
       "prevControl": {
-        "x": 4.560352180142368,
-        "y": 7.657254180163653
+        "x": 3.7882704692303126,
+        "y": 7.636514684386433
       },
       "nextControl": {
-        "x": 5.567548036504523,
-        "y": 6.677279833432906
+        "x": 4.758180783967202,
+        "y": 7.313211246140801
       },
       "isLocked": false,
       "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
@@ -57,7 +57,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Eject"
+                "name": "EjectForShooter"
               }
             }
           ]
@@ -75,6 +75,23 @@
               "type": "named",
               "data": {
                 "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "WarmShooting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "WarmShooting"
               }
             }
           ]
