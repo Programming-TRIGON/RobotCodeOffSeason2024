@@ -1,0 +1,170 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.299162513817985,
+        "y": 5.781194660980872
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.576513181195377,
+        "y": 5.96908348746275
+      },
+      "isLocked": false,
+      "linkedName": "7NoteAutoFifthNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 5.3507532367177415,
+        "y": 6.648373860128002
+      },
+      "prevControl": {
+        "x": 4.694574521792963,
+        "y": 7.402979382291494
+      },
+      "nextControl": {
+        "x": 5.639812969766786,
+        "y": 6.3159551671216025
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.299162513817985,
+        "y": 4.104648209296419
+      },
+      "prevControl": {
+        "x": 7.73549603437235,
+        "y": 5.3476050614073065
+      },
+      "nextControl": {
+        "x": 8.463828975544848,
+        "y": 3.7415375501038484
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.599197930790228,
+        "y": 4.668314688742054
+      },
+      "prevControl": {
+        "x": 7.176066472078554,
+        "y": 3.9503246833775103
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+        {
+          "name": "PrepareForShooting",
+          "waypointRelativePos": 0.05,
+          "command": {
+            "type": "parallel",
+            "data": {
+              "commands": [
+                {
+                  "type": "named",
+                  "data": {
+                    "name": "PrepareForShooting"
+                  }
+                }
+              ]
+            }
+          }
+        },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 3.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 2.1999999999999997,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -14.931417178137574,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
