@@ -24,15 +24,15 @@ public class Intake extends MotorSubsystem {
     }
 
     @Override
+    public void updateMechanism() {
+        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
+    }
+
+    @Override
     public void stop() {
         masterMotor.stopMotor();
         targetState = IntakeConstants.IntakeState.STOP;
         IntakeConstants.MECHANISM.setTargetVelocity(0);
-    }
-
-    @Override
-    public void updateMechanism() {
-        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
     }
 
     public IntakeConstants.IntakeState getTargetState() {
@@ -41,6 +41,10 @@ public class Intake extends MotorSubsystem {
 
     public boolean hasNote() {
         return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
+    }
+
+    public boolean isCollecting() {
+        return targetState == IntakeConstants.IntakeState.COLLECT;
     }
 
     /**

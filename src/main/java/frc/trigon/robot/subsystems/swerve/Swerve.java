@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
+import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -28,6 +29,7 @@ import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 import java.util.Optional;
 
 public class Swerve extends MotorSubsystem {
+    private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
     private final Pigeon2Gyro gyro = SwerveConstants.GYRO;
     private final SwerveModule[] swerveModules = SwerveConstants.SWERVE_MODULES;
     private final Phoenix6SignalThread phoenix6SignalThread = Phoenix6SignalThread.getInstance();
@@ -49,6 +51,11 @@ public class Swerve extends MotorSubsystem {
 
         updatePoseEstimatorStates();
         RobotContainer.POSE_ESTIMATOR.periodic();
+        SHOOTING_CALCULATIONS.updateCalculationsForSpeakerShot();
+    }
+
+    @Override
+    public void updateMechanism() {
         updateNetworkTables();
     }
 
@@ -237,10 +244,15 @@ public class Swerve extends MotorSubsystem {
     }
 
     private Optional<Rotation2d> getRotationTargetOverride() {
-        if (!CameraConstants.NOTE_DETECTION_CAMERA.hasTargets())
-            return Optional.empty();
-        double targetAngle = CameraConstants.NOTE_DETECTION_CAMERA.getTrackedObjectYaw();
-        return Optional.of(Rotation2d.fromDegrees(targetAngle));
+        if (CameraConstants.NOTE_DETECTION_CAMERA.hasTargets() && RobotContainer.INTAKE.isCollecting()) {
+            Rotation2d targetAngle = Rotation2d.fromDegrees(CameraConstants.NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+            return Optional.of(targetAngle);
+        }
+        if (RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())) {
+            Rotation2d targetAngle = SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get();
+            return Optional.of(targetAngle);
+        }
+        return Optional.empty();
     }
 
     private void selfRelativeDrive(ChassisSpeeds chassisSpeeds) {
