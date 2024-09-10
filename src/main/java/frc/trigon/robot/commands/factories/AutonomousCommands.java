@@ -10,6 +10,8 @@ import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
+import frc.trigon.robot.subsystems.intake.IntakeCommands;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 
@@ -32,10 +34,25 @@ public class AutonomousCommands {
         );
     }
 
+    public static Command getAutonomousShootCommand() {
+        return new ParallelCommandGroup(
+                getAlignToSpeakerCommand(),
+                geAutonomousFeedNoteCommand()
+        );
+    }
+
     public static Command getEjectFromShooterCommand() {
         return new ParallelCommandGroup(
                 PitcherCommands.getSetTargetPitchCommand(AutonomousConstants.EJECT_FROM_SHOOTER_PITCH),
                 ShooterCommands.getSetTargetVelocityCommand(AutonomousConstants.EJECT_FROM_SHOOTER_SPEED)
+        );
+    }
+
+    private static Command geAutonomousFeedNoteCommand() {
+        return GeneralCommands.runWhen(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
+                        .alongWith(ShootingCommands.getVisualizeNoteShootingCommand()),
+                () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch()
         );
     }
 

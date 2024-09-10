@@ -54,6 +54,12 @@ public class ShootingCommands {
         );
     }
 
+    public static Command getVisualizeNoteShootingCommand() {
+        return new InstantCommand(
+                () -> new VisualizeNoteShootingCommand()
+                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
+    }
+
     private static Command getPrepareForShootingCommand(boolean isDelivery) {
         return new ParallelCommandGroup(
                 getUpdateShootingCalculationsCommand(isDelivery),
@@ -93,12 +99,6 @@ public class ShootingCommands {
 
     private static Command getFeedNoteWhenPitcherAndShooterReadyCommand() {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
-    }
-
-    private static Command getVisualizeNoteShootingCommand() {
-        return new InstantCommand(
-                () -> new VisualizeNoteShootingCommand()
-                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
     }
 
     public static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
