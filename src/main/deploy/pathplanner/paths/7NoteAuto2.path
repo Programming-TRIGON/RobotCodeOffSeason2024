@@ -12,7 +12,7 @@
         "y": 4.148007169253776
       },
       "isLocked": false,
-      "linkedName": "firstNoteCollection"
+      "linkedName": "7NoteAutoFirstNoteCollection"
     },
     {
       "anchor": {
@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SecondNoteCollection"
+      "linkedName": "7NoteAutoSecondNoteCollection"
     }
   ],
   "rotationTargets": [],
