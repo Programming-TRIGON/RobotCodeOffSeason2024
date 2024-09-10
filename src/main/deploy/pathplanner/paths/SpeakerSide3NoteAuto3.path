@@ -1,0 +1,126 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 4.104648209296419
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.2585474748414285,
+        "y": 6.272596207164246
+      },
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 5.278488303455481,
+        "y": 6.417126073688768
+      },
+      "prevControl": {
+        "x": 6.492539182261463,
+        "y": 5.96908348746275
+      },
+      "nextControl": {
+        "x": 5.205470301508003,
+        "y": 6.4440731934550985
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.032787530363793,
+        "y": 7.197587352921185
+      },
+      "prevControl": {
+        "x": 5.191770383540767,
+        "y": 6.749544766695167
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "FeedNote",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "RecollectNote",
+      "waypointRelativePos": 1.9,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PrepareNote",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": -44.09061955080095,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

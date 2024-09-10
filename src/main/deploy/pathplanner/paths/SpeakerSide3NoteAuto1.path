@@ -1,0 +1,103 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3617289206409402,
+        "y": 7.63117695249475
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.460155906227306,
+        "y": 7.717894872409463
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.032787530363793,
+        "y": 7.197587352921185
+      },
+      "prevControl": {
+        "x": 4.560352180142368,
+        "y": 7.657254180163653
+      },
+      "nextControl": {
+        "x": 5.567548036504523,
+        "y": 6.677279833432906
+      },
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+    },
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 5.781194660980872
+      },
+      "prevControl": {
+        "x": 7.53315422123802,
+        "y": 6.417126073688768
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoFirstNoteCollection"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "EjectFromShooter",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Eject"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -23.962488974578218,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
