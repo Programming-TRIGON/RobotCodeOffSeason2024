@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class AutonomousConstants {
     public static final PathConstraints REAL_TIME_CONSTRAINTS = new PathConstraints(2.5, 2.5, 4, 4);
-    public static boolean shouldUpdateRobotAngle = false;
+    public static boolean shouldAlignToSpeaker = false;
 
     static {
         registerCommands();
@@ -16,32 +16,32 @@ public class AutonomousConstants {
         NamedCommands.registerCommand("Collect", new InstantCommand(
                 () -> {
                     System.out.println("Collecting");
-                    shouldUpdateRobotAngle = false;
+                    shouldAlignToSpeaker = false;
                 }));
         NamedCommands.registerCommand("WarmShooting", new InstantCommand(
                 () -> {
                     System.out.println("WarmingShooting");
-                    shouldUpdateRobotAngle = false;
+                    shouldAlignToSpeaker = false;
                 }));
         NamedCommands.registerCommand("PrepareForShooting", new InstantCommand(
                 () -> {
                     System.out.println("PreparingForShooting");
-                    shouldUpdateRobotAngle = true;
+                    shouldAlignToSpeaker = true;
                 }));
         NamedCommands.registerCommand("FeedNote", new InstantCommand(
                 () -> {
                     System.out.println("FeedingNote");
-                    shouldUpdateRobotAngle = true;
+                    shouldAlignToSpeaker = false;
                 }));
         NamedCommands.registerCommand("Eject", new InstantCommand(
                 () -> {
                     System.out.println("Ejecting");
-                    shouldUpdateRobotAngle = false;
+                    shouldAlignToSpeaker = false;
                 }));
         NamedCommands.registerCommand("EjectFromShooter", new InstantCommand(
                 () -> {
                     System.out.println("EjectingFromShooter");
-                    shouldUpdateRobotAngle = false;
+                    shouldAlignToSpeaker = false;
                 }));
     }
 }

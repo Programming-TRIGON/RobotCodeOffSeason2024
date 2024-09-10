@@ -249,7 +249,7 @@ public class Swerve extends MotorSubsystem {
             Rotation2d targetAngle = Rotation2d.fromDegrees(CameraConstants.NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
             return Optional.of(targetAngle);
         }
-        if (AutonomousConstants.shouldUpdateRobotAngle) {
+        if (AutonomousConstants.shouldAlignToSpeaker) {
             Rotation2d targetAngle = SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get();
             return Optional.of(targetAngle);
         }
