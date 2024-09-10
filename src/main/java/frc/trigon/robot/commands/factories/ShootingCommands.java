@@ -101,7 +101,7 @@ public class ShootingCommands {
                         .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
     }
 
-    private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
+    public static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
         return new RunCommand(isDelivery ? SHOOTING_CALCULATIONS::updateCalculationsForDelivery : SHOOTING_CALCULATIONS::updateCalculationsForSpeakerShot);
     }
 }

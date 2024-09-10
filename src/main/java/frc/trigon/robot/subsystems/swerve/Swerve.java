@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.constants.AutonomousConstants;
+import frc.trigon.robot.commands.factories.AutonomousCommands;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
@@ -249,7 +249,7 @@ public class Swerve extends MotorSubsystem {
             Rotation2d targetAngle = Rotation2d.fromDegrees(CameraConstants.NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
             return Optional.of(targetAngle);
         }
-        if (AutonomousConstants.shouldAlignToSpeaker) {
+        if (AutonomousCommands.shouldAlignToSpeaker) {
             Rotation2d targetAngle = SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get();
             return Optional.of(targetAngle);
         }
@@ -319,7 +319,7 @@ public class Swerve extends MotorSubsystem {
 
     private void configurePathPlanner() {
         AutoBuilder.configureHolonomic(
-                () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose(),
+                RobotContainer.POSE_ESTIMATOR::getCurrentPose,
                 (pose) -> {
                 },
                 this::getSelfRelativeVelocity,
