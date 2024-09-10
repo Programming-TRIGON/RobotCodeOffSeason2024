@@ -1,79 +1,74 @@
 package frc.trigon.robot.poseestimation.robotposesources;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation2d;
-import frc.trigon.robot.poseestimation.photonposeestimator.EstimatedRobotPose;
-import frc.trigon.robot.poseestimation.photonposeestimator.PhotonPoseEstimator;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.numbers.N3;
 import org.littletonrobotics.junction.Logger;
+import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
+import org.photonvision.targeting.TargetCorner;
 
 import java.util.List;
 import java.util.Optional;
 
 public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
     private final PhotonCamera photonCamera;
-    private final PhotonPoseEstimator photonPoseEstimator;
 
-    protected AprilTagPhotonCameraIO(String cameraName, Transform3d robotCenterToCamera) {
+    protected AprilTagPhotonCameraIO(String cameraName) {
         photonCamera = new PhotonCamera(cameraName);
-
-        photonPoseEstimator = new PhotonPoseEstimator(
-                RobotPoseSourceConstants.APRIL_TAG_FIELD_LAYOUT,
-                RobotPoseSourceConstants.PRIMARY_POSE_STRATEGY,
-                photonCamera,
-                robotCenterToCamera
-        );
-
-        photonPoseEstimator.setMultiTagFallbackStrategy(RobotPoseSourceConstants.SECONDARY_POSE_STRATEGY);
     }
 
     @Override
     protected void updateInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final PhotonPipelineResult latestResult = photonCamera.getLatestResult();
-        Optional<EstimatedRobotPose> optionalEstimatedRobotPose = photonPoseEstimator.update(latestResult);
+        final Optional<Transform3d> estimatedPose;
 
-        inputs.hasResult = hasResult(optionalEstimatedRobotPose);
+        if (photonCamera.getLatestResult().getMultiTagResult().estimatedPose.isPresent)
+            estimatedPose = Optional.ofNullable(latestResult.getMultiTagResult().estimatedPose.best);
+        else
+            estimatedPose = Optional.ofNullable(latestResult.getBestTarget().getBestCameraToTarget());
+
+        inputs.hasResult = estimatedPose.isPresent();
         if (inputs.hasResult) {
-            final EstimatedRobotPose estimatedRobotPose = optionalEstimatedRobotPose.get();
-            inputs.cameraPose = RobotPoseSource.pose3dToDoubleArray(estimatedRobotPose.estimatedPose);
-            inputs.lastResultTimestamp = estimatedRobotPose.timestampSeconds;
-            inputs.visibleTags = estimatedRobotPose.targetsUsed.size();
-            inputs.averageDistanceFromTags = getAverageDistanceFromTags(latestResult);
+            final Transform3d estimatedRobotPose = estimatedPose.get();
+            final Rotation3d bestTargetRelativeRotation3d = test(latestResult);
+            inputs.cameraPose = RobotPoseSource.pose3dToDoubleArray(new Pose3d(estimatedRobotPose.getTranslation(), estimatedRobotPose.getRotation()));
+            inputs.lastResultTimestamp = latestResult.getTimestampSeconds();
+            inputs.bestTargetRelativePitch = bestTargetRelativeRotation3d.getX();
+            inputs.bestTargetRelativeYaw = bestTargetRelativeRotation3d.getZ();
+            inputs.visibleTags = new int[latestResult.getTargets().size()];
+            for (int i = 0; i < inputs.visibleTags.length; i++) {
+                if (i == 0) {
+                    inputs.visibleTags[i] = latestResult.getBestTarget().getFiducialId();
+                    continue;
+                }
+                final int tagId = latestResult.getTargets().get(i).getFiducialId();
+                if (tagId != latestResult.getBestTarget().getFiducialId())
+                    inputs.visibleTags[i] = tagId;
+            }
         } else {
-            inputs.visibleTags = 0;
+            inputs.visibleTags = new int[0];
             inputs.cameraPose = new double[0];
         }
 
-        logVisibleTags(inputs.hasResult, optionalEstimatedRobotPose);
+        logVisibleTags(inputs.hasResult, latestResult);
     }
 
-    private void logVisibleTags(boolean hasResult, Optional<EstimatedRobotPose> optionalEstimatedRobotPose) {
+    private void logVisibleTags(boolean hasResult, PhotonPipelineResult result) {
         if (!hasResult) {
             Logger.recordOutput("VisibleTags/" + photonCamera.getName(), new Pose2d[0]);
             return;
         }
 
-        final EstimatedRobotPose estimatedRobotPose = optionalEstimatedRobotPose.get();
-        final Pose2d[] visibleTagPoses = new Pose2d[estimatedRobotPose.targetsUsed.size()];
+        final Pose2d[] visibleTagPoses = new Pose2d[result.getTargets().size()];
         for (int i = 0; i < visibleTagPoses.length; i++) {
-            final int currentId = estimatedRobotPose.targetsUsed.get(i).getFiducialId();
+            final int currentId = result.getTargets().get(i).getFiducialId();
             final Pose2d currentPose = RobotPoseSourceConstants.TAG_ID_TO_POSE.get(currentId).toPose2d();
             visibleTagPoses[i] = currentPose;
         }
         Logger.recordOutput("VisibleTags/" + photonCamera.getName(), visibleTagPoses);
-    }
-
-    private boolean hasResult(Optional<EstimatedRobotPose> optionalEstimatedRobotPose) {
-        final boolean isEmpty = optionalEstimatedRobotPose.isEmpty();
-        if (isEmpty)
-            return false;
-        final EstimatedRobotPose estimatedRobotPose = optionalEstimatedRobotPose.get();
-        if (estimatedRobotPose.strategy == PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR)
-            return true;
-        return estimatedRobotPose.targetsUsed.get(0).getPoseAmbiguity() < RobotPoseSourceConstants.MAXIMUM_AMBIGUITY;
     }
 
     private double getAverageDistanceFromTags(PhotonPipelineResult result) {
@@ -86,5 +81,36 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
         }
 
         return distanceSum / targets.size();
+    }
+
+    private Rotation3d test(PhotonPipelineResult result) {
+        List<TargetCorner> targetCorners = result.getBestTarget().getDetectedCorners();
+        double sumX = 0.0;
+        double sumY = 0.0;
+        for (TargetCorner t : targetCorners) {
+            sumX += t.x;
+            sumY += t.y;
+        }
+
+        Point tagCenter = new Point(sumX / 4, sumY / 4);
+
+        return correctPixelRot(tagCenter, photonCamera.getCameraMatrix().get());
+    }
+
+    public static Rotation3d correctPixelRot(Point pixel, Matrix<N3, N3> camIntrinsics) {
+        double fx = camIntrinsics.get(0, 0);
+        double cx = camIntrinsics.get(0, 2);
+        double xOffset = cx - pixel.x;
+
+        double fy = camIntrinsics.get(1, 1);
+        double cy = camIntrinsics.get(1, 2);
+        double yOffset = cy - pixel.y;
+
+        // calculate yaw normally
+        var yaw = new Rotation2d(fx, xOffset);
+        // correct pitch based on yaw
+        var pitch = new Rotation2d(fy / Math.cos(Math.atan(xOffset / fx)), -yOffset);
+
+        return new Rotation3d(0, pitch.getRadians(), yaw.getRadians());
     }
 }

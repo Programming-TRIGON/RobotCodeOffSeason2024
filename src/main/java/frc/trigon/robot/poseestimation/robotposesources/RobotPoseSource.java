@@ -53,7 +53,7 @@ public class RobotPoseSource {
     }
 
     public int getVisibleTags() {
-        return inputs.visibleTags;
+        return inputs.visibleTags.length;
     }
 
     public double getAverageDistanceFromTags() {

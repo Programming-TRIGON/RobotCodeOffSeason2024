@@ -11,7 +11,8 @@ public class RobotPoseSourceIO {
         public boolean hasResult = false;
         public double lastResultTimestamp = 0;
         public double[] cameraPose = new double[6];
-        public double averageDistanceFromTags = 0;
-        public int visibleTags = 0;
+        public int[] visibleTags = new int[0];
+        public double bestTargetRelativeYaw = 0;
+        public double bestTargetRelativePitch = 0;
     }
 }

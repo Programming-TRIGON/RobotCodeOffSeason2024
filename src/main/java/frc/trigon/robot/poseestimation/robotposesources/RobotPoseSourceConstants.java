@@ -27,7 +27,7 @@ public class RobotPoseSourceConstants {
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
 
     public enum RobotPoseSourceType {
-        PHOTON_CAMERA(AprilTagPhotonCameraIO::new),
+        PHOTON_CAMERA((name, transform3d) -> new AprilTagPhotonCameraIO(name)),
         LIMELIGHT((name, transform3d) -> new AprilTagLimelightIO(name)),
         T265((name, transform3d) -> new T265IO(name));
 
