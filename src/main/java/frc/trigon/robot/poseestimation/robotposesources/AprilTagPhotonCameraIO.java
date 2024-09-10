@@ -1,17 +1,17 @@
 package frc.trigon.robot.poseestimation.robotposesources;
 
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
-import org.littletonrobotics.junction.Logger;
 import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
-import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
 
 import java.util.List;
-import java.util.Optional;
 
 public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
     private final PhotonCamera photonCamera;
@@ -23,67 +23,71 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
     @Override
     protected void updateInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final PhotonPipelineResult latestResult = photonCamera.getLatestResult();
-        final Optional<Transform3d> estimatedPose;
-
-        if (photonCamera.getLatestResult().getMultiTagResult().estimatedPose.isPresent)
-            estimatedPose = Optional.ofNullable(latestResult.getMultiTagResult().estimatedPose.best);
+        inputs.hasResult = latestResult.hasTargets();
+        if (inputs.hasResult)
+            updateHasResultInputs(inputs, latestResult);
         else
-            estimatedPose = Optional.ofNullable(latestResult.getBestTarget().getBestCameraToTarget());
-
-        inputs.hasResult = estimatedPose.isPresent();
-        if (inputs.hasResult) {
-            final Transform3d estimatedRobotPose = estimatedPose.get();
-            final Rotation3d bestTargetRelativeRotation3d = test(latestResult);
-            inputs.cameraPose = RobotPoseSource.pose3dToDoubleArray(new Pose3d(estimatedRobotPose.getTranslation(), estimatedRobotPose.getRotation()));
-            inputs.lastResultTimestamp = latestResult.getTimestampSeconds();
-            inputs.bestTargetRelativePitch = bestTargetRelativeRotation3d.getX();
-            inputs.bestTargetRelativeYaw = bestTargetRelativeRotation3d.getZ();
-            inputs.visibleTags = new int[latestResult.getTargets().size()];
-            for (int i = 0; i < inputs.visibleTags.length; i++) {
-                if (i == 0) {
-                    inputs.visibleTags[i] = latestResult.getBestTarget().getFiducialId();
-                    continue;
-                }
-                final int tagId = latestResult.getTargets().get(i).getFiducialId();
-                if (tagId != latestResult.getBestTarget().getFiducialId())
-                    inputs.visibleTags[i] = tagId;
-            }
-        } else {
-            inputs.visibleTags = new int[0];
-            inputs.cameraPose = new double[0];
-        }
-
-        logVisibleTags(inputs.hasResult, latestResult);
+            updateNoResultInputs(inputs);
     }
 
-    private void logVisibleTags(boolean hasResult, PhotonPipelineResult result) {
-        if (!hasResult) {
-            Logger.recordOutput("VisibleTags/" + photonCamera.getName(), new Pose2d[0]);
-            return;
-        }
+//    private void logVisibleTags(boolean hasResult, PhotonPipelineResult result) {
+//        if (!hasResult) {
+//            Logger.recordOutput("VisibleTags/" + photonCamera.getName(), new Pose2d[0]);
+//            return;
+//        }
+//
+//        final Pose2d[] visibleTagPoses = new Pose2d[result.getTargets().size()];
+//        for (int i = 0; i < visibleTagPoses.length; i++) {
+//            final int currentId = result.getTargets().get(i).getFiducialId();
+//            final Pose2d currentPose = RobotPoseSourceConstants.TAG_ID_TO_POSE.get(currentId).toPose2d();
+//            visibleTagPoses[i] = currentPose;
+//        }
+//        Logger.recordOutput("VisibleTags/" + photonCamera.getName(), visibleTagPoses);
+//    }
+//
+//    private double getAverageDistanceFromTags(PhotonPipelineResult result) {
+//        final List<PhotonTrackedTarget> targets = result.targets;
+//        double distanceSum = 0;
+//
+//        for (PhotonTrackedTarget currentTarget : targets) {
+//            final Translation2d distanceTranslation = currentTarget.getBestCameraToTarget().getTranslation().toTranslation2d();
+//            distanceSum += distanceTranslation.getNorm();
+//        }
+//
+//        return distanceSum / targets.size();
+//    }
 
-        final Pose2d[] visibleTagPoses = new Pose2d[result.getTargets().size()];
-        for (int i = 0; i < visibleTagPoses.length; i++) {
-            final int currentId = result.getTargets().get(i).getFiducialId();
-            final Pose2d currentPose = RobotPoseSourceConstants.TAG_ID_TO_POSE.get(currentId).toPose2d();
-            visibleTagPoses[i] = currentPose;
+    private Pose3d getSolvePNPPose(PhotonPipelineResult result) {
+        Transform3d estimatedPose = result.getBestTarget().getBestCameraToTarget();
+        if (result.getMultiTagResult().estimatedPose.isPresent) {
+            estimatedPose = result.getMultiTagResult().estimatedPose.best;
         }
-        Logger.recordOutput("VisibleTags/" + photonCamera.getName(), visibleTagPoses);
+        return new Pose3d(estimatedPose.getTranslation(), estimatedPose.getRotation());
     }
 
-    private double getAverageDistanceFromTags(PhotonPipelineResult result) {
-        final List<PhotonTrackedTarget> targets = result.targets;
-        double distanceSum = 0;
-
-        for (PhotonTrackedTarget currentTarget : targets) {
-            final Translation2d distanceTranslation = currentTarget.getBestCameraToTarget().getTranslation().toTranslation2d();
-            distanceSum += distanceTranslation.getNorm();
+    private int[] getVisibleTagIDs(PhotonPipelineResult result) {
+        int[] visibleTagIDs = new int[result.getTargets().size()];
+        for (int i = 0; i < visibleTagIDs.length; i++) {
+            visibleTagIDs[i] = result.getTargets().get(i).getFiducialId();
         }
-
-        return distanceSum / targets.size();
+        return visibleTagIDs;
     }
 
-    private Rotation3d test(PhotonPipelineResult result) {
+    private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs, PhotonPipelineResult latestResult) {
+        final Rotation3d bestTargetRelativeRotation3d = getBestTargetRelativeRotation(latestResult);
+        inputs.solvePNPPose = getSolvePNPPose(latestResult);
+        inputs.lastResultTimestamp = latestResult.getTimestampSeconds();
+        inputs.bestTargetRelativePitch = bestTargetRelativeRotation3d.getX();
+        inputs.bestTargetRelativeYaw = bestTargetRelativeRotation3d.getZ();
+        inputs.visibleTagIDs = getVisibleTagIDs(latestResult);
+    }
+
+    private void updateNoResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
+        inputs.visibleTagIDs = new int[0];
+        inputs.solvePNPPose = new Pose3d();
+    }
+
+    private Rotation3d getBestTargetRelativeRotation(PhotonPipelineResult result) {
         List<TargetCorner> targetCorners = result.getBestTarget().getDetectedCorners();
         double sumX = 0.0;
         double sumY = 0.0;

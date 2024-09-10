@@ -14,7 +14,7 @@ public class AprilTagLimelightIO extends RobotPoseSourceIO {
         inputs.hasResult = LimelightHelpers.getTV(hostname);
         if (inputs.hasResult) {
             final LimelightHelpers.Results results = LimelightHelpers.getLatestResults(hostname).targetingResults;
-            inputs.cameraPose = RobotPoseSource.pose3dToDoubleArray(results.getBotPose3d_wpiBlue());
+            inputs.solvePNPPose = results.getBotPose3d_wpiBlue();
             inputs.lastResultTimestamp = results.timestamp_LIMELIGHT_publish;
         }
     }

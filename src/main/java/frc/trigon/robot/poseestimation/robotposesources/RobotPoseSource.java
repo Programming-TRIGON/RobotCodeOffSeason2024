@@ -1,6 +1,8 @@
 package frc.trigon.robot.poseestimation.robotposesources;
 
-import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import frc.trigon.robot.Robot;
 import org.littletonrobotics.junction.Logger;
 
@@ -28,40 +30,27 @@ public class RobotPoseSource {
             robotPoseSourceIO = new RobotPoseSourceIO();
     }
 
-    public static double[] pose3dToDoubleArray(Pose3d pose) {
-        if (pose == null)
-            return new double[0];
-
-        return new double[]{
-                pose.getTranslation().getX(),
-                pose.getTranslation().getY(),
-                pose.getTranslation().getZ(),
-                pose.getRotation().getX(),
-                pose.getRotation().getY(),
-                pose.getRotation().getZ()
-        };
-    }
-
     public void update() {
         robotPoseSourceIO.updateInputs(inputs);
         Logger.processInputs("Cameras/" + name, inputs);
         cachedPose = getUnCachedRobotPose();
-        if (!inputs.hasResult || inputs.averageDistanceFromTags == 0 || cachedPose == null)
+        if (!inputs.hasResult || cachedPose == null)
             Logger.recordOutput("Poses/Robot/" + name + "Pose", RobotPoseSourceConstants.EMPTY_POSE_LIST);
         else
             Logger.recordOutput("Poses/Robot/" + name + "Pose", cachedPose);
     }
 
     public int getVisibleTags() {
-        return inputs.visibleTags.length;
+        return inputs.visibleTagIDs.length;
     }
 
     public double getAverageDistanceFromTags() {
-        return inputs.averageDistanceFromTags;
+//        return inputs.averageDistanceFromTags;
+        return 0;
     }
 
     public boolean hasNewResult() {
-        return (inputs.hasResult && inputs.averageDistanceFromTags != 0) && isNewTimestamp();
+        return inputs.hasResult && isNewTimestamp();
     }
 
     public Pose2d getRobotPose() {
@@ -77,7 +66,7 @@ public class RobotPoseSource {
     }
 
     private Pose2d getUnCachedRobotPose() {
-        final Pose3d cameraPose = doubleArrayToPose3d(inputs.cameraPose);
+        final Pose3d cameraPose = inputs.solvePNPPose;
         if (cameraPose == null)
             return null;
 
@@ -90,15 +79,5 @@ public class RobotPoseSource {
 
         lastUpdatedTimestamp = getLastResultTimestamp();
         return true;
-    }
-
-    private Pose3d doubleArrayToPose3d(double[] doubleArray) {
-        if (doubleArray == null || doubleArray.length != 6)
-            return null;
-
-        return new Pose3d(
-                new Translation3d(doubleArray[0], doubleArray[1], doubleArray[2]),
-                new Rotation3d(doubleArray[3], doubleArray[4], doubleArray[5])
-        );
     }
 }
