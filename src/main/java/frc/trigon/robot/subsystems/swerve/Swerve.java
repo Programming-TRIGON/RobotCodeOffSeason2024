@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
@@ -248,7 +249,7 @@ public class Swerve extends MotorSubsystem {
             Rotation2d targetAngle = Rotation2d.fromDegrees(CameraConstants.NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
             return Optional.of(targetAngle);
         }
-        if (RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())) {
+        if (AutonomousConstants.shouldUpdateRobotAngle) {
             Rotation2d targetAngle = SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get();
             return Optional.of(targetAngle);
         }
