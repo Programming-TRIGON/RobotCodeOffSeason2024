@@ -5,7 +5,6 @@ import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.AutonomousCommands;
-import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
 
 public class AutonomousConstants {
@@ -18,10 +17,10 @@ public class AutonomousConstants {
     }
 
     private static void registerCommands() {
-        NamedCommands.registerCommand("Collect", GeneralCommands.getNoteCollectionCommand());
+        NamedCommands.registerCommand("Collect", AutonomousCommands.getAutonomousNoteCollectionCommand());
         NamedCommands.registerCommand("WarmShooting", ShootingCommands.getWarmSpeakerShotCommand());
         NamedCommands.registerCommand("PrepareForShooting", AutonomousCommands.getAutonomousPrepareForShootingCommand());
-        NamedCommands.registerCommand("Shoot", AutonomousCommands.getAutonomousShootCommand());
+        NamedCommands.registerCommand("Shoot", CommandConstants.SHOOT_AT_SPEAKER_COMMAND);
         NamedCommands.registerCommand("Eject", CommandConstants.EJECT_COMMAND);
         NamedCommands.registerCommand("EjectFromShooter", AutonomousCommands.getEjectFromShooterCommand());
     }
