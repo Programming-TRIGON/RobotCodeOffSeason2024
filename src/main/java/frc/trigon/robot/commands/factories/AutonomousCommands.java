@@ -1,7 +1,10 @@
 package frc.trigon.robot.commands.factories;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -16,8 +19,10 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import org.trigon.commands.ExecuteEndCommand;
+import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * A class that contains commands that are used during the 15-second autonomous period at the start of each match.
@@ -25,6 +30,17 @@ import java.util.Optional;
 public class AutonomousCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
     private static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
+
+    public static Command getResetPoseToAutoPoseCommand(Supplier<String> pathName) {
+        return new InstantCommand(
+                () -> {
+                    if (DriverStation.isEnabled())
+                        return;
+                    final Pose2d autoStartPose = PathPlannerAuto.getStaringPoseFromAutoFile(pathName.get());
+                    RobotContainer.POSE_ESTIMATOR.resetPose(new MirrorablePose2d(autoStartPose, true).get());
+                }
+        ).ignoringDisable(true);
+    }
 
     public static Command getAutonomousNoteCollectionCommand() {
         return new SequentialCommandGroup(
@@ -50,20 +66,26 @@ public class AutonomousCommands {
 
     public static Command getAlignToSpeakerCommand() {
         return new ExecuteEndCommand(
-                () -> getOverrideRotationCommand(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())).withTimeout(0.2).schedule(),
-                () -> getOverrideRotationCommand(Optional.empty()).onlyIf(() -> !RobotContainer.INTAKE.hasNote()).schedule()
+                () -> overrideRotation(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
+                () -> {
+                    if (!RobotContainer.INTAKE.hasNote())
+                        overrideRotation(Optional.empty());
+                }
         );
     }
 
     private static Command getAlignToNoteCommand() {
         NOTE_DETECTION_CAMERA.startTrackingObject();
         return new ExecuteEndCommand(
-                () -> getOverrideRotationCommand(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()))).schedule(),
-                () -> getOverrideRotationCommand(Optional.empty()).onlyIf(RobotContainer.INTAKE::hasNote).schedule()
+                () -> overrideRotation(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()))),
+                () -> {
+                    if (RobotContainer.INTAKE.hasNote())
+                        overrideRotation(Optional.empty());
+                }
         );
     }
 
-    private static Command getOverrideRotationCommand(Optional<Rotation2d> rotationOverride) {
-        return new InstantCommand(() -> PPHolonomicDriveController.setRotationTargetOverride(() -> rotationOverride));
+    private static void overrideRotation(Optional<Rotation2d> rotationOverride) {
+        PPHolonomicDriveController.setRotationTargetOverride(() -> rotationOverride);
     }
 }
