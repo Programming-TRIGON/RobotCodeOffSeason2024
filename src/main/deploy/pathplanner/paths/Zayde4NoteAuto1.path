@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3617289206409402,
-        "y": 7.63117695249475
+        "x": 1.2894639873786793,
+        "y": 2.0234181313433055
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.460155906227306,
-        "y": 7.717894872409463
+        "x": 2.2894639873786775,
+        "y": 2.0234181313433055
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.408565183327549,
-        "y": 7.63117695249475
+        "x": 5.090599476973602,
+        "y": 2.0234181313433055
       },
       "prevControl": {
-        "x": 4.888257663839272,
-        "y": 7.660082925799655
+        "x": 4.094151185116227,
+        "y": 1.9392112334398655
       },
       "nextControl": {
-        "x": 5.495960537814178,
-        "y": 7.62632165502327
+        "x": 6.1167615292977064,
+        "y": 2.1101360512580185
       },
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+      "linkedName": "Zayde4NoteAutoEjectPoint"
     },
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 5.781194660980872
+        "x": 8.284709527165534,
+        "y": 2.442554744264419
       },
       "prevControl": {
-        "x": 7.991228576374863,
-        "y": 7.871525725162363
+        "x": 7.1442955421122125,
+        "y": 2.211306957825184
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoFirstNoteCollection"
+      "linkedName": "Zayde4NoteAutoFirstCollection"
     }
   ],
   "rotationTargets": [],
@@ -90,13 +90,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -23.962488974578218,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

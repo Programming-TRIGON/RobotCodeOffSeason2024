@@ -3,53 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3617289206409402,
-        "y": 7.63117695249475
+        "x": 8.284709527165534,
+        "y": 2.442554744264419
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.460155906227306,
-        "y": 7.717894872409463
+        "x": 7.287453448146333,
+        "y": 1.6765464516844533
+      },
+      "isLocked": false,
+      "linkedName": "Zayde4NoteAutoFirstCollection"
+    },
+    {
+      "anchor": {
+        "x": 3.9921724913872363,
+        "y": 2.1245890379104706
+      },
+      "prevControl": {
+        "x": 4.93865002318084,
+        "y": 1.809096527312608
+      },
+      "nextControl": {
+        "x": 3.8620956115151666,
+        "y": 2.1679479978678264
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.408565183327549,
-        "y": 7.63117695249475
+        "x": 8.284709527165534,
+        "y": 0.7515553059275135
       },
       "prevControl": {
-        "x": 4.888257663839272,
-        "y": 7.660082925799655
-      },
-      "nextControl": {
-        "x": 5.495960537814178,
-        "y": 7.62632165502327
-      },
-      "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
-    },
-    {
-      "anchor": {
-        "x": 8.270256540513081,
-        "y": 5.781194660980872
-      },
-      "prevControl": {
-        "x": 7.991228576374863,
-        "y": 7.871525725162363
+        "x": 6.174573475907515,
+        "y": 1.445298665245218
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoFirstNoteCollection"
+      "linkedName": "Zayde4NoteAutoSecondCollection"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "EjectFromShooter",
-      "waypointRelativePos": 1.0,
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -57,7 +57,24 @@
             {
               "type": "named",
               "data": {
-                "name": "EjectFromShooter"
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 1.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
               }
             }
           ]
@@ -90,13 +107,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -23.962488974578218,
+    "rotation": -18.43494882292192,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -3,57 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 4.104648209296419
+        "x": 8.299162513817985,
+        "y": 4.119101195948871
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.2585474748414285,
-        "y": 6.272596207164246
+        "x": 9.299162513817985,
+        "y": 4.119101195948871
       },
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
+      "linkedName": "Zayde4NoteAutoThirdCollection"
     },
     {
       "anchor": {
-        "x": 4.541385984180419,
-        "y": 6.3159551671216025
+        "x": 3.28397614541708,
+        "y": 2.905050317142888
       },
       "prevControl": {
-        "x": 5.914419716163375,
-        "y": 6.287049193816698
+        "x": 2.4264832197045405,
+        "y": 3.4195460725704128
       },
       "nextControl": {
-        "x": 4.463571511395854,
-        "y": 6.317593366548646
+        "x": 4.15115534456421,
+        "y": 2.384742797654609
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.408565183327549,
-        "y": 7.63117695249475
+        "x": 5.090599476973602,
+        "y": 2.0234181313433055
       },
       "prevControl": {
-        "x": 5.567548036504523,
-        "y": 7.183134366268732
+        "x": 4.772633770619654,
+        "y": 2.1968539711727315
       },
       "nextControl": {
-        "x": 5.249582330150575,
-        "y": 8.079219538720768
+        "x": 5.40856518332755,
+        "y": 1.8499822915138795
       },
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+      "linkedName": "Zayde4NoteAutoEjectPoint"
     },
     {
       "anchor": {
-        "x": 4.064437424649498,
-        "y": 6.865168659914785
+        "x": 3.6597537983808364,
+        "y": 2.428101757611967
       },
       "prevControl": {
-        "x": 4.657009877400036,
-        "y": 7.472194099317776
+        "x": 4.295685211088732,
+        "y": 2.2257599444776366
       },
       "nextControl": null,
       "isLocked": false,
@@ -64,24 +64,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "RecollectNote",
-      "waypointRelativePos": 1.9,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "PrepareNote",
+      "name": "PrepareForShooting",
       "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
@@ -98,8 +81,8 @@
       }
     },
     {
-      "name": "FeedNote",
-      "waypointRelativePos": 1.1,
+      "name": "Shoot",
+      "waypointRelativePos": 0.8999999999999999,
       "command": {
         "type": "parallel",
         "data": {
@@ -115,7 +98,30 @@
       }
     },
     {
-      "name": "ShootLastNote",
+      "name": "recollect note",
+      "waypointRelativePos": 2.0999999999999996,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot",
       "waypointRelativePos": 2.9499999999999997,
       "command": {
         "type": "parallel",
@@ -140,13 +146,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 27.29957221133287,
+    "rotation": -32.19573393471329,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -44.09061955080095,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
