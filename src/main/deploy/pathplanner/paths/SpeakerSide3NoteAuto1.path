@@ -51,13 +51,19 @@
       "name": "EjectFromShooter",
       "waypointRelativePos": 1.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
                 "name": "EjectFromShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
               }
             }
           ]

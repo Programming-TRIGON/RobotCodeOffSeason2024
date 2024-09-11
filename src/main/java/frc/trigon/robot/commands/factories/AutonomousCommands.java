@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CameraConstants;
+import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
@@ -48,12 +48,12 @@ public class AutonomousCommands {
 
     public static Command getPrepareForEjectFromShooterCommand() {
         return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(AutonomousConstants.EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(AutonomousConstants.EJECT_FROM_SHOOTER_SPEED)
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.EJECT_FROM_SHOOTER_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_ROTATIONS_PER_SECOND)
         );
     }
 
-    private static Command geAutonomousFeedNoteCommand() {
+    public static Command geAutonomousFeedNoteCommand() {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
                 ShootingCommands.getVisualizeNoteShootingCommand()
