@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
 import org.littletonrobotics.junction.Logger;
@@ -21,6 +22,7 @@ public class VisualizeNoteShootingCommand extends Command {
     private Translation2d initialXYVelocity;
     private double initialZVelocity;
     private double noteZ;
+    private boolean crossedFieldWidthBorder = false;
 
     @Override
     public void initialize() {
@@ -32,8 +34,12 @@ public class VisualizeNoteShootingCommand extends Command {
         final double timeDifference = Timer.getFPGATimestamp() - startingTimeSeconds;
 
         final Transform3d noteTransform = calculateNoteTransform(timeDifference);
-        final Pose3d notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
+        Pose3d notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
         noteZ = notePose.getTranslation().getZ();
+
+        if (noteCrossedFieldWithBorder(notePose.getTranslation().getY()))
+            configureNoteInAmpStats();
+
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
     }
 
@@ -75,6 +81,24 @@ public class VisualizeNoteShootingCommand extends Command {
         fieldRelativeNoteExitPointTranslation = calculateFieldRelativeNoteExitPoint(currentRobotPose.getTranslation(), currentRobotAngle);
         initialXYVelocity = calculateInitialXYVelocityWithRobotVelocity(startingPitch, startingTangentialVelocity, currentRobotAngle);
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
+    }
+
+    private boolean noteCrossedFieldWithBorder(double noteY) {
+        return noteY > FieldConstants.FIELD_WIDTH_METERS && !crossedFieldWidthBorder;
+    }
+
+    private void configureNoteInAmpStats() {
+        crossedFieldWidthBorder = true;
+        startingTimeSeconds = Timer.getFPGATimestamp();
+
+        startingPitch = Rotation2d.fromDegrees(90);
+        startingYaw = Rotation2d.fromDegrees(90);
+        fieldRelativeNoteExitPointTranslation = new Translation3d(
+                RobotContainer.POSE_ESTIMATOR.getCurrentPose().getX(),
+                FieldConstants.AMP_TRANSLATION.get().getY(),
+                FieldConstants.AMP_TRANSLATION.get().getZ());
+        initialXYVelocity = new Translation2d(0, 0);
+        initialZVelocity = 0;
     }
 
     private double getStartingTangentialVelocity() {
