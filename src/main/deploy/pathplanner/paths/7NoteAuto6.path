@@ -64,7 +64,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
+      "name": "FeedNote",
       "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
@@ -73,30 +73,30 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot"
+                "name": "FeedNote"
               }
             }
           ]
         }
       }
     },
-        {
-          "name": "PrepareForShooting",
-          "waypointRelativePos": 0.05,
-          "command": {
-            "type": "parallel",
-            "data": {
-              "commands": [
-                {
-                  "type": "named",
-                  "data": {
-                    "name": "PrepareForShooting"
-                  }
-                }
-              ]
+    {
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
             }
-          }
-        },
+          ]
+        }
+      }
+    },
     {
       "name": "Collect",
       "waypointRelativePos": 1.95,
@@ -115,7 +115,7 @@
       }
     },
     {
-      "name": "Shoot",
+      "name": "FeedNote",
       "waypointRelativePos": 3.0,
       "command": {
         "type": "parallel",
@@ -124,7 +124,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot"
+                "name": "FeedNote"
               }
             }
           ]

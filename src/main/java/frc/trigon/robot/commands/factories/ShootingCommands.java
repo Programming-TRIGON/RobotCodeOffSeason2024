@@ -88,14 +88,20 @@ public class ShootingCommands {
     }
 
     private static Command getFeedNoteForShootingCommand() {
-        return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand());
+        return GeneralCommands.runWhen(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
+                        .alongWith(getVisualizeNoteShootingCommand()),
+                () -> RobotContainer.SHOOTER.atTargetVelocity() &&
+                        RobotContainer.PITCHER.atTargetPitch() &&
+                        RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+        );
     }
 
     private static Command getFeedNoteWhenPitcherAndShooterReadyCommand() {
         return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
-    private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
+    static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
         return new RunCommand(isDelivery ? SHOOTING_CALCULATIONS::updateCalculationsForDelivery : SHOOTING_CALCULATIONS::updateCalculationsForSpeakerShot);
     }
 }

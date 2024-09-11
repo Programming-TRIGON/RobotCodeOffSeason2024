@@ -9,6 +9,7 @@ public class ObjectDetectionCamera extends SubsystemBase {
     private final ObjectDetectionCameraIO objectDetectionCameraIO;
     private final String hostname;
     private double lastVisibleObjectYaw = 0;
+    private boolean wasVisible = false;
 
     public ObjectDetectionCamera(String hostname) {
         this.hostname = hostname;
@@ -19,6 +20,16 @@ public class ObjectDetectionCamera extends SubsystemBase {
     public void periodic() {
         objectDetectionCameraIO.updateInputs(objectDetectionCameraInputs);
         Logger.processInputs(hostname, objectDetectionCameraInputs);
+    }
+
+    public void startTrackingObject() {
+        if (hasTargets() && !wasVisible) {
+            wasVisible = true;
+            startTrackingBestObject();
+            return;
+        }
+        if (!hasTargets())
+            wasVisible = false;
     }
 
     public boolean hasTargets() {

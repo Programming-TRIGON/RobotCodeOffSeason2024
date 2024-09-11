@@ -65,7 +65,7 @@
       }
     },
     {
-      "name": "Shoot",
+      "name": "FeedNote",
       "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
@@ -74,7 +74,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot"
+                "name": "FeedNote"
               }
             }
           ]
