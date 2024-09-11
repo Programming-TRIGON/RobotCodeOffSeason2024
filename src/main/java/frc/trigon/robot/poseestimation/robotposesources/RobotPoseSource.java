@@ -7,6 +7,8 @@ import frc.trigon.robot.constants.FieldConstants;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.PhotonUtils;
 
+import java.util.Optional;
+
 /**
  * A pose source is a class that provides the robot's pose, from a camera.
  */
@@ -44,6 +46,9 @@ public class RobotPoseSource {
         return (inputs.hasResult && inputs.averageDistanceFromAllTags != 0) && isNewTimestamp();
     }
 
+    /**
+     * @return the current estimated robot position
+     */
     public Pose2d getCurrentRobotPose() {
         return robotPose;
     }
@@ -65,9 +70,14 @@ public class RobotPoseSource {
     }
 
     protected static Pose3d getTagPose(int targetTag) {
-        return FieldConstants.APRIL_TAG_FIELD_LAYOUT.getTagPose(targetTag).get();
+        Optional<Pose3d> tagPose = FieldConstants.APRIL_TAG_FIELD_LAYOUT.getTagPose(targetTag);
+        return tagPose.orElse(new Pose3d());
     }
 
+    /**
+     * @param averageDistanceFromAllTags the average of the distance from all visible tags
+     * @return the best calculated robot pose
+     */
     private Pose2d getBestRobotPose(double averageDistanceFromAllTags) {
         if (averageDistanceFromAllTags < RobotPoseSourceConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS)
             return getRobotPoseFromCameraPose(inputs.solvePNPPose);
@@ -111,18 +121,16 @@ public class RobotPoseSource {
         return true;
     }
 
-//    private void logVisibleTags(boolean hasResult, PhotonPipelineResult result) {
-//        if (!hasResult) {
-//            Logger.recordOutput("VisibleTags/" + photonCamera.getName(), new Pose2d[0]);
-//            return;
-//        }
-//
-//        final Pose2d[] visibleTagPoses = new Pose2d[result.getTargets().size()];
-//        for (int i = 0; i < visibleTagPoses.length; i++) {
-//            final int currentId = result.getTargets().get(i).getFiducialId();
-//            final Pose2d currentPose = RobotPoseSourceConstants.TAG_ID_TO_POSE.get(currentId).toPose2d();
-//            visibleTagPoses[i] = currentPose;
-//        }
-//        Logger.recordOutput("VisibleTags/" + photonCamera.getName(), visibleTagPoses);
-//    }
+    private void logVisibleTags() {
+        if (inputs.hasResult) {
+            Logger.recordOutput("VisibleTags/" + this.getName(), new Pose2d[0]);
+            return;
+        }
+
+        final Pose2d[] visibleTagPoses = new Pose2d[inputs.visibleTagIDs.length];
+        for (int i = 0; i < visibleTagPoses.length; i++) {
+            visibleTagPoses[i] = getTagPose(i).toPose2d();
+        }
+        Logger.recordOutput("VisibleTags/" + this.getName(), visibleTagPoses);
+    }
 }
