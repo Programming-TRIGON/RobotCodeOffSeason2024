@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3973572133190786,
+      "y": 5.565873600441298
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FrontRow4NoteAuto1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FrontRow4NoteAuto2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FrontRow4NoteAuto3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

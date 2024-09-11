@@ -48,18 +48,18 @@ public class AutonomousCommands {
         );
     }
 
+    public static Command getAlignToSpeakerCommand() {
+        return new ExecuteEndCommand(
+                () -> getOverrideRotationCommand(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())).schedule(),
+                () -> getOverrideRotationCommand(Optional.empty()).onlyIf(() -> !RobotContainer.INTAKE.hasNote()).schedule()
+        );
+    }
+
     private static Command getAlignToNoteCommand() {
         CAMERA.startTrackingObject();
         return new ExecuteEndCommand(
                 () -> getOverrideRotationCommand(Optional.of(Rotation2d.fromDegrees(CAMERA.getTrackedObjectYaw()))).schedule(),
                 () -> getOverrideRotationCommand(Optional.empty()).onlyIf(RobotContainer.INTAKE::hasNote).schedule()
-        );
-    }
-
-    public static Command getAlignToSpeakerCommand() {
-        return new ExecuteEndCommand(
-                () -> getOverrideRotationCommand(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())).schedule(),
-                () -> getOverrideRotationCommand(Optional.empty()).onlyIf(() -> !RobotContainer.INTAKE.hasNote()).schedule()
         );
     }
 

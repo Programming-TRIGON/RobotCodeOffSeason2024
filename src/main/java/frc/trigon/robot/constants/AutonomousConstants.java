@@ -18,6 +18,7 @@ public class AutonomousConstants {
         NamedCommands.registerCommand("AlignToSpeaker", AutonomousCommands.getAlignToSpeakerCommand());
         NamedCommands.registerCommand("PrepareForShooting", ShootingCommands.getWarmSpeakerShotCommand());
         NamedCommands.registerCommand("FeedNote", AutonomousCommands.geAutonomousFeedNoteCommand());
+        NamedCommands.registerCommand("CloseShot", ShootingCommands.getPrepareCloseSpeakerShotCommand());
         NamedCommands.registerCommand("Eject", CommandConstants.EJECT_COMMAND);
         NamedCommands.registerCommand("EjectFromShooter", AutonomousCommands.getPrepareForShooterEjectionCommand());
     }

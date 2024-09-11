@@ -1,0 +1,158 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.895296810271618,
+        "y": 5.565873600441298
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.922651479105775,
+        "y": 5.535493887889185
+      },
+      "isLocked": false,
+      "linkedName": "FrontRow4NoteAutoSecondCollection"
+    },
+    {
+      "anchor": {
+        "x": 1.3973572133190786,
+        "y": 5.565873600441298
+      },
+      "prevControl": {
+        "x": 1.3631838183621285,
+        "y": 5.621503496454528
+      },
+      "nextControl": {
+        "x": 1.9398483867390275,
+        "y": 4.682767675394506
+      },
+      "isLocked": false,
+      "linkedName": "CloseShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 2.8937455058008714,
+        "y": 4.104648209296419
+      },
+      "prevControl": {
+        "x": 1.9109424134341229,
+        "y": 4.292537035778297
+      },
+      "nextControl": {
+        "x": 2.9539735904836593,
+        "y": 4.0931340166364745
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3973572133190786,
+        "y": 5.565873600441298
+      },
+      "prevControl": {
+        "x": 2.1277372132209056,
+        "y": 4.220272102516036
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "CloseShotPoint"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "CloseShot",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 2.1999999999999997,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.3
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "CloseShot",
+      "waypointRelativePos": 3.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "CloseShot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
