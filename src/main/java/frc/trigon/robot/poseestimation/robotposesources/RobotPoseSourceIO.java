@@ -15,5 +15,7 @@ public class RobotPoseSourceIO {
         public int[] visibleTagIDs = new int[0];
         public double bestTargetRelativeYaw = 0;
         public double bestTargetRelativePitch = 0;
+        public double averageDistanceFromAllTags = 0;
+        public double averageDistanceFromBestTag = 0;
     }
 }

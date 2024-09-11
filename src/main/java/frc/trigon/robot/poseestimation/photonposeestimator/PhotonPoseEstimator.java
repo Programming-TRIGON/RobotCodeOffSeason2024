@@ -494,11 +494,11 @@ public class PhotonPoseEstimator {
             Optional<Matrix<N3, N3>> cameraMatrixOpt,
             Optional<Matrix<N5, N1>> distCoeffsOpt) {
         if (result.getMultiTagResult().estimatedPose.isPresent) {
-            var best_tf = result.getMultiTagResult().estimatedPose.best;
-            var cam = new Pose3d()
+            Transform3d best_tf = result.getMultiTagResult().estimatedPose.best;
+            Pose3d cam = new Pose3d()
                     .plus(best_tf) // field-to-camera
                     .relativeTo(fieldTags.getOrigin());
-            var best = cam.plus(robotToCamera.inverse()); // field-to-robot
+            Pose3d best = cam.plus(robotToCamera.inverse()); // field-to-robot
 //            Logger.recordOutput(camera.getName(), Math.toDegrees(cam.getRotation().getY()));
 
             return Optional.of(

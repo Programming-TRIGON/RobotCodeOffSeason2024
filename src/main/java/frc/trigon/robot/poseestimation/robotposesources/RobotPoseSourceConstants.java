@@ -5,11 +5,10 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import frc.trigon.robot.poseestimation.photonposeestimator.PhotonPoseEstimator;
 
 import java.util.HashMap;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class RobotPoseSourceConstants {
     public static final HashMap<Integer, Pose3d> TAG_ID_TO_POSE = new HashMap<>();
@@ -24,16 +23,16 @@ public class RobotPoseSourceConstants {
     }
 
     static final double MAXIMUM_AMBIGUITY = 0.2;
+    static final double MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS = 2;
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
 
     public enum RobotPoseSourceType {
-        PHOTON_CAMERA((name, transform3d) -> new AprilTagPhotonCameraIO(name)),
-        LIMELIGHT((name, transform3d) -> new AprilTagLimelightIO(name)),
-        T265((name, transform3d) -> new T265IO(name));
+        PHOTON_CAMERA(AprilTagPhotonCameraIO::new),
+        LIMELIGHT(AprilTagLimelightIO::new);
 
-        final BiFunction<String, Transform3d, RobotPoseSourceIO> createIOFunction;
+        final Function<String, RobotPoseSourceIO> createIOFunction;
 
-        RobotPoseSourceType(BiFunction<String, Transform3d, RobotPoseSourceIO> createIOFunction) {
+        RobotPoseSourceType(Function<String, RobotPoseSourceIO> createIOFunction) {
             this.createIOFunction = createIOFunction;
         }
     }
