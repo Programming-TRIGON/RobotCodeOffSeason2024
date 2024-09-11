@@ -24,7 +24,7 @@ import java.util.Optional;
  */
 public class AutonomousCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
-    private static final ObjectDetectionCamera CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
+    private static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
 
     public static Command getAutonomousNoteCollectionCommand() {
         return new SequentialCommandGroup(
@@ -37,7 +37,7 @@ public class AutonomousCommands {
     public static Command getPrepareForShooterEjectionCommand() {
         return new ParallelCommandGroup(
                 PitcherCommands.getSetTargetPitchCommand(ShootingConstants.EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_ROTATIONS_PER_SECOND)
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
 
@@ -50,15 +50,15 @@ public class AutonomousCommands {
 
     public static Command getAlignToSpeakerCommand() {
         return new ExecuteEndCommand(
-                () -> getOverrideRotationCommand(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())).schedule(),
+                () -> getOverrideRotationCommand(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())).withTimeout(0.2).schedule(),
                 () -> getOverrideRotationCommand(Optional.empty()).onlyIf(() -> !RobotContainer.INTAKE.hasNote()).schedule()
         );
     }
 
     private static Command getAlignToNoteCommand() {
-        CAMERA.startTrackingObject();
+        NOTE_DETECTION_CAMERA.startTrackingObject();
         return new ExecuteEndCommand(
-                () -> getOverrideRotationCommand(Optional.of(Rotation2d.fromDegrees(CAMERA.getTrackedObjectYaw()))).schedule(),
+                () -> getOverrideRotationCommand(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()))).schedule(),
                 () -> getOverrideRotationCommand(Optional.empty()).onlyIf(RobotContainer.INTAKE::hasNote).schedule()
         );
     }

@@ -14,8 +14,8 @@ public class ShootingConstants {
     public static final double
             CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 45,
             AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 10,//TODO: calibrate on real robot
-            MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND = 45,
-            EJECT_FROM_SHOOTER_ROTATIONS_PER_SECOND = 2;
+            MANUAL_LOW_DELIVERY_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 45,
+            EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = 25;
     public static final Rotation2d
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57),
             AMP_PITCH = Rotation2d.fromDegrees(45),
