@@ -19,9 +19,9 @@ public class AutonomousConstants {
     private static void registerCommands() {
         NamedCommands.registerCommand("Collect", AutonomousCommands.getAutonomousNoteCollectionCommand());
         NamedCommands.registerCommand("WarmShooting", ShootingCommands.getWarmSpeakerShotCommand());
-        NamedCommands.registerCommand("PrepareForShooting", AutonomousCommands.getAutonomousPrepareForShootingCommand());
+        NamedCommands.registerCommand("PrepareForShooting", AutonomousCommands.getAutonomousPrepareForSpeakerShootingCommand());
         NamedCommands.registerCommand("Shoot", AutonomousCommands.getAutonomousShootCommand());
         NamedCommands.registerCommand("Eject", CommandConstants.EJECT_COMMAND);
-        NamedCommands.registerCommand("EjectFromShooter", AutonomousCommands.getEjectFromShooterCommand());
+        NamedCommands.registerCommand("EjectFromShooter", AutonomousCommands.getPrepareForEjectFromShooterCommand());
     }
 }

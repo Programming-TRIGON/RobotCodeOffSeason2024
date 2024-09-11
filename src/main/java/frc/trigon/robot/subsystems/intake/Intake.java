@@ -42,11 +42,7 @@ public class Intake extends MotorSubsystem {
     public boolean hasNote() {
         return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
     }
-
-    public boolean isCollecting() {
-        return targetState == IntakeConstants.IntakeState.COLLECT;
-    }
-
+    
     /**
      * Checks if a note has been collected early using the motor's current.
      * This is quicker than {@linkplain Intake#hasNote} since it updates from the change in current (which happens right when we hit the note),
