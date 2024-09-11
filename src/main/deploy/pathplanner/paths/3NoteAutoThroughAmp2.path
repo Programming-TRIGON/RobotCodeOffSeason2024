@@ -1,0 +1,120 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.879292519148419,
+        "y": 6.995245539786855
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.009369399020488,
+        "y": 6.995245539786855
+      },
+      "isLocked": false,
+      "linkedName": "3NoteAutoThroughAmpFirstCollection"
+    },
+    {
+      "anchor": {
+        "x": 3.544129905161219,
+        "y": 7.327664232793255
+      },
+      "prevControl": {
+        "x": 3.3179048807317555,
+        "y": 7.198392790262134
+      },
+      "nextControl": {
+        "x": 3.9488135314298805,
+        "y": 7.558912019232489
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.299162513817985,
+        "y": 5.781194660980872
+      },
+      "prevControl": {
+        "x": 6.0444965960354455,
+        "y": 6.605014900170646
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "3NoteAutoThroughAmpSecondCollection"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "WarmShooting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "WarmShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -21.50143432404788,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 25.769327624338693,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

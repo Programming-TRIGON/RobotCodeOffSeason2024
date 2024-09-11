@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7402504945854966,
+      "y": 6.76399775334762
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3NoteAutoThroughAmp1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3NoteAutoThroughAmp2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3NoteAutoThroughAmp3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3NoteAutoThroughAmp4"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
