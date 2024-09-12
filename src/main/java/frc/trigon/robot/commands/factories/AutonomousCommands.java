@@ -71,7 +71,10 @@ public class AutonomousCommands {
     public static Command getAlignToNoteCommand() {
         return new FunctionalCommand(
                 NOTE_DETECTION_CAMERA::startTrackingObject,
-                () -> overrideRotation(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()))),
+                () -> {
+                    if (NOTE_DETECTION_CAMERA.hasTargets())
+                        overrideRotation(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw())));
+                },
                 (interrupted) -> overrideRotation(Optional.empty()),
                 () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), true))
         );
