@@ -96,7 +96,7 @@ public class VisualizeNoteShootingCommand extends Command {
         fieldRelativeNoteExitPointTranslation = new Translation3d(
                 RobotContainer.POSE_ESTIMATOR.getCurrentPose().getX(),
                 FieldConstants.AMP_TRANSLATION.get().getY(),
-                FieldConstants.AMP_TRANSLATION.get().getZ());
+                noteZ);
         initialXYVelocity = new Translation2d(0, 0);
         initialZVelocity = 0;
     }
