@@ -1,20 +1,20 @@
 package frc.trigon.robot.commands.factories;
 
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.CommandConstants;
-import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
-import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
-import org.trigon.hardware.RobotHardwareStats;
 
 public class ShootingCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
@@ -84,7 +84,7 @@ public class ShootingCommands {
     private static Command getFeedNoteForShootingCommand() {
         return GeneralCommands.runWhen(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
-                        .alongWith(getVisualizeNoteShootingCommand()),
+                        .alongWith(GeneralCommands.getVisualizeNoteShootingCommand()),
                 () -> RobotContainer.SHOOTER.atTargetVelocity() &&
                         RobotContainer.PITCHER.atTargetPitch() &&
                         RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
@@ -92,13 +92,7 @@ public class ShootingCommands {
     }
 
     private static Command getFeedNoteWhenPitcherAndShooterReadyCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
-    }
-
-    private static Command getVisualizeNoteShootingCommand() {
-        return new InstantCommand(
-                () -> new VisualizeNoteShootingCommand()
-                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
+        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(GeneralCommands.getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
 
     private static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
