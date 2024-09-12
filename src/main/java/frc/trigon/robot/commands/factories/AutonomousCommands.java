@@ -5,9 +5,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
@@ -18,7 +16,6 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import org.trigon.commands.ExecuteEndCommand;
-import org.trigon.commands.InitExecuteCommand;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
@@ -44,8 +41,8 @@ public class AutonomousCommands {
     }
 
     public static Command getNoteCollectionCommand() {
-        return new ParallelCommandGroup(
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).unless(RobotContainer.INTAKE::hasNote),
+        return new SequentialCommandGroup(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).until(RobotContainer.INTAKE::hasNote),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP).onlyIf(RobotContainer.INTAKE::hasNote)
         );
     }
@@ -67,21 +64,16 @@ public class AutonomousCommands {
     public static Command getAlignToSpeakerCommand() {
         return new ExecuteEndCommand(
                 () -> overrideRotation(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
-                () -> {
-                    if (!RobotContainer.INTAKE.hasNote())
-                        overrideRotation(Optional.empty());
-                }
+                () -> overrideRotation(Optional.empty())
         );
     }
 
     public static Command getAlignToNoteCommand() {
-        return new InitExecuteCommand(
+        return new FunctionalCommand(
                 NOTE_DETECTION_CAMERA::startTrackingObject,
-                () -> overrideRotation(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw())))
-        ).andThen(new InstantCommand(() -> {
-                    if (RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), true)))
-                        overrideRotation(Optional.empty());
-                })
+                () -> overrideRotation(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()))),
+                (interrupted) -> overrideRotation(Optional.empty()),
+                () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), true))
         );
     }
 

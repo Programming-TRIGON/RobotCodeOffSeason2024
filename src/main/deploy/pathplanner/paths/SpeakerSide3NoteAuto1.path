@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.408565183327549,
-        "y": 7.63117695249475
+        "x": 5.3331200759002595,
+        "y": 7.57781207870108
       },
       "prevControl": {
-        "x": 4.888257663839272,
-        "y": 7.660082925799655
+        "x": 4.812812556411982,
+        "y": 7.606718052005985
       },
       "nextControl": {
-        "x": 5.495960537814178,
-        "y": 7.62632165502327
+        "x": 5.420515430386889,
+        "y": 7.572956781229601
       },
       "isLocked": false,
       "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
@@ -44,7 +44,13 @@
       "linkedName": "SpeakerSide3NoteAutoFirstNoteCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.15,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -80,6 +86,12 @@
             {
               "type": "named",
               "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
                 "name": "Collect"
               }
             }
@@ -96,7 +108,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -23.962488974578218,
+    "rotation": -59.32695600403629,
     "rotateFast": false
   },
   "reversed": false,

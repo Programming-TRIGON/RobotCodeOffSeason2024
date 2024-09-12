@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 5.408565183327549,
-        "y": 7.63117695249475
+        "x": 5.3331200759002595,
+        "y": 7.57781207870108
       },
       "prevControl": {
-        "x": 5.567548036504523,
-        "y": 7.183134366268732
+        "x": 5.303748711254131,
+        "y": 7.122555926686094
       },
       "nextControl": {
-        "x": 5.249582330150575,
-        "y": 8.079219538720768
+        "x": 5.336479559587067,
+        "y": 7.629884075846596
       },
       "isLocked": false,
       "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
@@ -75,13 +75,19 @@
               "data": {
                 "name": "Collect"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
             }
           ]
         }
       }
     },
     {
-      "name": "PrepareNote",
+      "name": "PrepareForShooting",
       "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
@@ -101,9 +107,15 @@
       "name": "FeedNote",
       "waypointRelativePos": 1.1,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
+            },
             {
               "type": "named",
               "data": {
@@ -124,7 +136,30 @@
             {
               "type": "named",
               "data": {
+                "name": "AlignToSpeaker"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
                 "name": "FeedNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PrepareForShootingLastNote",
+      "waypointRelativePos": 2.35,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
               }
             }
           ]
