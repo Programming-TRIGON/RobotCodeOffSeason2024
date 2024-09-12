@@ -7,8 +7,6 @@ import frc.trigon.robot.constants.FieldConstants;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.PhotonUtils;
 
-import java.util.Optional;
-
 /**
  * A pose source is a class that provides the robot's pose, from a camera.
  */
@@ -69,11 +67,6 @@ public class RobotPoseSource {
         return inputs.lastResultTimestamp;
     }
 
-    protected static Pose3d getTagPose(int targetTag) {
-        Optional<Pose3d> tagPose = FieldConstants.APRIL_TAG_FIELD_LAYOUT.getTagPose(targetTag);
-        return tagPose.orElse(new Pose3d());
-    }
-
     /**
      * Gets the best possible robot Pose from the camera's data
      *
@@ -93,7 +86,7 @@ public class RobotPoseSource {
     }
 
     private Translation2d getRobotFieldRelativePosition(Rotation2d robotHeading) {
-        final Pose3d tagPose = getTagPose(inputs.visibleTagIDs[0]);
+        final Pose3d tagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]);
         final Translation2d tagToCamera = getTagToCamera(tagPose);
         final Translation2d robotToTag = tagToCamera.plus(robotCenterToCamera.getTranslation().toTranslation2d());
         final Translation2d fieldRelativeTagPose = robotToTag.rotateBy(robotHeading);
@@ -131,7 +124,7 @@ public class RobotPoseSource {
 
         final Pose2d[] visibleTagPoses = new Pose2d[inputs.visibleTagIDs.length];
         for (int i = 0; i < visibleTagPoses.length; i++) {
-            visibleTagPoses[i] = getTagPose(i).toPose2d();
+            visibleTagPoses[i] = FieldConstants.TAG_ID_TO_POSE.get(i).toPose2d();
         }
         Logger.recordOutput("VisibleTags/" + this.getName(), visibleTagPoses);
     }
