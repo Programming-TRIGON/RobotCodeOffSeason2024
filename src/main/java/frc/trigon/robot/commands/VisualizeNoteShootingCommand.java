@@ -22,7 +22,7 @@ public class VisualizeNoteShootingCommand extends Command {
     private Translation2d initialXYVelocity;
     private double initialZVelocity;
     private Pose3d notePose = new Pose3d();
-    private boolean crossedFieldWidthBorder = false;
+    private boolean hasCrossedFieldWidthBorder = false;
 
     @Override
     public void initialize() {
@@ -36,7 +36,7 @@ public class VisualizeNoteShootingCommand extends Command {
         final Transform3d noteTransform = calculateNoteTransform(timeDifference);
         notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
 
-        if (noteCrossedFieldWidthBorder(notePose.getTranslation().getY()))
+        if (noteCrossedFieldWidth(notePose.getTranslation().getY()))
             configureNoteInAmpStats();
 
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
@@ -82,12 +82,12 @@ public class VisualizeNoteShootingCommand extends Command {
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
     }
 
-    private boolean noteCrossedFieldWidthBorder(double noteY) {
-        return noteY > FieldConstants.FIELD_WIDTH_METERS && !crossedFieldWidthBorder;
+    private boolean noteCrossedFieldWidth(double noteY) {
+        return noteY > FieldConstants.FIELD_WIDTH_METERS && !hasCrossedFieldWidthBorder;
     }
 
     private void configureNoteInAmpStats() {
-        crossedFieldWidthBorder = true;
+        hasCrossedFieldWidthBorder = true;
         startingTimeSeconds = Timer.getFPGATimestamp();
 
         startingPitch = Rotation2d.fromDegrees(90);
