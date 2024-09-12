@@ -59,7 +59,7 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
         }
 
         final Transform3d targetToCamera = result.getBestTarget().getBestCameraToTarget().inverse();
-        return RobotPoseSource.getTagPose(result.getBestTarget().getFiducialId()).transformBy(targetToCamera);
+        return FieldConstants.TAG_ID_TO_POSE.get(result.getBestTarget().getFiducialId()).transformBy(targetToCamera);
     }
 
     private int[] getVisibleTagIDs(PhotonPipelineResult result) {
