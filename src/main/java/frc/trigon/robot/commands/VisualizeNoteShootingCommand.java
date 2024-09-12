@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.ShootingCalculations;
 import org.littletonrobotics.junction.Logger;
@@ -20,7 +21,8 @@ public class VisualizeNoteShootingCommand extends Command {
     private Rotation2d startingPitch, startingYaw;
     private Translation2d initialXYVelocity;
     private double initialZVelocity;
-    private double noteZ;
+    private Pose3d notePose = new Pose3d();
+    private boolean hasNoteCrossedAmpY = false;
 
     @Override
     public void initialize() {
@@ -32,14 +34,17 @@ public class VisualizeNoteShootingCommand extends Command {
         final double timeDifference = Timer.getFPGATimestamp() - startingTimeSeconds;
 
         final Transform3d noteTransform = calculateNoteTransform(timeDifference);
-        final Pose3d notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
-        noteZ = notePose.getTranslation().getZ();
+        notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
+
+        if (didNoteJustCrossAmpY(notePose.getTranslation().getY()))
+            configureNoteInAmpStats();
+
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
     }
 
     @Override
     public boolean isFinished() {
-        return noteZ < 0;
+        return notePose.getZ() < 0;
     }
 
     @Override
@@ -75,6 +80,24 @@ public class VisualizeNoteShootingCommand extends Command {
         fieldRelativeNoteExitPointTranslation = calculateFieldRelativeNoteExitPoint(currentRobotPose.getTranslation(), currentRobotAngle);
         initialXYVelocity = calculateInitialXYVelocityWithRobotVelocity(startingPitch, startingTangentialVelocity, currentRobotAngle);
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
+    }
+
+    private boolean didNoteJustCrossAmpY(double noteY) {
+        return noteY > FieldConstants.FIELD_WIDTH_METERS && !hasNoteCrossedAmpY;
+    }
+
+    private void configureNoteInAmpStats() {
+        hasNoteCrossedAmpY = true;
+        startingTimeSeconds = Timer.getFPGATimestamp();
+
+        startingPitch = Rotation2d.fromDegrees(90);
+        startingYaw = Rotation2d.fromDegrees(90);
+        fieldRelativeNoteExitPointTranslation = new Translation3d(
+                notePose.getX(),
+                FieldConstants.AMP_TRANSLATION.get().getY(),
+                notePose.getZ());
+        initialXYVelocity = new Translation2d(0, 0);
+        initialZVelocity = 2;
     }
 
     private double getStartingTangentialVelocity() {
