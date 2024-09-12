@@ -51,12 +51,6 @@ public class GeneralCommands {
         ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
     }
 
-    public static Command getVisualizeNoteShootingCommand() {
-        return new InstantCommand(
-                () -> new VisualizeNoteShootingCommand()
-                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
-    }
-
     /**
      * If the pitcher closes before the amp aligner is closed, the amp aligner hits the amp.
      * This command ensures that the pitcher closes after the amp is closed enough.
