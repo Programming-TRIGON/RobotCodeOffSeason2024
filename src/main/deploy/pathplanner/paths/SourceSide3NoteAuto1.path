@@ -3,32 +3,59 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.299162513817985,
-        "y": 4.119101195948871
+        "x": 0.7547034812379487,
+        "y": 3.84449444955228
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.299162513817985,
-        "y": 4.119101195948871
+        "x": 1.7086006002997924,
+        "y": 3.3530929033689056
       },
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpThirdCollection"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.165608331216663,
-        "y": 4.885109488528837
+        "x": 2.864839532495967,
+        "y": 2.861691357185532
       },
       "prevControl": {
-        "x": 4.498027024223063,
-        "y": 3.9312123694669934
+        "x": 2.0265663066537405,
+        "y": 3.2230160234968364
+      },
+      "nextControl": {
+        "x": 3.703112758338193,
+        "y": 2.5003666908742272
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.284709527165534,
+        "y": 2.442554744264419
+      },
+      "prevControl": {
+        "x": 6.116761529297707,
+        "y": 0.6648373860128005
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SourceSide3NoteAutoFirstCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.65,
+      "rotationDegrees": 30.9518678714508,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.65,
+      "rotationDegrees": -26.738411554285022,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -50,11 +77,17 @@
     },
     {
       "name": "FeedNote",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 1.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
+            },
             {
               "type": "named",
               "data": {
@@ -66,16 +99,22 @@
       }
     },
     {
-      "name": "AlignToSpeaker",
-      "waypointRelativePos": 0.85,
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "AlignToSpeaker"
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
               }
             }
           ]
@@ -91,13 +130,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.136303428248176,
+    "rotation": 42.614055969611165,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -38.659808254090066,
     "velocity": 0
   },
   "useDefaultConstraints": true

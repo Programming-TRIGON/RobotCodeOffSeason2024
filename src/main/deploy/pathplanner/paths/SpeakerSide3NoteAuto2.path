@@ -91,7 +91,7 @@
       "name": "Collect",
       "waypointRelativePos": 1.95,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {

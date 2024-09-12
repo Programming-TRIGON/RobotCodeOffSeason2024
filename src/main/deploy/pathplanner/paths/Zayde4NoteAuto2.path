@@ -68,9 +68,15 @@
       "name": "FeedNote",
       "waypointRelativePos": 1.05,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
+            },
             {
               "type": "named",
               "data": {
@@ -85,9 +91,15 @@
       "name": "Collect",
       "waypointRelativePos": 1.95,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
             {
               "type": "named",
               "data": {

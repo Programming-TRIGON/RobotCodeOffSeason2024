@@ -73,13 +73,13 @@
             {
               "type": "named",
               "data": {
-                "name": "Collect"
+                "name": "AlignToNote"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
+                "name": "Collect"
               }
             }
           ]
@@ -130,7 +130,7 @@
       "name": "ShootLastNote",
       "waypointRelativePos": 2.9499999999999997,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {

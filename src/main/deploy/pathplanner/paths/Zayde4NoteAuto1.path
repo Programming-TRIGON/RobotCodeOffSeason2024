@@ -74,13 +74,36 @@
       "name": "Collect",
       "waypointRelativePos": 1.95,
       "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PrepareForEjecting",
+      "waypointRelativePos": 0.05,
+      "command": {
         "type": "parallel",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Collect"
+                "name": "PrepareForShooting"
               }
             }
           ]

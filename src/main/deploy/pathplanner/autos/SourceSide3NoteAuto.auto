@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7547034812379487,
+      "y": 3.84449444955228
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceSide3NoteAuto1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceSide3NoteAuto2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceSide3NoteAuto3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

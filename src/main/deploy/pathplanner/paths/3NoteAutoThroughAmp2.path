@@ -59,6 +59,12 @@
               "data": {
                 "name": "PrepareForShooting"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
             }
           ]
         }
@@ -88,6 +94,12 @@
         "type": "parallel",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
             {
               "type": "named",
               "data": {

@@ -26,13 +26,10 @@ public class ObjectDetectionCamera extends SubsystemBase {
         if (hasTargets() && !wasVisible) {
             wasVisible = true;
             startTrackingBestObject();
-            lastVisibleObjectYaw = getTrackedObjectYaw();
             return;
         }
         if (!hasTargets())
             wasVisible = false;
-        if (hasTargets())
-            lastVisibleObjectYaw = getTrackedObjectYaw();
     }
 
     public boolean hasTargets() {

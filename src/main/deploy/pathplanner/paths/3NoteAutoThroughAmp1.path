@@ -59,6 +59,12 @@
               "data": {
                 "name": "PrepareForShooting"
               }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
             }
           ]
         }
