@@ -39,8 +39,8 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
      * @return the result
      */
     private Rotation3d getBestTargetRelativeRotation(PhotonPipelineResult result) {
-        List<TargetCorner> tagCorners = result.getBestTarget().getDetectedCorners();
-        Point tagCenter = getTagCenter(tagCorners);
+        final List<TargetCorner> tagCorners = result.getBestTarget().getDetectedCorners();
+        final Point tagCenter = getTagCenter(tagCorners);
         if (photonCamera.getCameraMatrix().isPresent())
             return correctPixelRot(tagCenter, photonCamera.getCameraMatrix().get());
         return null;
