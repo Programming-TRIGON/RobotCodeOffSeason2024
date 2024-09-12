@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.AlignToNoteCommand;
 import frc.trigon.robot.commands.CommandConstants;
+import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.climber.ClimberCommands;
@@ -15,12 +16,19 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.RobotHardwareStats;
 
 import java.awt.*;
 import java.util.function.BooleanSupplier;
 
 public class GeneralCommands {
     public static boolean IS_BRAKING = true;
+
+    public static Command getVisualizeNoteShootingCommand() {
+        return new InstantCommand(
+                () -> new VisualizeNoteShootingCommand()
+                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
+    }
 
     public static Command getClimbCommand() {
         return new SequentialCommandGroup(

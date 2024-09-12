@@ -14,10 +14,11 @@ public class AutonomousConstants {
     }
 
     private static void registerCommands() {
-        NamedCommands.registerCommand("Collect", AutonomousCommands.getAutonomousNoteCollectionCommand());
+        NamedCommands.registerCommand("Collect", AutonomousCommands.getNoteCollectionCommand());
+        NamedCommands.registerCommand("AlignToNote", AutonomousCommands.getAlignToNoteCommand());
         NamedCommands.registerCommand("AlignToSpeaker", AutonomousCommands.getAlignToSpeakerCommand());
         NamedCommands.registerCommand("PrepareForShooting", ShootingCommands.getWarmSpeakerShotCommand());
-        NamedCommands.registerCommand("FeedNote", AutonomousCommands.geAutonomousFeedNoteCommand());
+        NamedCommands.registerCommand("FeedNote", AutonomousCommands.getFeedNoteCommand());
         NamedCommands.registerCommand("CloseShot", ShootingCommands.getPrepareCloseSpeakerShotCommand());
         NamedCommands.registerCommand("Eject", CommandConstants.EJECT_COMMAND);
         NamedCommands.registerCommand("EjectFromShooter", AutonomousCommands.getPrepareForShooterEjectionCommand());

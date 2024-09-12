@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
@@ -19,7 +18,9 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import org.trigon.commands.ExecuteEndCommand;
+import org.trigon.commands.InitExecuteCommand;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
+import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -42,11 +43,10 @@ public class AutonomousCommands {
         ).ignoringDisable(true);
     }
 
-    public static Command getAutonomousNoteCollectionCommand() {
-        return new SequentialCommandGroup(
+    public static Command getNoteCollectionCommand() {
+        return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).unless(RobotContainer.INTAKE::hasNote),
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP).onlyIf(RobotContainer.INTAKE::hasNote),
-                getAlignToNoteCommand()
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP).onlyIf(RobotContainer.INTAKE::hasNote)
         );
     }
 
@@ -57,10 +57,10 @@ public class AutonomousCommands {
         );
     }
 
-    public static Command geAutonomousFeedNoteCommand() {
+    public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
-                ShootingCommands.getVisualizeNoteShootingCommand()
+                GeneralCommands.getVisualizeNoteShootingCommand()
         );
     }
 
@@ -74,14 +74,14 @@ public class AutonomousCommands {
         );
     }
 
-    private static Command getAlignToNoteCommand() {
-        NOTE_DETECTION_CAMERA.startTrackingObject();
-        return new ExecuteEndCommand(
-                () -> overrideRotation(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()))),
-                () -> {
-                    if (RobotContainer.INTAKE.hasNote())
+    public static Command getAlignToNoteCommand() {
+        return new InitExecuteCommand(
+                NOTE_DETECTION_CAMERA::startTrackingObject,
+                () -> overrideRotation(Optional.of(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw())))
+        ).andThen(new InstantCommand(() -> {
+                    if (RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), true)))
                         overrideRotation(Optional.empty());
-                }
+                })
         );
     }
 
