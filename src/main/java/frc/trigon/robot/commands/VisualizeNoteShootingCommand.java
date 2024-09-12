@@ -98,7 +98,7 @@ public class VisualizeNoteShootingCommand extends Command {
                 FieldConstants.AMP_TRANSLATION.get().getY(),
                 noteZ);
         initialXYVelocity = new Translation2d(0, 0);
-        initialZVelocity = 0;
+        initialZVelocity = 2;
     }
 
     private double getStartingTangentialVelocity() {
