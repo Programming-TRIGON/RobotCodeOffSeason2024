@@ -21,7 +21,7 @@ public class VisualizeNoteShootingCommand extends Command {
     private Rotation2d startingPitch, startingYaw;
     private Translation2d initialXYVelocity;
     private double initialZVelocity;
-    private double noteZ;
+    private Pose3d notePose = new Pose3d();
     private boolean crossedFieldWidthBorder = false;
 
     @Override
@@ -34,10 +34,9 @@ public class VisualizeNoteShootingCommand extends Command {
         final double timeDifference = Timer.getFPGATimestamp() - startingTimeSeconds;
 
         final Transform3d noteTransform = calculateNoteTransform(timeDifference);
-        Pose3d notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
-        noteZ = notePose.getTranslation().getZ();
+        notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
 
-        if (noteCrossedFieldWithBorder(notePose.getTranslation().getY()))
+        if (noteCrossedFieldWidthBorder(notePose.getTranslation().getY()))
             configureNoteInAmpStats();
 
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
@@ -45,7 +44,7 @@ public class VisualizeNoteShootingCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return noteZ < 0;
+        return notePose.getZ() < 0;
     }
 
     @Override
@@ -83,7 +82,7 @@ public class VisualizeNoteShootingCommand extends Command {
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
     }
 
-    private boolean noteCrossedFieldWithBorder(double noteY) {
+    private boolean noteCrossedFieldWidthBorder(double noteY) {
         return noteY > FieldConstants.FIELD_WIDTH_METERS && !crossedFieldWidthBorder;
     }
 
@@ -94,9 +93,9 @@ public class VisualizeNoteShootingCommand extends Command {
         startingPitch = Rotation2d.fromDegrees(90);
         startingYaw = Rotation2d.fromDegrees(90);
         fieldRelativeNoteExitPointTranslation = new Translation3d(
-                RobotContainer.POSE_ESTIMATOR.getCurrentPose().getX(),
+                notePose.getX(),
                 FieldConstants.AMP_TRANSLATION.get().getY(),
-                noteZ);
+                notePose.getZ());
         initialXYVelocity = new Translation2d(0, 0);
         initialZVelocity = 2;
     }
