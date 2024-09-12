@@ -22,7 +22,7 @@ public class VisualizeNoteShootingCommand extends Command {
     private Translation2d initialXYVelocity;
     private double initialZVelocity;
     private Pose3d notePose = new Pose3d();
-    private boolean hasCrossedAmpY = false;
+    private boolean hasNoteCrossedAmpY = false;
 
     @Override
     public void initialize() {
@@ -83,11 +83,11 @@ public class VisualizeNoteShootingCommand extends Command {
     }
 
     private boolean noteJustCrossedAmpY(double noteY) {
-        return noteY > FieldConstants.FIELD_WIDTH_METERS && !hasCrossedAmpY;
+        return noteY > FieldConstants.FIELD_WIDTH_METERS && !hasNoteCrossedAmpY;
     }
 
     private void configureNoteInAmpStats() {
-        hasCrossedAmpY = true;
+        hasNoteCrossedAmpY = true;
         startingTimeSeconds = Timer.getFPGATimestamp();
 
         startingPitch = Rotation2d.fromDegrees(90);
