@@ -36,7 +36,7 @@ public class VisualizeNoteShootingCommand extends Command {
         final Transform3d noteTransform = calculateNoteTransform(timeDifference);
         notePose = new Pose3d(fieldRelativeNoteExitPointTranslation, new Rotation3d()).plus(noteTransform);
 
-        if (noteCrossedCrossedAmpY(notePose.getTranslation().getY()))
+        if (noteJustCrossedAmpY(notePose.getTranslation().getY()))
             configureNoteInAmpStats();
 
         Logger.recordOutput("Poses/GamePieces/ShotNotePose", notePose);
@@ -82,7 +82,7 @@ public class VisualizeNoteShootingCommand extends Command {
         initialZVelocity = startingPitch.getSin() * startingTangentialVelocity;
     }
 
-    private boolean noteCrossedCrossedAmpY(double noteY) {
+    private boolean noteJustCrossedAmpY(double noteY) {
         return noteY > FieldConstants.FIELD_WIDTH_METERS && !hasCrossedAmpY;
     }
 
