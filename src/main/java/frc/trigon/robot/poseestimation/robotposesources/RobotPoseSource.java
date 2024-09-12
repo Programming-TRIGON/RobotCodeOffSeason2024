@@ -75,8 +75,10 @@ public class RobotPoseSource {
     }
 
     /**
+     * Gets the best possible robot Pose from the camera's data
+     *
      * @param averageDistanceFromAllTags the average of the distance from all visible tags
-     * @return the best calculated robot pose
+     * @return the result
      */
     private Pose2d getBestRobotPose(double averageDistanceFromAllTags) {
         if (averageDistanceFromAllTags < RobotPoseSourceConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS)
