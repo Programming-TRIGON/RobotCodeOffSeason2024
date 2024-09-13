@@ -7,7 +7,7 @@ import org.trigon.utilities.LimelightHelpers;
 public class AprilTagLimelightIO extends AprilTagCameraIO {
     private final String hostname;
 
-    protected AprilTagLimelightIO(String hostname) {
+    public AprilTagLimelightIO(String hostname) {
         this.hostname = hostname;
     }
 

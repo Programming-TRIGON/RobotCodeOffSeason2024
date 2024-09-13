@@ -24,19 +24,19 @@ public class AprilTagCamera {
     private Pose2d robotPose = null;
 
     /**
-     * @param robotPoseSourceType                     the type of camera
-     * @param name                                    the camera's name
-     * @param robotCenterToCamera                     the transform of the robot's origin point to the camera
-     * @param solvePNPTranslationsStdExponent
-     * @param solvePNPThetaStdExponent
-     * @param assumedRobotPoseTranslationsStdExponent
+     * @param robotPoseSourceType                        the type of camera
+     * @param name                                       the camera's name
+     * @param robotCenterToCamera                        the transform of the robot's origin point to the camera
+     * @param solvePNPTranslationsStdExponent            the translation exponent for solve PNP
+     * @param solvePNPThetaStdExponent                   the theta exponent for solve PNP
+     * @param assumedRobotHeadingTranslationsStdExponent the translation exponent for the assumed robot heading pose calculation
      */
-    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double solvePNPThetaStdExponent, double assumedRobotPoseTranslationsStdExponent) {
+    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double solvePNPThetaStdExponent, double assumedRobotHeadingTranslationsStdExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
         this.solvePNPTranslationsStdExponent = solvePNPTranslationsStdExponent;
         this.solvePNPThetaStdExponent = solvePNPThetaStdExponent;
-        this.assumedRobotPoseTranslationsStdExponent = assumedRobotPoseTranslationsStdExponent;
+        this.assumedRobotPoseTranslationsStdExponent = assumedRobotHeadingTranslationsStdExponent;
 
         if (Robot.IS_REAL)
             aprilTagCameraIO = robotPoseSourceType.createIOFunction.apply(name);

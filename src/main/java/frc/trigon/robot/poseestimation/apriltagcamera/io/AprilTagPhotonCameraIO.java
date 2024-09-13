@@ -19,7 +19,7 @@ import java.util.List;
 public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private final PhotonCamera photonCamera;
 
-    protected AprilTagPhotonCameraIO(String cameraName) {
+    public AprilTagPhotonCameraIO(String cameraName) {
         photonCamera = new PhotonCamera(cameraName);
     }
 
