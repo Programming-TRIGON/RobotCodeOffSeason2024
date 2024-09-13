@@ -14,36 +14,36 @@ import org.photonvision.PhotonUtils;
 /**
  * A pose source is a class that provides the robot's pose, from a camera.
  */
-public class RobotPoseSource {
+public class AprilTagCamera {
     protected final String name;
     private final RobotPoseSourceInputsAutoLogged inputs = new RobotPoseSourceInputsAutoLogged();
     private final Transform3d robotCenterToCamera;
-    private final RobotPoseSourceIO robotPoseSourceIO;
+    private final AprilTagCameraIO aprilTagCameraIO;
     private double lastUpdatedTimestamp;
-    private final double solvePNPTranslationsStdExponent, assumedRobotPoseTranslationsStdExponent, thetaStdExponent;
+    private final double solvePNPTranslationsStdExponent, assumedRobotPoseTranslationsStdExponent, solvePNPThetaStdExponent;
     private Pose2d robotPose = null;
 
-    public RobotPoseSource(RobotPoseSourceConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double assumedRobotPoseTranslationsStdExponent, double thetaStdExponent) {
+    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double assumedRobotPoseTranslationsStdExponent, double solvePNPThetaStdExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
         this.solvePNPTranslationsStdExponent = solvePNPTranslationsStdExponent;
         this.assumedRobotPoseTranslationsStdExponent = assumedRobotPoseTranslationsStdExponent;
-        this.thetaStdExponent = thetaStdExponent;
+        this.solvePNPThetaStdExponent = solvePNPThetaStdExponent;
 
         if (Robot.IS_REAL)
-            robotPoseSourceIO = robotPoseSourceType.createIOFunction.apply(name);
+            aprilTagCameraIO = robotPoseSourceType.createIOFunction.apply(name);
         else
-            robotPoseSourceIO = new RobotPoseSourceIO();
+            aprilTagCameraIO = new AprilTagCameraIO();
     }
 
     public void update() {
-        robotPoseSourceIO.updateInputs(inputs);
+        aprilTagCameraIO.updateInputs(inputs);
         Logger.processInputs("Cameras/" + name, inputs);
 
         robotPose = calculateBestRobotPose(inputs.distanceFromBestTag);
 
         if (!inputs.hasResult || inputs.averageDistanceFromAllTags == 0 || robotPose == null)
-            Logger.recordOutput("Poses/Robot/" + name + "Pose", RobotPoseSourceConstants.EMPTY_POSE_LIST);
+            Logger.recordOutput("Poses/Robot/" + name + "Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
         else
             Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);
     }
@@ -66,7 +66,7 @@ public class RobotPoseSource {
 
 
     /**
-     * Calculates the range of how inaccurate the estimated pose could be
+     * Calculates the range of how inaccurate the estimated pose could be.
      *
      * @return the standard deviations for the pose estimation strategy used
      */
@@ -98,7 +98,7 @@ public class RobotPoseSource {
      * @return the robot's pose
      */
     private Pose3d calculateAssumedRobotHeadingPose() {
-        final Rotation2d robotHeadingAtResultTimestamp = PoseEstimator6328.getInstance().getSamplePose(inputs.lastResultTimestamp).getRotation();
+        final Rotation2d robotHeadingAtResultTimestamp = PoseEstimator6328.getInstance().samplePose(inputs.lastResultTimestamp).getRotation();
         final Translation2d robotFieldRelativePositionTranslation = getRobotFieldRelativePosition(robotHeadingAtResultTimestamp);
         return new Pose3d(new Pose2d(robotFieldRelativePositionTranslation, robotHeadingAtResultTimestamp));
     }
@@ -149,7 +149,7 @@ public class RobotPoseSource {
     private Matrix<N3, N1> calculateSolvePNPStdDevs() {
         final int numberOfVisibleTags = inputs.visibleTagIDs.length;
         final double translationStd = solvePNPTranslationsStdExponent * inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags / numberOfVisibleTags;
-        final double thetaStd = thetaStdExponent * Math.pow(inputs.averageDistanceFromAllTags, 2) / numberOfVisibleTags;
+        final double thetaStd = solvePNPThetaStdExponent * Math.pow(inputs.averageDistanceFromAllTags, 2) / numberOfVisibleTags;
 
         return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }
@@ -168,6 +168,6 @@ public class RobotPoseSource {
     }
 
     private boolean isWithinBestTagRangeForSolvePNP() {
-        return inputs.distanceFromBestTag < RobotPoseSourceConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS;
+        return inputs.distanceFromBestTag < AprilTagCameraConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS;
     }
 }

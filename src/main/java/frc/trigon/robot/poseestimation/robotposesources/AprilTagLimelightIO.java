@@ -2,7 +2,7 @@ package frc.trigon.robot.poseestimation.robotposesources;
 
 import org.trigon.utilities.LimelightHelpers;
 
-public class AprilTagLimelightIO extends RobotPoseSourceIO {
+public class AprilTagLimelightIO extends AprilTagCameraIO {
     private final String hostname;
 
     protected AprilTagLimelightIO(String hostname) {

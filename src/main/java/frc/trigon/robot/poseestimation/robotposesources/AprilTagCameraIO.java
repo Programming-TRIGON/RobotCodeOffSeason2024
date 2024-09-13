@@ -3,7 +3,7 @@ package frc.trigon.robot.poseestimation.robotposesources;
 import edu.wpi.first.math.geometry.Pose3d;
 import org.littletonrobotics.junction.AutoLog;
 
-public class RobotPoseSourceIO {
+public class AprilTagCameraIO {
     protected void updateInputs(RobotPoseSourceInputsAutoLogged inputs) {
     }
 

@@ -12,8 +12,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.poseestimation.robotposesources.RobotPoseSource;
-import frc.trigon.robot.poseestimation.robotposesources.RobotPoseSourceConstants;
+import frc.trigon.robot.poseestimation.robotposesources.AprilTagCamera;
+import frc.trigon.robot.poseestimation.robotposesources.AprilTagCameraConstants;
 import org.littletonrobotics.junction.Logger;
 
 import java.util.ArrayList;
@@ -26,16 +26,16 @@ import java.util.Map;
  */
 public class PoseEstimator implements AutoCloseable {
     private final Field2d field = new Field2d();
-    private final RobotPoseSource[] robotPoseSources;
+    private final AprilTagCamera[] robotPoseSources;
     private final PoseEstimator6328 poseEstimator6328 = PoseEstimator6328.getInstance();
 
     /**
      * Constructs a new PoseEstimator.
      *
-     * @param robotPoseSources the sources that should update the pose estimator apart from the odometry. This should be cameras etc.
+     * @param aprilTagCameras the sources that should update the pose estimator apart from the odometry. This should be cameras etc.
      */
-    public PoseEstimator(RobotPoseSource... robotPoseSources) {
-        this.robotPoseSources = robotPoseSources;
+    public PoseEstimator(AprilTagCamera... aprilTagCameras) {
+        this.robotPoseSources = aprilTagCameras;
         putAprilTagsOnFieldWidget();
         SmartDashboard.putData("Field", field);
         PathPlannerLogging.setLogActivePathCallback((pose) -> {
@@ -92,26 +92,26 @@ public class PoseEstimator implements AutoCloseable {
 
     private List<PoseEstimator6328.VisionObservation> getViableVisionObservations() {
         List<PoseEstimator6328.VisionObservation> viableVisionObservations = new ArrayList<>();
-        for (RobotPoseSource robotPoseSource : robotPoseSources) {
-            final PoseEstimator6328.VisionObservation visionObservation = getVisionObservation(robotPoseSource);
+        for (AprilTagCamera aprilTagCamera : robotPoseSources) {
+            final PoseEstimator6328.VisionObservation visionObservation = getVisionObservation(aprilTagCamera);
             if (visionObservation != null)
                 viableVisionObservations.add(visionObservation);
         }
         return viableVisionObservations;
     }
 
-    private PoseEstimator6328.VisionObservation getVisionObservation(RobotPoseSource robotPoseSource) {
-        robotPoseSource.update();
-        if (!robotPoseSource.hasNewResult())
+    private PoseEstimator6328.VisionObservation getVisionObservation(AprilTagCamera aprilTagCamera) {
+        aprilTagCamera.update();
+        if (!aprilTagCamera.hasNewResult())
             return null;
-        final Pose2d robotPose = robotPoseSource.getEstimatedRobotPose();
+        final Pose2d robotPose = aprilTagCamera.getEstimatedRobotPose();
         if (robotPose == null)
             return null;
 
         return new PoseEstimator6328.VisionObservation(
                 robotPose,
-                robotPoseSource.getLastResultTimestamp(),
-                robotPoseSource.calculateStdDevs()
+                aprilTagCamera.getLastResultTimestamp(),
+                aprilTagCamera.calculateStdDevs()
         );
     }
 
@@ -123,7 +123,7 @@ public class PoseEstimator implements AutoCloseable {
     }
 
     private void putAprilTagsOnFieldWidget() {
-        for (Map.Entry<Integer, Pose3d> entry : RobotPoseSourceConstants.TAG_ID_TO_POSE.entrySet()) {
+        for (Map.Entry<Integer, Pose3d> entry : AprilTagCameraConstants.TAG_ID_TO_POSE.entrySet()) {
             final Pose2d tagPose = entry.getValue().toPose2d();
             field.getObject("Tag " + entry.getKey()).setPose(tagPose);
         }

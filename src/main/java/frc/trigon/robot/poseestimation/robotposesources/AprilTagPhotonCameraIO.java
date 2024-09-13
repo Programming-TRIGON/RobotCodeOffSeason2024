@@ -14,7 +14,7 @@ import org.photonvision.targeting.TargetCorner;
 
 import java.util.List;
 
-public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
+public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private final PhotonCamera photonCamera;
 
     protected AprilTagPhotonCameraIO(String cameraName) {

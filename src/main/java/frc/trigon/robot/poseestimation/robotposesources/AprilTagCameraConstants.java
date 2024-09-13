@@ -10,7 +10,7 @@ import frc.trigon.robot.poseestimation.photonposeestimator.PhotonPoseEstimator;
 import java.util.HashMap;
 import java.util.function.Function;
 
-public class RobotPoseSourceConstants {
+public class AprilTagCameraConstants {
     public static final HashMap<Integer, Pose3d> TAG_ID_TO_POSE = new HashMap<>();
     static final PhotonPoseEstimator.PoseStrategy
             PRIMARY_POSE_STRATEGY = PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
@@ -30,9 +30,9 @@ public class RobotPoseSourceConstants {
         PHOTON_CAMERA(AprilTagPhotonCameraIO::new),
         LIMELIGHT(AprilTagLimelightIO::new);
 
-        final Function<String, RobotPoseSourceIO> createIOFunction;
+        final Function<String, AprilTagCameraIO> createIOFunction;
 
-        RobotPoseSourceType(Function<String, RobotPoseSourceIO> createIOFunction) {
+        RobotPoseSourceType(Function<String, AprilTagCameraIO> createIOFunction) {
             this.createIOFunction = createIOFunction;
         }
     }
