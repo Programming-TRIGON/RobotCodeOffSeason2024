@@ -1,6 +1,10 @@
 package frc.trigon.robot.poseestimation.robotposesources;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import frc.trigon.robot.Robot;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.FieldConstants;
@@ -32,7 +36,7 @@ public class RobotPoseSource {
         robotPoseSourceIO.updateInputs(inputs);
         Logger.processInputs("Cameras/" + name, inputs);
 
-        robotPose = getBestRobotPose(inputs.averageDistanceFromAllTags);
+        robotPose = calculateBestRobotPose(inputs.averageDistanceFromBestTag);
 
         if (!inputs.hasResult || inputs.averageDistanceFromAllTags == 0 || robotPose == null)
             Logger.recordOutput("Poses/Robot/" + name + "Pose", RobotPoseSourceConstants.EMPTY_POSE_LIST);
@@ -68,18 +72,24 @@ public class RobotPoseSource {
     }
 
     /**
-     * Gets the best possible robot Pose from the camera's data
+     * If the robot is close enough to the tag, it gets the estimated solve PNP pose.
+     * If it's too far, it assumes the robot's heading and calculates its position from there.
      *
-     * @param averageDistanceFromAllTags the average of the distance from all visible tags
-     * @return the result
+     * @param averageDistanceFromBestTag the average of the distance from the best visible tag
+     * @return the robot's pose
      */
-    private Pose2d getBestRobotPose(double averageDistanceFromAllTags) {
-        if (averageDistanceFromAllTags < RobotPoseSourceConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS)
-            return getRobotPoseFromCameraPose(inputs.solvePNPPose);
-        return getAssumedRobotHeadingPose().toPose2d();
+    private Pose2d calculateBestRobotPose(double averageDistanceFromBestTag) {
+        if (averageDistanceFromBestTag < RobotPoseSourceConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS)
+            return cameraPoseToRobotPose(inputs.solvePNPPose);
+        return calculateAssumedRobotHeadingPose().toPose2d();
     }
 
-    private Pose3d getAssumedRobotHeadingPose() {
+    /**
+     * Calculates the robot's pose by assuming its heading.
+     *
+     * @return the robot's pose
+     */
+    private Pose3d calculateAssumedRobotHeadingPose() {
         final Rotation2d robotHeading = RobotContainer.SWERVE.getHeading();
         final Translation2d robotFieldRelativePositionTranslation = getRobotFieldRelativePosition(robotHeading);
         return new Pose3d(new Pose2d(robotFieldRelativePositionTranslation, robotHeading));
@@ -102,10 +112,10 @@ public class RobotPoseSource {
         return new Translation2d(cameraToTagXDistance, cameraToTagYDistance);
     }
 
-    private Pose2d getRobotPoseFromCameraPose(Pose3d solvePNPPose) {
-        if (solvePNPPose == null)
+    private Pose2d cameraPoseToRobotPose(Pose3d cameraPose) {
+        if (cameraPose == null)
             return null;
-        return solvePNPPose.transformBy(robotCenterToCamera.inverse()).toPose2d();
+        return cameraPose.transformBy(robotCenterToCamera.inverse()).toPose2d();
     }
 
     private boolean isNewTimestamp() {
@@ -123,9 +133,22 @@ public class RobotPoseSource {
         }
 
         final Pose2d[] visibleTagPoses = new Pose2d[inputs.visibleTagIDs.length];
-        for (int i = 0; i < visibleTagPoses.length; i++) {
+        for (int i = 0; i < visibleTagPoses.length; i++)
             visibleTagPoses[i] = FieldConstants.TAG_ID_TO_POSE.get(i).toPose2d();
-        }
         Logger.recordOutput("VisibleTags/" + this.getName(), visibleTagPoses);
+    }
+
+    private Matrix<N3, N1> solvePNPAverageDistanceToStdDevs(double translationsStdExponent, double thetaStdExponent, int visibleTags) {
+        final double translationStd = translationsStdExponent * Math.pow(inputs.averageDistanceFromAllTags, 2) / (visibleTags * visibleTags);
+        final double thetaStd = thetaStdExponent * Math.pow(inputs.averageDistanceFromAllTags, 2) / visibleTags;
+
+        return VecBuilder.fill(translationStd, translationStd, thetaStd);
+    }
+
+    private Matrix<N3, N1> assumedHeadingAverageDistanceToStdDevs(double assumedRobotHeadingPose, int visibleTags) {
+        final double translationStd = assumedRobotHeadingPose * Math.pow(inputs.averageDistanceFromBestTag, 2) / (visibleTags * visibleTags);
+        final double thetaStd = Double.POSITIVE_INFINITY;
+
+        return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }
 }

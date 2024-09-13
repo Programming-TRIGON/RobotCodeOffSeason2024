@@ -33,10 +33,10 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
     }
 
     /**
-     * Estimates the camera's rotation relative to the apriltag
+     * Estimates the camera's rotation relative to the apriltag.
      *
-     * @param result the camera's final resulted image
-     * @return the result
+     * @param result the camera's pipeline result
+     * @return the estimated rotation
      */
     private Rotation3d getBestTargetRelativeRotation(PhotonPipelineResult result) {
         final List<TargetCorner> tagCorners = result.getBestTarget().getDetectedCorners();
@@ -47,10 +47,10 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
     }
 
     /**
-     * Estimates the camera's pose using Solve PNP and uses multiple tags if possible
+     * Estimates the camera's pose using Solve PNP using as many tags as possible.
      *
-     * @param result the camera's final resulted image
-     * @return the result
+     * @param result the camera's pipeline result
+     * @return the estimated pose
      */
     private Pose3d getSolvePNPPose(PhotonPipelineResult result) {
         if (result.getMultiTagResult().estimatedPose.isPresent) {
