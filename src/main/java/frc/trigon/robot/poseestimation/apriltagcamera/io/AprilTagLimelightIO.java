@@ -1,5 +1,7 @@
-package frc.trigon.robot.poseestimation.apriltagcamera;
+package frc.trigon.robot.poseestimation.apriltagcamera.io;
 
+import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
+import frc.trigon.robot.poseestimation.apriltagcamera.RobotPoseSourceInputsAutoLogged;
 import org.trigon.utilities.LimelightHelpers;
 
 public class AprilTagLimelightIO extends AprilTagCameraIO {

@@ -1,4 +1,4 @@
-package frc.trigon.robot.poseestimation.apriltagcamera;
+package frc.trigon.robot.poseestimation.apriltagcamera.io;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -7,6 +7,8 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
 import frc.trigon.robot.constants.FieldConstants;
+import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
+import frc.trigon.robot.poseestimation.apriltagcamera.RobotPoseSourceInputsAutoLogged;
 import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;

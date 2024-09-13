@@ -12,7 +12,7 @@ import org.littletonrobotics.junction.Logger;
 import org.photonvision.PhotonUtils;
 
 /**
- * A pose source is a class that provides the robot's pose, from a camera.
+ * An april tag camera is a class that provides the robot's pose, from a camera.
  */
 public class AprilTagCamera {
     protected final String name;
@@ -23,12 +23,20 @@ public class AprilTagCamera {
     private final double solvePNPTranslationsStdExponent, assumedRobotPoseTranslationsStdExponent, solvePNPThetaStdExponent;
     private Pose2d robotPose = null;
 
-    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double assumedRobotPoseTranslationsStdExponent, double solvePNPThetaStdExponent) {
+    /**
+     * @param robotPoseSourceType                     the type of camera
+     * @param name                                    the camera's name
+     * @param robotCenterToCamera                     the transform of the robot's origin point to the camera
+     * @param solvePNPTranslationsStdExponent
+     * @param solvePNPThetaStdExponent
+     * @param assumedRobotPoseTranslationsStdExponent
+     */
+    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double solvePNPThetaStdExponent, double assumedRobotPoseTranslationsStdExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
         this.solvePNPTranslationsStdExponent = solvePNPTranslationsStdExponent;
-        this.assumedRobotPoseTranslationsStdExponent = assumedRobotPoseTranslationsStdExponent;
         this.solvePNPThetaStdExponent = solvePNPThetaStdExponent;
+        this.assumedRobotPoseTranslationsStdExponent = assumedRobotPoseTranslationsStdExponent;
 
         if (Robot.IS_REAL)
             aprilTagCameraIO = robotPoseSourceType.createIOFunction.apply(name);
@@ -148,8 +156,8 @@ public class AprilTagCamera {
 
     private Matrix<N3, N1> calculateSolvePNPStdDevs() {
         final int numberOfVisibleTags = inputs.visibleTagIDs.length;
-        final double translationStd = solvePNPTranslationsStdExponent * (inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags) / numberOfVisibleTags;
-        final double thetaStd = solvePNPThetaStdExponent * (inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags) / numberOfVisibleTags;
+        final double translationStd = calculateStd(solvePNPTranslationsStdExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
+        final double thetaStd = calculateStd(solvePNPThetaStdExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
 
         return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }
@@ -161,10 +169,15 @@ public class AprilTagCamera {
      * @return the standard deviations
      */
     private Matrix<N3, N1> calculateAssumedHeadingStdDevs() {
-        final double translationStd = assumedRobotPoseTranslationsStdExponent * inputs.distanceFromBestTag * inputs.distanceFromBestTag;
+        final double translationStd = calculateStd(assumedRobotPoseTranslationsStdExponent, inputs.distanceFromBestTag, inputs.visibleTagIDs.length);
         final double thetaStd = Double.POSITIVE_INFINITY;
 
         return VecBuilder.fill(translationStd, translationStd, thetaStd);
+    }
+
+    private double calculateStd(double exponent, double distance, int visibleTags) {
+        return exponent * (distance * distance) * visibleTags;
+
     }
 
     private boolean isWithinBestTagRangeForSolvePNP() {
