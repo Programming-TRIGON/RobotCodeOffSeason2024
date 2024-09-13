@@ -69,8 +69,8 @@ public class AprilTagCamera {
         return name;
     }
 
-    public double getLastResultTimestampSeconds() {
-        return inputs.lastResultTimestampSeconds;
+    public double getLatestResultTimestampSeconds() {
+        return inputs.latestResultTimestampSeconds;
     }
 
 
@@ -108,7 +108,7 @@ public class AprilTagCamera {
      * @return the robot's pose
      */
     private Pose3d calculateAssumedRobotHeadingPose() {
-        final Rotation2d robotHeadingAtResultTimestamp = PoseEstimator6328.getInstance().samplePose(inputs.lastResultTimestampSeconds).getRotation();
+        final Rotation2d robotHeadingAtResultTimestamp = PoseEstimator6328.getInstance().samplePose(inputs.latestResultTimestampSeconds).getRotation();
         final Translation2d robotFieldRelativePositionTranslation = getRobotFieldRelativePosition(robotHeadingAtResultTimestamp);
         return new Pose3d(new Pose2d(robotFieldRelativePositionTranslation, robotHeadingAtResultTimestamp));
     }
@@ -137,10 +137,10 @@ public class AprilTagCamera {
     }
 
     private boolean isNewTimestamp() {
-        if (lastUpdatedTimestamp == getLastResultTimestampSeconds())
+        if (lastUpdatedTimestamp == getLatestResultTimestampSeconds())
             return false;
 
-        lastUpdatedTimestamp = getLastResultTimestampSeconds();
+        lastUpdatedTimestamp = getLatestResultTimestampSeconds();
         return true;
     }
 

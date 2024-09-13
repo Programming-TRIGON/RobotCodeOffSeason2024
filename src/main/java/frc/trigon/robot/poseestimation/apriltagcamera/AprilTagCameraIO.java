@@ -10,7 +10,7 @@ public class AprilTagCameraIO {
     @AutoLog
     public static class RobotPoseSourceInputs {
         public boolean hasResult = false;
-        public double lastResultTimestampSeconds = 0;
+        public double latestResultTimestampSeconds = 0;
         public Pose3d solvePNPPose = new Pose3d();
         public int[] visibleTagIDs = new int[0];
         public double bestTargetRelativeYawRadians = 0;
