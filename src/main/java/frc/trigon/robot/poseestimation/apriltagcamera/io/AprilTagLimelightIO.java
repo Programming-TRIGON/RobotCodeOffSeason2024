@@ -28,7 +28,7 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final LimelightHelpers.Results results = LimelightHelpers.getLatestResults(hostname).targetingResults;
         inputs.solvePNPPose = results.getBotPose3d_wpiBlue();
-        inputs.lastResultTimestamp = Units.millisecondsToSeconds(results.timestamp_LIMELIGHT_publish);
+        inputs.lastResultTimestampSeconds = Units.millisecondsToSeconds(results.timestamp_LIMELIGHT_publish);
         inputs.visibleTagIDs = getVisibleTagIDs(results);
         inputs.bestTargetRelativeYawRadians = getBestTargetRelativeRotation(results).getZ();
         inputs.bestTargetRelativePitchRadians = getBestTargetRelativeRotation(results).getY();
@@ -50,10 +50,9 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     }
 
     private Rotation3d getBestTargetRelativeRotation(LimelightHelpers.Results results) {
-        final int fiducialID = (int) results.targets_Fiducials[0].fiducialID;
-        return FieldConstants.TAG_ID_TO_POSE.get(fiducialID).getRotation();
+        final LimelightHelpers.LimelightTarget_Fiducial targetTag = results.targets_Fiducials[0];
+        return new Rotation3d(0, targetTag.tx, targetTag.ty);
     }
-
 
     private double getAverageDistanceFromAllTags(LimelightHelpers.Results results) {
         final LimelightHelpers.LimelightTarget_Fiducial[] targetFiducials = results.targets_Fiducials;
