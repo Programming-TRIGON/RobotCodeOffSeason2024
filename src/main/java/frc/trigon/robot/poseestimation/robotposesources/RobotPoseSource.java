@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import frc.trigon.robot.Robot;
-import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
 import org.littletonrobotics.junction.Logger;
@@ -101,7 +100,6 @@ public class RobotPoseSource {
      */
     private Pose3d calculateAssumedRobotHeadingPose() {
         final Rotation2d robotHeading = PoseEstimator6328.getInstance().getSampleHeading(lastUpdatedTimestamp).getRotation();
-        RobotContainer.SWERVE.getHeading();
         final Translation2d robotFieldRelativePositionTranslation = getRobotFieldRelativePosition(robotHeading);
         return new Pose3d(new Pose2d(robotFieldRelativePositionTranslation, robotHeading));
     }
