@@ -13,6 +13,7 @@ import org.photonvision.PhotonUtils;
 
 /**
  * An april tag camera is a class that provides the robot's pose, from a camera.
+ * An april tag is like a 2D barcode
  */
 public class AprilTagCamera {
     protected final String name;
@@ -20,23 +21,23 @@ public class AprilTagCamera {
     private final Transform3d robotCenterToCamera;
     private final AprilTagCameraIO aprilTagCameraIO;
     private double lastUpdatedTimestamp;
-    private final double solvePNPTranslationsStdExponent, assumedRobotPoseTranslationsStdExponent, solvePNPThetaStdExponent;
+    private final double solvePNPTranslationsStandardDeviationsExponent, assumedRobotPoseTranslationsStandardDeviationsExponent, solvePNPThetaStandardDeviationsExponent;
     private Pose2d robotPose = null;
 
     /**
-     * @param robotPoseSourceType                        the type of camera
-     * @param name                                       the camera's name
-     * @param robotCenterToCamera                        the transform of the robot's origin point to the camera
-     * @param solvePNPTranslationsStdExponent            the translation exponent for solve PNP
-     * @param solvePNPThetaStdExponent                   the theta exponent for solve PNP
-     * @param assumedRobotHeadingTranslationsStdExponent the translation exponent for the assumed robot heading pose calculation
+     * @param robotPoseSourceType                                       the type of camera
+     * @param name                                                      the camera's name
+     * @param robotCenterToCamera                                       the transform of the robot's origin point to the camera
+     * @param solvePNPTranslationsStandardDeviationsExponent            the calibrated gain to calculate the translation deviation from the estimated pose when using solve PNP
+     * @param solvePNPThetaStandardDeviationsExponent                   the calibrated gain to calculate the theta deviation from the estimated pose when using solve PNP
+     * @param assumedRobotHeadingTranslationsStandardDeviationsExponent the calibrated gain to calculate the translation deviation from the estimated pose when getting the pose by assuming the robot's heading
      */
-    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double solvePNPThetaStdExponent, double assumedRobotHeadingTranslationsStdExponent) {
+    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStandardDeviationsExponent, double solvePNPThetaStandardDeviationsExponent, double assumedRobotHeadingTranslationsStandardDeviationsExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
-        this.solvePNPTranslationsStdExponent = solvePNPTranslationsStdExponent;
-        this.solvePNPThetaStdExponent = solvePNPThetaStdExponent;
-        this.assumedRobotPoseTranslationsStdExponent = assumedRobotHeadingTranslationsStdExponent;
+        this.solvePNPTranslationsStandardDeviationsExponent = solvePNPTranslationsStandardDeviationsExponent;
+        this.solvePNPThetaStandardDeviationsExponent = solvePNPThetaStandardDeviationsExponent;
+        this.assumedRobotPoseTranslationsStandardDeviationsExponent = assumedRobotHeadingTranslationsStandardDeviationsExponent;
 
         if (Robot.IS_REAL)
             aprilTagCameraIO = robotPoseSourceType.createIOFunction.apply(name);
@@ -74,14 +75,14 @@ public class AprilTagCamera {
 
 
     /**
-     * Calculates the range of how inaccurate the estimated pose could be.
+     * Calculates the range of how inaccurate the estimated pose could be using the distance from the target, the number of targets, and a calculated gain.
      *
      * @return the standard deviations for the pose estimation strategy used
      */
-    public Matrix<N3, N1> calculateStdDevs() {
+    public Matrix<N3, N1> calculateStandardDeviations() {
         if (isWithinBestTagRangeForSolvePNP())
-            return calculateSolvePNPStdDevs();
-        return calculateAssumedHeadingStdDevs();
+            return calculateSolvePNPStandardDeviations();
+        return calculateAssumedHeadingStandardDeviations();
     }
 
     /**
@@ -154,12 +155,12 @@ public class AprilTagCamera {
         Logger.recordOutput("VisibleTags/" + this.getName(), visibleTagPoses);
     }
 
-    private Matrix<N3, N1> calculateSolvePNPStdDevs() {
+    private Matrix<N3, N1> calculateSolvePNPStandardDeviations() {
         final int numberOfVisibleTags = inputs.visibleTagIDs.length;
-        final double translationStd = calculateStd(solvePNPTranslationsStdExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
-        final double thetaStd = calculateStd(solvePNPThetaStdExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
+        final double translationStandardDeviation = calculateStandardDeviations(solvePNPTranslationsStandardDeviationsExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
+        final double thetaStandardDeviation = calculateStandardDeviations(solvePNPThetaStandardDeviationsExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
 
-        return VecBuilder.fill(translationStd, translationStd, thetaStd);
+        return VecBuilder.fill(translationStandardDeviation, translationStandardDeviation, thetaStandardDeviation);
     }
 
     /**
@@ -168,16 +169,24 @@ public class AprilTagCamera {
      *
      * @return the standard deviations
      */
-    private Matrix<N3, N1> calculateAssumedHeadingStdDevs() {
-        final double translationStd = calculateStd(assumedRobotPoseTranslationsStdExponent, inputs.distanceFromBestTag, inputs.visibleTagIDs.length);
-        final double thetaStd = Double.POSITIVE_INFINITY;
+    private Matrix<N3, N1> calculateAssumedHeadingStandardDeviations() {
+        final double translationStandardDeviation = calculateStandardDeviations(assumedRobotPoseTranslationsStandardDeviationsExponent, inputs.distanceFromBestTag, inputs.visibleTagIDs.length);
+        final double thetaStandardDeviation = Double.POSITIVE_INFINITY;
 
-        return VecBuilder.fill(translationStd, translationStd, thetaStd);
+        return VecBuilder.fill(translationStandardDeviation, translationStandardDeviation, thetaStandardDeviation);
     }
 
-    private double calculateStd(double exponent, double distance, int visibleTags) {
-        return exponent * (distance * distance) * visibleTags;
-
+    /**
+     * Calculates the standard deviations of the estimated pose using a formula
+     * The farther it is from the tags, the less accurate the result and the more tags, the more accurate the result.
+     *
+     * @param exponent            a calibrated gain, different for each pose estimating strategy
+     * @param distance            the distance from the tag(s)
+     * @param numberOfVisibleTags the number of visible tags
+     * @return the standard deviation
+     */
+    private double calculateStandardDeviations(double exponent, double distance, int numberOfVisibleTags) {
+        return exponent * (distance * distance) / numberOfVisibleTags;
     }
 
     private boolean isWithinBestTagRangeForSolvePNP() {

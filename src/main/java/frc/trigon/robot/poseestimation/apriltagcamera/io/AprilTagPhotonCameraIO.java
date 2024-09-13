@@ -51,7 +51,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         inputs.solvePNPPose = new Pose3d();
     }
 
-    private static Point getTagCenter(List<TargetCorner> tagCorners) {
+    private Point getTagCenter(List<TargetCorner> tagCorners) {
         double tagCornerSumX = 0;
         double tagCornerSumY = 0;
         for (TargetCorner tagCorner : tagCorners) {
@@ -123,7 +123,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         return result.getBestTarget().getBestCameraToTarget().getTranslation().getNorm();
     }
 
-    private static Rotation3d correctPixelRot(Point pixel, Matrix<N3, N3> camIntrinsics) {
+    private Rotation3d correctPixelRot(Point pixel, Matrix<N3, N3> camIntrinsics) {
         double fx = camIntrinsics.get(0, 0);
         double cx = camIntrinsics.get(0, 2);
         double xOffset = cx - pixel.x;
