@@ -104,7 +104,7 @@ public class PoseEstimator implements AutoCloseable {
         robotPoseSource.update();
         if (!robotPoseSource.hasNewResult())
             return null;
-        final Pose2d robotPose = robotPoseSource.getCurrentRobotPose();
+        final Pose2d robotPose = robotPoseSource.getEstimatedRobotPose();
         if (robotPose == null)
             return null;
 

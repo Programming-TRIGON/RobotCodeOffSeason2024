@@ -20,13 +20,14 @@ public class RobotPoseSource {
     private final Transform3d robotCenterToCamera;
     private final RobotPoseSourceIO robotPoseSourceIO;
     private double lastUpdatedTimestamp;
-    private final double translationsStdExponent, thetaStdExponent;
+    private final double solvePNPTranslationsStdExponent, assumedRobotPoseTranslationsStdExponent, thetaStdExponent;
     private Pose2d robotPose = null;
 
-    public RobotPoseSource(RobotPoseSourceConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double translationsStdExponent, double thetaStdExponent) {
+    public RobotPoseSource(RobotPoseSourceConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStdExponent, double assumedRobotPoseTranslationsStdExponent, double thetaStdExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
-        this.translationsStdExponent = translationsStdExponent;
+        this.solvePNPTranslationsStdExponent = solvePNPTranslationsStdExponent;
+        this.assumedRobotPoseTranslationsStdExponent = assumedRobotPoseTranslationsStdExponent;
         this.thetaStdExponent = thetaStdExponent;
 
         if (Robot.IS_REAL)
@@ -51,10 +52,7 @@ public class RobotPoseSource {
         return (inputs.hasResult && inputs.averageDistanceFromAllTags != 0) && isNewTimestamp();
     }
 
-    /**
-     * @return the current estimated robot position
-     */
-    public Pose2d getCurrentRobotPose() {
+    public Pose2d getEstimatedRobotPose() {
         return robotPose;
     }
 
@@ -68,12 +66,12 @@ public class RobotPoseSource {
 
 
     /**
-     * Calculates the standard deviations of the estimated robot pose.
+     * Calculates the range of how inaccurate the estimated pose could be
      *
      * @return the standard deviations for the pose estimation strategy used
      */
     public Matrix<N3, N1> calculateStdDevs() {
-        if (isWithinTagRange())
+        if (isWithinBestTagRangeForSolvePNP())
             return calculateSolvePNPStdDevs();
         return calculateAssumedHeadingStdDevs();
     }
@@ -81,27 +79,28 @@ public class RobotPoseSource {
     /**
      * If the robot is close enough to the tag, it gets the estimated solve PNP pose.
      * If it's too far, it assumes the robot's heading and calculates its position from there.
-     * Assuming the robot's heading is more robust, but using solve PNP resets the robot's heading.
+     * Assuming the robot's heading is more robust, but won't fix current wrong heading.
+     * To fix this, we use solve PNP to reset the robot's heading, when we're close enough for an accurate result.
      *
      * @param distanceFromBestTag the average of the distance from the best visible tag
      * @return the robot's pose
      */
     private Pose2d calculateBestRobotPose(double distanceFromBestTag) {
-        if (isWithinTagRange())
+        if (isWithinBestTagRangeForSolvePNP())
             return cameraPoseToRobotPose(inputs.solvePNPPose);
         return calculateAssumedRobotHeadingPose().toPose2d();
     }
 
     /**
-     * Calculates the robot's pose by assuming its heading and the apriltag's position.
+     * Calculates the robot's pose by assuming its heading, the apriltag's position, and the camera's position on the robot.
      * This method of finding the robot's pose is more robust but relies on knowing the robot's heading beforehand.
      *
      * @return the robot's pose
      */
     private Pose3d calculateAssumedRobotHeadingPose() {
-        final Rotation2d robotHeading = PoseEstimator6328.getInstance().getSampleHeading(lastUpdatedTimestamp).getRotation();
-        final Translation2d robotFieldRelativePositionTranslation = getRobotFieldRelativePosition(robotHeading);
-        return new Pose3d(new Pose2d(robotFieldRelativePositionTranslation, robotHeading));
+        final Rotation2d robotHeadingAtResultTimestamp = PoseEstimator6328.getInstance().getSamplePose(inputs.lastResultTimestamp).getRotation();
+        final Translation2d robotFieldRelativePositionTranslation = getRobotFieldRelativePosition(robotHeadingAtResultTimestamp);
+        return new Pose3d(new Pose2d(robotFieldRelativePositionTranslation, robotHeadingAtResultTimestamp));
     }
 
     private Translation2d getRobotFieldRelativePosition(Rotation2d robotHeading) {
@@ -149,26 +148,26 @@ public class RobotPoseSource {
 
     private Matrix<N3, N1> calculateSolvePNPStdDevs() {
         final int numberOfVisibleTags = inputs.visibleTagIDs.length;
-        final double translationStd = translationsStdExponent * inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags / numberOfVisibleTags;
+        final double translationStd = solvePNPTranslationsStdExponent * inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags / numberOfVisibleTags;
         final double thetaStd = thetaStdExponent * Math.pow(inputs.averageDistanceFromAllTags, 2) / numberOfVisibleTags;
 
         return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }
 
     /**
-     * Calculates the standard deviations of the pose.
-     * The theta deviation is infinite because we assume the heading is correct.
+     * Calculates the standard deviations of the pose, for when the pose is calculated by assuming the robot's heading.
+     * The theta deviation is infinite so that it won't change anything in the heading because we assume it is correct.
      *
      * @return the standard deviations
      */
     private Matrix<N3, N1> calculateAssumedHeadingStdDevs() {
-        final double translationStd = translationsStdExponent * inputs.distanceFromBestTag * inputs.distanceFromBestTag;
+        final double translationStd = assumedRobotPoseTranslationsStdExponent * inputs.distanceFromBestTag * inputs.distanceFromBestTag;
         final double thetaStd = Double.POSITIVE_INFINITY;
 
         return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }
 
-    private boolean isWithinTagRange() {
+    private boolean isWithinBestTagRangeForSolvePNP() {
         return inputs.distanceFromBestTag < RobotPoseSourceConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS;
     }
 }
