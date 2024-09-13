@@ -12,9 +12,9 @@ import org.littletonrobotics.junction.Logger;
 import org.photonvision.PhotonUtils;
 
 /**
- * An april tag camera is a class that provides the robot's pose, from a camera.
+ * An april tag camera is a class that provides the robot's pose, from a camera using one or multiple apriltags.
  * An april tag is like a 2D barcode used to find the robot's position on the field.
- * By using the angle and size of the tag that the camera sees, it can estimate its position.
+ * Since the tag's position on the field is known, we can calculate our position relative to it, therefore estimating our position on the field.
  */
 public class AprilTagCamera {
     protected final String name;
@@ -181,8 +181,8 @@ public class AprilTagCamera {
     }
 
     /**
-     * Calculates the standard deviations of the estimated pose using a formula
-     * The farther it is from the tags, the less accurate the result and the more tags, the more accurate the result.
+     * Calculates the standard deviation of the estimated pose using a formula.
+     * As we get further from the tag(s), this will return a less trusting (higher deviation) result.
      *
      * @param exponent            a calibrated gain, different for each pose estimating strategy
      * @param distance            the distance from the tag(s)
