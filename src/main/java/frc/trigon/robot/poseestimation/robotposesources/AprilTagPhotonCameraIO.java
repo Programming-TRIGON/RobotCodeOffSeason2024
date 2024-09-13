@@ -37,8 +37,8 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
 
         inputs.solvePNPPose = getSolvePNPPose(latestResult);
         inputs.lastResultTimestamp = latestResult.getTimestampSeconds();
-        inputs.bestTargetRelativePitch = bestTargetRelativeRotation3d.getY();
-        inputs.bestTargetRelativeYaw = bestTargetRelativeRotation3d.getZ();
+        inputs.bestTargetRelativePitchRadians = bestTargetRelativeRotation3d.getY();
+        inputs.bestTargetRelativeYawRadians = bestTargetRelativeRotation3d.getZ();
         inputs.visibleTagIDs = getVisibleTagIDs(latestResult);
         inputs.averageDistanceFromAllTags = getAverageDistanceFromAllTags(latestResult);
         inputs.distanceFromBestTag = getDistanceFromBestTag(latestResult);

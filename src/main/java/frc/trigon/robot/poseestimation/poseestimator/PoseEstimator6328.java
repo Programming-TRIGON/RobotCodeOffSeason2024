@@ -145,6 +145,10 @@ public class PoseEstimator6328 {
         estimatedPose = estimateAtTime.plus(scaledTransform).plus(sampleToOdometryTransform);
     }
 
+    public Pose2d getSampleHeading(double timeStamp) {
+        return poseBuffer.getSample(timeStamp).orElse(null);
+    }
+
     /**
      * Reset estimated pose and odometry pose to pose <br>
      * Clear pose buffer
