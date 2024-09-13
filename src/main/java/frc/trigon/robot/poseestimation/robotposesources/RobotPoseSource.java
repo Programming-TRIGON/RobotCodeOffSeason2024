@@ -20,7 +20,8 @@ public class RobotPoseSource {
     private final RobotPoseSourceInputsAutoLogged inputs = new RobotPoseSourceInputsAutoLogged();
     private final Transform3d robotCenterToCamera;
     private final RobotPoseSourceIO robotPoseSourceIO;
-    private double lastUpdatedTimestamp, translationsStdExponent, thetaStdExponent;
+    private double lastUpdatedTimestamp;
+    private final double translationsStdExponent, thetaStdExponent;
     private Pose2d robotPose = null;
 
     public RobotPoseSource(RobotPoseSourceConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double translationsStdExponent, double thetaStdExponent) {
@@ -60,14 +61,6 @@ public class RobotPoseSource {
 
     public String getName() {
         return name;
-    }
-
-    public double getAverageDistanceFromTags() {
-        return inputs.averageDistanceFromAllTags;
-    }
-
-    public int getNumberOfVisibleTags() {
-        return inputs.visibleTagIDs.length;
     }
 
     public double getLastResultTimestamp() {
