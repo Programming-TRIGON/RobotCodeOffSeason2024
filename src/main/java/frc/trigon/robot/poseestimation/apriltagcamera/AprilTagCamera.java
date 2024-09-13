@@ -51,10 +51,10 @@ public class AprilTagCamera {
     public void update() {
         aprilTagCameraIO.updateInputs(inputs);
         Logger.processInputs("Cameras/" + name, inputs);
-        logVisibleTags();
-
         robotPose = calculateBestRobotPose(inputs.distanceFromBestTag);
+
         logEstimatedRobotPose();
+        logVisibleTags();
     }
 
     public boolean hasNewResult() {
