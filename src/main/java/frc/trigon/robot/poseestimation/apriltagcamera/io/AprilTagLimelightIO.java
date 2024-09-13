@@ -2,6 +2,7 @@ package frc.trigon.robot.poseestimation.apriltagcamera.io;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.util.Units;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.RobotPoseSourceInputsAutoLogged;
@@ -27,7 +28,7 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final LimelightHelpers.Results results = LimelightHelpers.getLatestResults(hostname).targetingResults;
         inputs.solvePNPPose = results.getBotPose3d_wpiBlue();
-        inputs.lastResultTimestamp = results.timestamp_LIMELIGHT_publish;
+        inputs.lastResultTimestamp = Units.millisecondsToSeconds(results.timestamp_LIMELIGHT_publish);
         inputs.visibleTagIDs = getVisibleTagIDs(results);
         inputs.bestTargetRelativeYawRadians = getBestTargetRelativeRotation(results).getZ();
         inputs.bestTargetRelativePitchRadians = getBestTargetRelativeRotation(results).getY();
