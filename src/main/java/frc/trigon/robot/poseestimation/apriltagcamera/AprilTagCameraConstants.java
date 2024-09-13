@@ -1,4 +1,4 @@
-package frc.trigon.robot.poseestimation.robotposesources;
+package frc.trigon.robot.poseestimation.apriltagcamera;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;

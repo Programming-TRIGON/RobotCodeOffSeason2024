@@ -1,4 +1,4 @@
-package frc.trigon.robot.poseestimation.robotposesources;
+package frc.trigon.robot.poseestimation.apriltagcamera;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
@@ -148,8 +148,8 @@ public class AprilTagCamera {
 
     private Matrix<N3, N1> calculateSolvePNPStdDevs() {
         final int numberOfVisibleTags = inputs.visibleTagIDs.length;
-        final double translationStd = solvePNPTranslationsStdExponent * inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags / numberOfVisibleTags;
-        final double thetaStd = solvePNPThetaStdExponent * Math.pow(inputs.averageDistanceFromAllTags, 2) / numberOfVisibleTags;
+        final double translationStd = solvePNPTranslationsStdExponent * (inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags) / numberOfVisibleTags;
+        final double thetaStd = solvePNPThetaStdExponent * (inputs.averageDistanceFromAllTags * inputs.averageDistanceFromAllTags) / numberOfVisibleTags;
 
         return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }

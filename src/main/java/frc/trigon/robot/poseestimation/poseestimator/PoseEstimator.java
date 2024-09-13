@@ -12,8 +12,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.poseestimation.robotposesources.AprilTagCamera;
-import frc.trigon.robot.poseestimation.robotposesources.AprilTagCameraConstants;
+import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCamera;
+import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import org.littletonrobotics.junction.Logger;
 
 import java.util.ArrayList;
