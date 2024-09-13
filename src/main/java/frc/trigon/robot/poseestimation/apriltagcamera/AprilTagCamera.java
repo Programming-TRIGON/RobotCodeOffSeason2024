@@ -13,7 +13,8 @@ import org.photonvision.PhotonUtils;
 
 /**
  * An april tag camera is a class that provides the robot's pose, from a camera.
- * An april tag is like a 2D barcode
+ * An april tag is like a 2D barcode used to find the robot's position on the field.
+ * By using the angle and size of the tag that the camera sees, it can estimate its position.
  */
 public class AprilTagCamera {
     protected final String name;
@@ -25,6 +26,8 @@ public class AprilTagCamera {
     private Pose2d robotPose = null;
 
     /**
+     * Constructs a new AprilTagCamera.
+     *
      * @param robotPoseSourceType                                       the type of camera
      * @param name                                                      the camera's name
      * @param robotCenterToCamera                                       the transform of the robot's origin point to the camera
@@ -76,6 +79,7 @@ public class AprilTagCamera {
 
     /**
      * Calculates the range of how inaccurate the estimated pose could be using the distance from the target, the number of targets, and a calculated gain.
+     * Different pose estimation strategies may use different formulae to calculate the standard deviations.
      *
      * @return the standard deviations for the pose estimation strategy used
      */
