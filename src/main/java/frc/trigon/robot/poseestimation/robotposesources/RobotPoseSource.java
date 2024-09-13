@@ -93,7 +93,7 @@ public class RobotPoseSource {
     }
 
     /**
-     * Calculates the robot's pose by assuming its heading.
+     * Calculates the robot's pose by assuming its heading and the apriltag's position.
      * This method of finding the robot's pose is more robust but relies on knowing the robot's heading beforehand.
      *
      * @return the robot's pose
