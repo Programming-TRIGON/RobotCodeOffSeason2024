@@ -51,13 +51,10 @@ public class AprilTagCamera {
     public void update() {
         aprilTagCameraIO.updateInputs(inputs);
         Logger.processInputs("Cameras/" + name, inputs);
+        logVisibleTags();
 
         robotPose = calculateBestRobotPose(inputs.distanceFromBestTag);
-
-        if (!inputs.hasResult || inputs.averageDistanceFromAllTags == 0 || robotPose == null)
-            Logger.recordOutput("Poses/Robot/" + name + "Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
-        else
-            Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);
+        logEstimatedRobotPose();
     }
 
     public boolean hasNewResult() {
@@ -195,5 +192,12 @@ public class AprilTagCamera {
 
     private boolean isWithinBestTagRangeForSolvePNP() {
         return inputs.distanceFromBestTag < AprilTagCameraConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS;
+    }
+
+    private void logEstimatedRobotPose() {
+        if (!inputs.hasResult || inputs.averageDistanceFromAllTags == 0 || robotPose == null)
+            Logger.recordOutput("Poses/Robot/" + name + "Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
+        else
+            Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);
     }
 }

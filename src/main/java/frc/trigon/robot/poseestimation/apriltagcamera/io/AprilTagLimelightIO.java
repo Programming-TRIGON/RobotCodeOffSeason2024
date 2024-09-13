@@ -49,9 +49,10 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     }
 
     private Rotation3d getBestTargetRelativeRotation(LimelightHelpers.Results results) {
-        int fiducialID = (int) LimelightHelpers.getFiducialID(hostname);
+        final int fiducialID = (int) results.targets_Fiducials[0].fiducialID;
         return FieldConstants.TAG_ID_TO_POSE.get(fiducialID).getRotation();
     }
+
 
     private double getAverageDistanceFromAllTags(LimelightHelpers.Results results) {
         double totalDistanceFromTags = 0;
@@ -61,10 +62,10 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     }
 
     private double getDistanceFromBestTag(LimelightHelpers.Results results) {
-        return getDistanceFromTag((int) LimelightHelpers.getFiducialID(hostname), results.getBotPose3d_wpiBlue());
+        return getDistanceFromTag((int) results.targets_Fiducials[0].fiducialID, results.getBotPose3d_wpiBlue());
     }
 
-    private double getDistanceFromTag(int fiducialID, Pose3d robotPose) {
-        return FieldConstants.TAG_ID_TO_POSE.get(fiducialID).getTranslation().getDistance(robotPose.getTranslation());
+    private double getDistanceFromTag(int fiducialID, Pose3d estimatedRobotPose) {
+        return FieldConstants.TAG_ID_TO_POSE.get(fiducialID).getTranslation().getDistance(estimatedRobotPose.getTranslation());
     }
 }
