@@ -111,7 +111,7 @@ public class PoseEstimator implements AutoCloseable {
         return new PoseEstimator6328.VisionObservation(
                 robotPose,
                 robotPoseSource.getLastResultTimestamp(),
-                averageDistanceToStdDevs(robotPoseSource.getAverageDistanceFromTags(), robotPoseSource.getNumberOfVisibleTags())
+                robotPoseSource.calculateStdDevs()
         );
     }
 

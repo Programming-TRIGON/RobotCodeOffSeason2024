@@ -32,6 +32,33 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
             updateNoResultInputs(inputs);
     }
 
+    private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs, PhotonPipelineResult latestResult) {
+        final Rotation3d bestTargetRelativeRotation3d = getBestTargetRelativeRotation(latestResult);
+
+        inputs.solvePNPPose = getSolvePNPPose(latestResult);
+        inputs.lastResultTimestamp = latestResult.getTimestampSeconds();
+        inputs.bestTargetRelativePitch = bestTargetRelativeRotation3d.getY();
+        inputs.bestTargetRelativeYaw = bestTargetRelativeRotation3d.getZ();
+        inputs.visibleTagIDs = getVisibleTagIDs(latestResult);
+        inputs.averageDistanceFromAllTags = getAverageDistanceFromAllTags(latestResult);
+        inputs.distanceFromBestTag = getDistanceFromBestTag(latestResult);
+    }
+
+    private void updateNoResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
+        inputs.visibleTagIDs = new int[0];
+        inputs.solvePNPPose = new Pose3d();
+    }
+
+    private static Point getTagCenter(List<TargetCorner> tagCorners) {
+        double tagCornerSumX = 0;
+        double tagCornerSumY = 0;
+        for (TargetCorner tagCorner : tagCorners) {
+            tagCornerSumX += tagCorner.x;
+            tagCornerSumY += tagCorner.y;
+        }
+        return new Point(tagCornerSumX / tagCorners.size(), tagCornerSumY / tagCorners.size());
+    }
+
     /**
      * Estimates the camera's rotation relative to the apriltag.
      *
@@ -90,35 +117,8 @@ public class AprilTagPhotonCameraIO extends RobotPoseSourceIO {
         return totalTagDistance / tagsSeen;
     }
 
-    private double getAverageDistanceFromBestTag(PhotonPipelineResult result) {
+    private double getDistanceFromBestTag(PhotonPipelineResult result) {
         return result.getBestTarget().getBestCameraToTarget().getTranslation().getNorm();
-    }
-
-    private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs, PhotonPipelineResult latestResult) {
-        final Rotation3d bestTargetRelativeRotation3d = getBestTargetRelativeRotation(latestResult);
-
-        inputs.solvePNPPose = getSolvePNPPose(latestResult);
-        inputs.lastResultTimestamp = latestResult.getTimestampSeconds();
-        inputs.bestTargetRelativePitch = bestTargetRelativeRotation3d.getY();
-        inputs.bestTargetRelativeYaw = bestTargetRelativeRotation3d.getZ();
-        inputs.visibleTagIDs = getVisibleTagIDs(latestResult);
-        inputs.averageDistanceFromAllTags = getAverageDistanceFromAllTags(latestResult);
-        inputs.averageDistanceFromBestTag = getAverageDistanceFromBestTag(latestResult);
-    }
-
-    private void updateNoResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
-        inputs.visibleTagIDs = new int[0];
-        inputs.solvePNPPose = new Pose3d();
-    }
-
-    private static Point getTagCenter(List<TargetCorner> tagCorners) {
-        double tagCornerSumX = 0;
-        double tagCornerSumY = 0;
-        for (TargetCorner tagCorner : tagCorners) {
-            tagCornerSumX += tagCorner.x;
-            tagCornerSumY += tagCorner.y;
-        }
-        return new Point(tagCornerSumX / tagCorners.size(), tagCornerSumY / tagCorners.size());
     }
 
     private static Rotation3d correctPixelRot(Point pixel, Matrix<N3, N3> camIntrinsics) {

@@ -16,6 +16,6 @@ public class RobotPoseSourceIO {
         public double bestTargetRelativeYaw = 0;
         public double bestTargetRelativePitch = 0;
         public double averageDistanceFromAllTags = 0;
-        public double averageDistanceFromBestTag = 0;
+        public double distanceFromBestTag = 0;
     }
 }
