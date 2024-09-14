@@ -27,11 +27,13 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
 
     private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final LimelightHelpers.Results results = LimelightHelpers.getLatestResults(hostname).targetingResults;
+        final Rotation3d bestTagRelativeRotation = getBestTargetRelativeRotation(results);
+
         inputs.solvePNPPose = results.getBotPose3d_wpiBlue();
         inputs.latestResultTimestampSeconds = Units.millisecondsToSeconds(results.timestamp_LIMELIGHT_publish);
         inputs.visibleTagIDs = getVisibleTagIDs(results);
-        inputs.bestTargetRelativeYawRadians = getBestTargetRelativeRotation(results).getZ();
-        inputs.bestTargetRelativePitchRadians = getBestTargetRelativeRotation(results).getY();
+        inputs.bestTargetRelativeYawRadians = bestTagRelativeRotation.getZ();
+        inputs.bestTargetRelativePitchRadians = bestTagRelativeRotation.getY();
         inputs.averageDistanceFromAllTags = getAverageDistanceFromAllTags(results);
         inputs.distanceFromBestTag = getDistanceFromBestTag(results);
     }
@@ -49,6 +51,12 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
         return visibleTagIDs;
     }
 
+    /**
+     * Estimates the camera's rotation relative to the apriltag.
+     *
+     * @param results the camera's pipeline result
+     * @return the estimated rotation
+     */
     private Rotation3d getBestTargetRelativeRotation(LimelightHelpers.Results results) {
         final LimelightHelpers.LimelightTarget_Fiducial bestTag = results.targets_Fiducials[0];
         return new Rotation3d(0, Units.degreesToRadians(bestTag.tx), Units.degreesToRadians(bestTag.ty));
