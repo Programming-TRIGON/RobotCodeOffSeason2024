@@ -46,9 +46,24 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     private int[] getVisibleTagIDs(LimelightHelpers.Results results) {
         final LimelightHelpers.LimelightTarget_Fiducial[] visibleTags = results.targets_Fiducials;
         final int[] visibleTagIDs = new int[visibleTags.length];
-        for (int i = 0; i < visibleTagIDs.length; i++)
-            visibleTagIDs[i] = (int) visibleTags[i].fiducialID;
+        visibleTagIDs[0] = (int) getBestTarget(results).fiducialID;
+        int idAddition = 1;
+
+        for (int i = 0; i < visibleTagIDs.length; i++) {
+            final int currentID = (int) visibleTags[i].fiducialID;
+
+            if (currentID == visibleTagIDs[0]) {
+                idAddition = 0;
+                continue;
+            }
+
+            visibleTagIDs[i + idAddition] = currentID;
+        }
         return visibleTagIDs;
+    }
+
+    private LimelightHelpers.LimelightTarget_Fiducial getBestTarget(LimelightHelpers.Results results) {
+        return results.targets_Fiducials[0];
     }
 
     /**
@@ -58,7 +73,7 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
      * @return the estimated rotation
      */
     private Rotation3d getBestTargetRelativeRotation(LimelightHelpers.Results results) {
-        final LimelightHelpers.LimelightTarget_Fiducial bestTag = results.targets_Fiducials[0];
+        final LimelightHelpers.LimelightTarget_Fiducial bestTag = getBestTarget(results);
         return new Rotation3d(0, Units.degreesToRadians(bestTag.tx), Units.degreesToRadians(bestTag.ty));
     }
 
