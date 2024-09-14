@@ -43,6 +43,10 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
         inputs.solvePNPPose = new Pose3d();
     }
 
+    private LimelightHelpers.LimelightTarget_Fiducial getBestTarget(LimelightHelpers.Results results) {
+        return results.targets_Fiducials[0];
+    }
+
     private int[] getVisibleTagIDs(LimelightHelpers.Results results) {
         final LimelightHelpers.LimelightTarget_Fiducial[] visibleTags = results.targets_Fiducials;
         final int[] visibleTagIDs = new int[visibleTags.length];
@@ -60,10 +64,6 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
             visibleTagIDs[i + idAddition] = currentID;
         }
         return visibleTagIDs;
-    }
-
-    private LimelightHelpers.LimelightTarget_Fiducial getBestTarget(LimelightHelpers.Results results) {
-        return results.targets_Fiducials[0];
     }
 
     /**
