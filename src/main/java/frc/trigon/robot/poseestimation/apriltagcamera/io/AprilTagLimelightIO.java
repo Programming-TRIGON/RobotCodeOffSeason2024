@@ -19,19 +19,15 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     protected void updateInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final LimelightHelpers.Results results = LimelightHelpers.getLatestResults(hostname).targetingResults;
 
-        if (results.targets_Fiducials.length > 0)
-            inputs.hasResult = LimelightHelpers.getTV(hostname);
-        else
-            inputs.hasResult = false;
+        inputs.hasResult = results.targets_Fiducials.length > 0;
 
         if (inputs.hasResult)
-            updateHasResultInputs(inputs);
+            updateHasResultInputs(inputs, results);
         else
             updateNoResultInputs(inputs);
     }
 
-    private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
-        final LimelightHelpers.Results results = LimelightHelpers.getLatestResults(hostname).targetingResults;
+    private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs, LimelightHelpers.Results results) {
         final Rotation3d bestTagRelativeRotation = getBestTargetRelativeRotation(results);
 
         inputs.solvePNPPose = results.getBotPose3d_wpiBlue();
@@ -80,10 +76,11 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
 
     private double getAverageDistanceFromAllTags(LimelightHelpers.Results results) {
         final LimelightHelpers.LimelightTarget_Fiducial[] targetFiducials = results.targets_Fiducials;
-
         double totalDistanceFromTags = 0;
+
         for (LimelightHelpers.LimelightTarget_Fiducial targetFiducial : targetFiducials)
             totalDistanceFromTags += getDistanceFromTag((int) targetFiducial.fiducialID, results.getBotPose3d_wpiBlue());
+
         return totalDistanceFromTags / results.targets_Fiducials.length;
     }
 
