@@ -84,7 +84,7 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
         double totalDistanceFromTags = 0;
         for (LimelightHelpers.LimelightTarget_Fiducial targetFiducial : targetFiducials)
             totalDistanceFromTags += getDistanceFromTag((int) targetFiducial.fiducialID, results.getBotPose3d_wpiBlue());
-        return totalDistanceFromTags /= results.targets_Fiducials.length;
+        return totalDistanceFromTags / results.targets_Fiducials.length;
     }
 
     private double getDistanceFromBestTag(LimelightHelpers.Results results) {
