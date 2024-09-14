@@ -17,7 +17,12 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
 
     @Override
     protected void updateInputs(RobotPoseSourceInputsAutoLogged inputs) {
-        inputs.hasResult = LimelightHelpers.getTV(hostname);
+        final LimelightHelpers.Results results = LimelightHelpers.getLatestResults(hostname).targetingResults;
+
+        if (results.targets_Fiducials.length > 0)
+            inputs.hasResult = LimelightHelpers.getTV(hostname);
+        else
+            inputs.hasResult = false;
 
         if (inputs.hasResult)
             updateHasResultInputs(inputs);
@@ -30,7 +35,7 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
         final Rotation3d bestTagRelativeRotation = getBestTargetRelativeRotation(results);
 
         inputs.solvePNPPose = results.getBotPose3d_wpiBlue();
-        inputs.latestResultTimestampSeconds = Units.millisecondsToSeconds(results.timestamp_LIMELIGHT_publish);
+        inputs.latestResultTimestampSeconds = results.timestamp_RIOFPGA_capture;
         inputs.visibleTagIDs = getVisibleTagIDs(results);
         inputs.bestTargetRelativeYawRadians = bestTagRelativeRotation.getZ();
         inputs.bestTargetRelativePitchRadians = bestTagRelativeRotation.getY();
@@ -41,10 +46,6 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     private void updateNoResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
         inputs.visibleTagIDs = new int[0];
         inputs.solvePNPPose = new Pose3d();
-    }
-
-    private LimelightHelpers.LimelightTarget_Fiducial getBestTarget(LimelightHelpers.Results results) {
-        return results.targets_Fiducials[0];
     }
 
     private int[] getVisibleTagIDs(LimelightHelpers.Results results) {
@@ -87,10 +88,14 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     }
 
     private double getDistanceFromBestTag(LimelightHelpers.Results results) {
-        return getDistanceFromTag((int) results.targets_Fiducials[0].fiducialID, results.getBotPose3d_wpiBlue());
+        return getDistanceFromTag((int) getBestTarget(results).fiducialID, results.getBotPose3d_wpiBlue());
     }
 
     private double getDistanceFromTag(int fiducialID, Pose3d estimatedRobotPose) {
         return FieldConstants.TAG_ID_TO_POSE.get(fiducialID).getTranslation().getDistance(estimatedRobotPose.getTranslation());
+    }
+
+    private LimelightHelpers.LimelightTarget_Fiducial getBestTarget(LimelightHelpers.Results results) {
+        return results.targets_Fiducials[0];
     }
 }
