@@ -21,26 +21,29 @@ public class AprilTagCamera {
     private final RobotPoseSourceInputsAutoLogged inputs = new RobotPoseSourceInputsAutoLogged();
     private final Transform3d robotCenterToCamera;
     private final AprilTagCameraIO aprilTagCameraIO;
+    private final double
+            solvePNPThetaStandardDeviationsExponent,
+            solvePNPTranslationStandardDeviationsExponent,
+            assumedRobotPoseTranslationStandardDeviationsExponent;
     private double lastUpdatedTimestamp;
-    private final double solvePNPTranslationsStandardDeviationsExponent, assumedRobotPoseTranslationsStandardDeviationsExponent, solvePNPThetaStandardDeviationsExponent;
     private Pose2d robotPose = null;
 
     /**
      * Constructs a new AprilTagCamera.
      *
-     * @param robotPoseSourceType                                       the type of camera
-     * @param name                                                      the camera's name
-     * @param robotCenterToCamera                                       the transform of the robot's origin point to the camera
-     * @param solvePNPTranslationsStandardDeviationsExponent            the calibrated gain to calculate the translation deviation from the estimated pose when using solve PNP
-     * @param solvePNPThetaStandardDeviationsExponent                   the calibrated gain to calculate the theta deviation from the estimated pose when using solve PNP
-     * @param assumedRobotHeadingTranslationsStandardDeviationsExponent the calibrated gain to calculate the translation deviation from the estimated pose when getting the pose by assuming the robot's heading
+     * @param robotPoseSourceType                                      the type of camera
+     * @param name                                                     the camera's name
+     * @param robotCenterToCamera                                      the transform of the robot's origin point to the camera
+     * @param solvePNPTranslationStandardDeviationsExponent            the calibrated gain to calculate the translation deviation from the estimated pose when using solve PNP
+     * @param solvePNPThetaStandardDeviationsExponent                  the calibrated gain to calculate the theta deviation from the estimated pose when using solve PNP
+     * @param assumedRobotHeadingTranslationStandardDeviationsExponent the calibrated gain to calculate the translation deviation from the estimated pose when getting the pose by assuming the robot's heading
      */
-    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationsStandardDeviationsExponent, double solvePNPThetaStandardDeviationsExponent, double assumedRobotHeadingTranslationsStandardDeviationsExponent) {
+    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationStandardDeviationsExponent, double solvePNPThetaStandardDeviationsExponent, double assumedRobotHeadingTranslationStandardDeviationsExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
-        this.solvePNPTranslationsStandardDeviationsExponent = solvePNPTranslationsStandardDeviationsExponent;
+        this.solvePNPTranslationStandardDeviationsExponent = solvePNPTranslationStandardDeviationsExponent;
         this.solvePNPThetaStandardDeviationsExponent = solvePNPThetaStandardDeviationsExponent;
-        this.assumedRobotPoseTranslationsStandardDeviationsExponent = assumedRobotHeadingTranslationsStandardDeviationsExponent;
+        this.assumedRobotPoseTranslationStandardDeviationsExponent = assumedRobotHeadingTranslationStandardDeviationsExponent;
 
         if (Robot.IS_REAL)
             aprilTagCameraIO = robotPoseSourceType.createIOFunction.apply(name);
@@ -158,7 +161,7 @@ public class AprilTagCamera {
 
     private Matrix<N3, N1> calculateSolvePNPStandardDeviations() {
         final int numberOfVisibleTags = inputs.visibleTagIDs.length;
-        final double translationStandardDeviation = calculateStandardDeviations(solvePNPTranslationsStandardDeviationsExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
+        final double translationStandardDeviation = calculateStandardDeviations(solvePNPTranslationStandardDeviationsExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
         final double thetaStandardDeviation = calculateStandardDeviations(solvePNPThetaStandardDeviationsExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
 
         return VecBuilder.fill(translationStandardDeviation, translationStandardDeviation, thetaStandardDeviation);
@@ -171,7 +174,7 @@ public class AprilTagCamera {
      * @return the standard deviations
      */
     private Matrix<N3, N1> calculateAssumedHeadingStandardDeviations() {
-        final double translationStandardDeviation = calculateStandardDeviations(assumedRobotPoseTranslationsStandardDeviationsExponent, inputs.distanceFromBestTag, inputs.visibleTagIDs.length);
+        final double translationStandardDeviation = calculateStandardDeviations(assumedRobotPoseTranslationStandardDeviationsExponent, inputs.distanceFromBestTag, inputs.visibleTagIDs.length);
         final double thetaStandardDeviation = Double.POSITIVE_INFINITY;
 
         return VecBuilder.fill(translationStandardDeviation, translationStandardDeviation, thetaStandardDeviation);
