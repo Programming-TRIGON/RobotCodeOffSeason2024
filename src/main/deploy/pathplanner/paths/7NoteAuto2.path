@@ -3,32 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6162688461334,
-        "y": 4.148007169253776
+        "x": 2.6456402107795283,
+        "y": 4.097305368134887
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7607987126579214,
-        "y": 4.148007169253776
+        "x": 2.7901700773040496,
+        "y": 4.097305368134887
       },
       "isLocked": false,
       "linkedName": "7NoteAutoFirstNoteCollection"
-    },
-    {
-      "anchor": {
-        "x": 2.1022699648261556,
-        "y": 4.905017895903413
-      },
-      "prevControl": {
-        "x": 2.1034702200380284,
-        "y": 4.890614833360936
-      },
-      "nextControl": {
-        "x": 2.0728986001800274,
-        "y": 5.257474271656951
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 5.549946874541637
       },
       "prevControl": {
-        "x": 2.249126788056797,
-        "y": 5.551187918118234
+        "x": 1.5588997188727838,
+        "y": 5.639302012056618
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.05,
+      "waypointRelativePos": 0.55,
       "rotationDegrees": -16.21959139957416,
       "rotateFast": false
     }
@@ -55,7 +39,7 @@
   "eventMarkers": [
     {
       "name": "FeedNote",
-      "waypointRelativePos": 0.85,
+      "waypointRelativePos": 0.45,
       "command": {
         "type": "sequential",
         "data": {
@@ -78,7 +62,7 @@
     },
     {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
         "data": {

@@ -4,31 +4,15 @@
     {
       "anchor": {
         "x": 2.8937455058008714,
-        "y": 5.549946874541637
+        "y": 5.551187918118234
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.8937455058008714,
-        "y": 5.549946874541637
+        "y": 5.551187918118234
       },
       "isLocked": false,
       "linkedName": "7NoteAutoSecondNoteCollection"
-    },
-    {
-      "anchor": {
-        "x": 2.084378253263549,
-        "y": 6.344861140426506
-      },
-      "prevControl": {
-        "x": 2.02656630665374,
-        "y": 6.330408153774053
-      },
-      "nextControl": {
-        "x": 2.0983997098691254,
-        "y": 6.3483665045779
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 6.995245539786855
       },
       "prevControl": {
-        "x": 2.5902327860993752,
-        "y": 6.778450740000072
+        "x": 1.441414260288271,
+        "y": 6.667299774671107
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "FeedNote",
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.45,
       "command": {
         "type": "sequential",
         "data": {
@@ -72,7 +56,7 @@
     },
     {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -113,7 +97,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 46.080924186660646,
+    "rotation": 19.632132186876802,
     "rotateFast": false
   },
   "reversed": false,

@@ -16,22 +16,6 @@
     },
     {
       "anchor": {
-        "x": 4.28123222443628,
-        "y": 7.240946312878542
-      },
-      "prevControl": {
-        "x": 3.3851470519842453,
-        "y": 7.139775406311377
-      },
-      "nextControl": {
-        "x": 5.274918948677738,
-        "y": 7.353136749486448
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 8.299162513817985,
         "y": 7.443288126012872
       },
@@ -46,8 +30,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.5,
+      "waypointRelativePos": 0.75,
       "rotationDegrees": 0.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.25,
+      "rotationDegrees": 18.111464433432825,
       "rotateFast": false
     }
   ],
@@ -55,7 +44,7 @@
   "eventMarkers": [
     {
       "name": "FeedNote",
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 0.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -78,7 +67,7 @@
     },
     {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "sequential",
         "data": {
