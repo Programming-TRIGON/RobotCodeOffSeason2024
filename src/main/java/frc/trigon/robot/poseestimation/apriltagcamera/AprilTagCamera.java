@@ -8,6 +8,7 @@ import edu.wpi.first.math.numbers.N3;
 import frc.trigon.robot.Robot;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.PhotonUtils;
 
@@ -34,15 +35,15 @@ public class AprilTagCamera {
      * @param robotPoseSourceType                                      the type of camera
      * @param name                                                     the camera's name
      * @param robotCenterToCamera                                      the transform of the robot's origin point to the camera
-     * @param solvePNPTranslationStandardDeviationsExponent            the calibrated gain to calculate the translation deviation from the estimated pose when using solve PNP
      * @param solvePNPThetaStandardDeviationsExponent                  the calibrated gain to calculate the theta deviation from the estimated pose when using solve PNP
+     * @param solvePNPTranslationStandardDeviationsExponent            the calibrated gain to calculate the translation deviation from the estimated pose when using solve PNP
      * @param assumedRobotHeadingTranslationStandardDeviationsExponent the calibrated gain to calculate the translation deviation from the estimated pose when getting the pose by assuming the robot's heading
      */
-    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPTranslationStandardDeviationsExponent, double solvePNPThetaStandardDeviationsExponent, double assumedRobotHeadingTranslationStandardDeviationsExponent) {
+    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double solvePNPThetaStandardDeviationsExponent, double solvePNPTranslationStandardDeviationsExponent, double assumedRobotHeadingTranslationStandardDeviationsExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
-        this.solvePNPTranslationStandardDeviationsExponent = solvePNPTranslationStandardDeviationsExponent;
         this.solvePNPThetaStandardDeviationsExponent = solvePNPThetaStandardDeviationsExponent;
+        this.solvePNPTranslationStandardDeviationsExponent = solvePNPTranslationStandardDeviationsExponent;
         this.assumedRobotPoseTranslationStandardDeviationsExponent = assumedRobotHeadingTranslationStandardDeviationsExponent;
 
         if (Robot.IS_REAL)
@@ -57,7 +58,8 @@ public class AprilTagCamera {
         robotPose = calculateBestRobotPose(inputs.distanceFromBestTag);
 
         logEstimatedRobotPose();
-        logVisibleTags();
+        if (MotorSubsystem.isExtensiveLoggingEnabled())
+            logVisibleTags();
     }
 
     public boolean hasNewResult() {
@@ -147,18 +149,6 @@ public class AprilTagCamera {
         return true;
     }
 
-    private void logVisibleTags() {
-        if (inputs.hasResult) {
-            Logger.recordOutput("VisibleTags/" + this.getName(), new Pose2d[0]);
-            return;
-        }
-
-        final Pose2d[] visibleTagPoses = new Pose2d[inputs.visibleTagIDs.length];
-        for (int i = 0; i < visibleTagPoses.length; i++)
-            visibleTagPoses[i] = FieldConstants.TAG_ID_TO_POSE.get(i).toPose2d();
-        Logger.recordOutput("VisibleTags/" + this.getName(), visibleTagPoses);
-    }
-
     private Matrix<N3, N1> calculateSolvePNPStandardDeviations() {
         final int numberOfVisibleTags = inputs.visibleTagIDs.length;
         final double translationStandardDeviation = calculateStandardDeviations(solvePNPTranslationStandardDeviationsExponent, inputs.averageDistanceFromAllTags, numberOfVisibleTags);
@@ -202,5 +192,17 @@ public class AprilTagCamera {
             Logger.recordOutput("Poses/Robot/" + name + "Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
         else
             Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);
+    }
+
+    private void logVisibleTags() {
+        if (inputs.hasResult) {
+            Logger.recordOutput("VisibleTags/" + this.getName(), new Pose2d[0]);
+            return;
+        }
+
+        final Pose2d[] visibleTagPoses = new Pose2d[inputs.visibleTagIDs.length];
+        for (int i = 0; i < visibleTagPoses.length; i++)
+            visibleTagPoses[i] = FieldConstants.TAG_ID_TO_POSE.get(i).toPose2d();
+        Logger.recordOutput("VisibleTags/" + this.getName(), visibleTagPoses);
     }
 }
