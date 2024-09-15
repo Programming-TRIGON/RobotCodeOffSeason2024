@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.299162513817985,
-        "y": 4.119101195948871
+        "x": 7.359744236483107,
+        "y": 3.832963086319733
       },
       "isLocked": false,
       "linkedName": "Zayde4NoteAutoThirdCollection"
@@ -20,12 +20,12 @@
         "y": 2.905050317142888
       },
       "prevControl": {
-        "x": 2.508891421596762,
-        "y": 3.5369076356099374
+        "x": 2.704382940071784,
+        "y": 3.4364496635970023
       },
       "nextControl": {
-        "x": 3.658952291070951,
-        "y": 2.599365771182348
+        "x": 3.640569599891593,
+        "y": 2.578108029155438
       },
       "isLocked": false,
       "linkedName": null
@@ -60,7 +60,13 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": -41.36588107498636,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -105,7 +111,7 @@
     },
     {
       "name": "recollect note",
-      "waypointRelativePos": 2,
+      "waypointRelativePos": 1.9500000000000002,
       "command": {
         "type": "sequential",
         "data": {
@@ -134,7 +140,7 @@
     },
     {
       "name": "FeedNote",
-      "waypointRelativePos": 2,
+      "waypointRelativePos": 2.9499999999999997,
       "command": {
         "type": "sequential",
         "data": {
@@ -157,10 +163,10 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 5.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
     "velocity": 0,

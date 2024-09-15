@@ -37,25 +37,9 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                 }),
                 getCurrentLEDColorCommand().asProxy(),
                 GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
-                new RunCommand(this::trackObject)
+                new RunCommand(CAMERA::trackObject),
+                new RunCommand(this::updateTrackedNoteYaw)
         );
-    }
-
-    private void trackObject() {
-        if (hasTarget() && !wasVisible) {
-            wasVisible = true;
-            CAMERA.startTrackingBestObject();
-            trackedNoteYaw = CAMERA.getTrackedObjectYaw();
-            return;
-        }
-
-        if (!hasTarget()) {
-            wasVisible = false;
-            return;
-        }
-
-        if (hasTarget())
-            trackedNoteYaw = CAMERA.getTrackedObjectYaw();
     }
 
     private Command getCurrentLEDColorCommand() {
@@ -77,6 +61,10 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private MirrorableRotation2d getTargetAngle() {
         final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
         return new MirrorableRotation2d(currentRotation.plus(Rotation2d.fromDegrees(trackedNoteYaw)), false);
+    }
+
+    private void updateTrackedNoteYaw() {
+        trackedNoteYaw = CAMERA.getTrackedObjectYaw();
     }
 
     private boolean hasTarget() {

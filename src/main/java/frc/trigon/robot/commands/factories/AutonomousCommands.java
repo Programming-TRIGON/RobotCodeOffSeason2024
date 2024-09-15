@@ -72,10 +72,11 @@ public class AutonomousCommands {
         return new FunctionalCommand(
                 NOTE_DETECTION_CAMERA::startTrackingBestObject,
                 () -> {
+                    NOTE_DETECTION_CAMERA.trackObject();
                     if (NOTE_DETECTION_CAMERA.hasTargets())
                         overrideRotation(Optional.of(getTargetAngle().get()));
-                    if (!NOTE_DETECTION_CAMERA.hasTargets())
-                        NOTE_DETECTION_CAMERA.startTrackingBestObject();
+                    else
+                        overrideRotation(Optional.empty());
                 },
                 (interrupted) -> overrideRotation(Optional.empty()),
                 () -> RobotContainer.SWERVE.atAngle(getTargetAngle())
