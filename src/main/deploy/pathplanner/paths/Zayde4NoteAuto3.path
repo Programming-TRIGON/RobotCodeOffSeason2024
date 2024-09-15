@@ -20,12 +20,12 @@
         "y": 1.7921703449040713
       },
       "prevControl": {
-        "x": 3.6163772530745275,
-        "y": 1.9147188541950795
+        "x": 4.026094349147554,
+        "y": 1.8944530196752711
       },
       "nextControl": {
-        "x": 5.264035316803028,
-        "y": 1.58982853176974
+        "x": 5.158632978246681,
+        "y": 1.3474718431747044
       },
       "isLocked": false,
       "linkedName": null
@@ -36,15 +36,26 @@
         "y": 4.119101195948871
       },
       "prevControl": {
-        "x": 8.487051340299864,
-        "y": 2.818332397228175
+        "x": 8.69614132788194,
+        "y": 2.8490223706744375
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Zayde4NoteAutoThirdCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": -30.13411296934363,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.5,
+      "rotationDegrees": 51.806339494292615,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -119,7 +130,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -101.63363399894034,
+    "rotation": 80.38683758812714,
     "rotateFast": false
   },
   "reversed": false,

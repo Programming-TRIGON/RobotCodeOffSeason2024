@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8937455058008714,
+        "x": 2.6162688461334,
         "y": 4.148007169253776
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.038275372325393,
+        "x": 2.7607987126579214,
         "y": 4.148007169253776
       },
       "isLocked": false,
@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.4023439596174967,
-        "y": 4.84175052857148
+        "x": 2.1022699648261556,
+        "y": 4.905017895903413
       },
       "prevControl": {
-        "x": 2.3888847201522134,
-        "y": 4.836483869650282
+        "x": 2.1034702200380284,
+        "y": 4.890614833360936
       },
       "nextControl": {
-        "x": 2.734762652623897,
-        "y": 4.971827408443549
+        "x": 2.0728986001800274,
+        "y": 5.257474271656951
       },
       "isLocked": false,
       "linkedName": null
@@ -36,15 +36,21 @@
         "y": 5.549946874541637
       },
       "prevControl": {
-        "x": 3.0685533061206973,
-        "y": 5.195848701556558
+        "x": 2.249126788056797,
+        "y": 5.551187918118234
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "7NoteAutoSecondNoteCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.05,
+      "rotationDegrees": -16.21959139957416,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -113,7 +119,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 88.451842301022,
+    "rotation": 5.487774574228397,
     "rotateFast": false
   },
   "reversed": false,

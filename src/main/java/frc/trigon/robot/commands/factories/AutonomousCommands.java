@@ -70,10 +70,12 @@ public class AutonomousCommands {
 
     public static Command getAlignToNoteCommand() {
         return new FunctionalCommand(
-                NOTE_DETECTION_CAMERA::startTrackingObject,
+                NOTE_DETECTION_CAMERA::startTrackingBestObject,
                 () -> {
                     if (NOTE_DETECTION_CAMERA.hasTargets())
                         overrideRotation(Optional.of(getTargetAngle().get()));
+                    if (!NOTE_DETECTION_CAMERA.hasTargets())
+                        NOTE_DETECTION_CAMERA.startTrackingBestObject();
                 },
                 (interrupted) -> overrideRotation(Optional.empty()),
                 () -> RobotContainer.SWERVE.atAngle(getTargetAngle())

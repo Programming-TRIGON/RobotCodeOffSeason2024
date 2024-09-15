@@ -44,7 +44,13 @@
       "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 21.382472722703643,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
