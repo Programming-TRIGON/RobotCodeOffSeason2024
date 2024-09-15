@@ -42,8 +42,8 @@ public class AutonomousCommands {
 
     public static Command getNoteCollectionCommand() {
         return new SequentialCommandGroup(
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).until(RobotContainer.INTAKE::hasNote),
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP).onlyIf(RobotContainer.INTAKE::hasNote)
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP).onlyIf(RobotContainer.INTAKE::hasNote),
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).until(RobotContainer.INTAKE::hasNote)
         );
     }
 
@@ -73,16 +73,16 @@ public class AutonomousCommands {
                 NOTE_DETECTION_CAMERA::startTrackingObject,
                 () -> {
                     if (NOTE_DETECTION_CAMERA.hasTargets())
-                        overrideRotation(Optional.of(getTargetAngle(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()).get()));
+                        overrideRotation(Optional.of(getTargetAngle().get()));
                 },
                 (interrupted) -> overrideRotation(Optional.empty()),
-                () -> RobotContainer.SWERVE.atAngle(getTargetAngle(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()))
+                () -> RobotContainer.SWERVE.atAngle(getTargetAngle())
         );
     }
 
-    private static MirrorableRotation2d getTargetAngle(double trackedNoteYaw) {
+    private static MirrorableRotation2d getTargetAngle() {
         final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
-        return new MirrorableRotation2d(currentRotation.plus(Rotation2d.fromDegrees(trackedNoteYaw)), false);
+        return new MirrorableRotation2d(currentRotation.plus(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw())), false);
     }
 
     private static void overrideRotation(Optional<Rotation2d> rotationOverride) {
