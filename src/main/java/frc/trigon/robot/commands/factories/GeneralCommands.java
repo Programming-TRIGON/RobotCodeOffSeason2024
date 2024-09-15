@@ -16,7 +16,6 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import org.littletonrobotics.junction.Logger;
-import org.trigon.hardware.RobotHardwareStats;
 
 import java.awt.*;
 import java.util.function.BooleanSupplier;
@@ -48,7 +47,7 @@ public class GeneralCommands {
     public static Command getVisualizeNoteShootingCommand() {
         return new InstantCommand(
                 () -> new VisualizeNoteShootingCommand()
-                        .schedule()).onlyIf(() -> RobotHardwareStats.isReplay() || MotorSubsystem.isExtensiveLoggingEnabled());
+                        .schedule()).onlyIf(MotorSubsystem::isExtensiveLoggingEnabled);
     }
 
     /**
