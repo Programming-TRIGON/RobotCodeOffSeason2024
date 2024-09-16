@@ -25,14 +25,12 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
             new PIDController(0.0075, 0, 0) :
             new PIDController(0, 0, 0);
     private boolean didCollect = false;
-    private boolean wasVisible = false;
-    private double trackedNoteYaw = 0;
+    private Rotation2d trackedNoteYaw = new Rotation2d();
 
     public AlignToNoteCommand() {
         addCommands(
                 new InstantCommand(() -> {
                     didCollect = false;
-                    wasVisible = false;
                     didCollect = RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
                 }),
                 getCurrentLEDColorCommand().asProxy(),
@@ -53,14 +51,14 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
-                () -> -Y_PID_CONTROLLER.calculate(trackedNoteYaw),
+                () -> -Y_PID_CONTROLLER.calculate(trackedNoteYaw.getDegrees()),
                 this::getTargetAngle
         );
     }
 
     private MirrorableRotation2d getTargetAngle() {
         final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
-        return new MirrorableRotation2d(currentRotation.plus(Rotation2d.fromDegrees(trackedNoteYaw)), false);
+        return new MirrorableRotation2d(currentRotation.plus(trackedNoteYaw), false);
     }
 
     private void updateTrackedNoteYaw() {

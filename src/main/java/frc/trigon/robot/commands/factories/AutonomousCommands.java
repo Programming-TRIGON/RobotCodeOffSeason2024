@@ -74,18 +74,13 @@ public class AutonomousCommands {
                 () -> {
                     NOTE_DETECTION_CAMERA.trackObject();
                     if (NOTE_DETECTION_CAMERA.hasTargets())
-                        overrideRotation(Optional.of(getTargetAngle().get()));
+                        overrideRotation(Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()));
                     else
                         overrideRotation(Optional.empty());
                 },
                 (interrupted) -> overrideRotation(Optional.empty()),
-                () -> RobotContainer.SWERVE.atAngle(getTargetAngle())
+                () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), false))
         );
-    }
-
-    private static MirrorableRotation2d getTargetAngle() {
-        final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
-        return new MirrorableRotation2d(currentRotation.plus(Rotation2d.fromDegrees(NOTE_DETECTION_CAMERA.getTrackedObjectYaw())), false);
     }
 
     private static void overrideRotation(Optional<Rotation2d> rotationOverride) {
