@@ -1,0 +1,93 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.700262133976862,
+        "y": 4.2147908267194
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.406548487515581,
+        "y": 4.391019014596169
+      },
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+    },
+    {
+      "anchor": {
+        "x": 4.26106526631658,
+        "y": 4.978446307518733
+      },
+      "prevControl": {
+        "x": 4.628207324393182,
+        "y": 4.758161072672772
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "FeedNote",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": -31.827446576673115,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

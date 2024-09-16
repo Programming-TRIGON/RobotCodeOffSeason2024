@@ -1,0 +1,126 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.240885175866953,
+        "y": 4.111991050457951
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.903114482436479,
+        "y": 4.111991050457951
+      },
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoFirstCollection"
+    },
+    {
+      "anchor": {
+        "x": 5.700262133976862,
+        "y": 4.2147908267194
+      },
+      "prevControl": {
+        "x": 5.643460235517399,
+        "y": 4.269817665852005
+      },
+      "nextControl": {
+        "x": 6.640145802652965,
+        "y": 3.304278522689425
+      },
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+    },
+    {
+      "anchor": {
+        "x": 8.240885175866953,
+        "y": 2.437823265628643
+      },
+      "prevControl": {
+        "x": 7.315687189513914,
+        "y": 2.9811935115820147
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoSecondCollection"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareForEjecting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "EjectFromShooter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "FeedNote",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -38.15722658736909,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

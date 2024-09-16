@@ -1,0 +1,138 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.9219209708544644,
+        "y": 3.700791945412156
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.5988359597470545,
+        "y": 4.023876956519567
+      },
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
+    },
+    {
+      "anchor": {
+        "x": 4.055465713793683,
+        "y": 4.934389260549541
+      },
+      "prevControl": {
+        "x": 4.326167478714244,
+        "y": 4.582476966152813
+      },
+      "nextControl": {
+        "x": 3.908608890563041,
+        "y": 5.125303130749375
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.700262133976862,
+        "y": 4.2147908267194
+      },
+      "prevControl": {
+        "x": 4.875226792787819,
+        "y": 4.575743788489607
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareForShooting",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "FeedNote",
+      "waypointRelativePos": 1.05,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "FeedNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "RecollectNote",
+      "waypointRelativePos": 1.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": -37.8749836510981,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
