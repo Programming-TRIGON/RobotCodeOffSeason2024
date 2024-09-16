@@ -5,7 +5,10 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
@@ -41,10 +44,7 @@ public class AutonomousCommands {
     }
 
     public static Command getNoteCollectionCommand() {
-        return new SequentialCommandGroup(
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP).onlyIf(RobotContainer.INTAKE::hasNote),
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).until(RobotContainer.INTAKE::hasNote)
-        );
+        return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT, true).onlyIf(() -> !RobotContainer.INTAKE.hasNote());
     }
 
     public static Command getPrepareForShooterEjectionCommand() {
@@ -56,7 +56,7 @@ public class AutonomousCommands {
 
     public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING, true),
                 GeneralCommands.getVisualizeNoteShootingCommand()
         );
     }

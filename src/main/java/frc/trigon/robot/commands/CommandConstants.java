@@ -84,7 +84,7 @@ public class CommandConstants {
                 SHOULD_ALIGN_TO_NOTE = false;
                 Logger.recordOutput("ShouldAlignToNote", false);
             }).ignoringDisable(true),
-            DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
+            DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP, false),
             DEFAULT_CLIMBER_COMMAND = ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
             MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
@@ -92,7 +92,7 @@ public class CommandConstants {
                 RobotContainer.CLIMBER.setIsClimbing(false);
                 Logger.recordOutput("IsClimbing", false);
             }).ignoringDisable(true),
-            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT),
+            EJECT_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT, false),
             DEFAULT_AMP_ALIGNER_COMMAND = AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
             SHOOT_AT_SPEAKER_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(false),
             DELIVERY_COMMAND = ShootingCommands.getShootAtShootingTargetCommand(true),
@@ -102,8 +102,7 @@ public class CommandConstants {
                     () -> RobotContainer.SWERVE.getHeading().getRadians(),
                     RobotContainer.SWERVE::runWheelRadiusCharacterization,
                     RobotContainer.SWERVE
-            ),
-            RUMBLE_COMMAND = new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER));
+            );
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);

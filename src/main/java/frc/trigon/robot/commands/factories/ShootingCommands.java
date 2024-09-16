@@ -87,7 +87,7 @@ public class ShootingCommands {
 
     private static Command getFeedNoteForShootingCommand() {
         return GeneralCommands.runWhen(
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING)
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING, false)
                         .alongWith(GeneralCommands.getVisualizeNoteShootingCommand()),
                 () -> RobotContainer.SHOOTER.atTargetVelocity() &&
                         RobotContainer.PITCHER.atTargetPitch() &&
@@ -96,7 +96,8 @@ public class ShootingCommands {
     }
 
     private static Command getFeedNoteWhenPitcherAndShooterReadyCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING).alongWith(GeneralCommands.getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
+        return GeneralCommands.runWhen(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING, false).alongWith(GeneralCommands.getVisualizeNoteShootingCommand()),
+                () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());
     }
-
 }

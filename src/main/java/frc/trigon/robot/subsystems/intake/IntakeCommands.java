@@ -13,9 +13,9 @@ public class IntakeCommands {
         );
     }
 
-    public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
+    public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState, boolean isAutonomous) {
         if (targetState == IntakeConstants.IntakeState.COLLECT)
-            return getCollectionCommand();
+            return getCollectionCommand(isAutonomous);
         return new StartEndCommand(
                 () -> RobotContainer.INTAKE.setTargetState(targetState),
                 RobotContainer.INTAKE::stop,
@@ -31,7 +31,7 @@ public class IntakeCommands {
         );
     }
 
-    private static Command getCollectionCommand() {
+    private static Command getCollectionCommand(boolean isAutonomous) {
         return new SequentialCommandGroup(
                 new FunctionalCommand(
                         () -> RobotContainer.INTAKE.setTargetState(IntakeConstants.IntakeState.COLLECT),
@@ -39,7 +39,8 @@ public class IntakeCommands {
                         },
                         (interrupted) -> {
                             if (!interrupted) {
-                                RobotContainer.INTAKE.indicateCollection();
+                                if (isAutonomous)
+                                    RobotContainer.INTAKE.indicateCollection();
                                 RobotContainer.INTAKE.sendStaticBrakeRequest();
                             }
                         },
