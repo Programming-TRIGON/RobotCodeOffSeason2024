@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.895296810271618,
-        "y": 6.990384785778517
+        "x": 1.3973572133190786,
+        "y": 5.565873600441298
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4023439596174967,
-        "y": 6.518296980255932
+        "x": 1.9398483867390275,
+        "y": 4.682767675394506
       },
       "isLocked": false,
-      "linkedName": "FrontRow4NoteAutoFirstCollection"
+      "linkedName": "CloseShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 2.7337543047179125,
+        "y": 4.097305368134887
+      },
+      "prevControl": {
+        "x": 1.750951212351164,
+        "y": 4.285194194616765
+      },
+      "nextControl": {
+        "x": 2.7939823894007003,
+        "y": 4.0857911754749425
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,8 +36,8 @@
         "y": 5.565873600441298
       },
       "prevControl": {
-        "x": 1.2956378625373428,
-        "y": 6.259428667790661
+        "x": 2.1277372132209056,
+        "y": 4.220272102516036
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,15 +49,27 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 1.1999999999999997,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
                 "name": "Collect"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.3
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "PrepareForShooting"
               }
             }
           ]
@@ -50,7 +78,7 @@
     },
     {
       "name": "FeedNote",
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 1.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -80,7 +108,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.19781020330750715,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,

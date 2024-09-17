@@ -12,21 +12,53 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "FrontRow4NoteAuto1"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FrontRow4NoteAuto1"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FrontRow4NoteAuto2"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FrontRow4NoteAuto3"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FrontRow4NoteAuto4"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "FrontRow4NoteAuto2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FrontRow4NoteAuto3"
+            "name": "StopShooting"
           }
         }
       ]

@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.895296810271618,
+        "x": 1.3973572133190786,
         "y": 5.565873600441298
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.922651479105775,
-        "y": 5.535493887889185
+        "x": 2.3973572133190784,
+        "y": 5.565873600441298
+      },
+      "isLocked": false,
+      "linkedName": "CloseShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 2.895296810271618,
+        "y": 5.565873600441298
+      },
+      "prevControl": {
+        "x": 1.8952968102716197,
+        "y": 5.565873600441298
+      },
+      "nextControl": {
+        "x": 2.9246681749177457,
+        "y": 5.565873600441298
       },
       "isLocked": false,
       "linkedName": "FrontRow4NoteAutoSecondCollection"
@@ -20,40 +36,8 @@
         "y": 5.565873600441298
       },
       "prevControl": {
-        "x": 1.3631838183621285,
-        "y": 5.621503496454528
-      },
-      "nextControl": {
-        "x": 1.9398483867390275,
-        "y": 4.682767675394506
-      },
-      "isLocked": false,
-      "linkedName": "CloseShotPoint"
-    },
-    {
-      "anchor": {
-        "x": 2.7337543047179125,
-        "y": 4.097305368134887
-      },
-      "prevControl": {
-        "x": 1.750951212351164,
-        "y": 4.285194194616765
-      },
-      "nextControl": {
-        "x": 2.7939823894007003,
-        "y": 4.0857911754749425
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.3973572133190786,
+        "x": 1.8085563183648736,
         "y": 5.565873600441298
-      },
-      "prevControl": {
-        "x": 2.1277372132209056,
-        "y": 4.220272102516036
       },
       "nextControl": null,
       "isLocked": false,
@@ -64,37 +48,10 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "CloseShot",
+      "name": "Collect",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Collect",
-      "waypointRelativePos": 2.1999999999999997,
-      "command": {
-        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -102,34 +59,28 @@
               "data": {
                 "name": "Collect"
               }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.3
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
             }
           ]
         }
       }
     },
     {
-      "name": "CloseShot",
-      "waypointRelativePos": 3.0,
+      "name": "FeedNote",
+      "waypointRelativePos": 1.95,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.1
+              }
+            },
+            {
               "type": "named",
               "data": {
-                "name": "CloseShot"
+                "name": "FeedNote"
               }
             }
           ]
