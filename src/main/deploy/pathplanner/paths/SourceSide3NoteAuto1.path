@@ -134,7 +134,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "SourceSide3NoteAuto",
   "previewStartingState": {
     "rotation": -38.659808254090066,
     "velocity": 0

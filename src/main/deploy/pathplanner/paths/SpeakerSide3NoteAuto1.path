@@ -112,7 +112,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "SpeakerSide3NoteAuto",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

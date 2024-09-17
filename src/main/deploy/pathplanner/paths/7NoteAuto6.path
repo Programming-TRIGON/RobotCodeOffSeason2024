@@ -195,7 +195,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "7NoteAuto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
