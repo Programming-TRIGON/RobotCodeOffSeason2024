@@ -26,6 +26,12 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "FrontRow4NoteAuto1"
@@ -38,15 +44,51 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "FrontRow4NoteAuto3"
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "FrontRow4NoteAuto4"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
                       }
                     }
                   ]

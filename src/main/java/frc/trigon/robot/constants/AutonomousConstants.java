@@ -2,6 +2,7 @@ package frc.trigon.robot.constants;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
+import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.AutonomousCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
@@ -20,7 +21,7 @@ public class AutonomousConstants {
         NamedCommands.registerCommand("AlignToSpeaker", AutonomousCommands.getAlignToSpeakerCommand());
         NamedCommands.registerCommand("PrepareForShooting", ShootingCommands.getWarmSpeakerShotCommand());
         NamedCommands.registerCommand("StopShooting", ShooterCommands.getStopCommand());
-        NamedCommands.registerCommand("FeedNote", AutonomousCommands.getFeedNoteCommand());
+        NamedCommands.registerCommand("FeedNote", AutonomousCommands.getFeedNoteCommand().until(() -> !RobotContainer.INTAKE.hasNote()));
         NamedCommands.registerCommand("CloseShot", ShootingCommands.getPrepareCloseSpeakerShotCommand());
         NamedCommands.registerCommand("Eject", CommandConstants.EJECT_COMMAND);
         NamedCommands.registerCommand("EjectFromShooter", AutonomousCommands.getPrepareForShooterEjectionCommand());

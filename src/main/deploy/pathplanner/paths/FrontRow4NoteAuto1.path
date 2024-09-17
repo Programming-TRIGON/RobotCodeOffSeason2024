@@ -47,16 +47,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
     }
   ],
   "globalConstraints": {

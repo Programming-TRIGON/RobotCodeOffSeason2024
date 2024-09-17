@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3973572133190784,
-        "y": 5.565873600441298
+        "x": 1.4970626618692369,
+        "y": 5.573543250329771
       },
       "isLocked": false,
       "linkedName": "CloseShotPoint"
@@ -20,7 +20,7 @@
         "y": 5.565873600441298
       },
       "prevControl": {
-        "x": 1.8952968102716197,
+        "x": 2.795296810271618,
         "y": 5.565873600441298
       },
       "nextControl": {
@@ -36,7 +36,7 @@
         "y": 5.565873600441298
       },
       "prevControl": {
-        "x": 1.8085563183648736,
+        "x": 1.4267285779652068,
         "y": 5.565873600441298
       },
       "nextControl": null,
@@ -58,29 +58,6 @@
               "type": "named",
               "data": {
                 "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 1.95,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.1
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
               }
             }
           ]
