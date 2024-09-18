@@ -3,53 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.284709527165534,
-        "y": 4.119101195948871
+        "x": 3.5007709452038624,
+        "y": 2.659349544051202
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.940581768487481,
-        "y": 4.711673648699411
+        "x": 3.703112758338193,
+        "y": 3.699964583027759
       },
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoSecondCollection"
+      "linkedName": "SourceSide3NoteAutoSecondFeed"
     },
     {
       "anchor": {
-        "x": 3.48631795855141,
-        "y": 2.818332397228175
+        "x": 8.284709527165534,
+        "y": 4.119101195948871
       },
       "prevControl": {
-        "x": 3.674206785033289,
-        "y": 3.2952809567590973
+        "x": 5.9722316627731855,
+        "y": 3.909532889488315
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SourceSide3NoteAutoSecondCollection"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
+      "name": "Collect",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -58,19 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToSpeaker"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.2
+                "name": "AlignToNote"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "FeedNote"
+                "name": "Collect"
               }
             }
           ]
@@ -86,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -22.479434397103145,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SourceSide3NoteAuto",
   "previewStartingState": {
-    "rotation": -8.880659150520266,
+    "rotation": -47.92461560287347,
     "velocity": 0
   },
   "useDefaultConstraints": true

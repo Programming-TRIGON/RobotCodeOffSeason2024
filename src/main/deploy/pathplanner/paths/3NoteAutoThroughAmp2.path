@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.879292519148419,
-        "y": 6.995245539786855
+        "x": 1.751959560257149,
+        "y": 6.76399775334762
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.009369399020488,
+        "x": 2.043527235533899,
+        "y": 6.887585009517068
+      },
+      "isLocked": false,
+      "linkedName": "3NoteAutoThroughAmpFirstFeed"
+    },
+    {
+      "anchor": {
+        "x": 2.879292519148419,
         "y": 6.995245539786855
+      },
+      "prevControl": {
+        "x": 2.4987833875488867,
+        "y": 6.828842280224811
+      },
+      "nextControl": {
+        "x": 3.6012985190029894,
+        "y": 7.310991317803029
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpFirstCollection"
@@ -20,86 +36,24 @@
         "y": 7.327664232793255
       },
       "prevControl": {
-        "x": 3.3179048807317555,
-        "y": 7.198392790262134
-      },
-      "nextControl": {
-        "x": 3.9488135314298805,
-        "y": 7.558912019232489
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.299162513817985,
-        "y": 5.781194660980872
-      },
-      "prevControl": {
-        "x": 6.0444965960354455,
-        "y": 6.605014900170646
+        "x": 3.4386670562249897,
+        "y": 7.225355702947542
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpSecondCollection"
+      "linkedName": "3NoteAutoThroughAmpSecondFeed"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
             {
               "type": "named",
               "data": {
@@ -119,13 +73,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -21.50143432404788,
+    "rotation": 31.87946570148725,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 25.769327624338693,
+    "rotation": 19.7161888055752,
     "velocity": 0
   },
   "useDefaultConstraints": true

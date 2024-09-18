@@ -65,7 +65,7 @@ public class AutonomousCommands {
         return new ExecuteEndCommand(
                 () -> overrideRotation(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
                 () -> overrideRotation(Optional.empty())
-        );
+        ).until(() -> !RobotContainer.INTAKE.hasNote());
     }
 
     public static Command getAlignToNoteCommand() {

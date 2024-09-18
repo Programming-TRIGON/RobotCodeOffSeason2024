@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.299162513817985,
-        "y": 5.781194660980872
+        "x": 3.544129905161219,
+        "y": 7.327664232793255
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.229641501536524,
-        "y": 6.113613353987272
+        "x": 3.9488135314298805,
+        "y": 7.558912019232489
       },
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpSecondCollection"
+      "linkedName": "3NoteAutoThroughAmpSecondFeed"
+    },
+    {
+      "anchor": {
+        "x": 8.29962790515921,
+        "y": 5.771473152964195
+      },
+      "prevControl": {
+        "x": 8.060339078774927,
+        "y": 6.712675870075721
+      },
+      "nextControl": {
+        "x": 8.51991314000517,
+        "y": 4.905017895903413
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,101 +36,40 @@
         "y": 6.373767113731411
       },
       "prevControl": {
-        "x": 4.809073792931678,
-        "y": 6.927976021858253
-      },
-      "nextControl": {
-        "x": 1.9976603333488359,
-        "y": 4.986280395096002
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.299162513817985,
-        "y": 4.119101195948871
-      },
-      "prevControl": {
-        "x": 7.518701234585568,
-        "y": 3.1652040768870275
+        "x": 5.421234169838644,
+        "y": 7.034441832747708
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpThirdCollection"
+      "linkedName": "3NoteAutoThroughAmpThirdFeed"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": -37.571022899857944,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 0.95,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            },
             {
               "type": "named",
               "data": {
                 "name": "AlignToNote"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "AlignToSpeaker",
-      "waypointRelativePos": 0.8,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "AlignToSpeaker"
+                "name": "Collect"
               }
             }
           ]
@@ -130,13 +85,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 15.466095386821955,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 25.769327624338693,
     "velocity": 0
   },
   "useDefaultConstraints": true

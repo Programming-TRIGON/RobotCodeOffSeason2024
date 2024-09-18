@@ -3,53 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.299162513817985,
-        "y": 4.119101195948871
+        "x": 4.006625478039688,
+        "y": 6.373767113731411
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.299162513817985,
-        "y": 4.119101195948871
+        "x": 1.9976603333488359,
+        "y": 4.986280395096002
       },
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpThirdCollection"
+      "linkedName": "3NoteAutoThroughAmpThirdFeed"
     },
     {
       "anchor": {
-        "x": 4.165608331216663,
-        "y": 4.885109488528837
+        "x": 8.299162513817985,
+        "y": 4.119101195948871
       },
       "prevControl": {
-        "x": 4.498027024223063,
-        "y": 3.9312123694669934
+        "x": 7.518701234585568,
+        "y": 3.1652040768870275
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "3NoteAutoThroughAmpThirdCollection"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
+      "name": "Collect",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "parallel",
@@ -58,24 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "FeedNote"
+                "name": "Collect"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "AlignToSpeaker",
-      "waypointRelativePos": 0.85,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "AlignToSpeaker"
+                "name": "AlignToNote"
               }
             }
           ]
@@ -91,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.136303428248176,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,

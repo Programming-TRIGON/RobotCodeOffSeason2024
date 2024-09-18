@@ -23,105 +23,14 @@
         "x": 2.0265663066537405,
         "y": 3.2230160234968364
       },
-      "nextControl": {
-        "x": 3.703112758338193,
-        "y": 2.5003666908742272
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.284709527165534,
-        "y": 2.442554744264419
-      },
-      "prevControl": {
-        "x": 6.116761529297707,
-        "y": 0.6648373860128005
-      },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoFirstCollection"
+      "linkedName": "SourceSide3NoteAutoFirstFeed"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.65,
-      "rotationDegrees": 30.9518678714508,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 0.65,
-      "rotationDegrees": -26.738411554285022,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Collect",
-      "waypointRelativePos": 1.95,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -130,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 42.614055969611165,
+    "rotation": -49.17228798013541,
     "rotateFast": false
   },
   "reversed": false,
