@@ -58,7 +58,7 @@ public class AutonomousCommands {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING, true),
                 GeneralCommands.getVisualizeNoteShootingCommand()
-        );
+        ).until(() -> !RobotContainer.INTAKE.hasNote());
     }
 
     public static Command getAlignToSpeakerCommand() {

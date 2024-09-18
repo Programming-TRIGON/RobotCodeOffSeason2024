@@ -16,6 +16,12 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "PrepareForCloseShot"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
