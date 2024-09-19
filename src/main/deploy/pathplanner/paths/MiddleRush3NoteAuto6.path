@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8833583320118348,
-        "y": 3.054621923197335
+        "x": 5.700262133976862,
+        "y": 4.2147908267194
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1022699648261556,
-        "y": 2.7755939590591177
+        "x": 5.406548487515581,
+        "y": 4.391019014596169
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
     },
     {
       "anchor": {
-        "x": 4.9219209708544644,
-        "y": 3.700791945412156
+        "x": 4.26,
+        "y": 4.98
       },
       "prevControl": {
-        "x": 3.997246152324696,
-        "y": 3.3593735508780878
+        "x": 4.62873646216327,
+        "y": 4.758791000473953
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 19.983106521899998,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -31.827446576673115,
     "velocity": 0
   },
   "useDefaultConstraints": true

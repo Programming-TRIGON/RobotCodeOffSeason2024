@@ -3,51 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.700262133976862,
-        "y": 4.2147908267194
+        "x": 4.9219209708544644,
+        "y": 3.700791945412156
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.713574214268286,
-        "y": 3.5245637575353865
+        "x": 5.9219209708544644,
+        "y": 3.700791945412156
       },
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
     },
     {
       "anchor": {
         "x": 8.240885175866953,
-        "y": 2.437823265628643
+        "y": 4.111991050457951
       },
       "prevControl": {
-        "x": 7.3288213531525015,
-        "y": 3.0965360264779704
+        "x": 7.240885175866953,
+        "y": 4.111991050457951
       },
       "nextControl": {
-        "x": 8.76956973949726,
-        "y": 2.055995525228976
+        "x": 8.431799046066786,
+        "y": 4.111991050457951
       },
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondCollection"
+      "linkedName": " MiddleRush3NoteAutoFirstCollection"
     },
     {
       "anchor": {
-        "x": 3.3799243269327333,
-        "y": 2.672794182797669
+        "x": 5.700262133976862,
+        "y": 4.2147908267194
       },
       "prevControl": {
-        "x": 4.995349382469785,
-        "y": 1.1161118565528736
+        "x": 7.544002066537228,
+        "y": 4.053248321165696
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MiddleRush3NoteAutoFirstShotPoint"
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9,
-      "rotationDegrees": -36.81507662127073,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 5.619820331983138,
       "rotateFast": false
     }
   ],
@@ -85,13 +85,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -38.15722658736909,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -37.56859202882748,
     "velocity": 0
   },
   "useDefaultConstraints": true

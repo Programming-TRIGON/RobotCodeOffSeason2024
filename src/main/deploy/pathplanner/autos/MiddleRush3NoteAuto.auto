@@ -28,7 +28,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto0"
+                        "pathName": "MiddleRush3NoteAuto1"
                       }
                     },
                     {
@@ -46,7 +46,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto1"
+                        "pathName": "MiddleRush3NoteAuto2"
                       }
                     },
                     {
@@ -81,37 +81,6 @@
                 "type": "sequential",
                 "data": {
                   "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "MiddleRush3NoteAuto2"
-                      }
-                    },
-                    {
-                      "type": "sequential",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignToSpeaker"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.1
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "FeedNote"
-                            }
-                          }
-                        ]
-                      }
-                    },
                     {
                       "type": "path",
                       "data": {
@@ -150,9 +119,40 @@
                       }
                     },
                     {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignToSpeaker"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.1
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "MiddleRush3NoteAuto5"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MiddleRush3NoteAuto6"
                       }
                     },
                     {

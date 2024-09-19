@@ -12,21 +12,135 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "SpeakerSide3NoteAuto1"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "EjectFromShooter"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SpeakerSide3NoteAuto1"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.05
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SpeakerSide3NoteAuto2"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "SpeakerSide3NoteAuto2"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepareForShooting"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SpeakerSide3NoteAuto3"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignToSpeaker"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.1
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SpeakerSide3NoteAuto4"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignToSpeaker"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.1
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "SpeakerSide3NoteAuto3"
+            "name": "StopShooting"
           }
         }
       ]

@@ -3,34 +3,58 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.700262133976862,
-        "y": 4.2147908267194
+        "x": 4.055465713793683,
+        "y": 4.934389260549541
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.406548487515581,
-        "y": 4.391019014596169
+        "x": 3.908608890563041,
+        "y": 5.125303130749375
       },
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+      "linkedName": "MiddleRush3NoteAutoSecondShotPoint"
     },
     {
       "anchor": {
-        "x": 4.26,
-        "y": 4.98
+        "x": 5.700262133976862,
+        "y": 4.2147908267194
       },
       "prevControl": {
-        "x": 4.62873646216327,
-        "y": 4.758791000473953
+        "x": 4.875226792787819,
+        "y": 4.575743788489607
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "RecollectNote",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -39,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -22.750976342787602,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": -31.827446576673115,
+    "rotation": -3.691385986451337,
     "velocity": 0
   },
   "useDefaultConstraints": true

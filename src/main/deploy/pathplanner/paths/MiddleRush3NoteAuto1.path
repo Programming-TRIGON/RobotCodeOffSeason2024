@@ -3,80 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.9219209708544644,
-        "y": 3.700791945412156
+        "x": 0.8833583320118348,
+        "y": 3.054621923197335
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.9219209708544644,
+        "x": 2.1022699648261556,
+        "y": 2.7755939590591177
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.9219209708544644,
         "y": 3.700791945412156
       },
-      "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
-    },
-    {
-      "anchor": {
-        "x": 8.240885175866953,
-        "y": 4.111991050457951
-      },
       "prevControl": {
-        "x": 7.240885175866953,
-        "y": 4.111991050457951
-      },
-      "nextControl": {
-        "x": 8.431799046066786,
-        "y": 4.111991050457951
-      },
-      "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstCollection"
-    },
-    {
-      "anchor": {
-        "x": 5.700262133976862,
-        "y": 4.2147908267194
-      },
-      "prevControl": {
-        "x": 7.544002066537228,
-        "y": 4.053248321165696
+        "x": 3.997246152324696,
+        "y": 3.3593735508780878
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": 5.619820331983138,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -85,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 19.983106521899998,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": -37.56859202882748,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

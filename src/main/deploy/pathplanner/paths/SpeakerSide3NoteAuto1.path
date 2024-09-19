@@ -16,90 +16,21 @@
     },
     {
       "anchor": {
-        "x": 5.3331200759002595,
-        "y": 7.57781207870108
+        "x": 5.340436970626591,
+        "y": 7.455085440206217
       },
       "prevControl": {
-        "x": 4.812812556411982,
-        "y": 7.606718052005985
-      },
-      "nextControl": {
-        "x": 5.420515430386889,
-        "y": 7.572956781229601
-      },
-      "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
-    },
-    {
-      "anchor": {
-        "x": 8.270256540513081,
-        "y": 5.781194660980872
-      },
-      "prevControl": {
-        "x": 7.991228576374863,
-        "y": 7.871525725162363
+        "x": 4.820129451138314,
+        "y": 7.483991413511122
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoFirstNoteCollection"
+      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.15,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "EjectFromShooter",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "EjectFromShooter"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Collect",
-      "waypointRelativePos": 1.95,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -108,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.32695600403629,
+    "rotation": 5.826342029555829,
     "rotateFast": false
   },
   "reversed": false,
