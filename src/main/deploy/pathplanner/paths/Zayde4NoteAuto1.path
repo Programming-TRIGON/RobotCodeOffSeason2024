@@ -3,80 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6886597716857406,
+        "x": 1.2894639873786793,
         "y": 2.0234181313433055
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.6886597716857406,
+        "x": 2.2894639873786775,
         "y": 2.0234181313433055
       },
       "isLocked": false,
-      "linkedName": "Zayde4NoteAutoEjectPoint"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.284709527165534,
-        "y": 2.442554744264419
+        "x": 3.6886597716857406,
+        "y": 2.0234181313433055
       },
       "prevControl": {
-        "x": 6.904291141141233,
-        "y": 1.8817597749420463
-      },
-      "nextControl": {
-        "x": 8.747205100044003,
-        "y": 2.630443570746297
-      },
-      "isLocked": false,
-      "linkedName": "Zayde4NoteAutoFirstCollection"
-    },
-    {
-      "anchor": {
-        "x": 3.9921724913872363,
-        "y": 2.1245890379104706
-      },
-      "prevControl": {
-        "x": 6.331746473868619,
-        "y": 1.6007393732139887
+        "x": 2.69129896637809,
+        "y": 2.0234181313433055
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Zayde4NoteAutoFirstShotPoint"
+      "linkedName": "Zayde4NoteAutoEjectPoint"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": 9.026268795486535,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -85,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -41.8517257383016,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,

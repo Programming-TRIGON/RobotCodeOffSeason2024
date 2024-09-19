@@ -16,6 +16,12 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "PrepareForShooting"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -134,6 +140,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopShooting"
           }
         }
       ]

@@ -71,12 +71,6 @@
               "data": {
                 "name": "Collect"
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
             }
           ]
         }

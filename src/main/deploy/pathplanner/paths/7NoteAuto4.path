@@ -107,12 +107,6 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
                 "name": "Collect"
               }
             }
