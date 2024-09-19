@@ -39,7 +39,7 @@ public class IntakeCommands {
                         },
                         (interrupted) -> {
                             if (!interrupted) {
-                                if (isAutonomous)
+                                if (!isAutonomous)
                                     RobotContainer.INTAKE.indicateCollection();
                                 RobotContainer.INTAKE.sendStaticBrakeRequest();
                             }

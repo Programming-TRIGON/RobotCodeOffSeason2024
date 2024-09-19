@@ -33,14 +33,14 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                     didCollect = false;
                     didCollect = RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
                 }),
-                getCurrentLEDColorCommand().asProxy(),
+                getSetCurrentLEDColorCommand().asProxy(),
                 GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
                 new RunCommand(CAMERA::trackObject),
                 new RunCommand(this::updateTrackedNoteYaw)
         );
     }
 
-    private Command getCurrentLEDColorCommand() {
+    private Command getSetCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
                 LEDStripCommands.getStaticColorCommand(Color.green, LEDStripConstants.LED_STRIPS),
                 LEDStripCommands.getStaticColorCommand(Color.red, LEDStripConstants.LED_STRIPS),
