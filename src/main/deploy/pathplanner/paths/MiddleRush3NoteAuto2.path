@@ -3,29 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.240885175866953,
-        "y": 4.111991050457951
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 7.903114482436479,
-        "y": 4.111991050457951
-      },
-      "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstCollection"
-    },
-    {
-      "anchor": {
         "x": 5.700262133976862,
         "y": 4.2147908267194
       },
-      "prevControl": {
-        "x": 5.643460235517399,
-        "y": 4.269817665852005
-      },
+      "prevControl": null,
       "nextControl": {
-        "x": 6.640145802652965,
-        "y": 3.304278522689425
+        "x": 6.713574214268286,
+        "y": 3.5245637575353865
       },
       "isLocked": false,
       "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
@@ -36,54 +20,42 @@
         "y": 2.437823265628643
       },
       "prevControl": {
-        "x": 7.315687189513914,
-        "y": 2.9811935115820147
+        "x": 7.3288213531525015,
+        "y": 3.0965360264779704
+      },
+      "nextControl": {
+        "x": 8.76956973949726,
+        "y": 2.055995525228976
+      },
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoSecondCollection"
+    },
+    {
+      "anchor": {
+        "x": 3.3799243269327333,
+        "y": 2.672794182797669
+      },
+      "prevControl": {
+        "x": 4.995349382469785,
+        "y": 1.1161118565528736
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondCollection"
+      "linkedName": "MiddleRush3NoteAutoFirstShotPoint"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9,
+      "rotationDegrees": -36.81507662127073,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareForEjecting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "EjectFromShooter"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 0.9,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {

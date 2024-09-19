@@ -3,29 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8833583320118348,
-        "y": 3.054621923197335
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 1.999470188564707,
-        "y": 2.320337807044129
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 4.9219209708544644,
         "y": 3.700791945412156
       },
-      "prevControl": {
-        "x": 3.997246152324696,
-        "y": 3.3593735508780878
-      },
+      "prevControl": null,
       "nextControl": {
-        "x": 5.876490321853631,
-        "y": 4.053248321165694
+        "x": 5.9219209708544644,
+        "y": 3.700791945412156
       },
       "isLocked": false,
       "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
@@ -36,54 +20,42 @@
         "y": 4.111991050457951
       },
       "prevControl": {
-        "x": 7.462544012744556,
-        "y": 4.053248321165694
+        "x": 7.240885175866953,
+        "y": 4.111991050457951
+      },
+      "nextControl": {
+        "x": 8.431799046066786,
+        "y": 4.111991050457951
+      },
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoFirstCollection"
+    },
+    {
+      "anchor": {
+        "x": 5.700262133976862,
+        "y": 4.2147908267194
+      },
+      "prevControl": {
+        "x": 7.544002066537228,
+        "y": 4.053248321165696
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstCollection"
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 5.619820331983138,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareForEjecting",
-      "waypointRelativePos": 0.1,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "EjectFromShooter"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -119,7 +91,7 @@
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -37.56859202882748,
     "velocity": 0
   },
   "useDefaultConstraints": true
