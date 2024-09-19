@@ -61,8 +61,8 @@
       }
     },
     {
-      "name": "CollectAndShoot",
-      "waypointRelativePos": 1.0,
+      "name": "Collect",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -71,12 +71,6 @@
               "type": "named",
               "data": {
                 "name": "Collect"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
               }
             }
           ]

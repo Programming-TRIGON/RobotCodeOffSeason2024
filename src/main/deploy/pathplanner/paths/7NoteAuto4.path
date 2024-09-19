@@ -62,11 +62,6 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": 25.48,
-      "rotateFast": false
-    },
-    {
       "waypointRelativePos": 1.7999999999999998,
       "rotationDegrees": 0,
       "rotateFast": false
@@ -76,7 +71,7 @@
   "eventMarkers": [
     {
       "name": "FeedNote",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.15000000000000002,
       "command": {
         "type": "sequential",
         "data": {
@@ -129,7 +124,7 @@
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 35.996147099142746,
     "velocity": 0
   },
   "useDefaultConstraints": true

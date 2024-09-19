@@ -38,6 +38,12 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "7NoteAuto3"
