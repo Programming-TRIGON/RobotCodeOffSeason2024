@@ -61,10 +61,10 @@
       }
     },
     {
-      "name": "Collect",
+      "name": "CollectAndShoot",
       "waypointRelativePos": 1.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -72,22 +72,11 @@
               "data": {
                 "name": "Collect"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "PrepareForShooting"
+                "name": "FeedNote"
               }
             }
           ]
@@ -103,7 +92,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 5.487774574228397,
+    "rotation": 3.8140748342904516,
     "rotateFast": false
   },
   "reversed": false,

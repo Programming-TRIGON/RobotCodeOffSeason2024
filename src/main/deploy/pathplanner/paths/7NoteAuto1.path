@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.15,
+      "waypointRelativePos": 0.25,
       "rotationDegrees": -40.98227510966754,
       "rotateFast": false
     }
@@ -71,23 +71,6 @@
               "type": "named",
               "data": {
                 "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
               }
             }
           ]

@@ -8,35 +8,67 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.963266518082332,
-        "y": 7.22649332622609
+        "x": 3.891001584820071,
+        "y": 7.168681379616281
       },
       "isLocked": false,
       "linkedName": "7NoteAutoThirdNoteCollection"
     },
     {
       "anchor": {
-        "x": 8.299162513817985,
+        "x": 5.018334543711345,
+        "y": 7.255399299530993
+      },
+      "prevControl": {
+        "x": 4.030680550240381,
+        "y": 7.193670924939057
+      },
+      "nextControl": {
+        "x": 6.005988537182309,
+        "y": 7.317127674122928
+      },
+      "isLocked": false,
+      "linkedName": "7noteAutofourthShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 8.3,
         "y": 7.443288126012872
       },
       "prevControl": {
-        "x": 6.767145928658055,
-        "y": 7.298758259488349
+        "x": 7.1379421563965835,
+        "y": 7.443288126012872
+      },
+      "nextControl": {
+        "x": 8.429239393690056,
+        "y": 7.443288126012872
+      },
+      "isLocked": false,
+      "linkedName": "7NoteAutoFourthNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 5.423018169980266,
+        "y": 6.778450740002665
+      },
+      "prevControl": {
+        "x": 5.37691230305196,
+        "y": 6.962874207718218
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutoFourthNoteCollection"
+      "linkedName": "7NoteAutofifthNoteShot"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": 0.0,
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 25.48,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 0.25,
-      "rotationDegrees": 18.111464433432825,
+      "waypointRelativePos": 1.7999999999999998,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
@@ -44,7 +76,7 @@
   "eventMarkers": [
     {
       "name": "FeedNote",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -67,7 +99,7 @@
     },
     {
       "name": "Collect",
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 1.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -87,29 +119,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -120,7 +129,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 3.2704879231836457,
+    "rotation": 16.69924423368887,
     "rotateFast": false
   },
   "reversed": false,

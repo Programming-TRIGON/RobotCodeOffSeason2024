@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.299162513817985,
-        "y": 4.119101195948871
+        "x": 4.237873264478924,
+        "y": 1.7921703449040713
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.359744236483107,
-        "y": 3.832963086319733
+        "x": 5.259691664284939,
+        "y": 1.2923400444296418
+      },
+      "isLocked": false,
+      "linkedName": "Zayde4NoteAutoSecondShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 8.299162513817985,
+        "y": 4.119101195948871
+      },
+      "prevControl": {
+        "x": 7.800314706175031,
+        "y": 3.128050334812656
+      },
+      "nextControl": {
+        "x": 8.462217762717184,
+        "y": 4.443039764703677
       },
       "isLocked": false,
       "linkedName": "Zayde4NoteAutoThirdCollection"
@@ -20,98 +36,26 @@
         "y": 2.905050317142888
       },
       "prevControl": {
-        "x": 2.704382940071784,
-        "y": 3.4364496635970023
-      },
-      "nextControl": {
-        "x": 3.640569599891593,
-        "y": 2.578108029155438
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.6886597716857406,
-        "y": 2.0234181313433055
-      },
-      "prevControl": {
-        "x": 3.958940901840077,
-        "y": 2.2645203744622746
-      },
-      "nextControl": {
-        "x": 3.2477531860251565,
-        "y": 1.6301107378601165
-      },
-      "isLocked": false,
-      "linkedName": "Zayde4NoteAutoEjectPoint"
-    },
-    {
-      "anchor": {
-        "x": 2.968725221886938,
-        "y": 2.905050317142888
-      },
-      "prevControl": {
-        "x": 3.1596390920867714,
-        "y": 2.437823265628643
+        "x": 5.104535362135805,
+        "y": 3.9548439075713597
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Zayde4NoteAutoThirdShotPoint"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": -41.36588107498636,
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 69.70942750209375,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 0.8999999999999999,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "recollect note",
-      "waypointRelativePos": 1.9500000000000002,
+      "name": "Collect",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -127,35 +71,6 @@
               "data": {
                 "name": "Collect"
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 2.9499999999999997,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
             }
           ]
         }
@@ -170,13 +85,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -32.19573393471329,
+    "rotation": -37.12621466326737,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Zayde4NoteAuto",
   "previewStartingState": {
-    "rotation": 40.68051665329484,
+    "rotation": -14.036243467926397,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -3,32 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.299162513817985,
-        "y": 5.781194660980872
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 7.576513181195377,
-        "y": 5.96908348746275
-      },
-      "isLocked": false,
-      "linkedName": "7NoteAutoFifthNoteCollection"
-    },
-    {
-      "anchor": {
         "x": 5.3507532367177415,
         "y": 6.648373860128002
       },
-      "prevControl": {
-        "x": 4.521466643187671,
-        "y": 7.2071973973839585
-      },
+      "prevControl": null,
       "nextControl": {
         "x": 5.714947816299927,
         "y": 6.402957492855952
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "7NoteAutosixthNoteShot"
     },
     {
       "anchor": {
@@ -62,17 +46,17 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
+      "waypointRelativePos": 0.0,
       "rotationDegrees": 18.652530478826883,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.6,
+      "waypointRelativePos": 0.6000000000000001,
       "rotationDegrees": -44.87314432664102,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.5500000000000003,
+      "waypointRelativePos": 0.5500000000000003,
       "rotationDegrees": -43.54803446242331,
       "rotateFast": false
     }
@@ -80,48 +64,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "FeedNote",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -136,46 +80,6 @@
               "type": "named",
               "data": {
                 "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 3.0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "PrepareForShooting",
-      "waypointRelativePos": 2.3000000000000003,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
               }
             }
           ]
