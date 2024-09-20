@@ -1,6 +1,7 @@
 package frc.trigon.robot.constants;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathConstraints;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.AutonomousCommands;
@@ -12,6 +13,7 @@ public class AutonomousConstants {
 
     static {
         registerCommands();
+        PPHolonomicDriveController.setRotationTargetOverride(AutonomousCommands::getRotationOverride);
     }
 
     private static void registerCommands() {

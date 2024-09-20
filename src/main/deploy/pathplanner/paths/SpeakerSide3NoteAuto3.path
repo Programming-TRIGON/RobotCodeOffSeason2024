@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.250233866321391,
-        "y": 4.234795591542403
+        "x": 8.270256540513081,
+        "y": 4.104648209296419
       },
       "prevControl": {
-        "x": 7.853507412229869,
-        "y": 6.416791089045807
+        "x": 7.873530086421559,
+        "y": 6.286643706799824
       },
       "nextControl": {
-        "x": 8.294290913290583,
-        "y": 3.9924818332118446
+        "x": 8.314313587482273,
+        "y": 3.8623344509658613
       },
       "isLocked": false,
       "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
@@ -46,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": -61.69924423399364,
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": -65.60272008394655,
       "rotateFast": false
     }
   ],

@@ -1,15 +1,16 @@
 {
   "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotLength": 0.82,
   "holonomicMode": true,
   "pathFolders": [
     "3NoteAutoThroughAmp",
     "7NoteAuto",
     "FrontRow4NoteAuto",
     "MiddleRush3NoteAuto",
-    "Zayde4NoteAuto",
+    "New Folder",
     "SourceSide3NoteAuto",
-    "SpeakerSide3NoteAuto"
+    "SpeakerSide3NoteAuto",
+    "Zayde4NoteAuto"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,

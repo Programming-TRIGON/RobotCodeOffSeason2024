@@ -1,7 +1,6 @@
 package frc.trigon.robot.commands.factories;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -31,6 +30,9 @@ import java.util.function.Supplier;
 public class AutonomousCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
     private static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
+    private static boolean
+            SHOULD_ALIGN_TO_NOTE = false,
+            SHOULD_ALIGN_TO_SPEAKER = false;
 
     public static Command getResetPoseToAutoPoseCommand(Supplier<String> pathName) {
         return new InstantCommand(
@@ -63,36 +65,70 @@ public class AutonomousCommands {
 
     public static Command getAlignToSpeakerCommand() {
         return new FunctionalCommand(
-                () -> overrideRotation(() -> Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
                 () -> {
-                    System.out.println("target angle" + SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
-                    System.out.println(RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation());
                 },
-                (interrupted) -> overrideRotation(Optional::empty),
+                () -> SHOULD_ALIGN_TO_SPEAKER = true,
+                (interrupted) -> SHOULD_ALIGN_TO_SPEAKER = false,
                 () -> RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
         );
+//        return new FunctionalCommand(
+//                () -> overrideRotation(() -> Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
+//                () -> {
+//                    System.out.println("target angle" + SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
+//                    System.out.println(RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation());
+//                },
+//                (interrupted) -> overrideRotation(Optional::empty),
+//
+//                () -> RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+//        );
     }
 
     public static Command getAlignToNoteCommand() {
         return new FunctionalCommand(
-                () -> {
-                    NOTE_DETECTION_CAMERA.startTrackingBestObject();
-                    overrideRotation(
-                            () -> {
-                                NOTE_DETECTION_CAMERA.trackObject();
-                                if (NOTE_DETECTION_CAMERA.hasTargets())
-                                    return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
-                                return Optional.empty();
-                            }
-                    );
-                },
-                NOTE_DETECTION_CAMERA::trackObject,
-                (interrupted) -> overrideRotation(Optional::empty),
+                NOTE_DETECTION_CAMERA::startTrackingBestObject,
+                () -> SHOULD_ALIGN_TO_NOTE = true,
+                (interrupted) -> SHOULD_ALIGN_TO_NOTE = false,
                 () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), false))
         );
+//        return new FunctionalCommand(
+//                () -> {
+//                    NOTE_DETECTION_CAMERA.startTrackingBestObject();
+//                    overrideRotation(
+//                            () -> {
+//                                NOTE_DETECTION_CAMERA.trackObject();
+//                                if (NOTE_DETECTION_CAMERA.hasTargets())
+//                                    return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+//                                return Optional.empty();
+//                            }
+//                    );
+//                },
+//                NOTE_DETECTION_CAMERA::trackObject,
+//                (interrupted) -> overrideRotation(Optional::empty),
+//                () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), false))
+//        );
     }
 
-    private static void overrideRotation(Supplier<Optional<Rotation2d>> rotationOverride) {
-        PPHolonomicDriveController.setRotationTargetOverride(rotationOverride);
+//    private static void overrideRotation(Supplier<Optional<Rotation2d>> rotationOverride) {
+//        PPHolonomicDriveController.setRotationTargetOverride(rotationOverride);
+//    }
+
+    public static Optional<Rotation2d> getRotationOverride() {
+        System.out.println("current rotation" + RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation());
+        System.out.println("note" + SHOULD_ALIGN_TO_NOTE);
+        System.out.println("speaker" + SHOULD_ALIGN_TO_SPEAKER);
+
+        if (SHOULD_ALIGN_TO_NOTE) {
+            NOTE_DETECTION_CAMERA.trackObject();
+            if (NOTE_DETECTION_CAMERA.hasTargets()) {
+                System.out.println("Tracked object yaw: " + NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+                return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+            }
+        }
+        if (SHOULD_ALIGN_TO_SPEAKER) {
+            System.out.println("Speaker angle: " + SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
+            return Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
+        }
+        System.out.println("No rotation override");
+        return Optional.empty();
     }
 }
