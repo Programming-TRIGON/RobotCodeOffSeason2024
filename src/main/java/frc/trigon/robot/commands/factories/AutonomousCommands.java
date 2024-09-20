@@ -19,7 +19,6 @@ import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
-import org.trigon.commands.ExecuteEndCommand;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
@@ -63,28 +62,37 @@ public class AutonomousCommands {
     }
 
     public static Command getAlignToSpeakerCommand() {
-        return new ExecuteEndCommand(
-                () -> overrideRotation(Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
-                () -> overrideRotation(Optional.empty())
-        ).until(() -> !RobotContainer.INTAKE.hasNote());
+        return new FunctionalCommand(
+                () -> overrideRotation(() -> Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
+                () -> {
+                    System.out.println("target angle" + SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
+                    System.out.println(RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation());
+                },
+                (interrupted) -> overrideRotation(Optional::empty),
+                () -> RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+        );
     }
 
     public static Command getAlignToNoteCommand() {
         return new FunctionalCommand(
-                NOTE_DETECTION_CAMERA::startTrackingBestObject,
                 () -> {
-                    NOTE_DETECTION_CAMERA.trackObject();
-                    if (NOTE_DETECTION_CAMERA.hasTargets())
-                        overrideRotation(Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw()));
-                    else
-                        overrideRotation(Optional.empty());
+                    NOTE_DETECTION_CAMERA.startTrackingBestObject();
+                    overrideRotation(
+                            () -> {
+                                NOTE_DETECTION_CAMERA.trackObject();
+                                if (NOTE_DETECTION_CAMERA.hasTargets())
+                                    return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+                                return Optional.empty();
+                            }
+                    );
                 },
-                (interrupted) -> overrideRotation(Optional.empty()),
+                NOTE_DETECTION_CAMERA::trackObject,
+                (interrupted) -> overrideRotation(Optional::empty),
                 () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), false))
         );
     }
 
-    private static void overrideRotation(Optional<Rotation2d> rotationOverride) {
-        PPHolonomicDriveController.setRotationTargetOverride(() -> rotationOverride);
+    private static void overrideRotation(Supplier<Optional<Rotation2d>> rotationOverride) {
+        PPHolonomicDriveController.setRotationTargetOverride(rotationOverride);
     }
 }
