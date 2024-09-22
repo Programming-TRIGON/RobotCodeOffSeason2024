@@ -65,70 +65,37 @@ public class AutonomousCommands {
 
     public static Command getAlignToSpeakerCommand() {
         return new FunctionalCommand(
+                () -> SHOULD_ALIGN_TO_SPEAKER = true,
                 () -> {
                 },
-                () -> SHOULD_ALIGN_TO_SPEAKER = true,
                 (interrupted) -> SHOULD_ALIGN_TO_SPEAKER = false,
-                () -> RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+                () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get(), false))
         );
-//        return new FunctionalCommand(
-//                () -> overrideRotation(() -> Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get())),
-//                () -> {
-//                    System.out.println("target angle" + SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
-//                    System.out.println(RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation());
-//                },
-//                (interrupted) -> overrideRotation(Optional::empty),
-//
-//                () -> RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
-//        );
     }
 
     public static Command getAlignToNoteCommand() {
         return new FunctionalCommand(
-                NOTE_DETECTION_CAMERA::startTrackingBestObject,
-                () -> SHOULD_ALIGN_TO_NOTE = true,
+                () -> {
+                    NOTE_DETECTION_CAMERA.startTrackingBestObject();
+                    SHOULD_ALIGN_TO_NOTE = true;
+                },
+                () -> {
+                },
                 (interrupted) -> SHOULD_ALIGN_TO_NOTE = false,
                 () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), false))
         );
-//        return new FunctionalCommand(
-//                () -> {
-//                    NOTE_DETECTION_CAMERA.startTrackingBestObject();
-//                    overrideRotation(
-//                            () -> {
-//                                NOTE_DETECTION_CAMERA.trackObject();
-//                                if (NOTE_DETECTION_CAMERA.hasTargets())
-//                                    return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
-//                                return Optional.empty();
-//                            }
-//                    );
-//                },
-//                NOTE_DETECTION_CAMERA::trackObject,
-//                (interrupted) -> overrideRotation(Optional::empty),
-//                () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), false))
-//        );
     }
 
-//    private static void overrideRotation(Supplier<Optional<Rotation2d>> rotationOverride) {
-//        PPHolonomicDriveController.setRotationTargetOverride(rotationOverride);
-//    }
-
     public static Optional<Rotation2d> getRotationOverride() {
-        System.out.println("current rotation" + RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation());
-        System.out.println("note" + SHOULD_ALIGN_TO_NOTE);
-        System.out.println("speaker" + SHOULD_ALIGN_TO_SPEAKER);
-
         if (SHOULD_ALIGN_TO_NOTE) {
             NOTE_DETECTION_CAMERA.trackObject();
-            if (NOTE_DETECTION_CAMERA.hasTargets()) {
-                System.out.println("Tracked object yaw: " + NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+            if (NOTE_DETECTION_CAMERA.hasTargets())
                 return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
-            }
         }
-        if (SHOULD_ALIGN_TO_SPEAKER) {
-            System.out.println("Speaker angle: " + SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
+        
+        if (SHOULD_ALIGN_TO_SPEAKER)
             return Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
-        }
-        System.out.println("No rotation override");
+
         return Optional.empty();
     }
 }
