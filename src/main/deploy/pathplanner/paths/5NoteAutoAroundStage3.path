@@ -1,0 +1,98 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.52634938524034,
+        "y": 6.4835892142093074
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.813317469865345,
+        "y": 6.561587279944157
+      },
+      "isLocked": false,
+      "linkedName": "5NoteAroundStageThirdShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 4.1338974839469875
+      },
+      "prevControl": {
+        "x": 8.016762826874823,
+        "y": 5.235620162451728
+      },
+      "nextControl": {
+        "x": 8.362024218441938,
+        "y": 3.735061037563875
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.321604462686361,
+        "y": 4.82613031734377
+      },
+      "prevControl": {
+        "x": 6.539674457021124,
+        "y": 3.7731564299233114
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "5NoteAroundStageFourthShotPoint"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": -72.55581840842046,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -10.379999999999995,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "5NoteAutoAroundStage",
+  "previewStartingState": {
+    "rotation": 19.855214369321224,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

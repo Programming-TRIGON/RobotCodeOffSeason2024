@@ -1,0 +1,119 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.2699301408104018,
+        "y": 6.932078092184688
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6306711948340775,
+        "y": 7.780307057051169
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.366128157434463,
+        "y": 7.673059716665752
+      },
+      "prevControl": {
+        "x": 2.3174507560666098,
+        "y": 7.682769692604344
+      },
+      "nextControl": {
+        "x": 4.419102044854923,
+        "y": 7.663309958448895
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.211757991211945,
+        "y": 7.507313826979199
+      },
+      "prevControl": {
+        "x": 8.074507596440814,
+        "y": 7.6171141427961055
+      },
+      "nextControl": {
+        "x": 8.358004364464785,
+        "y": 7.390316728376925
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.52634938524034,
+        "y": 6.464089697775596
+      },
+      "prevControl": {
+        "x": 7.339154630803325,
+        "y": 6.863829784666695
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "5NoteAroundStageSecondShotPoint"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.75,
+      "rotationDegrees": -6.024797168719817,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 10.810000000000002,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "5NoteAutoAroundStage",
+  "previewStartingState": {
+    "rotation": 55.06,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

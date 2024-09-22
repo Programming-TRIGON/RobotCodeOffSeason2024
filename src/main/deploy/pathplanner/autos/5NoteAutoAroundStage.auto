@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7547034812379487,
-      "y": 3.84449444955228
+      "x": 1.2699301408104018,
+      "y": 6.932078092184688
     },
-    "rotation": 0
+    "rotation": 51.03999999999999
   },
   "command": {
     "type": "sequential",
@@ -26,9 +26,15 @@
                 "data": {
                   "commands": [
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceSide3NoteAuto1"
+                        "pathName": "5NoteAutoAroundStage1"
                       }
                     },
                     {
@@ -40,7 +46,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceSide3NoteAuto2"
+                        "pathName": "5NoteAutoAroundStage2"
                       }
                     },
                     {
@@ -52,13 +58,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceSide3NoteAuto3"
+                        "pathName": "5NoteAutoAroundStage3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceSide3NoteAuto4"
+                        "pathName": "5NoteAutoAroundStage4"
                       }
                     },
                     {
