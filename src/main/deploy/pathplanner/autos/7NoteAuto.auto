@@ -5,12 +5,18 @@
       "x": 1.1882930808115142,
       "y": 4.148007169253776
     },
-    "rotation": 0
+    "rotation": -45.77083940144205
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
         {
           "type": "race",
           "data": {
@@ -25,6 +31,18 @@
                 "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
                     {
                       "type": "path",
                       "data": {
@@ -56,28 +74,9 @@
                       }
                     },
                     {
-                      "type": "sequential",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignToSpeaker"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.1
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "FeedNote"
-                            }
-                          }
-                        ]
+                        "name": "FeedNote"
                       }
                     },
                     {
@@ -87,28 +86,9 @@
                       }
                     },
                     {
-                      "type": "sequential",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignToSpeaker"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.1
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "FeedNote"
-                            }
-                          }
-                        ]
+                        "name": "FeedNote"
                       }
                     },
                     {
@@ -118,28 +98,9 @@
                       }
                     },
                     {
-                      "type": "sequential",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignToSpeaker"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.1
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "FeedNote"
-                            }
-                          }
-                        ]
+                        "name": "FeedNote"
                       }
                     }
                   ]

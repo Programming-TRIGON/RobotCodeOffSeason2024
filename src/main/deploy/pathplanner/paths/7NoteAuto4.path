@@ -48,12 +48,12 @@
     },
     {
       "anchor": {
-        "x": 5.423018169980266,
-        "y": 6.778450740002665
+        "x": 4.750593824228029,
+        "y": 6.434840423125027
       },
       "prevControl": {
-        "x": 5.37691230305196,
-        "y": 6.962874207718218
+        "x": 4.704487957299723,
+        "y": 6.61926389084058
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,12 +62,12 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": 25.48,
+      "waypointRelativePos": 0.2,
+      "rotationDegrees": 25.0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.7999999999999998,
+      "waypointRelativePos": 1.85,
       "rotationDegrees": 0,
       "rotateFast": false
     }
@@ -76,17 +76,11 @@
   "eventMarkers": [
     {
       "name": "FeedNote",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.25,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            },
             {
               "type": "named",
               "data": {
@@ -99,7 +93,7 @@
     },
     {
       "name": "Collect",
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 1.85,
       "command": {
         "type": "sequential",
         "data": {
@@ -123,13 +117,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 16.69924423368887,
+    "rotation": 10.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 7.966801659666691,
     "velocity": 0
   },
   "useDefaultConstraints": true

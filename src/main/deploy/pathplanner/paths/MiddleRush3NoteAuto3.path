@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.700262133976862,
-        "y": 4.2147908267194
+        "x": 7.714520322152286,
+        "y": 4.111991050457951
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.713574214268286,
-        "y": 3.5245637575353865
+        "x": 8.055761859742248,
+        "y": 3.27591876086365
       },
       "isLocked": false,
       "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
@@ -20,24 +20,24 @@
         "y": 2.437823265628643
       },
       "prevControl": {
-        "x": 7.3288213531525015,
-        "y": 3.0965360264779704
+        "x": 7.909515486489407,
+        "y": 3.3344173101647874
       },
       "nextControl": {
-        "x": 8.76956973949726,
-        "y": 2.055995525228976
+        "x": 8.466964945259141,
+        "y": 1.8261144059320906
       },
       "isLocked": false,
       "linkedName": " MiddleRush3NoteAutoSecondCollection"
     },
     {
       "anchor": {
-        "x": 3.3799243269327333,
-        "y": 2.672794182797669
+        "x": 3.385627673868176,
+        "y": 2.739682058936565
       },
       "prevControl": {
-        "x": 4.995349382469785,
-        "y": 1.1161118565528736
+        "x": 4.809092373529164,
+        "y": 0.6532338005293596
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.9,
-      "rotationDegrees": -36.81507662127073,
+      "rotationDegrees": -65.3534920293612,
       "rotateFast": false
     }
   ],
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "sequential",
         "data": {
@@ -85,7 +85,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -38.15722658736909,
+    "rotation": -40.0,
     "rotateFast": false
   },
   "reversed": false,

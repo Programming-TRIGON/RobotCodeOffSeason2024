@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8833583320118348,
-      "y": 3.054621923197335
+      "x": 2,
+      "y": 2
     },
     "rotation": 0
   },
@@ -28,39 +28,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto1"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "PrepareForEjectFromShooter"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "MiddleRush3NoteAuto2"
+                        "pathName": "Zayde3NoteAuto1"
                       }
                     },
                     {
@@ -92,7 +60,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto3"
+                        "pathName": "Zayde3NoteAuto2"
                       }
                     },
                     {
@@ -104,7 +72,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto4"
+                        "pathName": "Zayde3NoteAuto3"
                       }
                     },
                     {
@@ -116,13 +84,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto5"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "MiddleRush3NoteAuto6"
+                        "pathName": "Zayde3NoteAuto4"
                       }
                     },
                     {

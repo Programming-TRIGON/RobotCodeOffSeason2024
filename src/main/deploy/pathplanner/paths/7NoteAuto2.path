@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7901700773040496,
-        "y": 4.097305368134887
+        "x": 2.2254064460623,
+        "y": 4.124147725730131
       },
       "isLocked": false,
       "linkedName": "7NoteAutoFirstNoteCollection"
@@ -20,8 +20,8 @@
         "y": 5.549946874541637
       },
       "prevControl": {
-        "x": 1.5588997188727838,
-        "y": 5.639302012056618
+        "x": 1.562422887316085,
+        "y": 5.567111941824834
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.55,
-      "rotationDegrees": -16.21959139957416,
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -23.0,
       "rotateFast": false
     }
   ],
@@ -39,17 +39,11 @@
   "eventMarkers": [
     {
       "name": "FeedNote",
-      "waypointRelativePos": 0.45,
+      "waypointRelativePos": 0.4,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            },
             {
               "type": "named",
               "data": {
@@ -61,7 +55,7 @@
       }
     },
     {
-      "name": "CollectAndShoot",
+      "name": "Collect",
       "waypointRelativePos": 1.0,
       "command": {
         "type": "sequential",
@@ -71,12 +65,6 @@
               "type": "named",
               "data": {
                 "name": "Collect"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
               }
             }
           ]
@@ -92,7 +80,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 3.8140748342904516,
+    "rotation": -0.3157271937730075,
     "rotateFast": false
   },
   "reversed": false,

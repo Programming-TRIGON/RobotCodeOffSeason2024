@@ -103,6 +103,6 @@ public class RobotContainer {
     }
 
     private void buildAutoChooser() {
-        autoChooser = new LoggedDashboardChooser<>("AutoChooser", AutoBuilder.buildAutoChooser());
+        autoChooser = new LoggedDashboardChooser<>("AutoChooser", AutoBuilder.buildAutoChooser("3NoteAutoThroughAmp"));
     }
 }

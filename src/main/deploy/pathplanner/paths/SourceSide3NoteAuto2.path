@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.864839532495967,
-        "y": 2.861691357185532
+        "x": 2.8981397630253705,
+        "y": 2.778681091803989
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.02485271776185,
-        "y": 2.0778741527243776
+        "x": 4.5693993739866,
+        "y": 1.0772109624243345
       },
       "isLocked": false,
       "linkedName": "SourceSide3NoteAutoFirstFeed"
@@ -20,24 +20,24 @@
         "y": 2.442554744264419
       },
       "prevControl": {
-        "x": 8.138085399605504,
-        "y": 1.2189116328143221
+        "x": 7.19778313665891,
+        "y": 2.261943906310616
       },
       "nextControl": {
-        "x": 8.339331484021937,
-        "y": 2.8983991018985127
+        "x": 8.737604836786108,
+        "y": 2.5178108076835732
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.5007709452038624,
-        "y": 2.659349544051202
+        "x": 2.4983996761342704,
+        "y": 3.2271699697793705
       },
       "prevControl": {
-        "x": 5.50934826377703,
-        "y": 0.7195984338301424
+        "x": 4.389852770204355,
+        "y": 1.0529738874204604
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "sequential",
         "data": {
@@ -75,23 +75,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "AlignToSpeaker",
-      "waypointRelativePos": 1.25,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToSpeaker"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -102,13 +85,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.33017420027948,
+    "rotation": 135.23972989608086,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SourceSide3NoteAuto",
   "previewStartingState": {
-    "rotation": -45.88713044324461,
+    "rotation": -45.08976502427133,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9921724913872363,
-        "y": 2.1245890379104706
+        "x": 2.8298914555073775,
+        "y": 2.8079303664545576
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.9447383264847105,
-        "y": 2.140400426211312
+        "x": 2.7824572906048517,
+        "y": 2.823741754755399
       },
       "isLocked": false,
       "linkedName": "Zayde4NoteAutoFirstShotPoint"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 4.237873264478924,
-        "y": 1.7921703449040713
+        "x": 2.820141697290522,
+        "y": 2.681183509635428
       },
       "prevControl": {
-        "x": 7.223992167755558,
-        "y": 0.9913352669558533
+        "x": 5.806260600567157,
+        "y": 1.8803484316872099
       },
       "nextControl": null,
       "isLocked": false,
@@ -85,11 +85,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -41.73640180050183,
+    "rotation": -47.66999999999996,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Zayde4NoteAuto",
+  "folder": "Zayde3NoteAuto",
   "previewStartingState": {
     "rotation": -40.75093688059897,
     "velocity": 0

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.006625478039688,
-        "y": 6.373767113731411
+        "x": 3.7171194532412826,
+        "y": 6.269094533438474
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9976603333488359,
-        "y": 4.986280395096002
+        "x": 1.70815430855043,
+        "y": 4.881607814803065
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpThirdFeed"

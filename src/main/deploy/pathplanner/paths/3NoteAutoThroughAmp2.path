@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.751959560257149,
-        "y": 6.76399775334762
+        "x": 1.8159166009543433,
+        "y": 6.932078092184688
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.043527235533899,
-        "y": 6.887585009517068
+        "x": 2.1074842762310935,
+        "y": 7.055665348354136
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpFirstFeed"
@@ -73,7 +73,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 31.87946570148725,
+    "rotation": 27.0,
     "rotateFast": false
   },
   "reversed": false,

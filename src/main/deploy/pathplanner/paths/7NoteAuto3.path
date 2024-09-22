@@ -20,15 +20,21 @@
         "y": 6.995245539786855
       },
       "prevControl": {
-        "x": 1.441414260288271,
-        "y": 6.667299774671107
+        "x": 1.3186789318946823,
+        "y": 6.668834620329574
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "7NoteAutoThirdNoteCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 22.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {

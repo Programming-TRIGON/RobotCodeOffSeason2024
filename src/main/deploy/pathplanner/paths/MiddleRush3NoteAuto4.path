@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.3799243269327333,
-        "y": 2.672794182797669
+        "x": 3.385627673868176,
+        "y": 2.739682058936565
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.309865875834416,
-        "y": 2.763610693480673
+        "x": 3.3155692227698585,
+        "y": 2.830498569619569
       },
       "isLocked": false,
       "linkedName": "MiddleRush3NoteAutoFirstShotPoint"
@@ -85,7 +85,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -8.880659150520325,
+    "rotation": -10.0,
     "rotateFast": false
   },
   "reversed": false,

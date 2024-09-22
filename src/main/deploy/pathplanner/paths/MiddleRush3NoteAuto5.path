@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.700262133976862,
-        "y": 4.2147908267194
+        "x": 5.413577382974244,
+        "y": 4.494638537970663
       },
       "prevControl": {
-        "x": 4.875226792787819,
-        "y": 4.575743788489607
+        "x": 4.588542041785201,
+        "y": 4.85559149974087
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+      "linkedName": "MiddleRushLastCollection"
     }
   ],
   "rotationTargets": [],

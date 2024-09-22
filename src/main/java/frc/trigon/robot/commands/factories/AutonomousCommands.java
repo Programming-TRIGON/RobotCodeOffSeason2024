@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
-import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
@@ -27,11 +26,8 @@ import java.util.function.Supplier;
  * A class that contains commands that are used during the 15-second autonomous period at the start of each match.
  */
 public class AutonomousCommands {
-    private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
     private static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
-    private static boolean
-            SHOULD_ALIGN_TO_NOTE = false,
-            SHOULD_ALIGN_TO_SPEAKER = false;
+    private static boolean SHOULD_ALIGN_TO_NOTE = false;
 
     public static Command getResetPoseToAutoPoseCommand(Supplier<String> pathName) {
         return new InstantCommand(
@@ -55,21 +51,18 @@ public class AutonomousCommands {
         );
     }
 
+    public static Command getPrepareForCloseShooterEjectionCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+        );
+    }
+
     public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING, true),
                 GeneralCommands.getVisualizeNoteShootingCommand().onlyIf(MotorSubsystem::isExtensiveLoggingEnabled)
         ).until(() -> !RobotContainer.INTAKE.hasNote());
-    }
-
-    public static Command getAlignToSpeakerCommand() {
-        return new FunctionalCommand(
-                () -> SHOULD_ALIGN_TO_SPEAKER = true,
-                () -> {
-                },
-                (interrupted) -> SHOULD_ALIGN_TO_SPEAKER = false,
-                () -> false
-        );
     }
 
     public static Command getAlignToNoteCommand() {
@@ -91,10 +84,6 @@ public class AutonomousCommands {
             if (NOTE_DETECTION_CAMERA.hasTargets())
                 return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
         }
-
-        if (SHOULD_ALIGN_TO_SPEAKER)
-            return Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
-
         return Optional.empty();
     }
 }

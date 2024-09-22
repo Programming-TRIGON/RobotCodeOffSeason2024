@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.700262133976862,
-        "y": 4.2147908267194
+        "x": 5.413577382974244,
+        "y": 4.494638537970663
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.406548487515581,
-        "y": 4.391019014596169
+        "x": 5.119863736512963,
+        "y": 4.670866725847431
       },
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+      "linkedName": "MiddleRushLastCollection"
     },
     {
       "anchor": {
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -8.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": -31.827446576673115,
+    "rotation": -25.906507999514293,
     "velocity": 0
   },
   "useDefaultConstraints": true
