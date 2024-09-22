@@ -75,6 +75,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "AlignToSpeaker",
+      "waypointRelativePos": 1.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToSpeaker"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {

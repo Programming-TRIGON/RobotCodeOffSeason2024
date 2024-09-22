@@ -19,7 +19,6 @@ import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
-import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -69,7 +68,7 @@ public class AutonomousCommands {
                 () -> {
                 },
                 (interrupted) -> SHOULD_ALIGN_TO_SPEAKER = false,
-                () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get(), false))
+                () -> false
         );
     }
 
@@ -82,7 +81,7 @@ public class AutonomousCommands {
                 () -> {
                 },
                 (interrupted) -> SHOULD_ALIGN_TO_NOTE = false,
-                () -> RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(NOTE_DETECTION_CAMERA.getTrackedObjectYaw(), false))
+                () -> false
         );
     }
 
@@ -92,7 +91,7 @@ public class AutonomousCommands {
             if (NOTE_DETECTION_CAMERA.hasTargets())
                 return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
         }
-        
+
         if (SHOULD_ALIGN_TO_SPEAKER)
             return Optional.of(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get());
 
