@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.661546434731825,
-        "y": 5.996101303366502
+        "x": 6.640145802652965,
+        "y": 6.1826722580099895
       },
       "isLocked": false,
       "linkedName": "5NoteAroundStageSecondShotPoint"
@@ -46,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 0.15,
       "rotationDegrees": -2.8001176376211188,
       "rotateFast": false
     }
