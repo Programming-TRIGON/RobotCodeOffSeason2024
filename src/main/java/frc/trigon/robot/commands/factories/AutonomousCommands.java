@@ -79,12 +79,10 @@ public class AutonomousCommands {
 
     private static Optional<Rotation2d> calculateRotationOverride() {
         NOTE_DETECTION_CAMERA.trackObject();
-        System.out.println("Tracking object");
         if (RobotContainer.INTAKE.hasNote())
             return Optional.empty();
         if (NOTE_DETECTION_CAMERA.hasTargets())
             return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
-        System.out.println("No targets");
         return Optional.empty();
     }
 
