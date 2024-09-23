@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 8.211757991211945,
-        "y": 7.507313826979199
+        "x": 8.255570858190017,
+        "y": 7.445640937793504
       },
       "prevControl": {
-        "x": 8.074507596440814,
-        "y": 7.6171141427961055
+        "x": 8.255570858190017,
+        "y": 7.621407203664753
       },
       "nextControl": {
-        "x": 8.358004364464785,
-        "y": 7.390316728376925
+        "x": 8.255570858190017,
+        "y": 7.357526843855119
       },
       "isLocked": false,
       "linkedName": null
@@ -91,6 +91,23 @@
               "type": "named",
               "data": {
                 "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 2.4000000000000004,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
               }
             }
           ]

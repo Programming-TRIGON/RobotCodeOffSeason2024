@@ -1,13 +1,14 @@
 package frc.trigon.robot.commands.factories;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
@@ -27,7 +28,6 @@ import java.util.function.Supplier;
  */
 public class AutonomousCommands {
     private static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
-    private static boolean SHOULD_ALIGN_TO_NOTE = false;
 
     public static Command getResetPoseToAutoPoseCommand(Supplier<String> pathName) {
         return new InstantCommand(
@@ -66,24 +66,31 @@ public class AutonomousCommands {
     }
 
     public static Command getAlignToNoteCommand() {
-        return new FunctionalCommand(
+        return new StartEndCommand(
                 () -> {
                     NOTE_DETECTION_CAMERA.startTrackingBestObject();
-                    SHOULD_ALIGN_TO_NOTE = true;
+                    overrideRotation(AutonomousCommands::getRotationOverride);
                 },
-                () -> {
-                },
-                (interrupted) -> SHOULD_ALIGN_TO_NOTE = false,
-                () -> false
+                () -> overrideRotation(Optional::empty)
         );
     }
 
-    public static Optional<Rotation2d> getRotationOverride() {
-        if (SHOULD_ALIGN_TO_NOTE) {
-            NOTE_DETECTION_CAMERA.trackObject();
-            if (NOTE_DETECTION_CAMERA.hasTargets())
-                return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
-        }
+    public static Command getStopAligningToNoteCommand() {
+        return new InstantCommand(() -> overrideRotation(Optional::empty));
+    }
+
+    private static Optional<Rotation2d> getRotationOverride() {
+        NOTE_DETECTION_CAMERA.trackObject();
+        System.out.println("Tracking object");
+        if (RobotContainer.INTAKE.hasNote())
+            return Optional.empty();
+        if (NOTE_DETECTION_CAMERA.hasTargets())
+            return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+        System.out.println("No targets");
         return Optional.empty();
+    }
+
+    private static void overrideRotation(Supplier<Optional<Rotation2d>> rotationOverride) {
+        PPHolonomicDriveController.setRotationTargetOverride(rotationOverride);
     }
 }

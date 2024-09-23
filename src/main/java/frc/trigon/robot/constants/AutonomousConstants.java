@@ -1,7 +1,6 @@
 package frc.trigon.robot.constants;
 
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathConstraints;
 import frc.trigon.robot.commands.factories.AutonomousCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
@@ -12,12 +11,12 @@ public class AutonomousConstants {
 
     static {
         registerCommands();
-        PPHolonomicDriveController.setRotationTargetOverride(AutonomousCommands::getRotationOverride);
     }
 
     private static void registerCommands() {
         NamedCommands.registerCommand("Collect", AutonomousCommands.getNoteCollectionCommand());
         NamedCommands.registerCommand("AlignToNote", AutonomousCommands.getAlignToNoteCommand());
+        NamedCommands.registerCommand("StopAligningToNote", AutonomousCommands.getStopAligningToNoteCommand());
         NamedCommands.registerCommand("PrepareForShooting", ShootingCommands.getWarmSpeakerShotCommand());
         NamedCommands.registerCommand("StopShooting", ShooterCommands.getStopCommand());
         NamedCommands.registerCommand("FeedNote", AutonomousCommands.getFeedNoteCommand());
