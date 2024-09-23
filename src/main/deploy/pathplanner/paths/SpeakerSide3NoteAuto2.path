@@ -92,7 +92,7 @@
   "folder": "SpeakerSide3NoteAuto",
   "previewStartingState": {
     "rotation": 7.125016348901798,
-    "velocity": 0
+    "velocity": 2.0
   },
   "useDefaultConstraints": true
 }

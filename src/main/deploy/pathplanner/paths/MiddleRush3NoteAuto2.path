@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.9219209708544644,
-        "y": 3.700791945412156
+        "x": 7.402528059212889,
+        "y": 4.0363999017784264
       },
       "isLocked": false,
       "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
@@ -84,7 +84,7 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 0,
     "rotateFast": false
   },
@@ -92,7 +92,7 @@
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
     "rotation": -37.56859202882748,
-    "velocity": 0
+    "velocity": 2.0
   },
   "useDefaultConstraints": true
 }

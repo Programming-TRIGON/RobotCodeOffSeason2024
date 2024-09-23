@@ -20,8 +20,8 @@
         "y": 4.885109488528837
       },
       "prevControl": {
-        "x": 4.498027024223063,
-        "y": 3.9312123694669934
+        "x": 4.8383416481797346,
+        "y": 4.562886845488656
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +46,7 @@
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 0
+    "velocity": 2.0
   },
   "useDefaultConstraints": true
 }

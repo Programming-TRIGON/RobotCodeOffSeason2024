@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.299162513817985,
-        "y": 5.781194660980872
+        "x": 8.280006298729937,
+        "y": 5.781606622595669
       },
       "prevControl": {
-        "x": 7.55536008831674,
-        "y": 6.524997086482113
+        "x": 8.270599841858747,
+        "y": 6.259756736836414
       },
       "nextControl": {
-        "x": 8.487051340299864,
-        "y": 5.593305834498993
+        "x": 8.288089556923318,
+        "y": 5.37071749807951
       },
       "isLocked": false,
       "linkedName": "7NoteAutoFifthNoteCollection"
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.8,
-      "rotationDegrees": -35.56908197463423,
+      "rotationDegrees": -27.643128944932975,
       "rotateFast": false
     }
   ],

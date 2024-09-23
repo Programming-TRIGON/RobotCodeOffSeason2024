@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6886597716857406,
-        "y": 2.0234181313433055
+        "x": 3.6781204203738587,
+        "y": 1.7744559954678114
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.657578689039311,
-        "y": 1.8797673373522068
+        "x": 4.6470393377274295,
+        "y": 1.6308052014767127
       },
       "isLocked": false,
       "linkedName": "Zayde4NoteAutoEjectPoint"
@@ -92,7 +92,7 @@
   "folder": "Zayde3NoteAuto",
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 0
+    "velocity": 2.0
   },
   "useDefaultConstraints": true
 }

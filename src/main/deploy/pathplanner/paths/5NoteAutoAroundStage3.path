@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.813317469865345,
-        "y": 6.561587279944157
+        "x": 5.988813117768754,
+        "y": 6.395841390257602
       },
       "isLocked": false,
       "linkedName": "5NoteAroundStageThirdShotPoint"
@@ -20,12 +20,12 @@
         "y": 4.1338974839469875
       },
       "prevControl": {
-        "x": 8.016762826874823,
-        "y": 5.235620162451728
+        "x": 8.153259441910809,
+        "y": 4.572636603705512
       },
       "nextControl": {
-        "x": 8.362024218441938,
-        "y": 3.735061037563875
+        "x": 8.37570694935712,
+        "y": 3.738458450781841
       },
       "isLocked": false,
       "linkedName": null
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.8,
-      "rotationDegrees": -72.55581840842046,
+      "rotationDegrees": -59.42448148552224,
       "rotateFast": false
     }
   ],
@@ -91,7 +91,7 @@
   "reversed": false,
   "folder": "5NoteAutoAroundStage",
   "previewStartingState": {
-    "rotation": 19.855214369321224,
+    "rotation": 11.240000000000009,
     "velocity": 0
   },
   "useDefaultConstraints": true

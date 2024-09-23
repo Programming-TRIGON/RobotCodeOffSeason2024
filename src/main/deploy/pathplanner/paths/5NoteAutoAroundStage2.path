@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.52634938524034,
-        "y": 6.464089697775596
+        "x": 6.661546434731825,
+        "y": 5.996101303366502
       },
       "isLocked": false,
       "linkedName": "5NoteAroundStageSecondShotPoint"
@@ -36,8 +36,8 @@
         "y": 6.4835892142093074
       },
       "prevControl": {
-        "x": 6.883678325551427,
-        "y": 6.137472797510916
+        "x": 4.750593824228029,
+        "y": 6.493338972426163
       },
       "nextControl": null,
       "isLocked": false,
@@ -91,7 +91,7 @@
   "reversed": false,
   "folder": "5NoteAutoAroundStage",
   "previewStartingState": {
-    "rotation": 17.700427788667255,
+    "rotation": 10.680000000000007,
     "velocity": 0
   },
   "useDefaultConstraints": true

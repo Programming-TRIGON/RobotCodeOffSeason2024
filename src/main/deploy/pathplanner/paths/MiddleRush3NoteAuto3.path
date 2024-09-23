@@ -20,12 +20,12 @@
         "y": 2.437823265628643
       },
       "prevControl": {
-        "x": 7.909515486489407,
-        "y": 3.3344173101647874
+        "x": 7.982068347339294,
+        "y": 3.3579866212382528
       },
       "nextControl": {
-        "x": 8.466964945259141,
-        "y": 1.8261144059320906
+        "x": 8.416502913765923,
+        "y": 1.8134550283352364
       },
       "isLocked": false,
       "linkedName": " MiddleRush3NoteAutoSecondCollection"
@@ -36,8 +36,8 @@
         "y": 2.739682058936565
       },
       "prevControl": {
-        "x": 4.809092373529164,
-        "y": 0.6532338005293596
+        "x": 5.286830526155116,
+        "y": 1.3747159085767113
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.85,
       "rotationDegrees": -65.3534920293612,
       "rotateFast": false
     }
@@ -92,7 +92,7 @@
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 0
+    "velocity": 1.0
   },
   "useDefaultConstraints": true
 }

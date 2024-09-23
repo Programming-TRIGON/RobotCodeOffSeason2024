@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.70815430855043,
-        "y": 4.881607814803065
+        "x": 2.9273890376759386,
+        "y": 4.6018858783560805
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpThirdFeed"
@@ -20,8 +20,8 @@
         "y": 4.119101195948871
       },
       "prevControl": {
-        "x": 7.518701234585568,
-        "y": 3.1652040768870275
+        "x": 7.295280718827471,
+        "y": 4.0363999017784264
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,14 +62,14 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0,
+    "velocity": 2.0,
+    "rotation": 0.7407221068638863,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 10.150000000000006,
     "velocity": 0
   },
   "useDefaultConstraints": true
