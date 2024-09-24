@@ -13,8 +13,8 @@
     "Zayde3NoteAuto"
   ],
   "autoFolders": [],
-  "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 3.0,
+  "defaultMaxVel": 4.0,
+  "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 400.0,
   "defaultMaxAngAccel": 600.0,
   "maxModuleSpeed": 4.5

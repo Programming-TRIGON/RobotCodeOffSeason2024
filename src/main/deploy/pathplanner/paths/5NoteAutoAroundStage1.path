@@ -99,7 +99,7 @@
     },
     {
       "name": "StopAligning",
-      "waypointRelativePos": 2.4000000000000004,
+      "waypointRelativePos": 2.15,
       "command": {
         "type": "parallel",
         "data": {
@@ -116,8 +116,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },

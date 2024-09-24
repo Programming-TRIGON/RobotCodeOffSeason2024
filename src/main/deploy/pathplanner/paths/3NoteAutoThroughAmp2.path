@@ -66,8 +66,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
@@ -80,7 +80,7 @@
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
     "rotation": 19.7161888055752,
-    "velocity": 1.0
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }

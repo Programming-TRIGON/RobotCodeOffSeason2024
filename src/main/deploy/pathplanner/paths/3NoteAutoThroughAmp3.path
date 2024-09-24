@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.29950581516365,
-        "y": 5.781606622595669
+        "x": 8.31703315828284,
+        "y": 5.157122109116013
       },
       "prevControl": {
-        "x": 8.353663919349328,
-        "y": 5.871870129571796
+        "x": 8.51548873362557,
+        "y": 5.504419365965794
       },
       "nextControl": {
-        "x": 8.270256540513081,
-        "y": 5.732857831511389
+        "x": 8.176703304973561,
+        "y": 4.911544865824775
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 6.269094533438474
       },
       "prevControl": {
-        "x": 4.552175394949081,
-        "y": 6.564519385449028
+        "x": 5.288247157690896,
+        "y": 7.016492665463964
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": -37.571022899857944,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -36.42323266712899,
       "rotateFast": false
     }
   ],
@@ -55,9 +55,9 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.7,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
@@ -78,7 +78,7 @@
     },
     {
       "name": "StopAligning",
-      "waypointRelativePos": 1.25,
+      "waypointRelativePos": 1.2,
       "command": {
         "type": "parallel",
         "data": {
@@ -95,8 +95,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
