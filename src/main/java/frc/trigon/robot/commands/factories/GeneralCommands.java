@@ -46,7 +46,7 @@ public class GeneralCommands {
         return new ParallelCommandGroup(
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT, false)
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
         ).unless(RobotContainer.INTAKE::hasNote);
     }
 

@@ -42,12 +42,6 @@
                       "data": {
                         "name": "FeedNote"
                       }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "SpeakerSide3NoteAuto2"
-                      }
                     }
                   ]
                 }
@@ -69,6 +63,18 @@
                 "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SpeakerSide3NoteAuto2"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
                     {
                       "type": "path",
                       "data": {

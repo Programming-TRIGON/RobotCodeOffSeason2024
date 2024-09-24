@@ -72,7 +72,7 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 27.0,
     "rotateFast": false
   },
@@ -80,7 +80,7 @@
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
     "rotation": 19.7161888055752,
-    "velocity": 0
+    "velocity": 1.0
   },
   "useDefaultConstraints": true
 }

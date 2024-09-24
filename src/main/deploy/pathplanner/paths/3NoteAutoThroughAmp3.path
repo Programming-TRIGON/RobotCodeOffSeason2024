@@ -75,6 +75,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 1.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -92,7 +109,7 @@
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
     "rotation": 25.769327624338693,
-    "velocity": 0
+    "velocity": 1.0
   },
   "useDefaultConstraints": true
 }

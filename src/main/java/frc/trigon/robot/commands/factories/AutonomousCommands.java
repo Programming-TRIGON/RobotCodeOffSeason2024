@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
@@ -41,7 +40,7 @@ public class AutonomousCommands {
     }
 
     public static Command getNoteCollectionCommand() {
-        return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT, true).onlyIf(() -> !RobotContainer.INTAKE.hasNote());
+        return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).onlyIf(() -> !RobotContainer.INTAKE.hasNote());
     }
 
     public static Command getPrepareForShooterEjectionCommand() {
@@ -60,18 +59,17 @@ public class AutonomousCommands {
 
     public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
-                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING, true),
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
                 GeneralCommands.getVisualizeNoteShootingCommand().onlyIf(MotorSubsystem::isExtensiveLoggingEnabled)
         ).until(() -> !RobotContainer.INTAKE.hasNote());
     }
 
     public static Command getAlignToNoteCommand() {
-        return new StartEndCommand(
+        return new InstantCommand(
                 () -> {
                     NOTE_DETECTION_CAMERA.startTrackingBestObject();
-                    overrideRotation(AutonomousCommands::getRotationOverride);
-                },
-                () -> overrideRotation(Optional::empty)
+                    overrideRotation(AutonomousCommands::calculateRotationOverride);
+                }
         );
     }
 
@@ -79,14 +77,12 @@ public class AutonomousCommands {
         return new InstantCommand(() -> overrideRotation(Optional::empty));
     }
 
-    private static Optional<Rotation2d> getRotationOverride() {
+    private static Optional<Rotation2d> calculateRotationOverride() {
         NOTE_DETECTION_CAMERA.trackObject();
-        System.out.println("Tracking object");
         if (RobotContainer.INTAKE.hasNote())
             return Optional.empty();
         if (NOTE_DETECTION_CAMERA.hasTargets())
             return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
-        System.out.println("No targets");
         return Optional.empty();
     }
 
