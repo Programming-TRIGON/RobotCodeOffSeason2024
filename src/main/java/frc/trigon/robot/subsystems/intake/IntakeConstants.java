@@ -1,5 +1,6 @@
 package frc.trigon.robot.subsystems.intake;
 
+import com.ctre.phoenix.led.TwinkleAnimation;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -71,6 +72,8 @@ public class IntakeConstants {
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> Math.abs(MASTER_MOTOR.getSignal(TalonFXSignal.TORQUE_CURRENT)) > IntakeConstants.NOTE_COLLECTION_CURRENT
     ).debounce(NOTE_COLLECTION_TIME_THRESHOLD_SECONDS);
+    static final double LED_SPEED = 0.5;
+    static final TwinkleAnimation.TwinklePercent LED_DIVIDER = TwinkleAnimation.TwinklePercent.Percent100;
 
     static {
         configureMasterMotor();
