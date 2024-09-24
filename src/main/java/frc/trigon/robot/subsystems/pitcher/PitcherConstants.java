@@ -37,8 +37,8 @@ public class PitcherConstants {
 
     private static final InvertedValue
             MASTER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
-            FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
-    private static final boolean FOLLOWER_OPPOSES_MASTER = false;
+            FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
+    private static final boolean FOLLOWER_OPPOSES_MASTER = true;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
             P = RobotHardwareStats.isSimulation() ? 100 : 0,
@@ -54,7 +54,7 @@ public class PitcherConstants {
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
-    private static final double GEAR_RATIO = 200;
+    private static final double GEAR_RATIO = 227.77777;
     private static final Rotation2d
             REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
             FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
