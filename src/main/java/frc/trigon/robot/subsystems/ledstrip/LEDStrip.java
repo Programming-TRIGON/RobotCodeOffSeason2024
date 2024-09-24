@@ -1,7 +1,6 @@
 package frc.trigon.robot.subsystems.ledstrip;
 
 import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -58,14 +57,6 @@ public class LEDStrip extends SubsystemBase {
 
     void staticColor(Color color) {
         setAllLedColors(color);
-    }
-
-    void flash(Color color) {
-        double startTimestamp = Timer.getFPGATimestamp();
-        while (Timer.getFPGATimestamp() - startTimestamp < LEDStripConstants.FLASHING_TIME) {
-            setAllLedColors(color);
-        }
-        clearLedColors();
     }
 
     void blink(Color color) {

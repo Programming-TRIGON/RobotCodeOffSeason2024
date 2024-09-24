@@ -3,6 +3,7 @@ package frc.trigon.robot.subsystems.ledstrip;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import org.trigon.commands.ExecuteEndCommand;
 
@@ -18,10 +19,9 @@ public class LEDStripCommands {
     }
 
     public static Command getFlashCommand(Color color) {
-        return new StartEndCommand(
-                () -> LEDStripConstants.LED_STRIP.flash(color),
-                () -> {
-                }
+        return new SequentialCommandGroup(
+                getStaticColorCommand(color).withTimeout(LEDStripConstants.FLASHING_TIME),
+                getClearLEDsCommand()
         ).ignoringDisable(true);
     }
 
@@ -38,6 +38,14 @@ public class LEDStripCommands {
                 LEDStripConstants.LED_STRIP::clearLedColors,
                 () -> LEDStripConstants.LED_STRIP.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get())
 
+        ).ignoringDisable(true);
+    }
+
+    private static Command getClearLEDsCommand() {
+        return new StartEndCommand(
+                LEDStripConstants.LED_STRIP::clearLedColors,
+                () -> {
+                }
         ).ignoringDisable(true);
     }
 }
