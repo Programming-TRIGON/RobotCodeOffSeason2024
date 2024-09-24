@@ -16,62 +16,21 @@
     },
     {
       "anchor": {
-        "x": 2.8937455058008714,
-        "y": 5.549946874541637
+        "x": 2.189296230444312,
+        "y": 4.478861151454497
       },
       "prevControl": {
-        "x": 1.562422887316085,
-        "y": 5.567111941824834
+        "x": 2.4114851648506717,
+        "y": 4.198201444835939
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutoSecondNoteCollection"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -23.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "FeedNote",
-      "waypointRelativePos": 0.4,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Collect",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
@@ -79,8 +38,8 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -0.3157271937730075,
+    "velocity": 2.0,
+    "rotation": -29.279999999999973,
     "rotateFast": false
   },
   "reversed": false,

@@ -4,113 +4,42 @@
     {
       "anchor": {
         "x": 2.8937455058008714,
-        "y": 6.995245539786855
+        "y": 5.551187918118234
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.891001584820071,
-        "y": 7.168681379616281
+        "x": 2.8937455058008714,
+        "y": 5.551187918118234
       },
       "isLocked": false,
-      "linkedName": "7NoteAutoThirdNoteCollection"
+      "linkedName": "7NoteAutoSecondNoteCollection"
     },
     {
       "anchor": {
-        "x": 5.018334543711345,
-        "y": 7.255399299530993
+        "x": 2.8937455058008714,
+        "y": 6.995245539786855
       },
       "prevControl": {
-        "x": 4.033365844655869,
-        "y": 7.1599662605462395
-      },
-      "nextControl": {
-        "x": 6.008312634198568,
-        "y": 7.3513176955105966
-      },
-      "isLocked": false,
-      "linkedName": "7noteAutofourthShotPoint"
-    },
-    {
-      "anchor": {
-        "x": 8.3,
-        "y": 7.443288126012872
-      },
-      "prevControl": {
-        "x": 8.241007265858615,
-        "y": 7.809556331702832
-      },
-      "nextControl": {
-        "x": 8.383538066328756,
-        "y": 6.92462530920377
-      },
-      "isLocked": false,
-      "linkedName": "7NoteAutoFourthNoteCollection"
-    },
-    {
-      "anchor": {
-        "x": 4.750593824228029,
-        "y": 6.434840423125027
-      },
-      "prevControl": {
-        "x": 4.704487957299723,
-        "y": 6.61926389084058
+        "x": 1.3186789318946823,
+        "y": 6.668834620329574
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutofifthNoteShot"
+      "linkedName": "7NoteAutoThirdNoteCollection"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.2,
-      "rotationDegrees": 25.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.85,
-      "rotationDegrees": -17.449227608425616,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 22.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "FeedNote",
-      "waypointRelativePos": 0.25,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "FeedNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Collect",
-      "waypointRelativePos": 1.85,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "StopAligning",
-      "waypointRelativePos": 2.15,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -118,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "StopAligningToNote"
+                "name": "Collect"
               }
             }
           ]
@@ -134,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 10.0,
+    "rotation": 19.632132186876802,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 7.966801659666691,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

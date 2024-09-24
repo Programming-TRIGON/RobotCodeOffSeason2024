@@ -3,51 +3,56 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.884948624598104,
-        "y": 7.168516673215683
+        "x": 4.4678508359392035,
+        "y": 6.434840423125027
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.874926715085328,
-        "y": 7.264435069195287
+        "x": 5.959563843118187,
+        "y": 6.542087763510444
       },
       "isLocked": false,
-      "linkedName": "7noteAutofourthShotPoint"
+      "linkedName": "7NoteAutosixthNoteShot"
     },
     {
       "anchor": {
-        "x": 8.3,
-        "y": 7.443288126012872
+        "x": 8.299162513817985,
+        "y": 4.104648209296419
       },
       "prevControl": {
-        "x": 8.302537154894363,
-        "y": 7.730392765282098
+        "x": 8.314313587482273,
+        "y": 4.8169038019650285
       },
       "nextControl": {
-        "x": 8.293644849397962,
-        "y": 6.7241388044029655
+        "x": 8.290683228762186,
+        "y": 3.7060349930556
       },
       "isLocked": false,
-      "linkedName": "7NoteAutoFourthNoteCollection"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.750593824228029,
-        "y": 6.434840423125027
+        "x": 4.282605429818937,
+        "y": 4.816380559126915
       },
       "prevControl": {
-        "x": 4.704487957299723,
-        "y": 6.61926389084058
+        "x": 6.8594739711072625,
+        "y": 4.098390553762371
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutofifthNoteShot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": -11.724730245006423,
+      "waypointRelativePos": 0.6000000000000001,
+      "rotationDegrees": -46.17743228821637,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": -63.70900474414372,
       "rotateFast": false
     }
   ],
@@ -55,11 +60,17 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
             {
               "type": "named",
               "data": {
@@ -72,7 +83,7 @@
     },
     {
       "name": "StopAligning",
-      "waypointRelativePos": 1.15,
+      "waypointRelativePos": 1.1,
       "command": {
         "type": "parallel",
         "data": {
@@ -96,14 +107,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 10.0,
+    "rotation": -10.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 18.69999999999999,
-    "velocity": 2.0
+    "rotation": 10.97999999999999,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

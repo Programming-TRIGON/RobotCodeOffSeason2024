@@ -62,15 +62,15 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "7NoteAuto4"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "7NoteAuto4"
                       }
                     },
                     {
@@ -89,6 +89,30 @@
                       "type": "path",
                       "data": {
                         "pathName": "7NoteAuto6"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "7NoteAuto7"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "7NoteAuto8"
                       }
                     },
                     {
