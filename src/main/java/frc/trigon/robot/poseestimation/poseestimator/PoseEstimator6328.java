@@ -146,7 +146,10 @@ public class PoseEstimator6328 {
     }
 
     public Pose2d samplePose(double timestamp) {
-        return poseBuffer.getSample(timestamp).orElse(null);
+        var sample = poseBuffer.getSample(timestamp).orElse(new Pose2d());
+        var odometryToSampleTransform = new Transform2d(odometryPose, sample);
+
+        return estimatedPose.plus(odometryToSampleTransform);
     }
 
     /**

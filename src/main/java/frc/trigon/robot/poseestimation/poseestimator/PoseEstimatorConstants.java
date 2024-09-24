@@ -15,7 +15,7 @@ public class PoseEstimatorConstants {
      */
     static final Vector<N3> ODOMETRY_AMBIGUITY = VecBuilder.fill(0.003, 0.003, 0.0002);
 
-    static final double
+    public static final double
             TRANSLATIONS_STD_EXPONENT = 0.005,
             THETA_STD_EXPONENT = 0.01;
 }

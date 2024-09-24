@@ -27,11 +27,11 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     protected void updateInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final PhotonPipelineResult latestResult = photonCamera.getLatestResult();
 
-        inputs.hasResult = latestResult.hasTargets();
-        if (inputs.hasResult)
-            updateHasResultInputs(inputs, latestResult);
-        else
-            updateNoResultInputs(inputs);
+            inputs.hasResult = latestResult.hasTargets() && !latestResult.getTargets().isEmpty();
+            if (inputs.hasResult)
+                updateHasResultInputs(inputs, latestResult);
+            else
+                updateNoResultInputs(inputs);
     }
 
     private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs, PhotonPipelineResult latestResult) {
@@ -47,7 +47,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     }
 
     private void updateNoResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
-        inputs.visibleTagIDs = new int[0];
+        inputs.visibleTagIDs = new int[]{};
         inputs.solvePNPPose = new Pose3d();
     }
 
