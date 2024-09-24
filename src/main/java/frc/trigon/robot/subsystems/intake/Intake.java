@@ -5,12 +5,8 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
-import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
-import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
-
-import java.awt.*;
 
 public class Intake extends MotorSubsystem {
     private final TalonFXMotor masterMotor = IntakeConstants.MASTER_MOTOR;
@@ -77,7 +73,6 @@ public class Intake extends MotorSubsystem {
      * Indicates to the driver that a note has been collected by rumbling the controller.
      */
     void indicateCollection() {
-        LEDStripCommands.getAnimateTwinkleCommand(Color.ORANGE, IntakeConstants.LED_SPEED, IntakeConstants.LED_DIVIDER, LEDStripConstants.LED_STRIPS).schedule();
         if (DriverStation.isAutonomous())
             OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
     }
