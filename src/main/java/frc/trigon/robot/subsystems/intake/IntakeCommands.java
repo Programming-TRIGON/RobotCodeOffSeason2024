@@ -40,8 +40,7 @@ public class IntakeCommands {
                         },
                         (interrupted) -> {
                             if (!interrupted) {
-                                if (DriverStation.isAutonomous())
-                                    RobotContainer.INTAKE.indicateCollection();
+                                RobotContainer.INTAKE.indicateCollection();
                                 RobotContainer.INTAKE.sendStaticBrakeRequest();
                             }
                         },

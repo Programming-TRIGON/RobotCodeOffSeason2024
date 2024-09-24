@@ -109,7 +109,7 @@
   "folder": "SourceSide3NoteAuto",
   "previewStartingState": {
     "rotation": -45.08976502427133,
-    "velocity": 0
+    "velocity": 1.0
   },
   "useDefaultConstraints": true
 }

@@ -2,6 +2,7 @@ package frc.trigon.robot.subsystems.intake;
 
 import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.controls.VoltageOut;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
@@ -42,7 +43,7 @@ public class Intake extends MotorSubsystem {
     public boolean hasNote() {
         return IntakeConstants.HAS_NOTE_BOOLEAN_EVENT.getAsBoolean();
     }
-    
+
     /**
      * Checks if a note has been collected early using the motor's current.
      * This is quicker than {@linkplain Intake#hasNote} since it updates from the change in current (which happens right when we hit the note),
@@ -72,6 +73,7 @@ public class Intake extends MotorSubsystem {
      * Indicates to the driver that a note has been collected by rumbling the controller.
      */
     void indicateCollection() {
-        OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
+        if (DriverStation.isAutonomous())
+            OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
     }
 }

@@ -49,5 +49,5 @@ public class OperatorConstants {
             AMP_TRIGGER = OPERATOR_CONTROLLER.a(),
             AUTONOMOUS_AMP_TRIGGER = OPERATOR_CONTROLLER.z(),
             ALIGN_TO_AMP_TRIGGER = DRIVER_CONTROLLER.x().and(OperatorConstants.AMP_TRIGGER.or(OperatorConstants.AUTONOMOUS_AMP_TRIGGER).negate()),
-            RESET_AUTO_POSE_TRIGGER = OPERATOR_CONTROLLER.period();
+            RESET_POSE_TO_AUTO_POSE_TRIGGER = OPERATOR_CONTROLLER.period();
 }
