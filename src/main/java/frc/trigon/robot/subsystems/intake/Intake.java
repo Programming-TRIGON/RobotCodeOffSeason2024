@@ -72,7 +72,7 @@ public class Intake extends MotorSubsystem {
     }
 
     /**
-     * Indicates to the driver that a note has been collected by rumbling the controller and flashing the LEDs.
+     * Indicates to the driver that a note has been collected by rumbling the controller and flashing the robot's LEDs.
      */
     void indicateCollection() {
         LEDStripCommands.getFlashCommand(Color.kOrange).schedule();

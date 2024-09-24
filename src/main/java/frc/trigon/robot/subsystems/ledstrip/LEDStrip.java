@@ -57,6 +57,7 @@ public class LEDStrip extends SubsystemBase {
     void staticColor(Color color) {
         setAllLedColors(color);
     }
+    
 
     void blink(Color color) {
         isBlinkingOn = !isBlinkingOn;

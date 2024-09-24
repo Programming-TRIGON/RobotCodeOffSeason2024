@@ -20,13 +20,13 @@ public class LEDStripCommands {
 
     public static Command getFlashCommand(Color color) {
         return new SequentialCommandGroup(
-                getStaticColorCommand(color).withTimeout(LEDStripConstants.FLASHING_TIME),
+                getStaticColorCommand(color).withTimeout(LEDStripConstants.FLASHING_TIME_SECONDS),
                 getClearLEDsCommand()
         ).ignoringDisable(true);
     }
 
     public static Command getBlinkingCommand(Color color) {
-        return new RunCommand(() -> LEDStripConstants.LED_STRIP.blink(color)).withTimeout(LEDStripConstants.BLINKING_INTERVAL).ignoringDisable(true);
+        return new RunCommand(() -> LEDStripConstants.LED_STRIP.blink(color)).withTimeout(LEDStripConstants.BLINKING_INTERVAL_SECONDS).ignoringDisable(true);
     }
 
     public static Command getRainbowCommand() {
