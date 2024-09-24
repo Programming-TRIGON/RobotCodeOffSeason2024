@@ -1,28 +1,25 @@
 package frc.trigon.robot.subsystems.ledstrip;
 
-import com.ctre.phoenix.led.*;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.trigon.robot.Robot;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
-import java.awt.*;
-import java.util.function.Function;
-
 public class LEDStrip extends SubsystemBase {
-    private static final CANdle CANDLE = LEDStripConstants.CANDLE;
-    private static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
-    private static int LAST_CREATED_LED_STRIP_ANIMATION_SLOT = 0;
-    private static int LAST_STRIP_INDEX = 8;
-    private final int animationSlot;
-    private final int offset, numberOfLEDs;
+    private static final AddressableLED LED = LEDStripConstants.LED;
+    private final int numberOfLEDs;
     private final boolean inverted;
+    private double rainbowFirstPixelHue = 0;
+    private double blinkingLastChange = 0;
+    private boolean isBlinkingOn = false;
 
     static {
-        GeneralCommands.getDelayedCommand(1, () -> LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getAnimateSingleFadeCommand(Color.red, LEDStripConstants.LOW_BATTERY_FLASHING_SPEED, LEDStripConstants.LED_STRIPS))).schedule();
+        GeneralCommands.getDelayedCommand(
+                1,
+                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getFlashCommand(Color.kRed))
+        );
     }
 
     /**
@@ -32,158 +29,86 @@ public class LEDStrip extends SubsystemBase {
      * @param inverted     is the strip inverted
      */
     public LEDStrip(int numberOfLEDs, boolean inverted) {
-        this.offset = LAST_STRIP_INDEX;
         this.numberOfLEDs = numberOfLEDs;
         this.inverted = inverted;
-
-        LAST_STRIP_INDEX = offset + numberOfLEDs;
-        LAST_CREATED_LED_STRIP_ANIMATION_SLOT++;
-        animationSlot = LAST_CREATED_LED_STRIP_ANIMATION_SLOT;
     }
 
-    public static void setDefaultCommandForAllLEDS(Function<LEDStrip, Command> command) {
-        for (LEDStrip ledStrip : LEDStripConstants.LED_STRIPS)
-            ledStrip.setDefaultCommand(command.apply(ledStrip));
+    public static void setDefaultCommandForAllLEDS(Command command) {
+        LEDStripConstants.LED_STRIP.setDefaultCommand(command);
+    }
+
+    public int getNumberOfLEDS() {
+        return numberOfLEDs;
+    }
+
+    private void setLedColors(edu.wpi.first.wpilibj.util.Color color, int index) {
+        LEDStripConstants.LED_BUFFER.setLED(index, color);
+        LED.setData(LEDStripConstants.LED_BUFFER);
+    }
+
+    private void setAllLedColors(Color color) {
+        for (int index = 0; index < numberOfLEDs; index++) {
+            setLedColors(color, index);
+        }
+    }
+
+    void clearLedColors() {
+        setAllLedColors(Color.kBlack);
     }
 
     void staticColor(Color color) {
-        CANDLE.setLEDs(color.getRed(), color.getGreen(), color.getBlue(), 0, offset, numberOfLEDs);
+        setAllLedColors(color);
+    }
+
+    void flash(Color color) {
+        double startTimestamp = Timer.getFPGATimestamp();
+        while (Timer.getFPGATimestamp() - startTimestamp < LEDStripConstants.FLASHING_TIME) {
+            setAllLedColors(color);
+        }
+        clearLedColors();
+    }
+
+    void blink(Color color) {
+        isBlinkingOn = !isBlinkingOn;
+        if (isBlinkingOn)
+            setAllLedColors(color);
+        else
+            clearLedColors();
+    }
+
+    void rainbow() {
+        for (int led = 0; led < numberOfLEDs; led++) {
+            final int hue = (int) (rainbowFirstPixelHue + (led * 180 / numberOfLEDs) % 180);
+            LEDStripConstants.LED_BUFFER.setHSV(led, hue, 255, 128);
+        }
+        rainbowFirstPixelHue += 3;
+        rainbowFirstPixelHue %= 180;
     }
 
     void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         final int firstLEDCount = (int) Math.floor(numberOfLEDs / 3.0);
         final int secondLEDCount = (int) Math.floor((numberOfLEDs - firstLEDCount) / 2.0);
-        final int thirdLEDCount = numberOfLEDs - firstLEDCount - secondLEDCount;
-        if (!inverted) {
-            CANDLE.setLEDs(firstSectionColor.getRed(), firstSectionColor.getGreen(), firstSectionColor.getBlue(), 0, offset, firstLEDCount);
-            CANDLE.setLEDs(secondSectionColor.getRed(), secondSectionColor.getGreen(), secondSectionColor.getBlue(), 0, offset + firstLEDCount, secondLEDCount);
-            CANDLE.setLEDs(thirdSectionColor.getRed(), thirdSectionColor.getGreen(), thirdSectionColor.getBlue(), 0, offset + firstLEDCount + secondLEDCount, thirdLEDCount);
+
+        if (inverted) {
+            for (int i = 0; i < numberOfLEDs; i++) {
+                if (i < firstLEDCount) {
+                    setLedColors(firstSectionColor, i);
+                } else if (i < firstLEDCount + secondLEDCount) {
+                    setLedColors(secondSectionColor, i);
+                } else {
+                    setLedColors(thirdSectionColor, i);
+                }
+            }
         } else {
-            CANDLE.setLEDs(thirdSectionColor.getRed(), thirdSectionColor.getGreen(), thirdSectionColor.getBlue(), 0, offset, firstLEDCount);
-            CANDLE.setLEDs(secondSectionColor.getRed(), secondSectionColor.getGreen(), secondSectionColor.getBlue(), 0, offset + firstLEDCount, secondLEDCount);
-            CANDLE.setLEDs(firstSectionColor.getRed(), firstSectionColor.getGreen(), firstSectionColor.getBlue(), 0, offset + firstLEDCount + secondLEDCount, thirdLEDCount);
+            for (int i = 0; i < numberOfLEDs; i++) {
+                if (i < firstLEDCount) {
+                    setLedColors(thirdSectionColor, i);
+                } else if (i < firstLEDCount + secondLEDCount) {
+                    setLedColors(secondSectionColor, i);
+                } else {
+                    setLedColors(firstSectionColor, i);
+                }
+            }
         }
-    }
-
-    void animateFire(double brightness, double speed, double sparking, double cooling) {
-        CANDLE.animate(
-                new FireAnimation(
-                        brightness,
-                        speed,
-                        this.numberOfLEDs,
-                        sparking,
-                        cooling,
-                        inverted,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void animateRainbow(double brightness, double speed) {
-        CANDLE.animate(
-                new RainbowAnimation(
-                        brightness,
-                        speed,
-                        this.numberOfLEDs,
-                        inverted,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void animateColorFlow(Color color, double speed) {
-        CANDLE.animate(new ColorFlowAnimation(
-                        color.getRed(),
-                        color.getGreen(),
-                        color.getBlue(),
-                        0,
-                        speed,
-                        this.numberOfLEDs,
-                        inverted ? ColorFlowAnimation.Direction.Backward : ColorFlowAnimation.Direction.Forward,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void animateLarson(Color color, double speed, LarsonAnimation.BounceMode mode, int size) {
-        CANDLE.animate(
-                new LarsonAnimation(
-                        color.getRed(),
-                        color.getGreen(),
-                        color.getBlue(),
-                        0,
-                        speed,
-                        this.numberOfLEDs,
-                        mode,
-                        size,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void animateRGBFade(double brightness, double speed) {
-        CANDLE.animate(
-                new RgbFadeAnimation(
-                        brightness,
-                        speed,
-                        this.numberOfLEDs,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void animateSingleFade(Color color, double speed) {
-        CANDLE.animate(
-                new SingleFadeAnimation(
-                        color.getRed(),
-                        color.getGreen(),
-                        color.getBlue(),
-                        0,
-                        speed,
-                        this.numberOfLEDs,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void animateTwinkle(Color color, double speed, TwinkleAnimation.TwinklePercent divider) {
-        CANDLE.animate(
-                new TwinkleAnimation(
-                        color.getRed(),
-                        color.getGreen(),
-                        color.getBlue(),
-                        0,
-                        speed,
-                        this.numberOfLEDs,
-                        divider,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void animateStrobe(Color color, double speed) {
-        CANDLE.animate(
-                new StrobeAnimation(
-                        color.getRed(),
-                        color.getGreen(),
-                        color.getBlue(),
-                        0,
-                        speed,
-                        this.numberOfLEDs,
-                        this.offset
-                ),
-                animationSlot
-        );
-    }
-
-    void clearAnimation() {
-        CANDLE.clearAnimation(animationSlot);
     }
 }

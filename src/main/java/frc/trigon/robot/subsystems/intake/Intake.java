@@ -2,8 +2,11 @@ package frc.trigon.robot.subsystems.intake;
 
 import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.controls.VoltageOut;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -69,9 +72,11 @@ public class Intake extends MotorSubsystem {
     }
 
     /**
-     * Indicates to the driver that a note has been collected by rumbling the controller.
+     * Indicates to the driver that a note has been collected by rumbling the controller and flashing the LEDs.
      */
     void indicateCollection() {
-        OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
+        LEDStripCommands.getFlashCommand(Color.kOrange).schedule();
+        if (DriverStation.isAutonomous())
+            OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
     }
 }

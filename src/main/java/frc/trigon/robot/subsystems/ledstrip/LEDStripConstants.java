@@ -1,36 +1,29 @@
 package frc.trigon.robot.subsystems.ledstrip;
 
-import com.ctre.phoenix.led.CANdle;
-import com.ctre.phoenix.led.CANdleConfiguration;
-import frc.trigon.robot.constants.RobotConstants;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.trigon.robot.Robot;
 
 public class LEDStripConstants {
-    private static final int CANDLE_ID = 0;
-    private static final CANdle.LEDStripType STRIP_TYPE = CANdle.LEDStripType.RGB;
-    private static final double BRIGHTNESS_SCALAR = 0.5;
-    static final double
-            MINIMUM_BATTERY_VOLTAGE = 10.5,
-            LOW_BATTERY_FLASHING_SPEED = 1;
-    static final CANdle CANDLE = new CANdle(CANDLE_ID, RobotConstants.CANIVORE_NAME);
+    private static final int PORT = 0;
+    private static final int NUMBER_OF_LEDS = 24;
+    private static final boolean INVERTED = false;
+    static final AddressableLEDBuffer LED_BUFFER = new AddressableLEDBuffer(NUMBER_OF_LEDS);
+    static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
+    static final AddressableLED LED = new AddressableLED(PORT);
 
-    public static final LEDStrip
-            REAR_LEFT_STRIP = new LEDStrip(24, false),
-            FRONT_LEFT_STRIP = new LEDStrip(17, true),
-            REAR_RIGHT_STRIP = new LEDStrip(24, false),
-            FRONT_RIGHT_STRIP = new LEDStrip(17, true);
-    public static final LEDStrip[] LED_STRIPS = {
-            REAR_LEFT_STRIP,
-            FRONT_LEFT_STRIP,
-            REAR_RIGHT_STRIP,
-            FRONT_RIGHT_STRIP
-    };
+    static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
+    static final double FLASHING_TIME = 0.5;
+    static final double BLINKING_INTERVAL = 0.1;
+
+    public static final LEDStrip LED_STRIP = new LEDStrip(NUMBER_OF_LEDS, INVERTED);
 
     static {
-        final CANdleConfiguration config = new CANdleConfiguration();
-        config.stripType = STRIP_TYPE;
-        config.brightnessScalar = BRIGHTNESS_SCALAR;
-        config.disableWhenLOS = true;
-        config.enableOptimizations = true;
-        CANDLE.configAllSettings(config);
+        LED.setLength(NUMBER_OF_LEDS);
+        LED.setData(LED_BUFFER);
+        LED.start();
     }
 }
