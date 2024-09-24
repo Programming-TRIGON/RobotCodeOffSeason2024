@@ -37,7 +37,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private void updateHasResultInputs(RobotPoseSourceInputsAutoLogged inputs, PhotonPipelineResult latestResult) {
         final Rotation3d bestTargetRelativeRotation3d = getBestTargetRelativeRotation(latestResult);
 
-        inputs.solvePNPPose = getSolvePNPPose(latestResult);
+        inputs.solvePNPHeading = getSolvePNPHeading(latestResult);
         inputs.latestResultTimestampSeconds = latestResult.getTimestampSeconds();
         inputs.bestTargetRelativePitchRadians = bestTargetRelativeRotation3d.getY();
         inputs.bestTargetRelativeYawRadians = bestTargetRelativeRotation3d.getZ();
@@ -48,7 +48,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
 
     private void updateNoResultInputs(RobotPoseSourceInputsAutoLogged inputs) {
         inputs.visibleTagIDs = new int[]{};
-        inputs.solvePNPPose = new Pose3d();
+        inputs.solvePNPHeading = new Rotation2d();
     }
 
     private Point getTagCenter(List<TargetCorner> tagCorners) {
@@ -81,14 +81,16 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
      * @param result the camera's pipeline result
      * @return the estimated pose
      */
-    private Pose3d getSolvePNPPose(PhotonPipelineResult result) {
+    private Rotation2d getSolvePNPHeading(PhotonPipelineResult result) {
         if (result.getMultiTagResult().estimatedPose.isPresent) {
             final Transform3d cameraPoseTransform = result.getMultiTagResult().estimatedPose.best;
-            return new Pose3d().plus(cameraPoseTransform).relativeTo(FieldConstants.APRIL_TAG_FIELD_LAYOUT.getOrigin());
+            final Pose3d estimatedPose = new Pose3d().plus(cameraPoseTransform).relativeTo(FieldConstants.APRIL_TAG_FIELD_LAYOUT.getOrigin());
+            return estimatedPose.toPose2d().getRotation();
         }
 
         final Transform3d targetToCamera = result.getBestTarget().getBestCameraToTarget().inverse();
-        return FieldConstants.TAG_ID_TO_POSE.get(result.getBestTarget().getFiducialId()).transformBy(targetToCamera);
+        final Pose3d estimatedPose = FieldConstants.TAG_ID_TO_POSE.get(result.getBestTarget().getFiducialId()).transformBy(targetToCamera);
+        return estimatedPose.toPose2d().getRotation();
     }
 
     private int[] getVisibleTagIDs(PhotonPipelineResult result) {

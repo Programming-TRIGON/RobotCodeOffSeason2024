@@ -103,10 +103,8 @@ public class AprilTagCamera {
      * @return the robot's pose
      */
     private Pose2d calculateBestRobotPose() {
-        if (isWithinBestTagRangeForSolvePNP())
-            return calculateAssumedRobotHeadingPose(inputs.solvePNPPose.toPose2d().getRotation());
-        final Rotation2d robotHeadingAtResultTimestamp = PoseEstimator6328.getInstance().samplePose(inputs.latestResultTimestampSeconds).getRotation();
-        return calculateAssumedRobotHeadingPose(robotHeadingAtResultTimestamp);
+        final Rotation2d gyroHeadingAtTimestamp = PoseEstimator6328.getInstance().samplePose(inputs.latestResultTimestampSeconds).getRotation();
+        return calculateAssumedRobotHeadingPose(isWithinBestTagRangeForSolvePNP() ? inputs.solvePNPHeading : gyroHeadingAtTimestamp);
     }
 
     /**
@@ -119,8 +117,8 @@ public class AprilTagCamera {
         if (inputs.visibleTagIDs.length == 0)
             return null;
 
-        final Translation2d robotFieldRelativePositionTranslation = getRobotFieldRelativePosition(robotHeading);
-        return new Pose2d(robotFieldRelativePositionTranslation, robotHeading);
+        final Translation2d robotFieldRelativeTranslation = getRobotFieldRelativeTranslation(robotHeading);
+        return new Pose2d(robotFieldRelativeTranslation, robotHeading);
     }
 
     private Transform2d toTransform2d(Transform3d transform3d) {
@@ -130,7 +128,7 @@ public class AprilTagCamera {
         );
     }
 
-    private Translation2d getRobotFieldRelativePosition(Rotation2d robotHeading) {
+    private Translation2d getRobotFieldRelativeTranslation(Rotation2d robotHeading) {
         if (!inputs.hasResult)
             return new Translation2d();
 
@@ -140,7 +138,7 @@ public class AprilTagCamera {
                 -robotCenterToCamera.getRotation().getY(),
                 -inputs.bestTargetRelativePitchRadians,
                 Rotation2d.fromRadians(inputs.bestTargetRelativeYawRadians),
-                robotHeading.minus(robotCenterToCamera.getRotation().toRotation2d()),
+                robotHeading,
                 AprilTagCameraConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]).toPose2d(),
                 toTransform2d(robotCenterToCamera.inverse())
         );
