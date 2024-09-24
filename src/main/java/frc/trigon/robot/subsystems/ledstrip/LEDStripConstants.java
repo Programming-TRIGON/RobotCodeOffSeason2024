@@ -12,10 +12,11 @@ public class LEDStripConstants {
     private static final int NUMBER_OF_LEDS = 24;
     private static final boolean INVERTED = false;
     static final AddressableLEDBuffer LED_BUFFER = new AddressableLEDBuffer(NUMBER_OF_LEDS);
-    static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
     static final AddressableLED LED = new AddressableLED(PORT);
 
+    static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
     static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
+    
     static final double FLASHING_TIME = 0.5;
     static final double BLINKING_INTERVAL = 0.1;
 
