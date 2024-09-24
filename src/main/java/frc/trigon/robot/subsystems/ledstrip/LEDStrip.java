@@ -82,23 +82,21 @@ public class LEDStrip extends SubsystemBase {
 
         if (inverted) {
             for (int i = 0; i < numberOfLEDs; i++) {
-                if (i < firstLEDCount) {
+                if (i < firstLEDCount)
                     setLedColors(firstSectionColor, i);
-                } else if (i < firstLEDCount + secondLEDCount) {
+                else if (i < firstLEDCount + secondLEDCount)
                     setLedColors(secondSectionColor, i);
-                } else {
+                else
                     setLedColors(thirdSectionColor, i);
-                }
             }
         } else {
             for (int i = 0; i < numberOfLEDs; i++) {
-                if (i < firstLEDCount) {
+                if (i < firstLEDCount)
                     setLedColors(thirdSectionColor, i);
-                } else if (i < firstLEDCount + secondLEDCount) {
+                else if (i < firstLEDCount + secondLEDCount)
                     setLedColors(secondSectionColor, i);
-                } else {
+                else
                     setLedColors(firstSectionColor, i);
-                }
             }
         }
     }
