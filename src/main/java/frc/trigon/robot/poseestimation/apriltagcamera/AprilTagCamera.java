@@ -80,8 +80,7 @@ public class AprilTagCamera {
     public double getLatestResultTimestampSeconds() {
         return inputs.latestResultTimestampSeconds;
     }
-
-
+    
     /**
      * Calculates the range of how inaccurate the estimated pose could be using the distance from the target, the number of targets, and a calculated gain.
      * Different pose estimation strategies may use different formulae to calculate the standard deviations.

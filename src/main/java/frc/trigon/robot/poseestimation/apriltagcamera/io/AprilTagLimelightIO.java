@@ -19,7 +19,6 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     @Override
     protected void updateInputs(RobotPoseSourceInputsAutoLogged inputs) {
         final LimelightHelpers.LimelightResults results = LimelightHelpers.getLatestResults(hostname);
-
         inputs.hasResult = results.targets_Fiducials.length > 0;
 
         if (inputs.hasResult)
