@@ -11,7 +11,6 @@ public class LEDStrip extends SubsystemBase {
     private final int numberOfLEDs;
     private final boolean inverted;
     private double rainbowFirstPixelHue = 0;
-    private double blinkingLastChange = 0;
     private boolean isBlinkingOn = false;
 
     static {
