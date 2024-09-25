@@ -81,23 +81,31 @@ public class LEDStrip extends SubsystemBase {
         final int secondLEDCount = (int) Math.floor((numberOfLEDs - firstLEDCount) / 2.0);
 
         if (inverted) {
-            for (int i = 0; i < numberOfLEDs; i++) {
-                if (i < firstLEDCount)
-                    setLedColors(firstSectionColor, i);
-                else if (i < firstLEDCount + secondLEDCount)
-                    setLedColors(secondSectionColor, i);
-                else
-                    setLedColors(thirdSectionColor, i);
-            }
-        } else {
-            for (int i = 0; i < numberOfLEDs; i++) {
-                if (i < firstLEDCount)
-                    setLedColors(thirdSectionColor, i);
-                else if (i < firstLEDCount + secondLEDCount)
-                    setLedColors(secondSectionColor, i);
-                else
-                    setLedColors(firstSectionColor, i);
-            }
+            setThreeSectionColorInverted(firstLEDCount, secondLEDCount, firstSectionColor, secondSectionColor, thirdSectionColor);
+            return;
+        }
+        setThreeSectionColor(firstLEDCount, secondLEDCount, firstSectionColor, secondSectionColor, thirdSectionColor);
+    }
+
+    private void setThreeSectionColor(int firstLEDCount, int secondLEDCount, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
+        for (int i = 0; i < numberOfLEDs; i++) {
+            if (i < firstLEDCount)
+                setLedColors(firstSectionColor, i);
+            else if (i < firstLEDCount + secondLEDCount)
+                setLedColors(secondSectionColor, i);
+            else
+                setLedColors(thirdSectionColor, i);
+        }
+    }
+
+    private void setThreeSectionColorInverted(int firstLEDCount, int secondLEDCount, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
+        for (int i = 0; i < numberOfLEDs; i++) {
+            if (i < firstLEDCount)
+                setLedColors(thirdSectionColor, i);
+            else if (i < firstLEDCount + secondLEDCount)
+                setLedColors(secondSectionColor, i);
+            else
+                setLedColors(firstSectionColor, i);
         }
     }
 }
