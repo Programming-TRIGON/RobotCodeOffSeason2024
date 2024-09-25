@@ -21,7 +21,7 @@ public class AutonomousConstants {
         NamedCommands.registerCommand("StopShooting", ShooterCommands.getStopCommand());
         NamedCommands.registerCommand("FeedNote", AutonomousCommands.getFeedNoteCommand());
         NamedCommands.registerCommand("PrepareForCloseShot", ShootingCommands.getPrepareCloseSpeakerShotCommand());
-        NamedCommands.registerCommand("PrepareForEjectFromShooter", AutonomousCommands.getPrepareForShooterEjectionCommand());
-        NamedCommands.registerCommand("PrepareForCloseEjectFromShooter", AutonomousCommands.getPrepareForCloseShooterEjectionCommand());
+        NamedCommands.registerCommand("PrepareForEjectFromShooter", AutonomousCommands.getPrepareForShooterEjectionCommand(false));
+        NamedCommands.registerCommand("PrepareForCloseEjectFromShooter", AutonomousCommands.getPrepareForShooterEjectionCommand(true));
     }
 }

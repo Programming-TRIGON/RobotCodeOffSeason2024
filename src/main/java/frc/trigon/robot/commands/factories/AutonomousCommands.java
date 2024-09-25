@@ -43,20 +43,6 @@ public class AutonomousCommands {
         return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).onlyIf(() -> !RobotContainer.INTAKE.hasNote());
     }
 
-    public static Command getPrepareForShooterEjectionCommand() {
-        return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
-        );
-    }
-
-    public static Command getPrepareForCloseShooterEjectionCommand() {
-        return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
-        );
-    }
-
     public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
@@ -77,16 +63,32 @@ public class AutonomousCommands {
         return new InstantCommand(() -> overrideRotation(Optional::empty));
     }
 
+    public static Command getPrepareForShooterEjectionCommand(boolean isClose) {
+        return isClose ? getPrepareForCloseShooterEjectionCommand() : getPrepareForShooterEjectionCommand();
+    }
+
+    private static Command getPrepareForShooterEjectionCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.EJECT_FROM_SHOOTER_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+        );
+    }
+
+    private static Command getPrepareForCloseShooterEjectionCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_PITCH),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+        );
+    }
+
     private static Optional<Rotation2d> calculateRotationOverride() {
         NOTE_DETECTION_CAMERA.trackObject();
         if (RobotContainer.INTAKE.hasNote())
             return Optional.empty();
         if (NOTE_DETECTION_CAMERA.hasTargets()) {
-            if (DriverStation.Alliance.Blue == DriverStation.getAlliance().get())
-                return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
             final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
             final Rotation2d targetRotation = NOTE_DETECTION_CAMERA.getTrackedObjectYaw().plus(currentRotation);
-            return Optional.of(targetRotation.plus(currentRotation));
+            return Optional.of(targetRotation);
         }
         return Optional.empty();
     }
