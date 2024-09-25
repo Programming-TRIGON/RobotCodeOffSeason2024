@@ -79,29 +79,16 @@ public class LEDStrip extends SubsystemBase {
     void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         final int firstLEDCount = (int) Math.floor(numberOfLEDs / 3.0);
         final int secondLEDCount = (int) Math.floor((numberOfLEDs - firstLEDCount) / 2.0);
-
-        if (inverted) {
-            setThreeSectionColorInverted(firstLEDCount, secondLEDCount, firstSectionColor, secondSectionColor, thirdSectionColor);
-            return;
-        }
+        
         setThreeSectionColor(firstLEDCount, secondLEDCount, firstSectionColor, secondSectionColor, thirdSectionColor);
     }
 
     private void setThreeSectionColor(int firstLEDCount, int secondLEDCount, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         for (int i = 0; i < firstLEDCount; i++)
-            setLedColors(firstSectionColor, i);
+            setLedColors(inverted ? thirdSectionColor : firstSectionColor, i);
         for (int i = firstLEDCount; i < firstLEDCount + secondLEDCount; i++)
             setLedColors(secondSectionColor, i);
         for (int i = firstLEDCount + secondLEDCount; i < numberOfLEDs; i++)
-            setLedColors(thirdSectionColor, i);
-    }
-
-    private void setThreeSectionColorInverted(int firstLEDCount, int secondLEDCount, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        for (int i = 0; i < firstLEDCount; i++)
-            setLedColors(thirdSectionColor, i);
-        for (int i = firstLEDCount; i < firstLEDCount + secondLEDCount; i++)
-            setLedColors(secondSectionColor, i);
-        for (int i = firstLEDCount + secondLEDCount; i < numberOfLEDs; i++)
-            setLedColors(firstSectionColor, i);
+            setLedColors(inverted ? firstSectionColor : thirdSectionColor, i);
     }
 }
