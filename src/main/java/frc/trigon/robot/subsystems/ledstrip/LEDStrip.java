@@ -88,24 +88,20 @@ public class LEDStrip extends SubsystemBase {
     }
 
     private void setThreeSectionColor(int firstLEDCount, int secondLEDCount, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        for (int i = 0; i < numberOfLEDs; i++) {
-            if (i < firstLEDCount)
-                setLedColors(firstSectionColor, i);
-            else if (i < firstLEDCount + secondLEDCount)
-                setLedColors(secondSectionColor, i);
-            else
-                setLedColors(thirdSectionColor, i);
-        }
+        for (int i = 0; i < firstLEDCount; i++)
+            setLedColors(firstSectionColor, i);
+        for (int i = firstLEDCount; i < firstLEDCount + secondLEDCount; i++)
+            setLedColors(secondSectionColor, i);
+        for (int i = firstLEDCount + secondLEDCount; i < numberOfLEDs; i++)
+            setLedColors(thirdSectionColor, i);
     }
 
     private void setThreeSectionColorInverted(int firstLEDCount, int secondLEDCount, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        for (int i = 0; i < numberOfLEDs; i++) {
-            if (i < firstLEDCount)
-                setLedColors(thirdSectionColor, i);
-            else if (i < firstLEDCount + secondLEDCount)
-                setLedColors(secondSectionColor, i);
-            else
-                setLedColors(firstSectionColor, i);
-        }
+        for (int i = 0; i < firstLEDCount; i++)
+            setLedColors(thirdSectionColor, i);
+        for (int i = firstLEDCount; i < firstLEDCount + secondLEDCount; i++)
+            setLedColors(secondSectionColor, i);
+        for (int i = firstLEDCount + secondLEDCount; i < numberOfLEDs; i++)
+            setLedColors(firstSectionColor, i);
     }
 }
