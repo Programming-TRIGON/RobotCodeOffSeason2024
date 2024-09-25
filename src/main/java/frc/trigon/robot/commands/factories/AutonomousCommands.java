@@ -82,6 +82,8 @@ public class AutonomousCommands {
         if (RobotContainer.INTAKE.hasNote())
             return Optional.empty();
         if (NOTE_DETECTION_CAMERA.hasTargets()) {
+            if (DriverStation.Alliance.Blue == DriverStation.getAlliance().get())
+                return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
             final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
             final Rotation2d targetRotation = NOTE_DETECTION_CAMERA.getTrackedObjectYaw().plus(currentRotation);
             return Optional.of(targetRotation.plus(currentRotation));
