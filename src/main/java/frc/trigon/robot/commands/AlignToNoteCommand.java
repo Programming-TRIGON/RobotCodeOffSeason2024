@@ -35,8 +35,10 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                 }),
                 getSetCurrentLEDColorCommand().asProxy(),
                 GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
-                new RunCommand(CAMERA::trackObject),
-                new RunCommand(this::updateTrackedNoteYaw)
+                new RunCommand(() -> {
+                    CAMERA.trackObject();
+                    updateTrackedNoteYaw();
+                })
         );
     }
 

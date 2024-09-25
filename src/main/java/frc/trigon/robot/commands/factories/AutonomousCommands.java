@@ -81,8 +81,11 @@ public class AutonomousCommands {
         NOTE_DETECTION_CAMERA.trackObject();
         if (RobotContainer.INTAKE.hasNote())
             return Optional.empty();
-        if (NOTE_DETECTION_CAMERA.hasTargets())
-            return Optional.of(NOTE_DETECTION_CAMERA.getTrackedObjectYaw());
+        if (NOTE_DETECTION_CAMERA.hasTargets()) {
+            final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
+            final Rotation2d targetRotation = NOTE_DETECTION_CAMERA.getTrackedObjectYaw().plus(currentRotation);
+            return Optional.of(targetRotation.plus(currentRotation));
+        }
         return Optional.empty();
     }
 
