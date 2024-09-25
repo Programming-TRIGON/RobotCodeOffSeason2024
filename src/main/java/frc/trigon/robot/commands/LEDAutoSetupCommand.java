@@ -34,9 +34,9 @@ public class LEDAutoSetupCommand extends SequentialCommandGroup {
         addCommands(
                 getUpdateAutoStartPoseCommand(),
                 LEDStripCommands.getThreeSectionColorCommand(
-                        () -> getStripColor(this.autoStartPose.getRotation().getDegrees() - getCurrentRobotPose().getRotation().getDegrees(), TOLERANCE_DEGREES),
-                        () -> getStripColor(this.autoStartPose.getX() - getCurrentRobotPose().getX(), TOLERANCE_METERS),
-                        () -> getStripColor(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS)
+                        () -> getStripDesiredColor(this.autoStartPose.getRotation().getDegrees() - getCurrentRobotPose().getRotation().getDegrees(), TOLERANCE_DEGREES),
+                        () -> getStripDesiredColor(this.autoStartPose.getX() - getCurrentRobotPose().getX(), TOLERANCE_METERS),
+                        () -> getStripDesiredColor(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS)
                 )
         );
     }
@@ -52,7 +52,7 @@ public class LEDAutoSetupCommand extends SequentialCommandGroup {
         ).ignoringDisable(true);
     }
 
-    private edu.wpi.first.wpilibj.util.Color getStripColor(double difference, double tolerance) {
+    private edu.wpi.first.wpilibj.util.Color getStripDesiredColor(double difference, double tolerance) {
         if (difference < -tolerance)
             return edu.wpi.first.wpilibj.util.Color.kBlack;
         else if (difference > tolerance)

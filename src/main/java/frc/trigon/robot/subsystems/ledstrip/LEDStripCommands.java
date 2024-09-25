@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import org.trigon.commands.ExecuteEndCommand;
+import org.trigon.commands.InitExecuteCommand;
 
 import java.util.function.Supplier;
 
@@ -34,10 +34,9 @@ public class LEDStripCommands {
     }
 
     public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor) {
-        return new ExecuteEndCommand(
+        return new InitExecuteCommand(
                 LEDStripConstants.LED_STRIP::clearLedColors,
                 () -> LEDStripConstants.LED_STRIP.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get())
-
         ).ignoringDisable(true);
     }
 

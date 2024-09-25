@@ -11,7 +11,7 @@ public class LEDStrip extends SubsystemBase {
     private final int numberOfLEDs;
     private final boolean inverted;
     private double rainbowFirstPixelHue = 0;
-    private boolean isBlinkingOn = false;
+    private boolean areLEDsOnForBlinking = false;
 
     static {
         GeneralCommands.getDelayedCommand(
@@ -57,11 +57,11 @@ public class LEDStrip extends SubsystemBase {
     void staticColor(Color color) {
         setAllLedColors(color);
     }
-    
+
 
     void blink(Color color) {
-        isBlinkingOn = !isBlinkingOn;
-        if (isBlinkingOn)
+        areLEDsOnForBlinking = !areLEDsOnForBlinking;
+        if (areLEDsOnForBlinking)
             setAllLedColors(color);
         else
             clearLedColors();
