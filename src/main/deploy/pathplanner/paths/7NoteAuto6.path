@@ -57,9 +57,15 @@
       "name": "Collect",
       "waypointRelativePos": 0.75,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
             {
               "type": "named",
               "data": {

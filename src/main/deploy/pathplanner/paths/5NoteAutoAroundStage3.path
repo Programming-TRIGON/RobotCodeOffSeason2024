@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.375803520837811,
+        "x": 7.168830366283274,
         "y": 6.417643175179016
       },
       "isLocked": false,
@@ -20,12 +20,12 @@
         "y": 4.1338974839469875
       },
       "prevControl": {
-        "x": 8.167456764251632,
-        "y": 4.772846754995836
+        "x": 8.255570858190017,
+        "y": 4.3029049206577845
       },
       "nextControl": {
-        "x": 8.335265498566415,
-        "y": 3.7298360368268977
+        "x": 8.30568495340586,
+        "y": 3.726176200180909
       },
       "isLocked": false,
       "linkedName": null
@@ -46,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 0.65,
       "rotationDegrees": -59.42448148552224,
       "rotateFast": false
     }
@@ -78,7 +78,7 @@
     },
     {
       "name": "StopAligning",
-      "waypointRelativePos": 1.2,
+      "waypointRelativePos": 1.1,
       "command": {
         "type": "parallel",
         "data": {

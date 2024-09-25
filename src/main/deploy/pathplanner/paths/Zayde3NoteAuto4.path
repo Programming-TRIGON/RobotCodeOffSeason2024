@@ -57,7 +57,7 @@
       "name": "recollect note",
       "waypointRelativePos": 0.9500000000000002,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
