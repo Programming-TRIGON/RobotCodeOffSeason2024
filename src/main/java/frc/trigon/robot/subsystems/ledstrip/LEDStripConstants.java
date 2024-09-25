@@ -9,8 +9,8 @@ import frc.trigon.robot.Robot;
 
 public class LEDStripConstants {
     private static final int PORT = 0;
-    private static final int NUMBER_OF_LEDS = 24;
-    private static final boolean INVERTED = false;
+    static final int NUMBER_OF_LEDS = 24;
+    static final boolean INVERTED = false;
     static final AddressableLEDBuffer LED_BUFFER = new AddressableLEDBuffer(NUMBER_OF_LEDS);
     static final AddressableLED LED = new AddressableLED(PORT);
 
@@ -20,7 +20,7 @@ public class LEDStripConstants {
     static final double FLASHING_TIME_SECONDS = 1;
     static final double BLINKING_INTERVAL_SECONDS = 0.2;
 
-    public static final LEDStrip LED_STRIP = new LEDStrip(NUMBER_OF_LEDS, INVERTED);
+    public static final LEDStrip LED_STRIP = new LEDStrip();
 
     static {
         LED.setLength(NUMBER_OF_LEDS);

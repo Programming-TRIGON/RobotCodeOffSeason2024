@@ -8,8 +8,6 @@ import frc.trigon.robot.commands.factories.GeneralCommands;
 
 public class LEDStrip extends SubsystemBase {
     private static final AddressableLED LED = LEDStripConstants.LED;
-    private final int numberOfLEDs;
-    private final boolean inverted;
     private double rainbowFirstPixelHue = 0;
     private boolean areLEDsOnForBlinking = false;
 
@@ -20,15 +18,7 @@ public class LEDStrip extends SubsystemBase {
         );
     }
 
-    /**
-     * Constructs a new LEDStrip.
-     *
-     * @param numberOfLEDs the number of LEDs in the strip
-     * @param inverted     is the strip inverted
-     */
-    public LEDStrip(int numberOfLEDs, boolean inverted) {
-        this.numberOfLEDs = numberOfLEDs;
-        this.inverted = inverted;
+    public LEDStrip() {
     }
 
     public static void setDefaultCommandForAllLEDS(Command command) {
@@ -36,7 +26,7 @@ public class LEDStrip extends SubsystemBase {
     }
 
     public int getNumberOfLEDS() {
-        return numberOfLEDs;
+        return LEDStripConstants.NUMBER_OF_LEDS;
     }
 
     private void setLedColors(edu.wpi.first.wpilibj.util.Color color, int index) {
@@ -45,7 +35,7 @@ public class LEDStrip extends SubsystemBase {
     }
 
     private void setAllLedColors(Color color) {
-        for (int index = 0; index < numberOfLEDs; index++) {
+        for (int index = 0; index < LEDStripConstants.NUMBER_OF_LEDS; index++) {
             setLedColors(color, index);
         }
     }
@@ -68,8 +58,8 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void rainbow() {
-        for (int led = 0; led < numberOfLEDs; led++) {
-            final int hue = (int) (rainbowFirstPixelHue + (led * 180 / numberOfLEDs) % 180);
+        for (int led = 0; led < LEDStripConstants.NUMBER_OF_LEDS; led++) {
+            final int hue = (int) (rainbowFirstPixelHue + (led * 180 / LEDStripConstants.NUMBER_OF_LEDS) % 180);
             LEDStripConstants.LED_BUFFER.setHSV(led, hue, 255, 128);
         }
         rainbowFirstPixelHue += 3;
@@ -77,17 +67,16 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        final int ledCount = (int) Math.floor(numberOfLEDs / 3.0);
-
-        setThreeSectionColor(ledCount, firstSectionColor, secondSectionColor, thirdSectionColor);
+        final int ledsPerSection = (int) Math.floor(LEDStripConstants.NUMBER_OF_LEDS / 3.0);
+        setThreeSectionColor(ledsPerSection, firstSectionColor, secondSectionColor, thirdSectionColor);
     }
 
-    private void setThreeSectionColor(int ledCount, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        for (int i = 0; i < ledCount; i++)
-            setLedColors(inverted ? thirdSectionColor : firstSectionColor, i);
-        for (int i = ledCount; i < 2 * ledCount * 2; i++)
+    private void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
+        for (int i = 0; i < ledsPerSection; i++)
+            setLedColors(LEDStripConstants.INVERTED ? thirdSectionColor : firstSectionColor, i);
+        for (int i = ledsPerSection; i < 2 * ledsPerSection * 2; i++)
             setLedColors(secondSectionColor, i);
-        for (int i = 2 * ledCount; i < numberOfLEDs; i++)
-            setLedColors(inverted ? firstSectionColor : thirdSectionColor, i);
+        for (int i = 2 * ledsPerSection; i < LEDStripConstants.NUMBER_OF_LEDS; i++)
+            setLedColors(LEDStripConstants.INVERTED ? firstSectionColor : thirdSectionColor, i);
     }
 }
