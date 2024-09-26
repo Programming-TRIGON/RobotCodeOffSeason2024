@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.874926715085328,
-        "y": 7.264435069195287
+        "x": 5.218082231036257,
+        "y": 7.2503757543127625
       },
       "isLocked": false,
       "linkedName": "7noteAutofourthShotPoint"
@@ -20,37 +20,15 @@
         "y": 7.443288126012872
       },
       "prevControl": {
-        "x": 8.302537154894363,
-        "y": 7.730392765282098
-      },
-      "nextControl": {
-        "x": 8.293644849397962,
-        "y": 6.7241388044029655
-      },
-      "isLocked": false,
-      "linkedName": "7NoteAutoFourthNoteCollection"
-    },
-    {
-      "anchor": {
-        "x": 4.750593824228029,
-        "y": 6.434840423125027
-      },
-      "prevControl": {
-        "x": 4.704487957299723,
-        "y": 6.61926389084058
+        "x": 8.18012452247285,
+        "y": 7.411552377938812
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutofifthNoteShot"
+      "linkedName": "7NoteAutoFourthNoteCollection"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": -11.724730245006423,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -75,23 +53,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "StopAligning",
-      "waypointRelativePos": 1.1,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "StopAligningToNote"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -102,14 +63,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 10.0,
+    "rotation": 2.5731130355179954,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 18.69999999999999,
-    "velocity": 2.0
+    "rotation": 25.04,
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }

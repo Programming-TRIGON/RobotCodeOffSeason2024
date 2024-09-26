@@ -3,43 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.750593824228029,
-        "y": 6.434840423125027
+        "x": 8.299162513817985,
+        "y": 4.104648209296419
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.258861976413411,
-        "y": 6.349925862244887
+        "x": 7.814184517257922,
+        "y": 4.02278912819934
       },
       "isLocked": false,
-      "linkedName": "7NoteAutofifthNoteShot"
+      "linkedName": "7NoteAutoSixthCollection"
     },
     {
       "anchor": {
-        "x": 8.280006298729937,
-        "y": 5.781606622595669
+        "x": 4.282605429818937,
+        "y": 4.816380559126915
       },
       "prevControl": {
-        "x": 8.053924931191029,
-        "y": 5.901725554788071
+        "x": 6.8594739711072625,
+        "y": 4.098390553762371
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutoFifthNoteCollection"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": -18.617934880685898,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.10000000000000009,
       "command": {
         "type": "parallel",
         "data": {
@@ -47,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
+                "name": "StopAligningToNote"
               }
             }
           ]
@@ -69,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -26.967025495103503,
+    "rotation": -10.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 16.69924423368887,
+    "rotation": 10.97999999999999,
     "velocity": 0
   },
   "useDefaultConstraints": true
