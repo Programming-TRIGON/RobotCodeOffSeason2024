@@ -20,6 +20,7 @@ public class LEDStripConstants {
 
     static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
     static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
+    static final boolean SHOULD_LOW_BATTERY_LEDS_BLINK_FAST = true;
     static final double
             FAST_BLINKING_INTERVAL_SECONDS = 0.2,
             SLOW_BLINKING_INTERVAL_SECONDS = 1.0;
