@@ -19,7 +19,7 @@ public class LEDStrip extends SubsystemBase {
     static {
         GeneralCommands.getDelayedCommand(
                 1,
-                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.LOW_BATTERY_BLINKING_INTERVAL_SECONDS))
+                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, true))
         );
     }
 
@@ -47,9 +47,10 @@ public class LEDStrip extends SubsystemBase {
     }
 
 
-    void blink(Color color, double blinkingIntervalSeconds) {
+    void blink(Color color, boolean isFastBlinkingEnabled) {
         double currentTime = Timer.getFPGATimestamp();
-        if (currentTime - lastBlinkTime > blinkingIntervalSeconds) {
+        double interval = isFastBlinkingEnabled ? LEDStripConstants.FAST_BLINKING_INTERVAL_SECONDS : LEDStripConstants.SLOW_BLINKING_INTERVAL_SECONDS;
+        if (currentTime - lastBlinkTime > interval) {
             lastBlinkTime = currentTime;
             areLEDsOnForBlinking = !areLEDsOnForBlinking;
         }
