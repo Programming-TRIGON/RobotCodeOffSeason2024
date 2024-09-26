@@ -78,7 +78,7 @@
     },
     {
       "name": "StopAligning",
-      "waypointRelativePos": 1.15,
+      "waypointRelativePos": 1.1,
       "command": {
         "type": "parallel",
         "data": {
