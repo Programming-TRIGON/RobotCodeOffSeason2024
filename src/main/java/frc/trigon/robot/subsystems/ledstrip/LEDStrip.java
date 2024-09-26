@@ -47,9 +47,9 @@ public class LEDStrip extends SubsystemBase {
     }
 
 
-    void blink(Color color, boolean isFastBlinkingEnabled) {
+    void blink(Color color, boolean shouldBlinkFast) {
         double currentTime = Timer.getFPGATimestamp();
-        double interval = isFastBlinkingEnabled ? LEDStripConstants.FAST_BLINKING_INTERVAL_SECONDS : LEDStripConstants.SLOW_BLINKING_INTERVAL_SECONDS;
+        double interval = shouldBlinkFast ? LEDStripConstants.FAST_BLINKING_INTERVAL_SECONDS : LEDStripConstants.SLOW_BLINKING_INTERVAL_SECONDS;
         if (currentTime - lastBlinkTime > interval) {
             lastBlinkTime = currentTime;
             areLEDsOnForBlinking = !areLEDsOnForBlinking;
