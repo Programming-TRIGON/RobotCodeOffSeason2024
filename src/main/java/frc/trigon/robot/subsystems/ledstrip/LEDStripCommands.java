@@ -28,16 +28,16 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
-    public static Command getBlinkingCommand(Color color, LEDStrip ledStrip) {
+    public static Command getBlinkingCommand(Color color, double blinkingIntervalSeconds, LEDStrip ledStrip) {
         return new RunCommand(
-                () -> ledStrip.blink(color),
+                () -> ledStrip.blink(color, blinkingIntervalSeconds),
                 ledStrip
         ).ignoringDisable(true);
     }
 
-    public static Command getBlinkingCommand(Color color) {
+    public static Command getBlinkingCommand(Color color, double blinkingIntervalSeconds) {
         return new RunCommand(
-                () -> runForAllLeds((ledStrip) -> ledStrip.blink(color)),
+                () -> runForAllLeds((ledStrip) -> ledStrip.blink(color, blinkingIntervalSeconds)),
                 LEDStripConstants.RIGHT_CLIMBER_LEDS, LEDStripConstants.LEFT_CLIMBER_LEDS
         ).ignoringDisable(true);
     }

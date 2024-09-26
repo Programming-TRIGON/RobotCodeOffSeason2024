@@ -19,7 +19,7 @@ public class LEDStrip extends SubsystemBase {
     static {
         GeneralCommands.getDelayedCommand(
                 1,
-                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed))
+                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.LOW_BATTERY_BLINKING_INTERVAL_SECONDS))
         );
     }
 
@@ -47,9 +47,9 @@ public class LEDStrip extends SubsystemBase {
     }
 
 
-    void blink(Color color) {
+    void blink(Color color, double blinkingIntervalSeconds) {
         double currentTime = Timer.getFPGATimestamp();
-        if (currentTime - lastBlinkTime > LEDStripConstants.BLINKING_INTERVAL_SECONDS) {
+        if (currentTime - lastBlinkTime > blinkingIntervalSeconds) {
             lastBlinkTime = currentTime;
             areLEDsOnForBlinking = !areLEDsOnForBlinking;
         }
@@ -75,21 +75,21 @@ public class LEDStrip extends SubsystemBase {
 
     private void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         for (int i = 0; i < ledsPerSection; i++)
-            setLedColors(inverted ? thirdSectionColor : firstSectionColor, i);
-        for (int i = ledsPerSection; i < 2 * ledsPerSection * 2; i++)
-            setLedColors(secondSectionColor, i);
+            setLEDColor(inverted ? thirdSectionColor : firstSectionColor, i);
+        for (int i = ledsPerSection; i < 2 * ledsPerSection; i++)
+            setLEDColor(secondSectionColor, i);
         for (int i = 2 * ledsPerSection; i < numberOfLEDs; i++)
-            setLedColors(inverted ? firstSectionColor : thirdSectionColor, i);
+            setLEDColor(inverted ? firstSectionColor : thirdSectionColor, i);
     }
 
-    private void setLedColors(Color color, int index) {
+    private void setLEDColor(Color color, int index) {
         LEDStripConstants.LED_BUFFER.setLED(index + indexOffset, color);
         LED.setData(LEDStripConstants.LED_BUFFER);
     }
 
     private void setAllStripColors(Color color) {
         for (int index = 0; index < numberOfLEDs; index++) {
-            setLedColors(color, index);
+            setLEDColor(color, index);
         }
     }
 }

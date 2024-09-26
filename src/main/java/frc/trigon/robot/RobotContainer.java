@@ -93,8 +93,6 @@ public class RobotContainer {
 
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
-
-        OperatorConstants.OPERATOR_CONTROLLER.one().whileTrue(LEDStripCommands.getBlinkingCommand(Color.kOrange));
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {

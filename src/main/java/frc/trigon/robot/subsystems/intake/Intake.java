@@ -77,6 +77,6 @@ public class Intake extends MotorSubsystem {
     void indicateCollection() {
         if (DriverStation.isAutonomous())
             OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
-        LEDStripCommands.getBlinkingCommand(Color.kOrange).andThen(LEDStripCommands.getStaticColorCommand(Color.kGreen)).schedule();
+        LEDStripCommands.getBlinkingCommand(Color.kOrange, IntakeConstants.BLINKING_INTERVAL_SECONDS).andThen(LEDStripCommands.getStaticColorCommand(Color.kGreen)).schedule();
     }
 }
