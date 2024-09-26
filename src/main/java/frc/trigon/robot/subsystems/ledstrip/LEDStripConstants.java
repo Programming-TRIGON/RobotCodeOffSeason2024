@@ -9,21 +9,26 @@ import frc.trigon.robot.Robot;
 
 public class LEDStripConstants {
     private static final int PORT = 0;
-    static final int NUMBER_OF_LEDS = 24;
-    static final boolean INVERTED = false;
-    static final AddressableLEDBuffer LED_BUFFER = new AddressableLEDBuffer(NUMBER_OF_LEDS);
+    private static final int
+            RIGHT_CLIMBER_NUMBER_OF_LEDS = 24,
+            LEFT_CLIMBER_NUMBER_OF_LEDS = 24;
+    private static final boolean
+            RIGHT_CLIMBER_INVERTED = false,
+            LEFT_CLIMBER_INVERTED = false;
+    static final AddressableLEDBuffer LED_BUFFER = new AddressableLEDBuffer(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);
     static final AddressableLED LED = new AddressableLED(PORT);
 
     static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
     static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
 
-    static final double FLASHING_TIME_SECONDS = 1;
     static final double BLINKING_INTERVAL_SECONDS = 0.2;
 
-    public static final LEDStrip LED_STRIP = new LEDStrip();
+    public static final LEDStrip
+            RIGHT_CLIMBER_LEDS = new LEDStrip(RIGHT_CLIMBER_INVERTED, RIGHT_CLIMBER_NUMBER_OF_LEDS, 0),
+            LEFT_CLIMBER_LEDS = new LEDStrip(LEFT_CLIMBER_INVERTED, LEFT_CLIMBER_NUMBER_OF_LEDS, RIGHT_CLIMBER_NUMBER_OF_LEDS - 1);
 
     static {
-        LED.setLength(NUMBER_OF_LEDS);
+        LED.setLength(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);
         LED.setData(LED_BUFFER);
         LED.start();
     }
