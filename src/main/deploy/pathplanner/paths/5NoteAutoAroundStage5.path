@@ -3,37 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.280006298729937,
-        "y": 5.781606622595669
+        "x": 4.52634938524034,
+        "y": 6.4835892142093074
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.229476795135926,
-        "y": 6.010795383414129
+        "x": 7.168830366283274,
+        "y": 6.417643175179016
       },
       "isLocked": false,
-      "linkedName": "7NoteAutoFifthNoteCollection"
+      "linkedName": "5NoteAroundStageThirdShotPoint"
     },
     {
       "anchor": {
-        "x": 4.4678508359392035,
-        "y": 6.434840423125027
+        "x": 8.270256540513081,
+        "y": 4.1338974839469875
       },
       "prevControl": {
-        "x": 5.311635466575775,
-        "y": 6.396702480014646
+        "x": 8.255570858190017,
+        "y": 4.3029049206577845
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutosixthNoteShot"
+      "linkedName": "5NoteAutoAroundStageThirdCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.65,
+      "rotationDegrees": -59.42448148552224,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Stopaligning",
-      "waypointRelativePos": 0.05,
+      "name": "Collect",
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,7 +47,13 @@
             {
               "type": "named",
               "data": {
-                "name": "StopAligningToNote"
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
               }
             }
           ]
@@ -57,13 +69,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 12.0,
+    "rotation": -61.04041695620099,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "7NoteAuto",
+  "folder": "5NoteAutoAroundStage",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 11.240000000000009,
     "velocity": 0
   },
   "useDefaultConstraints": true

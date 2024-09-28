@@ -3,82 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.321604462686361,
-        "y": 4.82613031734377
+        "x": 8.270256540513081,
+        "y": 5.791356380812524
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.554299094346408,
-        "y": 3.8121554627907357
+        "x": 7.345058554160043,
+        "y": 5.991758387810157
       },
       "isLocked": false,
-      "linkedName": "5NoteAroundStageFourthShotPoint"
+      "linkedName": "5NoteAutoAroundStageSecondCollection"
     },
     {
       "anchor": {
-        "x": 8.289756056946795,
-        "y": 2.47643858708145
+        "x": 4.52634938524034,
+        "y": 6.4835892142093074
       },
       "prevControl": {
-        "x": 8.416502913765923,
-        "y": 2.7494318171534218
-      },
-      "nextControl": {
-        "x": 8.129422041369844,
-        "y": 2.1311037843003224
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 4.4678508359392035,
-        "y": 4.855379591994339
-      },
-      "prevControl": {
-        "x": 4.7408440660111735,
-        "y": 4.689633702307785
+        "x": 5.4359198521617085,
+        "y": 6.476385904471273
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "5NoteAroundStageThirdShotPoint"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": -52.451235643620066,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.85,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "StopAligningToNote",
-      "waypointRelativePos": 1.1,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -102,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -10.159999999999968,
+    "rotation": 11.180000000000007,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "5NoteAutoAroundStage",
   "previewStartingState": {
-    "rotation": -5.856013585428872,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

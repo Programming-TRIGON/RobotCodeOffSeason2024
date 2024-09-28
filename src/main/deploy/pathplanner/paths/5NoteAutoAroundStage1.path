@@ -39,25 +39,9 @@
         "x": 8.255570858190017,
         "y": 7.621407203664753
       },
-      "nextControl": {
-        "x": 8.255570858190017,
-        "y": 7.357526843855119
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 4.52634938524034,
-        "y": 6.464089697775596
-      },
-      "prevControl": {
-        "x": 4.682345516710037,
-        "y": 6.50308873064302
-      },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "5NoteAroundStageSecondShotPoint"
+      "linkedName": "5NoteAutoAroundStageFirstCollection"
     }
   ],
   "rotationTargets": [
@@ -96,23 +80,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "StopAligning",
-      "waypointRelativePos": 2.15,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "StopAligningToNote"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -123,7 +90,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 10.810000000000002,
+    "rotation": -5.90614111377052,
     "rotateFast": false
   },
   "reversed": false,

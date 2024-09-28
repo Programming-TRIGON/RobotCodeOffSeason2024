@@ -44,15 +44,15 @@
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
                         "pathName": "5NoteAutoAroundStage2"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {
@@ -68,6 +68,18 @@
                       }
                     },
                     {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5NoteAutoAroundStage4"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
@@ -76,7 +88,43 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage4"
+                        "pathName": "5NoteAutoAroundStage5"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5NoteAutoAroundStage6"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5NoteAutoAroundStage7"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5NoteAutoAroundStage8"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {

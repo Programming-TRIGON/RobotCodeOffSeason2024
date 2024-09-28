@@ -3,35 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.4678508359392035,
+        "x": 4.750593824228029,
         "y": 6.434840423125027
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.831875544092969,
-        "y": 6.4083966344570875
+        "x": 6.258861976413411,
+        "y": 6.349925862244887
       },
       "isLocked": false,
-      "linkedName": "7NoteAutosixthNoteShot"
+      "linkedName": "7NoteAutofifthNoteShot"
     },
     {
       "anchor": {
-        "x": 8.299162513817985,
-        "y": 4.104648209296419
+        "x": 8.280006298729937,
+        "y": 5.781606622595669
       },
       "prevControl": {
-        "x": 7.779102053930604,
-        "y": 4.607496850321336
+        "x": 8.053924931191029,
+        "y": 5.901725554788071
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutoSixthCollection"
+      "linkedName": "7NoteAutoFifthNoteCollection"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.2,
-      "rotationDegrees": -21.53684819755253,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -18.617934880685898,
       "rotateFast": false
     }
   ],
@@ -39,7 +39,7 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "parallel",
         "data": {
@@ -69,13 +69,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -46.893161426011915,
+    "rotation": -26.967025495103503,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 10.780000000000001,
+    "rotation": 16.69924423368887,
     "velocity": 0
   },
   "useDefaultConstraints": true

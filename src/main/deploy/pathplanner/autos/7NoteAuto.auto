@@ -50,6 +50,12 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
@@ -59,6 +65,12 @@
                       "type": "path",
                       "data": {
                         "pathName": "7NoteAuto3"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {
@@ -100,31 +112,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "7NoteAuto6.5"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.1
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
                         "pathName": "7NoteAuto7"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "7NoteAuto7.5"
                       }
                     },
                     {
@@ -149,6 +137,30 @@
                       "type": "path",
                       "data": {
                         "pathName": "7NoteAuto9"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "7NoteAuto10"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "7NoteAuto11"
                       }
                     },
                     {
