@@ -39,7 +39,7 @@ public class LEDStripCommands {
         return new RunCommand(
                 () -> runForAllLeds((ledStrip) -> ledStrip.blink(color, shouldBlinkFast)),
                 LEDStripConstants.RIGHT_CLIMBER_LEDS, LEDStripConstants.LEFT_CLIMBER_LEDS
-        ).ignoringDisable(true);
+        ).withTimeout(LEDStripConstants.BLINKING_TIME_SECONDS).ignoringDisable(true);
     }
 
     public static Command getRainbowCommand(LEDStrip ledStrip) {

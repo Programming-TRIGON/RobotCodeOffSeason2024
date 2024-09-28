@@ -63,6 +63,8 @@ public class Intake extends MotorSubsystem {
 
     void setTargetState(IntakeConstants.IntakeState targetState) {
         this.targetState = targetState;
+        if (targetState == IntakeConstants.IntakeState.FEED_SHOOTING || targetState == IntakeConstants.IntakeState.FEED_AMP || targetState == IntakeConstants.IntakeState.EJECT)
+            LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.SHOULD_FEEDING_INDICATION_LEDS_BLINK_FAST).andThen(LEDStripCommands.getStaticColorCommand(Color.kRed)).schedule();
         setTargetVoltage(targetState.voltage);
     }
 
