@@ -3,34 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3617289206409402,
-        "y": 7.63117695249475
+        "x": 8.270256540513081,
+        "y": 4.104648209296419
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.502624772470449,
-        "y": 7.790056815268025
+        "x": 7.5885658485097895,
+        "y": 5.424517421473006
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
     },
     {
       "anchor": {
-        "x": 5.340436970626591,
-        "y": 7.455085440206217
+        "x": 4.541385984180419,
+        "y": 6.3159551671216025
       },
       "prevControl": {
-        "x": 4.820129451138314,
-        "y": 7.483991413511122
+        "x": 6.341216922716531,
+        "y": 6.860419091862919
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+      "linkedName": "SpeakerSide3NoteAutoSecondFeed"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
@@ -38,14 +49,14 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 5.826342029555829,
+    "velocity": 0,
+    "rotation": 9.889999999999986,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SpeakerSide3NoteAuto",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": -68.19999999999999,
     "velocity": 0
   },
   "useDefaultConstraints": true

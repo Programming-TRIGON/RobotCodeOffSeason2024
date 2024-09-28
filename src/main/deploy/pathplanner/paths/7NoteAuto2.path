@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.189296230444312,
-        "y": 4.478861151454497
+        "x": 2.0489663771350335,
+        "y": 4.853074093612575
       },
       "prevControl": {
-        "x": 2.4114851648506717,
-        "y": 4.198201444835939
+        "x": 2.271155311541393,
+        "y": 4.572414386994017
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "7NoteAutoSecondShot"
     }
   ],
   "rotationTargets": [],
@@ -38,7 +38,7 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 2.0,
+    "velocity": 0.0,
     "rotation": -29.279999999999973,
     "rotateFast": false
   },

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4023439596174967,
-        "y": 6.518296980255932
+        "x": 2.164048427036783,
+        "y": 6.78789880547959
       },
       "isLocked": false,
       "linkedName": "FrontRow4NoteAutoFirstCollection"
@@ -20,8 +20,8 @@
         "y": 5.565873600441298
       },
       "prevControl": {
-        "x": 1.2956378625373428,
-        "y": 6.259428667790661
+        "x": 1.38082933409683,
+        "y": 6.33827302990295
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
@@ -48,5 +48,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

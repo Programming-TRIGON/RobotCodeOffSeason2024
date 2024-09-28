@@ -3,59 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.385627673868176,
-        "y": 2.739682058936565
+        "x": 7.714520322152286,
+        "y": 4.111991050457951
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3155692227698585,
-        "y": 2.830498569619569
+        "x": 8.055761859742248,
+        "y": 3.27591876086365
       },
       "isLocked": false,
-      "linkedName": "MiddleRush3NoteAutoFirstShotPoint"
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
     },
     {
       "anchor": {
-        "x": 4.9219209708544644,
-        "y": 3.700791945412156
+        "x": 8.240885175866953,
+        "y": 2.437823265628643
       },
       "prevControl": {
-        "x": 4.3344936779319,
-        "y": 3.3923926166278098
-      },
-      "nextControl": {
-        "x": 5.509348263777029,
-        "y": 4.0091912741965015
-      },
-      "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
-    },
-    {
-      "anchor": {
-        "x": 4.055465713793683,
-        "y": 4.934389260549541
-      },
-      "prevControl": {
-        "x": 4.775064147623824,
-        "y": 4.648018455249791
+        "x": 7.982068347339294,
+        "y": 3.3579866212382528
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MiddleRush3NoteAutoSecondShotPoint"
+      "linkedName": " MiddleRush3NoteAutoSecondCollection"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": 31.194592978177205,
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": -65.3534920293612,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "ReCollectNote",
-      "waypointRelativePos": 0.95,
+      "name": "Collect",
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {
@@ -75,23 +59,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "StopAligning",
-      "waypointRelativePos": 1.35,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "StopAligningToNote"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -102,14 +69,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -10.0,
+    "rotation": -67.08328714127599,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": -42.709389957361545,
-    "velocity": 0
+    "rotation": 0,
+    "velocity": 1.0
   },
   "useDefaultConstraints": true
 }

@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4970626618692369,
-        "y": 5.573543250329771
+        "x": 1.9398483867390275,
+        "y": 4.682767675394506
       },
       "isLocked": false,
       "linkedName": "CloseShotPoint"
     },
     {
       "anchor": {
-        "x": 2.895296810271618,
-        "y": 5.565873600441298
+        "x": 2.7337543047179125,
+        "y": 4.097305368134887
       },
       "prevControl": {
-        "x": 2.795296810271618,
-        "y": 5.565873600441298
+        "x": 1.9609916251634618,
+        "y": 4.380225297553069
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FrontRow4NoteAutoSecondCollection"
+      "linkedName": "FrontRow4NoteAutoThirdCollection"
     }
   ],
   "rotationTargets": [],
@@ -33,9 +33,9 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 1,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {

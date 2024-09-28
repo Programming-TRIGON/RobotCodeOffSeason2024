@@ -3,59 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.820141697290522,
-        "y": 2.681183509635428
+        "x": 2.8298914555073775,
+        "y": 2.8079303664545576
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.176735151765035,
-        "y": 2.3542412216479778
+        "x": 2.7824572906048517,
+        "y": 2.823741754755399
       },
       "isLocked": false,
-      "linkedName": "Zayde4NoteAutoSecondShotPoint"
+      "linkedName": "Zayde4NoteAutoFirstShotPoint"
     },
     {
       "anchor": {
-        "x": 3.6781204203738587,
-        "y": 1.7744559954678114
+        "x": 8.270256540513081,
+        "y": 0.7687150356632869
       },
       "prevControl": {
-        "x": 3.726869211458139,
-        "y": 1.7062076879498176
-      },
-      "nextControl": {
-        "x": 3.5177352357790754,
-        "y": 1.9989952539005116
-      },
-      "isLocked": false,
-      "linkedName": "Zayde4NoteAutoEjectPoint"
-    },
-    {
-      "anchor": {
-        "x": 2.968725221886938,
-        "y": 2.905050317142888
-      },
-      "prevControl": {
-        "x": 3.2198817841816214,
-        "y": 2.47643858708145
+        "x": 6.124006650029445,
+        "y": 1.3410483397922595
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Zayde4NoteAutoSecondCollection"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -53.57336982385071,
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": -18.753997829952237,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "recollect note",
-      "waypointRelativePos": 0.9500000000000002,
+      "name": "Collect",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "parallel",
         "data": {
@@ -75,23 +59,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "StopAligning",
-      "waypointRelativePos": 1.25,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "StopAligningToNote"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -102,13 +69,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.870000000000005,
+    "rotation": -19.561926868369458,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Zayde3NoteAuto",
   "previewStartingState": {
-    "rotation": -41.145771634800994,
+    "rotation": -40.75093688059897,
     "velocity": 0
   },
   "useDefaultConstraints": true

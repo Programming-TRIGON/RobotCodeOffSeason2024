@@ -3,97 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.544129905161219,
-        "y": 7.327664232793255
+        "x": 2.879292519148419,
+        "y": 6.995245539786855
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.852316502732768,
-        "y": 6.737082927847566
+        "x": 3.1358202645733906,
+        "y": 7.106988065566237
       },
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpSecondFeed"
+      "linkedName": "3NoteAutoThroughAmpFirstCollection"
     },
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 5.771473152964195
+        "x": 3.544129905161219,
+        "y": 7.327664232793255
       },
       "prevControl": {
-        "x": 8.468712115855812,
-        "y": 6.118770409813976
-      },
-      "nextControl": {
-        "x": 8.129926687203803,
-        "y": 5.525895909672957
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.7171194532412826,
-        "y": 6.269094533438474
-      },
-      "prevControl": {
-        "x": 5.215634617315747,
-        "y": 6.637928410024977
+        "x": 3.353381123723378,
+        "y": 7.252028638332895
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpThirdFeed"
+      "linkedName": "3NoteAutoThroughAmpSecondFeed"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": -36.42323266712899,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Collect",
-      "waypointRelativePos": 0.7,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "StopAligning",
-      "waypointRelativePos": 1.2,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "StopAligningToNote"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
@@ -102,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 12.0,
+    "rotation": 27.870000000000005,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 25.769327624338693,
-    "velocity": 1.0
+    "rotation": 9.997197839160863,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

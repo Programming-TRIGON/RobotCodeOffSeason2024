@@ -3,82 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.714520322152286,
+        "x": 8.240885175866953,
         "y": 4.111991050457951
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.055761859742248,
-        "y": 3.27591876086365
+        "x": 8.009183509533097,
+        "y": 4.1046482092964185
       },
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
+      "linkedName": " MiddleRush3NoteAutoFirstCollection"
     },
     {
       "anchor": {
-        "x": 8.240885175866953,
-        "y": 2.437823265628643
+        "x": 7.714520322152286,
+        "y": 4.111991050457951
       },
       "prevControl": {
-        "x": 7.982068347339294,
-        "y": 3.3579866212382528
-      },
-      "nextControl": {
-        "x": 8.416502913765923,
-        "y": 1.8134550283352364
-      },
-      "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoSecondCollection"
-    },
-    {
-      "anchor": {
-        "x": 3.385627673868176,
-        "y": 2.739682058936565
-      },
-      "prevControl": {
-        "x": 5.286830526155116,
-        "y": 1.3747159085767113
+        "x": 7.8786469940431045,
+        "y": 4.1046482092964185
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MiddleRush3NoteAutoFirstShotPoint"
+      "linkedName": " MiddleRush3NoteAutoSecondEjectPoint"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": -65.3534920293612,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.9,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "StopAligning",
-      "waypointRelativePos": 1.25,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -102,14 +57,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 1.0
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

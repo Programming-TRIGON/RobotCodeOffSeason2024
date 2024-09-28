@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3973572133190837,
-        "y": 5.565873600441298
+        "x": 2.0480159688234565,
+        "y": 6.323768972626285
       },
       "isLocked": false,
       "linkedName": "CloseShotPoint"
@@ -20,8 +20,8 @@
         "y": 6.990384785778517
       },
       "prevControl": {
-        "x": 1.895296810271618,
-        "y": 6.990384785778517
+        "x": 2.077024083376788,
+        "y": 6.657362289989598
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,8 +50,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
@@ -66,5 +66,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

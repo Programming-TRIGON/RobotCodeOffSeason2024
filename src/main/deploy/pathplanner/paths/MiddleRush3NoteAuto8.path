@@ -3,42 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.9219209708544644,
-        "y": 3.700791945412156
+        "x": 4.055465713793683,
+        "y": 4.934389260549541
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.402528059212889,
-        "y": 4.0363999017784264
+        "x": 4.470193534026643,
+        "y": 4.815347015853042
       },
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
+      "linkedName": "MiddleRush3NoteAutoSecondShotPoint"
     },
     {
       "anchor": {
-        "x": 8.240885175866953,
-        "y": 4.111991050457951
+        "x": 5.413577382974244,
+        "y": 4.494638537970663
       },
       "prevControl": {
-        "x": 7.240885175866953,
-        "y": 4.111991050457951
+        "x": 5.021347710539944,
+        "y": 4.6267942712563865
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstCollection"
+      "linkedName": "MiddleRushLastCollection"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": 5.619820331983138,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
+      "name": "RecollectNote",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "parallel",
@@ -68,15 +62,15 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0,
+    "velocity": 0,
+    "rotation": -22.750976342787602,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "MiddleRush3NoteAuto",
   "previewStartingState": {
-    "rotation": 15.066474342465792,
-    "velocity": 0.0
+    "rotation": -3.691385986451337,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

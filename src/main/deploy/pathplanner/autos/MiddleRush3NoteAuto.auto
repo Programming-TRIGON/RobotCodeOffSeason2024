@@ -36,6 +36,12 @@
                       "data": {
                         "name": "FeedNote"
                       }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.05
+                      }
                     }
                   ]
                 }
@@ -64,9 +70,21 @@
                       }
                     },
                     {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MiddleRush3NoteAuto3"
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.05
                       }
                     }
                   ]
@@ -92,25 +110,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto3"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
                         "pathName": "MiddleRush3NoteAuto4"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
                       }
                     },
                     {
@@ -120,9 +120,57 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "MiddleRush3NoteAuto6"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MiddleRush3NoteAuto7"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MiddleRush3NoteAuto8"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MiddleRush3NoteAuto9"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {

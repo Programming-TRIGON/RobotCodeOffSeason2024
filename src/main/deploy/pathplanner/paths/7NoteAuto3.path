@@ -12,7 +12,7 @@
         "y": 5.203898726885772
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "7NoteAutoSecondShot"
     },
     {
       "anchor": {
@@ -64,7 +64,7 @@
   "folder": "7NoteAuto",
   "previewStartingState": {
     "rotation": -21.430000000000007,
-    "velocity": 2.0
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }

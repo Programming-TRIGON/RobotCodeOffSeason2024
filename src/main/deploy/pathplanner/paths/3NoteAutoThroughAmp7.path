@@ -3,43 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.9219209708544644,
-        "y": 3.700791945412156
+        "x": 8.299162513817985,
+        "y": 4.119101195948871
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.402528059212889,
-        "y": 4.0363999017784264
+        "x": 7.051915729273154,
+        "y": 3.727542720103108
       },
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
+      "linkedName": "3NoteAutoThroughAmpThirdCollection"
     },
     {
       "anchor": {
-        "x": 8.240885175866953,
-        "y": 4.111991050457951
+        "x": 4.165608331216663,
+        "y": 4.885109488528837
       },
       "prevControl": {
-        "x": 7.240885175866953,
-        "y": 4.111991050457951
+        "x": 4.818290908666623,
+        "y": 4.220680667509745
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": " MiddleRush3NoteAutoFirstCollection"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7,
-      "rotationDegrees": 5.619820331983138,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "parallel",
         "data": {
@@ -47,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
+                "name": "StopAligningToNote"
               }
             }
           ]
@@ -68,14 +56,14 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0,
+    "velocity": 0,
+    "rotation": -10.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "MiddleRush3NoteAuto",
+  "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 15.066474342465792,
+    "rotation": 0,
     "velocity": 0.0
   },
   "useDefaultConstraints": true

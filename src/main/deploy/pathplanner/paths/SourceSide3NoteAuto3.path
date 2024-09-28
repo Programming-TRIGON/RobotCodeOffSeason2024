@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4983996761342704,
-        "y": 3.2271699697793705
+        "x": 8.284709527165534,
+        "y": 2.442554744264419
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.009612199746966,
-        "y": 2.8079303664545576
+        "x": 6.566029810504851,
+        "y": 1.5229260140499075
       },
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoSecondFeed"
+      "linkedName": "SourceSide3NoteAutoFirstCollection"
     },
     {
       "anchor": {
-        "x": 8.284709527165534,
-        "y": 4.119101195948871
+        "x": 2.4983996761342704,
+        "y": 3.2271699697793705
       },
       "prevControl": {
-        "x": 5.940064326684474,
-        "y": 4.085148692862707
+        "x": 4.100340073471666,
+        "y": 1.1748286394099283
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoSecondCollection"
+      "linkedName": "SourceSide3NoteAutoSecondFeed"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
+                "name": "StopAligningToNote"
               }
             }
           ]
@@ -63,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": -46.66999999999996,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SourceSide3NoteAuto",
   "previewStartingState": {
-    "rotation": -45.120000000000005,
+    "rotation": 21.12937296136482,
     "velocity": 0
   },
   "useDefaultConstraints": true

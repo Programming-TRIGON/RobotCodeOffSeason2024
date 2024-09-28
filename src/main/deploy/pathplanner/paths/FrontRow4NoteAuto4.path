@@ -3,32 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3973572133190786,
+        "x": 2.895296810271618,
         "y": 5.565873600441298
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9398483867390275,
-        "y": 4.682767675394506
+        "x": 2.396113343463435,
+        "y": 5.555053936962998
       },
       "isLocked": false,
-      "linkedName": "CloseShotPoint"
-    },
-    {
-      "anchor": {
-        "x": 2.7337543047179125,
-        "y": 4.097305368134887
-      },
-      "prevControl": {
-        "x": 1.750951212351164,
-        "y": 4.285194194616765
-      },
-      "nextControl": {
-        "x": 2.7939823894007003,
-        "y": 4.0857911754749425
-      },
-      "isLocked": false,
-      "linkedName": null
+      "linkedName": "FrontRow4NoteAutoSecondCollection"
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 5.565873600441298
       },
       "prevControl": {
-        "x": 2.1277372132209056,
-        "y": 4.220272102516036
+        "x": 1.9899997397167932,
+        "y": 5.526045822409666
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,28 +30,10 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Collect",
-      "waypointRelativePos": 1.1999999999999997,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
@@ -82,5 +48,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

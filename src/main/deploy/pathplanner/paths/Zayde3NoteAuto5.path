@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3973572133190786,
-        "y": 5.565873600441298
+        "x": 8.270256540513081,
+        "y": 0.7687150356632869
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4970626618692369,
-        "y": 5.573543250329771
+        "x": 6.500398302667056,
+        "y": 1.2959206524872067
       },
       "isLocked": false,
-      "linkedName": "CloseShotPoint"
+      "linkedName": "Zayde4NoteAutoSecondCollection"
     },
     {
       "anchor": {
-        "x": 2.895296810271618,
-        "y": 5.565873600441298
+        "x": 2.820141697290522,
+        "y": 2.681183509635428
       },
       "prevControl": {
-        "x": 2.795296810271618,
-        "y": 5.565873600441298
+        "x": 3.7014784983633566,
+        "y": 2.2191207633298657
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FrontRow4NoteAutoSecondCollection"
+      "linkedName": "Zayde4NoteAutoSecondShotPoint"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Collect"
+                "name": "StopAligningToNote"
               }
             }
           ]
@@ -50,21 +50,21 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -48.74000000000001,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "FrontRow4NoteAuto",
+  "folder": "Zayde3NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -26.01135794800218,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7402504945854966,
-      "y": 6.76399775334762
+      "x": 0.7531929553170285,
+      "y": 6.932078092184688
     },
     "rotation": 60.1093232393867
   },
@@ -32,6 +32,12 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
@@ -44,15 +50,15 @@
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
                         "pathName": "3NoteAutoThroughAmp3"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {
@@ -71,6 +77,36 @@
                       "type": "path",
                       "data": {
                         "pathName": "3NoteAutoThroughAmp5"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3NoteAutoThroughAmp6"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3NoteAutoThroughAmp7"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {

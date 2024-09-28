@@ -3,52 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3973572133190786,
-        "y": 5.565873600441298
+        "x": 2.7337543047179125,
+        "y": 4.097305368134887
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4970626618692369,
-        "y": 5.573543250329771
+        "x": 2.1060321979301198,
+        "y": 4.351217182999737
       },
       "isLocked": false,
-      "linkedName": "CloseShotPoint"
+      "linkedName": "FrontRow4NoteAutoThirdCollection"
     },
     {
       "anchor": {
-        "x": 2.895296810271618,
+        "x": 1.3973572133190786,
         "y": 5.565873600441298
       },
       "prevControl": {
-        "x": 2.795296810271618,
-        "y": 5.565873600441298
+        "x": 1.5693820786934856,
+        "y": 5.090924104109693
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FrontRow4NoteAutoSecondCollection"
+      "linkedName": "CloseShotPoint"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
     "maxAcceleration": 2.0,

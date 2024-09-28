@@ -3,82 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.498027024223063,
-        "y": 6.691732820085359
+        "x": 8.270256540513081,
+        "y": 5.781194660980872
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.498027024223063,
+        "x": 7.182452244763146,
+        "y": 6.251248686242956
+      },
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoFirstNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 4.498027024223063,
         "y": 6.691732820085359
       },
-      "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoFirstFeed"
-    },
-    {
-      "anchor": {
-        "x": 8.270256540513081,
-        "y": 4.104648209296419
-      },
       "prevControl": {
-        "x": 7.873530086421559,
-        "y": 6.286643706799824
-      },
-      "nextControl": {
-        "x": 8.314313587482273,
-        "y": 3.8623344509658613
-      },
-      "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
-    },
-    {
-      "anchor": {
-        "x": 4.541385984180419,
-        "y": 6.3159551671216025
-      },
-      "prevControl": {
-        "x": 7.359744236483107,
-        "y": 6.946327738809324
+        "x": 5.529142927095888,
+        "y": 6.757562854696705
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoSecondFeed"
+      "linkedName": "SpeakerSide3NoteAutoFirstFeed"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": -65.60272008394655,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "StopAligning",
-      "waypointRelativePos": 1.3,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -102,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 8.669999999999987,
+    "rotation": 9.300000000000011,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SpeakerSide3NoteAuto",
   "previewStartingState": {
-    "rotation": 15.596381773199646,
+    "rotation": -38.18097859326857,
     "velocity": 0
   },
   "useDefaultConstraints": true

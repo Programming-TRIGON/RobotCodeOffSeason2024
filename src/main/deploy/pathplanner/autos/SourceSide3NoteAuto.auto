@@ -32,6 +32,12 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
@@ -44,6 +50,18 @@
                       }
                     },
                     {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SourceSide3NoteAuto3"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
@@ -52,13 +70,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceSide3NoteAuto3"
+                        "pathName": "SourceSide3NoteAuto4"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SourceSide3NoteAuto4"
+                        "pathName": "SourceSide3NoteAuto5"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {

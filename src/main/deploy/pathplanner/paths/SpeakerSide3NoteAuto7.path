@@ -8,38 +8,32 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.340436970626591,
-        "y": 7.455085440206217
+        "x": 5.0793639396466075,
+        "y": 7.339052981992889
       },
       "isLocked": false,
       "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
     },
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 5.781194660980872
+        "x": 4.064437424649498,
+        "y": 6.865168659914785
       },
       "prevControl": {
-        "x": 7.517691750836209,
-        "y": 6.378300057485056
+        "x": 4.803786851389956,
+        "y": 7.237524581056229
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SpeakerSide3NoteAutoFirstNoteCollection"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.65,
-      "rotationDegrees": -37.15460979349683,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.85,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -47,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
+                "name": "StopAligningToNote"
               }
             }
           ]
@@ -69,14 +57,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -39.92003336192763,
+    "rotation": 17.94999999999999,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SpeakerSide3NoteAuto",
   "previewStartingState": {
-    "rotation": 7.125016348901798,
-    "velocity": 0.0
+    "rotation": 55.78,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

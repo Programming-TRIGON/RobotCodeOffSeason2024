@@ -68,6 +68,12 @@
                       }
                     },
                     {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FrontRow4NoteAuto4"
+                      }
+                    },
+                    {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.1
@@ -82,7 +88,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "FrontRow4NoteAuto4"
+                        "pathName": "FrontRow4NoteAuto5"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FrontRow4NoteAuto6"
                       }
                     },
                     {
