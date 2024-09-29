@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.544129905161219,
-        "y": 7.327664232793255
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 7.719102363999782,
-        "y": 5.990175655262972
-      },
-      "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpSecondFeed"
-    },
-    {
-      "anchor": {
         "x": 8.270256540513081,
         "y": 5.771473152964195
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.61757396306312,
+        "y": 6.23674462896629
+      },
+      "isLocked": false,
+      "linkedName": "3NoteAutoThroughAmpSecondCollection"
+    },
+    {
+      "anchor": {
+        "x": 3.7171194532412826,
+        "y": 6.269094533438474
+      },
       "prevControl": {
-        "x": 7.994679452256431,
-        "y": 5.903151311602977
+        "x": 4.7022584504532965,
+        "y": 6.512321717222941
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpSecondCollection"
+      "linkedName": "3NoteAutoThroughAmpThirdFeed"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.7,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
+                "name": "StopAligningToNote"
               }
             }
           ]
@@ -63,14 +57,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -18.809265287141177,
+    "rotation": 11.219999999999999,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 25.769327624338693,
-    "velocity": 1.0
+    "rotation": 0,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

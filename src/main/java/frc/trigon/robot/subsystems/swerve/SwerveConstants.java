@@ -83,7 +83,7 @@ public class SwerveConstants {
                     new PIDConstants(5, 0, 0.1) :
                     new PIDConstants(6.5, 0, 0),
             AUTO_ROTATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
-                    new PIDConstants(2.5, 0, 0.1) :
+                    new PIDConstants(2.5, 0, 0.2) :
                     new PIDConstants(3, 0, 0);
     private static final double
             MAX_ROTATION_VELOCITY = RobotHardwareStats.isSimulation() ? 720 : 720,

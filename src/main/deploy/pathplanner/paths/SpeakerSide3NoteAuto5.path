@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.5885658485097895,
-        "y": 5.424517421473006
+        "x": 7.9545143705672015,
+        "y": 4.806297475842816
       },
       "isLocked": false,
       "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
@@ -20,8 +20,8 @@
         "y": 6.3159551671216025
       },
       "prevControl": {
-        "x": 6.341216922716531,
-        "y": 6.860419091862919
+        "x": 6.726628154111008,
+        "y": 6.770915422172725
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,11 +33,18 @@
   "eventMarkers": [
     {
       "name": "StopAligning",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
         }
       }
     }
@@ -50,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 9.889999999999986,
+    "rotation": 9.569999999999993,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SpeakerSide3NoteAuto",
   "previewStartingState": {
-    "rotation": -68.19999999999999,
+    "rotation": -65.77225468204594,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -8,29 +8,53 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1358202645733906,
-        "y": 7.106988065566237
+        "x": 7.556913119524244,
+        "y": 5.952324611201929
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpFirstCollection"
     },
     {
       "anchor": {
-        "x": 3.544129905161219,
-        "y": 7.327664232793255
+        "x": 8.270256540513081,
+        "y": 5.771473152964195
       },
       "prevControl": {
-        "x": 3.353381123723378,
-        "y": 7.252028638332895
+        "x": 7.942820216124763,
+        "y": 5.83538306677753
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpSecondFeed"
+      "linkedName": "3NoteAutoThroughAmpSecondCollection"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
@@ -39,14 +63,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 27.870000000000005,
+    "rotation": -20.799028408841473,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 9.997197839160863,
-    "velocity": 0
+    "rotation": 25.769327624338693,
+    "velocity": 1.0
   },
   "useDefaultConstraints": true
 }

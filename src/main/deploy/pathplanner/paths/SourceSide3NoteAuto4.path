@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.499201648579976,
-        "y": 3.045852028099816
+        "x": 4.7503160533386595,
+        "y": 2.982009382822185
       },
       "isLocked": false,
       "linkedName": "SourceSide3NoteAutoSecondFeed"
@@ -20,8 +20,8 @@
         "y": 4.119101195948871
       },
       "prevControl": {
-        "x": 6.109152006289878,
-        "y": 4.003119808359758
+        "x": 5.159611458824057,
+        "y": 4.350225452587657
       },
       "nextControl": null,
       "isLocked": false,

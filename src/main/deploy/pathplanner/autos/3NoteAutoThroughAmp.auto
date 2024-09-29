@@ -50,12 +50,6 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3NoteAutoThroughAmp3"
-                      }
-                    },
-                    {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.1
@@ -65,6 +59,12 @@
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3NoteAutoThroughAmp3"
                       }
                     },
                     {
@@ -74,12 +74,6 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3NoteAutoThroughAmp5"
-                      }
-                    },
-                    {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.1
@@ -94,13 +88,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "3NoteAutoThroughAmp6"
+                        "pathName": "3NoteAutoThroughAmp5"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "3NoteAutoThroughAmp7"
+                        "pathName": "3NoteAutoThroughAmp6"
                       }
                     },
                     {

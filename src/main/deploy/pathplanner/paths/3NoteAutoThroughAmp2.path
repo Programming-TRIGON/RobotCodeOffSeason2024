@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2655768279734434,
-        "y": 6.961947492799579
+        "x": 2.446567628177991,
+        "y": 6.443479097784407
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpFirstFeed"
@@ -20,8 +20,8 @@
         "y": 6.995245539786855
       },
       "prevControl": {
-        "x": 2.5411539162300936,
-        "y": 6.961947492799579
+        "x": 2.6570624081419103,
+        "y": 6.794303731057604
       },
       "nextControl": null,
       "isLocked": false,
@@ -57,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 6.882952592785585,
+    "rotation": 28.47,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 2.0222710359061082,
+    "rotation": 38.0,
     "velocity": 0.0
   },
   "useDefaultConstraints": true
