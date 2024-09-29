@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.trigon.robot.Robot;
 
@@ -18,7 +17,6 @@ public class LEDStripConstants {
             LEFT_CLIMBER_INVERTED = false;
     static final AddressableLEDBuffer LED_BUFFER = new AddressableLEDBuffer(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);
     static final AddressableLED LED = new AddressableLED(PORT);
-    static final AddressableLEDSim LED_SIMULATION = new AddressableLEDSim(LED);
 
     static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
     static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
@@ -36,10 +34,5 @@ public class LEDStripConstants {
         LED.setLength(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);
         LED.setData(LED_BUFFER);
         LED.start();
-
-        LED_SIMULATION.setRunning(true);
-        LED_SIMULATION.setInitialized(true);
-        LED_SIMULATION.setLength(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);
-        LED_SIMULATION.setOutputPort(PORT);
     }
 }
