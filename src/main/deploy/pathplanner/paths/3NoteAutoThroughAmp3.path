@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.556913119524244,
-        "y": 5.952324611201929
+        "x": 5.837872416485573,
+        "y": 6.829386194384925
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpFirstCollection"
@@ -20,8 +20,8 @@
         "y": 5.771473152964195
       },
       "prevControl": {
-        "x": 7.942820216124763,
-        "y": 5.83538306677753
+        "x": 7.708937127275964,
+        "y": 6.080960310068768
       },
       "nextControl": null,
       "isLocked": false,
