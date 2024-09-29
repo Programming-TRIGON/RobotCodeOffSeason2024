@@ -61,7 +61,7 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void rainbow() {
-        for (int led = 0; led < numberOfLEDs; led++) {
+        for (int led = 0; led <= numberOfLEDs; led++) {
             final int hue = (int) (rainbowFirstPixelHue + (led * 180 / numberOfLEDs) % 180);
             LEDStripConstants.LED_BUFFER.setHSV(led + indexOffset, hue, 255, 128);
             LED.setData(LEDStripConstants.LED_BUFFER);
@@ -80,7 +80,7 @@ public class LEDStrip extends SubsystemBase {
             setLEDColor(inverted ? thirdSectionColor : firstSectionColor, i);
         for (int i = ledsPerSection; i < 2 * ledsPerSection; i++)
             setLEDColor(secondSectionColor, i);
-        for (int i = 2 * ledsPerSection; i < numberOfLEDs; i++)
+        for (int i = 2 * ledsPerSection; i <= numberOfLEDs; i++)
             setLEDColor(inverted ? firstSectionColor : thirdSectionColor, i);
     }
 
@@ -90,7 +90,7 @@ public class LEDStrip extends SubsystemBase {
     }
 
     private void setAllStripColors(Color color) {
-        for (int index = 0; index < numberOfLEDs; index++) {
+        for (int index = 0; index <= numberOfLEDs; index++) {
             setLEDColor(color, index);
         }
     }
