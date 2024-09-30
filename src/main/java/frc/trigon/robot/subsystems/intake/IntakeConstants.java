@@ -32,8 +32,8 @@ public class IntakeConstants {
 
     private static final InvertedValue
             MASTER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive,
-            FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
-    private static final boolean FOLLOWER_OPPOSES_MASTER = false;
+            FOLLOWER_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
+    private static final boolean FOLLOWER_OPPOSES_MASTER = true;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double GEAR_RATIO = 1.5;
     private static final double
@@ -116,8 +116,8 @@ public class IntakeConstants {
     }
 
     public enum IntakeState {
-        COLLECT(10), //TODO: calibrate
-        EJECT(-4), //TODO: calibrate
+        COLLECT(5), //TODO: calibrate
+        EJECT(-2), //TODO: calibrate
         STOP(0),
         FEED_SHOOTING(8), //TODO: calibrate
         FEED_AMP(4); //TODO: calibrate

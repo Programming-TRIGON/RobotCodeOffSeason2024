@@ -28,7 +28,7 @@ public class ClimberConstants {
 
     private static final InvertedValue
             RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
-            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
+            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
     private static final double //TODO: calibrate
@@ -64,7 +64,7 @@ public class ClimberConstants {
     private static final double
             REVERSE_SOFT_LIMIT_POSITION_ROTATIONS = 0,
             FORWARD_SOFT_LIMIT_POSITION_ROTATIONS = 3.183;
-    static final double GEAR_RATIO = 74.67;
+    static final double GEAR_RATIO = 68.57;
 
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
