@@ -20,7 +20,6 @@ import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.shooter.Shooter;
-import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -90,7 +89,7 @@ public class RobotContainer {
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
 
-        configureSysIdBindings(PITCHER);
+        configureSysIdBindings(SHOOTER);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {

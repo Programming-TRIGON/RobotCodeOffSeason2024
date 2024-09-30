@@ -48,8 +48,8 @@ public class ShooterConstants {
             LEFT_SIMULATION = new FlywheelSimulation(LEFT_GEARBOX, GEAR_RATIO, MOMENT_OF_INERTIA);
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(0.25).per(Units.Second),
-            Units.Volts.of(7),
+            Units.Volts.of(5).per(Units.Second),
+            Units.Volts.of(9),
             Units.Second.of(1000)
     );
 

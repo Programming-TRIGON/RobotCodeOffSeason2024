@@ -9,8 +9,8 @@ public class RobotConstants {
             IS_SIMULATION = false,
             IS_REPLAY = false;
     private static final double PERIODIC_TIME_SECONDS = 0.02;
-    public static final String CANIVORE_NAME = "CANivore";
-    public static final String LOGGING_PATH = IS_SIMULATION && Robot.IS_REAL ? FilesHandler.DEPLOY_PATH + "logs/" : "/media/sda1/akitlogs/";
+    public static final String CANIVORE_NAME = "SwerveCANivore";
+    public static final String LOGGING_PATH = IS_SIMULATION && !Robot.IS_REAL ? FilesHandler.DEPLOY_PATH + "logs/" : "/media/sda1/akitlogs/";
 
     public static void init() {
         RobotHardwareStats.setCurrentRobotStats(Robot.IS_REAL, IS_SIMULATION, IS_REPLAY);

@@ -20,6 +20,7 @@ import org.trigon.hardware.phoenix6.cancoder.CANcoderSignal;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
+import org.trigon.utilities.Conversions;
 import org.trigon.utilities.mechanisms.DoubleJointedArmMechanism2d;
 
 public class PitcherConstants {
@@ -50,7 +51,7 @@ public class PitcherConstants {
             KA = RobotHardwareStats.isSimulation() ? 0 : 1.4593,
             KG = RobotHardwareStats.isSimulation() ? 0.2 : 0.25961;
     private static final double
-            EXPO_KV = KV + 40,
+            EXPO_KV = KV + 80,
             EXPO_KA = 0.2;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
@@ -59,8 +60,8 @@ public class PitcherConstants {
     private static final Rotation2d
             REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
             FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
-    private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.CounterClockwise_Positive;
-    private static final double ENCODER_MAGNET_OFFSET_VALUE = -0.13898 + 0.5;
+    private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
+    private static final double ENCODER_MAGNET_OFFSET_VALUE = -0.13898 + 0.5 + Conversions.degreesToRotations(90 + 12);
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
     static final boolean FOC_ENABLED = true;
 
