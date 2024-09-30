@@ -89,6 +89,8 @@ public class RobotContainer {
 
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
+
+        configureSysIdBindings(PITCHER);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {

@@ -35,7 +35,7 @@ public class Pitcher extends MotorSubsystem {
     public void updateLog(SysIdRoutineLog log) {
         log.motor("Pitcher")
                 .angularPosition(Units.Rotations.of(masterMotor.getSignal(TalonFXSignal.POSITION)))
-                .angularVelocity(Units.RotationsPerSecond.of(masterMotor.getSignal(TalonFXSignal.VELOCITY)))
+                .angularVelocity(Units.RotationsPerSecond.of(masterMotor.getSignal(TalonFXSignal.ROTOR_VELOCITY) / PitcherConstants.GEAR_RATIO))
                 .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
@@ -53,6 +53,7 @@ public class Pitcher extends MotorSubsystem {
     @Override
     public void updatePeriodically() {
         masterMotor.update();
+        PitcherConstants.ENCODER.update();
     }
 
     @Override

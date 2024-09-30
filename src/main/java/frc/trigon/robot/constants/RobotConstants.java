@@ -6,7 +6,7 @@ import org.trigon.utilities.FilesHandler;
 
 public class RobotConstants {
     private static final boolean
-            IS_SIMULATION = true,
+            IS_SIMULATION = false,
             IS_REPLAY = false;
     private static final double PERIODIC_TIME_SECONDS = 0.02;
     public static final String CANIVORE_NAME = "CANivore";
