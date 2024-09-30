@@ -1,28 +1,18 @@
 package frc.trigon.robot.poseestimation.apriltagcamera;
 
-import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.util.Units;
 import frc.trigon.robot.poseestimation.apriltagcamera.io.AprilTagLimelightIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.io.AprilTagPhotonCameraIO;
 
-import java.util.HashMap;
 import java.util.function.Function;
 
 public class AprilTagCameraConstants {
-    public static final HashMap<Integer, Pose3d> TAG_ID_TO_POSE = new HashMap<>();
-    static AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-
-    static {
-        for (AprilTag aprilTag : APRIL_TAG_FIELD_LAYOUT.getTags())
-            TAG_ID_TO_POSE.put(aprilTag.ID, aprilTag.pose);
-    }
-
-    static final double MAXIMUM_AMBIGUITY = 0.2;
-    static final double MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS = 2;
+    public static final Transform3d TAG_OFFSET = new Transform3d(0, 0, -0.06, new Rotation3d(Units.degreesToRadians(-1.8), 0, 0));
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
+    public static final double MAXIMUM_AMBIGUITY = 0.2;
 
     public enum RobotPoseSourceType {
         PHOTON_CAMERA(AprilTagPhotonCameraIO::new),

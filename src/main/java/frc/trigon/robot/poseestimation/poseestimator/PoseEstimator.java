@@ -12,8 +12,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCamera;
-import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import org.littletonrobotics.junction.Logger;
 
 import java.util.ArrayList;
@@ -111,7 +111,7 @@ public class PoseEstimator implements AutoCloseable {
         return new PoseEstimator6328.VisionObservation(
                 robotPose,
                 aprilTagCamera.getLatestResultTimestampSeconds(),
-                aprilTagCamera.calculateStandardDeviations()
+                aprilTagCamera.getStandardDeviations()
         );
     }
 
@@ -123,7 +123,7 @@ public class PoseEstimator implements AutoCloseable {
     }
 
     private void putAprilTagsOnFieldWidget() {
-        for (Map.Entry<Integer, Pose3d> entry : AprilTagCameraConstants.TAG_ID_TO_POSE.entrySet()) {
+        for (Map.Entry<Integer, Pose3d> entry : FieldConstants.TAG_ID_TO_POSE.entrySet()) {
             final Pose2d tagPose = entry.getValue().toPose2d();
             field.getObject("Tag " + entry.getKey()).setPose(tagPose);
         }
