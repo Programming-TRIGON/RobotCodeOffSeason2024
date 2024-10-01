@@ -14,13 +14,13 @@ public class AprilTagCameraConstants {
     static final int CALCULATE_YAW_ITERATIONS = 3;
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
 
-    public enum RobotPoseSourceType {
+    public enum AprilTagCameraType {
         PHOTON_CAMERA(AprilTagPhotonCameraIO::new),
         LIMELIGHT(AprilTagLimelightIO::new);
 
         final Function<String, AprilTagCameraIO> createIOFunction;
 
-        RobotPoseSourceType(Function<String, AprilTagCameraIO> createIOFunction) {
+        AprilTagCameraType(Function<String, AprilTagCameraIO> createIOFunction) {
             this.createIOFunction = createIOFunction;
         }
     }

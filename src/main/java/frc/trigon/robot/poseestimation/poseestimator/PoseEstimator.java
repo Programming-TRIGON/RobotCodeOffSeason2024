@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class PoseEstimator implements AutoCloseable {
     private final Field2d field = new Field2d();
-    private final AprilTagCamera[] robotPoseSources;
+    private final AprilTagCamera[] aprilTagCameras;
     private final PoseEstimator6328 poseEstimator6328 = PoseEstimator6328.getInstance();
 
     /**
@@ -31,7 +31,7 @@ public class PoseEstimator implements AutoCloseable {
      * @param aprilTagCameras the sources that should update the pose estimator apart from the odometry. This should be cameras etc.
      */
     public PoseEstimator(AprilTagCamera... aprilTagCameras) {
-        this.robotPoseSources = aprilTagCameras;
+        this.aprilTagCameras = aprilTagCameras;
         putAprilTagsOnFieldWidget();
         SmartDashboard.putData("Field", field);
         PathPlannerLogging.setLogActivePathCallback((pose) -> {
@@ -88,7 +88,7 @@ public class PoseEstimator implements AutoCloseable {
 
     private List<PoseEstimator6328.VisionObservation> getViableVisionObservations() {
         List<PoseEstimator6328.VisionObservation> viableVisionObservations = new ArrayList<>();
-        for (AprilTagCamera aprilTagCamera : robotPoseSources) {
+        for (AprilTagCamera aprilTagCamera : aprilTagCameras) {
             final PoseEstimator6328.VisionObservation visionObservation = getVisionObservation(aprilTagCamera);
             if (visionObservation != null)
                 viableVisionObservations.add(visionObservation);

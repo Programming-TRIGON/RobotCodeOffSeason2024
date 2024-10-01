@@ -30,20 +30,20 @@ public class AprilTagCamera {
     /**
      * Constructs a new AprilTagCamera.
      *
-     * @param robotPoseSourceType                   the type of camera
+     * @param aprilTagCameraType                    the type of camera
      * @param name                                  the camera's name
      * @param robotCenterToCamera                   the transform of the robot's origin point to the camera
      * @param thetaStandardDeviationsExponent       the calibrated gain to calculate the theta deviation from the estimated pose when using solve PNP
      * @param translationStandardDeviationsExponent the calibrated gain to calculate the translation deviation from the estimated pose when using solve PNP
      */
-    public AprilTagCamera(AprilTagCameraConstants.RobotPoseSourceType robotPoseSourceType, String name, Transform3d robotCenterToCamera, double thetaStandardDeviationsExponent, double translationStandardDeviationsExponent) {
+    public AprilTagCamera(AprilTagCameraConstants.AprilTagCameraType aprilTagCameraType, String name, Transform3d robotCenterToCamera, double thetaStandardDeviationsExponent, double translationStandardDeviationsExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
         this.thetaStandardDeviationsExponent = thetaStandardDeviationsExponent;
         this.translationStandardDeviationsExponent = translationStandardDeviationsExponent;
 
         if (Robot.IS_REAL)
-            aprilTagCameraIO = robotPoseSourceType.createIOFunction.apply(name);
+            aprilTagCameraIO = aprilTagCameraType.createIOFunction.apply(name);
         else
             aprilTagCameraIO = new AprilTagCameraIO();
     }
