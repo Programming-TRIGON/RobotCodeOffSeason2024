@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import org.trigon.commands.ExecuteEndCommand;
+import org.trigon.commands.GearRatioCalculationCommand;
 import org.trigon.commands.NetworkTablesCommand;
 
 public class PitcherCommands {
@@ -17,14 +18,12 @@ public class PitcherCommands {
     }
 
     public static Command getCalculateGearRatioCommand() {
-//        return new GearRatioCalculationCommand(
-//                () -> RobotContainer.PITCHER.getRotorPosition().getDegrees(),
-//                () -> RobotContainer.PITCHER.getEncoderPosition().getDegrees(),
-//                RobotContainer.PITCHER::setTargetVoltage,
-//                RobotContainer.PITCHER
-//        );
-        return new Command() {
-        };
+        return new GearRatioCalculationCommand(
+                () -> RobotContainer.PITCHER.getRotorPosition().getDegrees(),
+                () -> RobotContainer.PITCHER.getEncoderPosition().getDegrees(),
+                RobotContainer.PITCHER::setTargetVoltage,
+                RobotContainer.PITCHER
+        );
     }
 
     public static Command getReachTargetPitchFromShootingCalculationsCommand() {
