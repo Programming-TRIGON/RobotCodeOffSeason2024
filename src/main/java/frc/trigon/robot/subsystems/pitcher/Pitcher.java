@@ -15,6 +15,7 @@ import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.phoenix6.cancoder.CANcoderSignal;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -86,6 +87,14 @@ public class Pitcher extends MotorSubsystem {
 
     public boolean atTargetPitch() {
         return Math.abs(masterMotor.getSignal(TalonFXSignal.POSITION) - targetPitch.getRotations()) < PitcherConstants.PITCH_TOLERANCE.getRotations();
+    }
+
+    Rotation2d getEncoderPosition() {
+        return Rotation2d.fromRotations(PitcherConstants.ENCODER.getSignal(CANcoderSignal.POSITION));
+    }
+
+    void setTargetVoltage(double voltage) {
+        drive(Units.Volts.of(voltage));
     }
 
     void reachTargetPitchFromShootingCalculations() {

@@ -1,6 +1,5 @@
 package frc.trigon.robot.commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
@@ -14,16 +13,15 @@ public class GearRatioCalculationCommand extends Command {
     private static final LoggedDashboardNumber MOVEMENT_VOLTAGE = new LoggedDashboardNumber("WheelRadiusCharacterization/Voltage", 1);
     private static final LoggedDashboardBoolean SHOULD_MOVE_CLOCKWISE = new LoggedDashboardBoolean("WheelRadiusCharacterization/ShouldMoveClockwise", false);
 
-
-    private final Supplier<Rotation2d> rotorPositionSupplier;
-    private final Supplier<Rotation2d> encoderPositionSupplier;
+    private final Supplier rotorPositionSupplier;
+    private final Supplier encoderPositionSupplier;
     private final DoubleConsumer runGearRatioCalculation;
 
-    private Rotation2d startingRotorPosition;
-    private Rotation2d startingEncoderPosition;
+    private double startingRotorPosition;
+    private double startingEncoderPosition;
     private double gearRatio;
 
-    public GearRatioCalculationCommand(Supplier<Rotation2d> rotorPositionSupplier, Supplier<Rotation2d> encoderPositionSupplier, DoubleConsumer runGearRatioCalculation, SubsystemBase requirement) {
+    public GearRatioCalculationCommand(Supplier rotorPositionSupplier, Supplier encoderPositionSupplier, DoubleConsumer runGearRatioCalculation, SubsystemBase requirement) {
         this.rotorPositionSupplier = rotorPositionSupplier;
         this.encoderPositionSupplier = encoderPositionSupplier;
         this.runGearRatioCalculation = runGearRatioCalculation;
@@ -32,8 +30,8 @@ public class GearRatioCalculationCommand extends Command {
 
     @Override
     public void initialize() {
-        startingRotorPosition = rotorPositionSupplier.get();
-        startingEncoderPosition = encoderPositionSupplier.get();
+        startingRotorPosition = (double) rotorPositionSupplier.get();
+        startingEncoderPosition = (double) encoderPositionSupplier.get();
     }
 
     @Override
@@ -48,7 +46,7 @@ public class GearRatioCalculationCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        printResults();
+        printResult();
     }
 
     private double calculateGearRatio() {
@@ -58,18 +56,18 @@ public class GearRatioCalculationCommand extends Command {
     }
 
     private double getRotorDistance() {
-        return startingRotorPosition.minus(rotorPositionSupplier.get()).getDegrees();
+        return startingRotorPosition - (double) rotorPositionSupplier.get();
     }
 
     private double getEncoderDistance() {
-        return startingEncoderPosition.minus(encoderPositionSupplier.get()).getDegrees();
+        return startingEncoderPosition - (double) encoderPositionSupplier.get();
     }
 
     private int getRotationDirection() {
-        return SHOULD_MOVE_CLOCKWISE.get() ? 1 : -1;
+        return SHOULD_MOVE_CLOCKWISE.get() ? -1 : 1;
     }
 
-    private void printResults() {
+    private void printResult() {
         System.out.println("Gear Ratio: " + gearRatio);
     }
 }
