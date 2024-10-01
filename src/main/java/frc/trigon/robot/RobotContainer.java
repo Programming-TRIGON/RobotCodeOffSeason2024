@@ -6,7 +6,6 @@
 package frc.trigon.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.CommandConstants;
@@ -20,7 +19,6 @@ import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
-import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
@@ -61,7 +59,7 @@ public class RobotContainer {
         AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
         PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
         SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
-        LEDStrip.setDefaultCommandForAllLEDS(LEDStripCommands.getStaticColorCommand(Color.kRed));
+        LEDStrip.setDefaultCommandForAllLEDS(CommandConstants.DEFAULT_LEDS_COMMAND);
     }
 
     private void bindControllerCommands() {

@@ -21,14 +21,15 @@ public class LEDStripConstants {
     static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
     static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
     static final boolean SHOULD_LOW_BATTERY_LEDS_BLINK_FAST = true;
+    static final double LOW_BATTERY_BLINKING_TIME_SECONDS = 2;
     static final double
             FAST_BLINKING_INTERVAL_SECONDS = 0.2,
             SLOW_BLINKING_INTERVAL_SECONDS = 1.0;
-    static final double BLINKING_TIME_SECONDS = 2;
 
     public static final LEDStrip
             RIGHT_CLIMBER_LEDS = new LEDStrip(RIGHT_CLIMBER_INVERTED, RIGHT_CLIMBER_NUMBER_OF_LEDS, 0),
             LEFT_CLIMBER_LEDS = new LEDStrip(LEFT_CLIMBER_INVERTED, LEFT_CLIMBER_NUMBER_OF_LEDS, RIGHT_CLIMBER_NUMBER_OF_LEDS - 1);
+    public static final LEDStrip[] LED_STRIPS = {RIGHT_CLIMBER_LEDS, LEFT_CLIMBER_LEDS};
 
     static {
         LED.setLength(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);

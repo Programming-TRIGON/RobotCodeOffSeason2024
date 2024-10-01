@@ -13,6 +13,7 @@ import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
@@ -58,8 +59,8 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private Command getCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getStaticColorCommand(Color.kGreen),
-                LEDStripCommands.getStaticColorCommand(Color.kRed),
+                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStripConstants.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStripConstants.LED_STRIPS),
                 CAMERA::hasTargets
         );
     }

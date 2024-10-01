@@ -10,70 +10,40 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class LEDStripCommands {
-    public static Command getStaticColorCommand(Color color, LEDStrip ledStrip) {
+    public static Command getStaticColorCommand(Color color, LEDStrip... ledStrips) {
         return new StartEndCommand(
-                () -> ledStrip.staticColor(color),
+                () -> runForLeds((ledStrip -> ledStrip.staticColor(color))),
                 () -> {
                 },
-                ledStrip
+                ledStrips
         ).ignoringDisable(true);
     }
 
-    public static Command getStaticColorCommand(Color color) {
-        return new StartEndCommand(
-                () -> runForAllLeds((ledStrip) -> ledStrip.staticColor(color)),
-                () -> {
-                },
-                LEDStripConstants.RIGHT_CLIMBER_LEDS, LEDStripConstants.LEFT_CLIMBER_LEDS
-        ).ignoringDisable(true);
-    }
-
-    public static Command getBlinkingCommand(Color color, boolean shouldBlinkFast, LEDStrip ledStrip) {
+    public static Command getBlinkingCommand(Color color, boolean shouldBlinkFast, double blinkingTimeSeconds, LEDStrip... ledStrips) {
         return new RunCommand(
-                () -> ledStrip.blink(color, shouldBlinkFast),
-                ledStrip
+                () -> runForLeds((ledStrip -> ledStrip.blink(color, shouldBlinkFast))),
+                ledStrips
+        ).withTimeout(blinkingTimeSeconds).ignoringDisable(true);
+    }
+
+    public static Command getRainbowCommand(LEDStrip... ledStrips) {
+        return new RunCommand(
+                () -> runForLeds((LEDStrip::rainbow)),
+                ledStrips
         ).ignoringDisable(true);
     }
 
-    public static Command getBlinkingCommand(Color color, boolean shouldBlinkFast) {
-        return new RunCommand(
-                () -> runForAllLeds((ledStrip) -> ledStrip.blink(color, shouldBlinkFast)),
-                LEDStripConstants.RIGHT_CLIMBER_LEDS, LEDStripConstants.LEFT_CLIMBER_LEDS
-        ).withTimeout(LEDStripConstants.BLINKING_TIME_SECONDS).ignoringDisable(true);
-    }
-
-    public static Command getRainbowCommand(LEDStrip ledStrip) {
-        return new RunCommand(
-                ledStrip::rainbow,
-                ledStrip
-        ).ignoringDisable(true);
-    }
-
-    public static Command getRainbowCommand() {
-        return new RunCommand(
-                () -> runForAllLeds((LEDStrip::rainbow)),
-                LEDStripConstants.RIGHT_CLIMBER_LEDS, LEDStripConstants.LEFT_CLIMBER_LEDS
-        ).ignoringDisable(true);
-    }
-
-    public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor, LEDStrip ledStrip) {
+    public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor, LEDStrip... ledStrips) {
         return new InitExecuteCommand(
-                ledStrip::clearLedColors,
-                () -> ledStrip.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get()),
-                ledStrip
+                () -> runForLeds(LEDStrip::clearLedColors),
+                () -> runForLeds((ledStrip) -> ledStrip.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get())),
+                ledStrips
         ).ignoringDisable(true);
     }
 
-    public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor) {
-        return new InitExecuteCommand(
-                () -> runForAllLeds(LEDStrip::clearLedColors),
-                () -> runForAllLeds((ledStrip) -> ledStrip.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get())),
-                LEDStripConstants.RIGHT_CLIMBER_LEDS, LEDStripConstants.LEFT_CLIMBER_LEDS
-        ).ignoringDisable(true);
-    }
-
-    public static void runForAllLeds(Consumer<LEDStrip> action) {
-        action.accept(LEDStripConstants.RIGHT_CLIMBER_LEDS);
-        action.accept(LEDStripConstants.LEFT_CLIMBER_LEDS);
+    public static void runForLeds(Consumer<LEDStrip> action, LEDStrip... ledStrips) {
+        for (LEDStrip ledStrip : ledStrips) {
+            action.accept(ledStrip);
+        }
     }
 }

@@ -19,7 +19,7 @@ public class LEDStrip extends SubsystemBase {
     static {
         GeneralCommands.getDelayedCommand(
                 1,
-                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.SHOULD_LOW_BATTERY_LEDS_BLINK_FAST))
+                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.SHOULD_LOW_BATTERY_LEDS_BLINK_FAST, LEDStripConstants.LOW_BATTERY_BLINKING_TIME_SECONDS, LEDStripConstants.LED_STRIPS))
         );
     }
 

@@ -74,6 +74,9 @@ public class IntakeConstants {
     static final boolean
             SHOULD_COLLECTION_INDICATION_LEDS_BLINK_FAST = true,
             SHOULD_FEEDING_INDICATION_LEDS_BLINK_FAST = true;
+    static final double
+            COLLECTION_INDICATION_BLINKING_TIME_SECONDS = 2,
+            FEEDING_INDICATION_BLINKING_TIME_SECONDS = 2;
 
     static {
         configureMasterMotor();

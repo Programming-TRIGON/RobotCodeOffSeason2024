@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -64,7 +65,7 @@ public class Intake extends MotorSubsystem {
     void setTargetState(IntakeConstants.IntakeState targetState) {
         this.targetState = targetState;
         if (targetState == IntakeConstants.IntakeState.FEED_SHOOTING || targetState == IntakeConstants.IntakeState.FEED_AMP || targetState == IntakeConstants.IntakeState.EJECT)
-            LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.SHOULD_FEEDING_INDICATION_LEDS_BLINK_FAST).andThen(LEDStripCommands.getStaticColorCommand(Color.kRed)).schedule();
+            LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.SHOULD_FEEDING_INDICATION_LEDS_BLINK_FAST, IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS, LEDStripConstants.LED_STRIPS).andThen(LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStripConstants.LED_STRIPS)).schedule();
         setTargetVoltage(targetState.voltage);
     }
 
@@ -79,6 +80,6 @@ public class Intake extends MotorSubsystem {
     void indicateCollection() {
         if (DriverStation.isAutonomous())
             OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
-        LEDStripCommands.getBlinkingCommand(Color.kOrange, IntakeConstants.SHOULD_COLLECTION_INDICATION_LEDS_BLINK_FAST).andThen(LEDStripCommands.getStaticColorCommand(Color.kGreen)).schedule();
+        LEDStripCommands.getBlinkingCommand(Color.kOrange, IntakeConstants.SHOULD_COLLECTION_INDICATION_LEDS_BLINK_FAST, IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS, LEDStripConstants.LED_STRIPS).andThen(LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStripConstants.LED_STRIPS)).schedule();
     }
 }

@@ -2,11 +2,13 @@ package frc.trigon.robot.commands;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
 import java.util.function.Supplier;
@@ -36,7 +38,15 @@ public class LEDAutoSetupCommand extends SequentialCommandGroup {
                 LEDStripCommands.getThreeSectionColorCommand(
                         () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getRotation().getDegrees() - getCurrentRobotPose().getRotation().getDegrees(), TOLERANCE_DEGREES),
                         () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getX() - getCurrentRobotPose().getX(), TOLERANCE_METERS),
-                        () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS)
+                        () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS),
+                        LEDStripConstants.RIGHT_CLIMBER_LEDS
+                ).alongWith(
+                        LEDStripCommands.getThreeSectionColorCommand(
+                                () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getRotation().getDegrees() - getCurrentRobotPose().getRotation().getDegrees(), TOLERANCE_DEGREES),
+                                () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getX() - getCurrentRobotPose().getX(), TOLERANCE_METERS),
+                                () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS),
+                                LEDStripConstants.LEFT_CLIMBER_LEDS
+                        )
                 )
         );
     }
@@ -52,12 +62,12 @@ public class LEDAutoSetupCommand extends SequentialCommandGroup {
         ).ignoringDisable(true);
     }
 
-    private edu.wpi.first.wpilibj.util.Color getDesiredLEDColorFromRobotPose(double difference, double tolerance) {
+    private Color getDesiredLEDColorFromRobotPose(double difference, double tolerance) {
         if (difference < -tolerance)
-            return edu.wpi.first.wpilibj.util.Color.kBlack;
+            return Color.kBlack;
         else if (difference > tolerance)
-            return edu.wpi.first.wpilibj.util.Color.kRed;
-        return edu.wpi.first.wpilibj.util.Color.kGreen;
+            return Color.kRed;
+        return Color.kGreen;
     }
 
     private Pose2d getCurrentRobotPose() {
