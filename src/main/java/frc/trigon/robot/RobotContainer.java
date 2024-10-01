@@ -51,12 +51,12 @@ public class RobotContainer {
     }
 
     private void bindDefaultCommands() {
-        SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
-        INTAKE.setDefaultCommand(CommandConstants.DEFAULT_INTAKE_COMMAND);
-        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
-        AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
-        PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
-        SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
+//        SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+//        INTAKE.setDefaultCommand(CommandConstants.DEFAULT_INTAKE_COMMAND);
+//        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
+//        AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
+//        PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
+//        SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
     }
 
     private void bindControllerCommands() {
@@ -89,7 +89,7 @@ public class RobotContainer {
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
 
-        configureSysIdBindings(SHOOTER);
+        configureSysIdBindings(AMP_ALIGNER);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
