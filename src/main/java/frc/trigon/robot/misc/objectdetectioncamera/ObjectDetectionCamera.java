@@ -53,7 +53,7 @@ public class ObjectDetectionCamera extends SubsystemBase {
         return trackedObjectYaw;
     }
 
-    public Rotation2d calculateTrackedObjectYaw() {
+    private Rotation2d calculateTrackedObjectYaw() {
         double closestYawDifference = 10000000;
         double closestYaw = 10000000;
         for (double currentYaw : objectDetectionCameraInputs.visibleObjectsYaw) {

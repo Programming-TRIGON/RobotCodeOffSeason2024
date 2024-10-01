@@ -1,6 +1,5 @@
 package frc.trigon.robot.subsystems.intake;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import org.trigon.commands.NetworkTablesCommand;

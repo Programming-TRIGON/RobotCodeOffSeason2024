@@ -47,7 +47,7 @@ public class GeneralCommands {
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
-        ).unless(RobotContainer.INTAKE::hasNote);
+        ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
     }
 
     /**

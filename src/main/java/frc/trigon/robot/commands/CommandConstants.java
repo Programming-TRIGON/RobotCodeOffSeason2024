@@ -102,7 +102,8 @@ public class CommandConstants {
                     () -> RobotContainer.SWERVE.getHeading().getRadians(),
                     RobotContainer.SWERVE::runWheelRadiusCharacterization,
                     RobotContainer.SWERVE
-            );
+            ),
+            RUMBLE_COMMAND = new InstantCommand(() -> OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER));
 
     public static double calculateDriveStickAxisValue(double axisValue) {
         return axisValue / OperatorConstants.STICKS_SPEED_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER);

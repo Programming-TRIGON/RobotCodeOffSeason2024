@@ -83,14 +83,12 @@ public class AutonomousCommands {
 
     private static Optional<Rotation2d> calculateRotationOverride() {
         NOTE_DETECTION_CAMERA.trackObject();
-        if (RobotContainer.INTAKE.hasNote())
+        if (RobotContainer.INTAKE.hasNote() || !NOTE_DETECTION_CAMERA.hasTargets())
             return Optional.empty();
-        if (NOTE_DETECTION_CAMERA.hasTargets()) {
-            final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
-            final Rotation2d targetRotation = NOTE_DETECTION_CAMERA.getTrackedObjectYaw().minus(currentRotation);
-            return Optional.of(targetRotation);
-        }
-        return Optional.empty();
+
+        final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
+        final Rotation2d targetRotation = NOTE_DETECTION_CAMERA.getTrackedObjectYaw().minus(currentRotation);
+        return Optional.of(targetRotation);
     }
 
     private static void overrideRotation(Supplier<Optional<Rotation2d>> rotationOverride) {
