@@ -14,9 +14,5 @@ public class PoseEstimatorConstants {
      * Increase these numbers to trust the estimate less.
      */
     static final Vector<N3> ODOMETRY_AMBIGUITY = VecBuilder.fill(0.003, 0.003, 0.0002);
-
-    public static final double
-            TRANSLATIONS_STD_EXPONENT = 0.005,
-            THETA_STD_EXPONENT = 0.01;
 }
 

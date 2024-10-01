@@ -21,26 +21,19 @@ public class AprilTagCamera {
     private final AprilTagCameraInputsAutoLogged inputs = new AprilTagCameraInputsAutoLogged();
     private final Transform3d robotCenterToCamera;
     private final AprilTagCameraIO aprilTagCameraIO;
-    private final double
-            thetaStandardDeviationsExponent,
-            translationStandardDeviationsExponent;
     private double lastUpdatedTimestamp;
     private Pose2d robotPose = null;
 
     /**
      * Constructs a new AprilTagCamera.
      *
-     * @param aprilTagCameraType                    the type of camera
-     * @param name                                  the camera's name
-     * @param robotCenterToCamera                   the transform of the robot's origin point to the camera
-     * @param thetaStandardDeviationsExponent       the calibrated gain to calculate the theta deviation from the estimated pose when using solve PNP
-     * @param translationStandardDeviationsExponent the calibrated gain to calculate the translation deviation from the estimated pose when using solve PNP
+     * @param aprilTagCameraType  the type of camera
+     * @param name                the camera's name
+     * @param robotCenterToCamera the transform of the robot's origin point to the camera
      */
-    public AprilTagCamera(AprilTagCameraConstants.AprilTagCameraType aprilTagCameraType, String name, Transform3d robotCenterToCamera, double thetaStandardDeviationsExponent, double translationStandardDeviationsExponent) {
+    public AprilTagCamera(AprilTagCameraConstants.AprilTagCameraType aprilTagCameraType, String name, Transform3d robotCenterToCamera) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
-        this.thetaStandardDeviationsExponent = thetaStandardDeviationsExponent;
-        this.translationStandardDeviationsExponent = translationStandardDeviationsExponent;
 
         if (Robot.IS_REAL)
             aprilTagCameraIO = aprilTagCameraType.createIOFunction.apply(name);
@@ -59,7 +52,7 @@ public class AprilTagCamera {
     }
 
     public boolean hasNewResult() {
-        return (inputs.hasResult && inputs.averageDistanceFromAllTags != 0) && isNewTimestamp();
+        return (inputs.hasResult && inputs.distanceFromBestTag != 0) && isNewTimestamp();
     }
 
     public Pose2d getEstimatedRobotPose() {
@@ -87,8 +80,8 @@ public class AprilTagCamera {
      * @return the standard deviations for the pose estimation strategy used
      */
     public Matrix<N3, N1> calculateStandardDeviations() {
-        final double translationStandardDeviation = calculateStandardDeviations(translationStandardDeviationsExponent, inputs.distanceFromBestTag, inputs.visibleTagIDs.length);
-        final double thetaStandardDeviation = isWithinBestTagRangeForSolvePNP() ? calculateStandardDeviations(thetaStandardDeviationsExponent, inputs.distanceFromBestTag, inputs.visibleTagIDs.length) : Double.POSITIVE_INFINITY;
+        final double translationStandardDeviation = calculateStandardDeviations(AprilTagCameraConstants.TRANSLATIONS_STD_EXPONENT, inputs.distanceFromBestTag, inputs.visibleTagIDs.length);
+        final double thetaStandardDeviation = isWithinBestTagRangeForSolvePNP() ? calculateStandardDeviations(AprilTagCameraConstants.THETA_STD_EXPONENT, inputs.distanceFromBestTag, inputs.visibleTagIDs.length) : Double.POSITIVE_INFINITY;
 
         return VecBuilder.fill(translationStandardDeviation, translationStandardDeviation, thetaStandardDeviation);
     }
@@ -115,9 +108,12 @@ public class AprilTagCamera {
     private Pose2d calculateAssumedRobotHeadingPose(Rotation2d gyroHeading) {
         if (inputs.visibleTagIDs.length == 0 || !inputs.hasResult)
             return null;
+
         final Translation2d fieldRelativeRobotTranslation = getFieldRelativeRobotTranslation(gyroHeading);
+
         if (!isWithinBestTagRangeForSolvePNP())
             return new Pose2d(fieldRelativeRobotTranslation, gyroHeading);
+
         final Rotation2d solvePNPHeading = inputs.cameraSolvePNPPose.getRotation().toRotation2d().minus(robotCenterToCamera.getRotation().toRotation2d());
         return new Pose2d(fieldRelativeRobotTranslation, solvePNPHeading);
     }
@@ -189,7 +185,7 @@ public class AprilTagCamera {
     }
 
     private void logEstimatedRobotPose() {
-        if (!inputs.hasResult || inputs.averageDistanceFromAllTags == 0 || robotPose == null)
+        if (!inputs.hasResult || inputs.distanceFromBestTag == 0 || robotPose == null)
             Logger.recordOutput("Poses/Robot/" + name + "Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
         else
             Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);

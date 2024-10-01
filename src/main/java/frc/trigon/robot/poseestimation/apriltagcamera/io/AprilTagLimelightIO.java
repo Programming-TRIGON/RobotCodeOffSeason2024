@@ -35,7 +35,6 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
         inputs.visibleTagIDs = getVisibleTagIDs(results);
         inputs.bestTargetRelativeYawRadians = bestTagRelativeRotation.getZ();
         inputs.bestTargetRelativePitchRadians = bestTagRelativeRotation.getY();
-        inputs.averageDistanceFromAllTags = getAverageDistanceFromAllTags(results);
         inputs.distanceFromBestTag = getDistanceFromBestTag(results);
     }
 
@@ -72,16 +71,6 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     private Rotation3d getBestTargetRelativeRotation(LimelightHelpers.LimelightResults results) {
         final LimelightHelpers.LimelightTarget_Fiducial bestTag = getBestTarget(results);
         return new Rotation3d(0, -Units.degreesToRadians(bestTag.tx), -Units.degreesToRadians(bestTag.ty));
-    }
-
-    private double getAverageDistanceFromAllTags(LimelightHelpers.LimelightResults results) {
-        final LimelightHelpers.LimelightTarget_Fiducial[] targetFiducials = results.targets_Fiducials;
-        double totalDistanceFromTags = 0;
-
-        for (LimelightHelpers.LimelightTarget_Fiducial targetFiducial : targetFiducials)
-            totalDistanceFromTags += getDistanceFromTag((int) targetFiducial.fiducialID, results.getBotPose3d_wpiBlue());
-
-        return totalDistanceFromTags / results.targets_Fiducials.length;
     }
 
     private double getDistanceFromBestTag(LimelightHelpers.LimelightResults results) {

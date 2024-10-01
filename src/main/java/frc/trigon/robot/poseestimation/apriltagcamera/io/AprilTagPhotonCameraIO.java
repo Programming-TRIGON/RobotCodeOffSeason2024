@@ -43,7 +43,6 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         inputs.bestTargetRelativePitchRadians = bestTargetRelativeRotation3d.getY();
         inputs.bestTargetRelativeYawRadians = bestTargetRelativeRotation3d.getZ();
         inputs.visibleTagIDs = getVisibleTagIDs(latestResult);
-        inputs.averageDistanceFromAllTags = getAverageDistanceFromAllTags(latestResult);
         inputs.distanceFromBestTag = getDistanceFromBestTag(latestResult);
     }
 
@@ -88,39 +87,18 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
             return new Pose3d().plus(cameraPoseTransform).relativeTo(FieldConstants.APRIL_TAG_FIELD_LAYOUT.getOrigin());
         }
 
-        final Pose3d tagPose = FieldConstants.TAG_ID_TO_POSE.get(result.getBestTarget().getFiducialId());
+        final Pose3d rawTagPose = FieldConstants.TAG_ID_TO_POSE.get(result.getBestTarget().getFiducialId());
+        final Pose3d tagPose = rawTagPose.transformBy(AprilTagCameraConstants.TAG_OFFSET);
         final Transform3d targetToCamera = result.getBestTarget().getBestCameraToTarget().inverse();
-        return tagPose
-                .transformBy(targetToCamera)
-                .transformBy(AprilTagCameraConstants.TAG_OFFSET);
+        return tagPose.transformBy(targetToCamera);
     }
 
     private int[] getVisibleTagIDs(PhotonPipelineResult result) {
         final int[] visibleTagIDs = new int[result.getTargets().size()];
-        visibleTagIDs[0] = result.getBestTarget().getFiducialId();
-        int idAddition = 1;
-
-        for (int i = 0; i < visibleTagIDs.length; i++) {
-            final int currentID = result.getTargets().get(i).getFiducialId();
-
-            if (currentID == visibleTagIDs[0]) {
-                idAddition = 0;
-                continue;
-            }
-            visibleTagIDs[i + idAddition] = currentID;
-        }
-
+        
+        for (int i = 1; i < visibleTagIDs.length; i++)
+            visibleTagIDs[i] = result.getTargets().get(i).getFiducialId();
         return visibleTagIDs;
-    }
-
-    private double getAverageDistanceFromAllTags(PhotonPipelineResult result) {
-        final int tagsSeen = result.getTargets().size();
-        double totalTagDistance = 0;
-
-        for (int i = 0; i < tagsSeen; i++)
-            totalTagDistance += result.getTargets().get(i).getBestCameraToTarget().getTranslation().getNorm();
-
-        return totalTagDistance / tagsSeen;
     }
 
     private double getDistanceFromBestTag(PhotonPipelineResult result) {

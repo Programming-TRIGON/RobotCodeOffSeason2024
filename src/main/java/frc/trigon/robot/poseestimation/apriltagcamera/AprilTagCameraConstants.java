@@ -14,6 +14,10 @@ public class AprilTagCameraConstants {
     static final int CALCULATE_YAW_ITERATIONS = 3;
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
 
+    static final double
+            TRANSLATIONS_STD_EXPONENT = 0.005,
+            THETA_STD_EXPONENT = 0.01;
+
     public enum AprilTagCameraType {
         PHOTON_CAMERA(AprilTagPhotonCameraIO::new),
         LIMELIGHT(AprilTagLimelightIO::new);
