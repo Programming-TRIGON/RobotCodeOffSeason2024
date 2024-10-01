@@ -1,14 +1,10 @@
 package frc.trigon.robot.poseestimation.poseestimator;
 
 import com.pathplanner.lib.util.PathPlannerLogging;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveWheelPositions;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.trigon.robot.RobotContainer;
@@ -111,15 +107,8 @@ public class PoseEstimator implements AutoCloseable {
         return new PoseEstimator6328.VisionObservation(
                 robotPose,
                 aprilTagCamera.getLatestResultTimestampSeconds(),
-                aprilTagCamera.getStandardDeviations()
+                aprilTagCamera.calculateStandardDeviations()
         );
-    }
-
-    private Matrix<N3, N1> averageDistanceToStdDevs(double averageDistance, int visibleTags) {
-        final double translationStd = PoseEstimatorConstants.TRANSLATIONS_STD_EXPONENT * Math.pow(averageDistance, 2) / (visibleTags * visibleTags);
-        final double thetaStd = PoseEstimatorConstants.THETA_STD_EXPONENT * Math.pow(averageDistance, 2) / visibleTags;
-
-        return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }
 
     private void putAprilTagsOnFieldWidget() {
