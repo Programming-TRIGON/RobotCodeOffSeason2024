@@ -56,7 +56,7 @@ public class PitcherConstants {
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
-    static final double GEAR_RATIO = 227.77777;
+    static final double GEAR_RATIO = 279;
     private static final Rotation2d
             REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(13),
             FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(72);
