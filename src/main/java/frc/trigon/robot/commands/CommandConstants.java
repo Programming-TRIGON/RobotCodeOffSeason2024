@@ -86,7 +86,7 @@ public class CommandConstants {
                 Logger.recordOutput("ShouldAlignToNote", false);
             }).ignoringDisable(true),
             DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
-            DEFAULT_CLIMBER_COMMAND = ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST),
+            DEFAULT_CLIMBER_COMMAND = ClimberCommands.getStopCommand(),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
             MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
             OVERRIDE_IS_CLIMBING_COMMAND = new InstantCommand(() -> {

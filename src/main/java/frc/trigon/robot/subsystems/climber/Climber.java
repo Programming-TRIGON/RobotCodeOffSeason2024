@@ -50,8 +50,8 @@ public class Climber extends MotorSubsystem {
 
     @Override
     public void drive(Measure<Voltage> voltageMeasure) {
-        driveRightMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.SYSID_IS_ON_CHAIN))));
-        driveLeftMotor(voltageMeasure.plus(Units.Volts.of(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), ClimberConstants.SYSID_IS_ON_CHAIN))));
+        driveRightMotor(voltageMeasure);
+        driveLeftMotor(voltageMeasure);
     }
 
     @Override
@@ -62,11 +62,11 @@ public class Climber extends MotorSubsystem {
         log.motor("RightClimberMotor")
                 .angularPosition(Units.Rotations.of(rightMotorPosition))
                 .angularVelocity(Units.RotationsPerSecond.of(rightMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(rightMotorPosition, ClimberConstants.SYSID_IS_ON_CHAIN)));
+                .voltage(Units.Volts.of(rightMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
         log.motor("LeftClimberMotor")
                 .angularPosition(Units.Rotations.of(leftMotorPosition))
                 .angularVelocity(Units.RotationsPerSecond.of(leftMotor.getSignal(TalonFXSignal.VELOCITY)))
-                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE) - calculateStayingInPlaceFeedback(leftMotorPosition, ClimberConstants.SYSID_IS_ON_CHAIN)));
+                .voltage(Units.Volts.of(leftMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
 
     @Override
@@ -127,11 +127,9 @@ public class Climber extends MotorSubsystem {
 
     void setTargetPosition(double targetRightPositionRotations, double targetLeftPositionRotations, boolean affectedByRobotWeight) {
         rightMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetRightPositionRotations)
-                .withFeedForward(calculateStayingInPlaceFeedback(rightMotor.getSignal(TalonFXSignal.POSITION), affectedByRobotWeight)));
+                .withPosition(targetRightPositionRotations));
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetLeftPositionRotations)
-                .withFeedForward(calculateStayingInPlaceFeedback(leftMotor.getSignal(TalonFXSignal.POSITION), affectedByRobotWeight)));
+                .withPosition(targetLeftPositionRotations));
     }
 
     private void configurePositionResettingTrigger(TalonFXMotor motor) {
@@ -147,32 +145,17 @@ public class Climber extends MotorSubsystem {
         return affectedByRobotWeight ? onChainPositionRequest : groundedPositionRequest;
     }
 
-    private double calculateStayingInPlaceFeedback(double positionRotations, boolean affectedByRobotWeight) {
-        return affectedByRobotWeight ?
-                calculateParabola(positionRotations, ClimberConstants.ON_CHAIN_A, ClimberConstants.ON_CHAIN_B, ClimberConstants.ON_CHAIN_C) :
-                calculateParabola(positionRotations, ClimberConstants.GROUNDED_A, ClimberConstants.GROUNDED_B, ClimberConstants.GROUNDED_C);
-    }
-
-    private double calculateParabola(double x, double a, double b, double c) {
-        return a * Math.pow(x, 2) + b * x + c;
-    }
-
     private void configureChangingDefaultCommand() {
         final Trigger climbingTrigger = new Trigger(() -> isClimbing);
         climbingTrigger.onTrue(new InstantCommand(this::defaultToClimbing));
-        climbingTrigger.onFalse(new InstantCommand(this::defaultToResting));
+        climbingTrigger.onFalse(new InstantCommand(this::defaultToBraking));
     }
 
-    private void defaultToResting() {
-        changeDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST));
+    private void defaultToBraking() {
+        changeDefaultCommand(ClimberCommands.getStopCommand());
     }
 
     private void defaultToClimbing() {
         changeDefaultCommand(ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB));
-    }
-
-    private void updateMechanisms() {
-        ClimberConstants.RIGHT_VISUALIZATION.update(targetState, rightMotor.getSignal(TalonFXSignal.POSITION), rightMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
-        ClimberConstants.LEFT_VISUALIZATION.update(targetState, leftMotor.getSignal(TalonFXSignal.POSITION), leftMotor.getSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE));
     }
 }
