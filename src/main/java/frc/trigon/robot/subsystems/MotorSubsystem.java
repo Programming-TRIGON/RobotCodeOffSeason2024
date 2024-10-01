@@ -63,7 +63,7 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
     }
 
     public static boolean isExtensiveLoggingEnabled() {
-        return ENABLE_EXTENSIVE_LOGGING.get();
+        return ENABLE_EXTENSIVE_LOGGING.get() || RobotHardwareStats.isReplay();
     }
 
     /**
@@ -74,7 +74,7 @@ public abstract class MotorSubsystem extends edu.wpi.first.wpilibj2.command.Subs
     @Override
     public final void periodic() {
         updatePeriodically();
-        if (RobotHardwareStats.isReplay() || isExtensiveLoggingEnabled())
+        if (isExtensiveLoggingEnabled())
             updateMechanism();
     }
 
