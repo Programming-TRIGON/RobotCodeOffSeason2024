@@ -43,23 +43,23 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_OPPOSES_MASTER = true;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 100 : 0,
+            P = RobotHardwareStats.isSimulation() ? 100 : 1,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 20 : 0,
+            D = RobotHardwareStats.isSimulation() ? 20 : 4,
             KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.18078,
             KV = RobotHardwareStats.isSimulation() ? 32 : 26.981,
             KA = RobotHardwareStats.isSimulation() ? 0 : 1.4593,
             KG = RobotHardwareStats.isSimulation() ? 0.2 : 0.25961;
     private static final double
-            EXPO_KV = KV + 80,
-            EXPO_KA = 0.2;
+            EXPO_KV = KV,
+            EXPO_KA = KA;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
     static final double GEAR_RATIO = 227.77777;
     private static final Rotation2d
-            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
-            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
+            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(13),
+            FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(72);
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
     private static final double ENCODER_MAGNET_OFFSET_VALUE = -0.13898 + 0.5 + Conversions.degreesToRotations(90 + 12);
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
@@ -71,8 +71,8 @@ public class PitcherConstants {
             PITCHER_LENGTH_METERS = 0.5,
             PITCHER_MASS_KILOGRAMS = 11;
     private static final Rotation2d
-            PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(12),
-            PITCHER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(73);
+            PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(13),
+            PITCHER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(72);
     private static final boolean SIMULATE_GRAVITY = true;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
@@ -98,8 +98,8 @@ public class PitcherConstants {
             new Color8Bit(Color.kGreen)
     );
 
-    public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(12);
-    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(2);
+    public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(13);
+    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(1);
     public static final Transform3d VISUALIZATION_PITCHER_PIVOT_POINT_TO_HELD_NOTE = new Transform3d(0.24, 0, 0.02, new Rotation3d());
 
     static {
