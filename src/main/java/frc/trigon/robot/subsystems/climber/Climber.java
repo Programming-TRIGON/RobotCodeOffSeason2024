@@ -152,7 +152,7 @@ public class Climber extends MotorSubsystem {
     }
 
     private void defaultToBraking() {
-        changeDefaultCommand(ClimberCommands.getSetTargetVoltageCommand(0));
+        changeDefaultCommand(ClimberCommands.getStopCommand());
     }
 
     private void defaultToClimbing() {
