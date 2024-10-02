@@ -12,7 +12,6 @@ import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
-import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
@@ -46,7 +45,7 @@ public class AutonomousCommands {
     public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
-                GeneralCommands.getVisualizeNoteShootingCommand().onlyIf(MotorSubsystem::isExtensiveLoggingEnabled)
+                GeneralCommands.getVisualizeNoteShootingCommand()
         ).until(() -> !RobotContainer.INTAKE.hasNote());
     }
 
