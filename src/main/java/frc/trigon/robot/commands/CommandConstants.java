@@ -15,8 +15,8 @@ import frc.trigon.robot.subsystems.climber.ClimberCommands;
 import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
+import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
-import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveConstants;
 import org.littletonrobotics.junction.Logger;
@@ -49,7 +49,7 @@ public class CommandConstants {
                     () -> getYPowerFromPov(DRIVER_CONTROLLER.getPov()) / OperatorConstants.POV_DIVIDER / calculateShiftModeValue(MINIMUM_TRANSLATION_SHIFT_POWER),
                     () -> 0
             ),
-            STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.kWhite, LEDStripConstants.LED_STRIPS),
+            STATIC_WHITE_LED_COLOR_COMMAND = LEDStripCommands.getStaticColorCommand(Color.kWhite, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new)),
             FACE_AMP_COMMAND = SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
                     () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
                     () -> calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
@@ -83,7 +83,7 @@ public class CommandConstants {
                 SHOULD_ALIGN_TO_NOTE = false;
                 Logger.recordOutput("ShouldAlignToNote", false);
             }).ignoringDisable(true),
-            DEFAULT_LEDS_COMMAND = LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStripConstants.LED_STRIPS),
+            DEFAULT_LEDS_COMMAND = LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new)),
             DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
             DEFAULT_CLIMBER_COMMAND = ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),

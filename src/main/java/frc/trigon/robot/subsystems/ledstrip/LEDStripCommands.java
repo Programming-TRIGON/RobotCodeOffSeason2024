@@ -19,11 +19,11 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
-    public static Command getBlinkingCommand(Color color, boolean shouldBlinkFast, double blinkingTimeSeconds, LEDStrip... ledStrips) {
+    public static Command getBlinkingCommand(Color color, double blinkingIntervalSeconds, LEDStrip... ledStrips) {
         return new RunCommand(
-                () -> runForLeds((ledStrip -> ledStrip.blink(color, shouldBlinkFast))),
+                () -> runForLeds((ledStrip -> ledStrip.blink(color, blinkingIntervalSeconds))),
                 ledStrips
-        ).withTimeout(blinkingTimeSeconds).ignoringDisable(true);
+        ).ignoringDisable(true);
     }
 
     public static Command getRainbowCommand(LEDStrip... ledStrips) {

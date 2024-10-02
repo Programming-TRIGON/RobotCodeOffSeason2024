@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
+import java.util.ArrayList;
+
 public class LEDStrip extends SubsystemBase {
+    public static final ArrayList<LEDStrip> LED_STRIPS = new ArrayList<>();
     private static final AddressableLED LED = LEDStripConstants.LED;
     private final int indexOffset;
     private final boolean inverted;
@@ -19,7 +22,7 @@ public class LEDStrip extends SubsystemBase {
     static {
         GeneralCommands.getDelayedCommand(
                 1,
-                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.SHOULD_LOW_BATTERY_LEDS_BLINK_FAST, LEDStripConstants.LOW_BATTERY_BLINKING_TIME_SECONDS, LEDStripConstants.LED_STRIPS))
+                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.LOW_BATTERY_BLINKING_INTERVAL_SECONDS, LED_STRIPS.toArray(LEDStrip[]::new)).withTimeout(LEDStripConstants.LOW_BATTERY_BLINKING_TIME_SECONDS))
         );
     }
 
@@ -27,11 +30,13 @@ public class LEDStrip extends SubsystemBase {
         this.indexOffset = indexOffset;
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
+
+        LED_STRIPS.add(this);
     }
 
     public static void setDefaultCommandForAllLEDS(Command command) {
-        LEDStripConstants.RIGHT_CLIMBER_LEDS.setDefaultCommand(command);
-        LEDStripConstants.LEFT_CLIMBER_LEDS.setDefaultCommand(command);
+        for (LEDStrip ledStrip : LED_STRIPS)
+            ledStrip.setDefaultCommand(command);
     }
 
     public int getNumberOfLEDS() {
@@ -39,23 +44,23 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void clearLedColors() {
-        setAllStripColors(Color.kBlack);
+        staticColor(Color.kBlack);
     }
 
     void staticColor(Color color) {
-        setAllStripColors(color);
+        for (int index = 0; index <= numberOfLEDs; index++)
+            setLEDColor(color, index);
     }
 
 
-    void blink(Color color, boolean shouldBlinkFast) {
+    void blink(Color color, double blinkingIntervalSeconds) {
         double currentTime = Timer.getFPGATimestamp();
-        double interval = shouldBlinkFast ? LEDStripConstants.FAST_BLINKING_INTERVAL_SECONDS : LEDStripConstants.SLOW_BLINKING_INTERVAL_SECONDS;
-        if (currentTime - lastBlinkTime > interval) {
+        if (currentTime - lastBlinkTime > blinkingIntervalSeconds) {
             lastBlinkTime = currentTime;
             areLEDsOnForBlinking = !areLEDsOnForBlinking;
         }
         if (areLEDsOnForBlinking)
-            setAllStripColors(color);
+            staticColor(color);
         else
             clearLedColors();
     }
@@ -87,11 +92,5 @@ public class LEDStrip extends SubsystemBase {
     private void setLEDColor(Color color, int index) {
         LEDStripConstants.LED_BUFFER.setLED(index + indexOffset, color);
         LED.setData(LEDStripConstants.LED_BUFFER);
-    }
-
-    private void setAllStripColors(Color color) {
-        for (int index = 0; index <= numberOfLEDs; index++) {
-            setLEDColor(color, index);
-        }
     }
 }
