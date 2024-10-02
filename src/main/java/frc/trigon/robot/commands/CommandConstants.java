@@ -20,6 +20,7 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveConstants;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.commands.WheelRadiusCharacterizationCommand;
 import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.Mirrorable;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
@@ -85,7 +86,7 @@ public class CommandConstants {
             }).ignoringDisable(true),
             DEFAULT_LEDS_COMMAND = LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new)),
             DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
-            DEFAULT_CLIMBER_COMMAND = ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.REST),
+            DEFAULT_CLIMBER_COMMAND = ClimberCommands.getStopCommand(),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
             MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
             OVERRIDE_IS_CLIMBING_COMMAND = new InstantCommand(() -> {
