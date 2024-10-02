@@ -23,12 +23,6 @@ import java.util.function.BooleanSupplier;
 public class GeneralCommands {
     public static boolean IS_BRAKING = true;
 
-    public static Command getVisualizeNoteShootingCommand() {
-        return new InstantCommand(
-                () -> new VisualizeNoteShootingCommand()
-                        .schedule()).onlyIf(MotorSubsystem::isExtensiveLoggingEnabled);
-    }
-
     public static Command getClimbCommand() {
         return new SequentialCommandGroup(
                 new InstantCommand(
@@ -48,6 +42,12 @@ public class GeneralCommands {
                 LEDStripCommands.getStaticColorCommand(Color.ORANGE, LEDStripConstants.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT)
         ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
+    }
+
+    public static Command getVisualizeNoteShootingCommand() {
+        return new InstantCommand(
+                () -> new VisualizeNoteShootingCommand()
+                        .schedule()).onlyIf(MotorSubsystem::isExtensiveLoggingEnabled);
     }
 
     /**

@@ -35,7 +35,7 @@ public class AmpAlignerConstants {
             MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 6 : 0;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
-    private static final double GEAR_RATIO = 52;
+    private static final double GEAR_RATIO = 48;
     static final boolean FOC_ENABLED = true;
 
     private static final int MOTOR_AMOUNT = 1;
@@ -58,8 +58,8 @@ public class AmpAlignerConstants {
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(2).per(Units.Second.of(1)),
-            Units.Volts.of(4),
+            Units.Volts.of(1.5).per(Units.Second.of(1)),
+            Units.Volts.of(3),
             Units.Second.of(1000)
     );
 

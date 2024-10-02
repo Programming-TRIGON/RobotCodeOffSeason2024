@@ -28,7 +28,7 @@ public class ClimberConstants {
 
     private static final InvertedValue
             RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
-            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
+            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
     private static final double //TODO: calibrate
@@ -38,10 +38,6 @@ public class ClimberConstants {
             GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0,
             GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 0,
             GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0;
-    static final double
-            GROUNDED_A = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_B = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_C = RobotHardwareStats.isSimulation() ? 0 : 0;
     private static final double //TODO: calibrate
             ON_CHAIN_P = RobotHardwareStats.isSimulation() ? GROUNDED_P : 0,
             ON_CHAIN_I = RobotHardwareStats.isSimulation() ? GROUNDED_I : 0,
@@ -49,10 +45,6 @@ public class ClimberConstants {
             ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? GROUNDED_KS : 0,
             ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? GROUNDED_KV : 0,
             ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? GROUNDED_KA : 0;
-    static final double
-            ON_CHAIN_A = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_B = RobotHardwareStats.isSimulation() ? 0 : 0,
-            ON_CHAIN_C = RobotHardwareStats.isSimulation() ? 0 : 0;
     static final double
             MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KV : 0,
             MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KA : 0,
@@ -64,7 +56,7 @@ public class ClimberConstants {
     private static final double
             REVERSE_SOFT_LIMIT_POSITION_ROTATIONS = 0,
             FORWARD_SOFT_LIMIT_POSITION_ROTATIONS = 3.183;
-    static final double GEAR_RATIO = 74.67;
+    static final double GEAR_RATIO = 68.57;
 
     private static final int
             RIGHT_MOTOR_AMOUNT = 1,
@@ -83,7 +75,6 @@ public class ClimberConstants {
             null,
             null
     );
-    static final boolean SYSID_IS_ON_CHAIN = false;
 
     static final Translation3d
             RIGHT_CLIMBER_FIRST_JOINT_ORIGIN_POINT = new Translation3d(0.295, -0.2545, 0.27445),
