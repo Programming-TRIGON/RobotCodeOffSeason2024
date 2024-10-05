@@ -24,16 +24,23 @@ public class ShooterConstants {
             LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME);
 
     private static final InvertedValue
-            RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
+            RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive,
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 15 : 12,
-            I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0.35586 : 4.019,
-            KV = RobotHardwareStats.isSimulation() ? 0 : 0.071122,
-            KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0.99531;
+            RIGHT_P = RobotHardwareStats.isSimulation() ? 15 : 0.30587,
+            RIGHT_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            RIGHT_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            RIGHT_KS = RobotHardwareStats.isSimulation() ? 0.35586 : 6.3793,
+            RIGHT_KV = RobotHardwareStats.isSimulation() ? 0 : 0.071122,
+            RIGHT_KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0.90291;
+    private static final double
+            LEFT_P = RobotHardwareStats.isSimulation() ? 15 : 0.18528,
+            LEFT_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_KS = RobotHardwareStats.isSimulation() ? 0.35586 : 5.0484,
+            LEFT_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0.79623;
     private static final double GEAR_RATIO = 1;
 
     private static final int
@@ -63,11 +70,11 @@ public class ShooterConstants {
     static final double VELOCITY_TOLERANCE = 3;
 
     static {
-        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION);
-        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_SIMULATION);
+        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION, RIGHT_P, RIGHT_I, RIGHT_D, RIGHT_KS, RIGHT_KV, RIGHT_KA);
+        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_SIMULATION, LEFT_P, LEFT_I, LEFT_D, LEFT_KS, LEFT_KV, LEFT_KA);
     }
 
-    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, FlywheelSimulation simulation) {
+    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, FlywheelSimulation simulation, double P, double I, double D, double KS, double KV, double KA) {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.Audio.BeepOnBoot = false;
@@ -76,12 +83,12 @@ public class ShooterConstants {
         config.MotorOutput.Inverted = invertedValue;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
-        config.Slot0.kP = P;
-        config.Slot0.kI = I;
-        config.Slot0.kD = D;
-        config.Slot0.kS = KS;
-        config.Slot0.kV = KV;
-        config.Slot0.kA = KA;
+        config.Slot0.kP = RIGHT_P;
+        config.Slot0.kI = RIGHT_I;
+        config.Slot0.kD = RIGHT_D;
+        config.Slot0.kS = RIGHT_KS;
+        config.Slot0.kV = RIGHT_KV;
+        config.Slot0.kA = RIGHT_KA;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
