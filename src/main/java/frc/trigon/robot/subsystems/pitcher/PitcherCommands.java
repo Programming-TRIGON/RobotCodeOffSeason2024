@@ -1,6 +1,7 @@
 package frc.trigon.robot.subsystems.pitcher;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
@@ -21,7 +22,7 @@ public class PitcherCommands {
         return new GearRatioCalculationCommand(
                 () -> RobotContainer.PITCHER.getRotorPosition().getDegrees(),
                 () -> RobotContainer.PITCHER.getEncoderPosition().getDegrees(),
-                RobotContainer.PITCHER::setTargetVoltage,
+                (voltage) -> RobotContainer.PITCHER.drive(Units.Volts.of(voltage)),
                 RobotContainer.PITCHER
         );
     }

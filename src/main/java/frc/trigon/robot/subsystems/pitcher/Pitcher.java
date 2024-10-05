@@ -100,10 +100,6 @@ public class Pitcher extends MotorSubsystem {
         return Rotation2d.fromRotations(encoder.getSignal(CANcoderSignal.POSITION));
     }
 
-    void setTargetVoltage(double voltage) {
-        masterMotor.setControl(voltageRequest.withOutput(voltage));
-    }
-
     void reachTargetPitchFromShootingCalculations() {
         targetPitch = shootingCalculations.getTargetShootingState().targetPitch();
         setTargetPitch(targetPitch);
