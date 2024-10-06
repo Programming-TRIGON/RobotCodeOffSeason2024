@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 public class LEDStripCommands {
     public static Command getStaticColorCommand(Color color, LEDStrip... ledStrips) {
         return new StartEndCommand(
-                () -> runForLeds((ledStrip -> ledStrip.staticColor(color))),
+                () -> runForLEDs((ledStrip -> ledStrip.staticColor(color)), ledStrips),
                 () -> {
                 },
                 ledStrips
@@ -21,29 +21,28 @@ public class LEDStripCommands {
 
     public static Command getBlinkingCommand(Color color, double blinkingIntervalSeconds, LEDStrip... ledStrips) {
         return new RunCommand(
-                () -> runForLeds((ledStrip -> ledStrip.blink(color, blinkingIntervalSeconds))),
+                () -> runForLEDs((ledStrip -> ledStrip.blink(color, blinkingIntervalSeconds)), ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
 
     public static Command getRainbowCommand(LEDStrip... ledStrips) {
         return new RunCommand(
-                () -> runForLeds((LEDStrip::rainbow)),
+                () -> runForLEDs((LEDStrip::rainbow), ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
 
     public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor, LEDStrip... ledStrips) {
         return new InitExecuteCommand(
-                () -> runForLeds(LEDStrip::clearLedColors),
-                () -> runForLeds((ledStrip) -> ledStrip.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get())),
+                () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
+                () -> runForLEDs((ledStrip) -> ledStrip.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get()), ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
 
-    public static void runForLeds(Consumer<LEDStrip> action, LEDStrip... ledStrips) {
-        for (LEDStrip ledStrip : ledStrips) {
+    public static void runForLEDs(Consumer<LEDStrip> action, LEDStrip... ledStrips) {
+        for (LEDStrip ledStrip : ledStrips)
             action.accept(ledStrip);
-        }
     }
 }

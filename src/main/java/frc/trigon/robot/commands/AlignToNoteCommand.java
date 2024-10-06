@@ -59,8 +59,8 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private Command getCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new)),
-                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new)),
+                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
                 CAMERA::hasTargets
         );
     }

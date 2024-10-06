@@ -87,15 +87,15 @@ public class Intake extends MotorSubsystem {
 
     private Command getCollectionIndicationLEDsCommand() {
         return new SequentialCommandGroup(
-                LEDStripCommands.getBlinkingCommand(Color.kOrange, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new)).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS),
-                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new))
+                LEDStripCommands.getBlinkingCommand(Color.kOrange, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS),
+                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS)
         );
     }
 
     private Command getFeedingIndicationLEDsCommand() {
         return new SequentialCommandGroup(
-                LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new)).withTimeout(IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS),
-                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS.toArray(LEDStrip[]::new))
+                LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS),
+                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS)
         );
     }
 }

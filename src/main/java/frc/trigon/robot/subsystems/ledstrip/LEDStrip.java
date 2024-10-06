@@ -7,10 +7,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
-import java.util.ArrayList;
-
 public class LEDStrip extends SubsystemBase {
-    public static final ArrayList<LEDStrip> LED_STRIPS = new ArrayList<>();
+    public static LEDStrip[] LED_STRIPS = new LEDStrip[0];
     private static final AddressableLED LED = LEDStripConstants.LED;
     private final int indexOffset;
     private final boolean inverted;
@@ -22,7 +20,7 @@ public class LEDStrip extends SubsystemBase {
     static {
         GeneralCommands.getDelayedCommand(
                 1,
-                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.LOW_BATTERY_BLINKING_INTERVAL_SECONDS, LED_STRIPS.toArray(LEDStrip[]::new)).withTimeout(LEDStripConstants.LOW_BATTERY_BLINKING_TIME_SECONDS))
+                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.LOW_BATTERY_BLINKING_INTERVAL_SECONDS, LED_STRIPS).withTimeout(LEDStripConstants.LOW_BATTERY_BLINKING_TIME_SECONDS))
         );
     }
 
@@ -31,7 +29,7 @@ public class LEDStrip extends SubsystemBase {
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
 
-        LED_STRIPS.add(this);
+        addLEDStripToLEDStripsArrayArray(this);
     }
 
     public static void setDefaultCommandForAllLEDS(Command command) {
@@ -47,12 +45,6 @@ public class LEDStrip extends SubsystemBase {
         staticColor(Color.kBlack);
     }
 
-    void staticColor(Color color) {
-        for (int index = 0; index <= numberOfLEDs; index++)
-            setLEDColor(color, index);
-    }
-
-
     void blink(Color color, double blinkingIntervalSeconds) {
         double currentTime = Timer.getFPGATimestamp();
         if (currentTime - lastBlinkTime > blinkingIntervalSeconds) {
@@ -63,6 +55,11 @@ public class LEDStrip extends SubsystemBase {
             staticColor(color);
         else
             clearLedColors();
+    }
+
+    void staticColor(Color color) {
+        for (int index = 0; index <= numberOfLEDs; index++)
+            setLEDColor(color, index);
     }
 
     void rainbow() {
@@ -92,5 +89,12 @@ public class LEDStrip extends SubsystemBase {
     private void setLEDColor(Color color, int index) {
         LEDStripConstants.LED_BUFFER.setLED(index + indexOffset, color);
         LED.setData(LEDStripConstants.LED_BUFFER);
+    }
+
+    private void addLEDStripToLEDStripsArrayArray(LEDStrip ledStrip) {
+        final LEDStrip[] newLEDStrips = new LEDStrip[LED_STRIPS.length + 1];
+        System.arraycopy(LED_STRIPS, 0, newLEDStrips, 0, LED_STRIPS.length);
+        newLEDStrips[LED_STRIPS.length] = ledStrip;
+        LED_STRIPS = newLEDStrips;
     }
 }
