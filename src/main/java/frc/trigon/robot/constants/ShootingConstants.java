@@ -13,11 +13,11 @@ public class ShootingConstants {
 
     public static final double
             CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 45,
-            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 20,
+            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 30,
             MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND = 45;
     public static final Rotation2d
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57),
-            AMP_PITCH = Rotation2d.fromDegrees(45),
+            AMP_PITCH = Rotation2d.fromDegrees(47),
             MANUAL_LOW_DELIVERY_PITCH = Rotation2d.fromDegrees(12);
 
     public static final Pose3d ROBOT_RELATIVE_PITCHER_PIVOT_POINT = new Pose3d(0.2521, 0, 0.15545, new Rotation3d(0, 0, Math.PI));
