@@ -20,7 +20,7 @@ public class IntakeConstants {
     private static final int
             MASTER_MOTOR_ID = 16,
             FOLLOWER_MOTOR_ID = 17,
-            DISTANCE_SENSOR_CHANNEL = 0;
+            DISTANCE_SENSOR_CHANNEL = 2;
     private static final String
             MASTER_MOTOR_NAME = "MasterIntakeMotor",
             FOLLOWER_MOTOR_NAME = "FollowerIntakeMotor",
