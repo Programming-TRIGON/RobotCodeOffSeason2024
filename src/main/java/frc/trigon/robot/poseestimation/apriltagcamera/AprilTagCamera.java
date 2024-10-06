@@ -196,7 +196,7 @@ public class AprilTagCamera {
         Logger.processInputs("Cameras/" + name, inputs);
         if (!FieldConstants.TAG_ID_TO_POSE.isEmpty())
             logUsedTags();
-        if (!inputs.hasResult || inputs.distanceFromBestTag == 0) {
+        if (!inputs.hasResult || inputs.distanceFromBestTag == 0 || robotPose == null) {
             logEstimatedRobotPose();
             logSolvePNPPose();
         } else {
@@ -218,10 +218,7 @@ public class AprilTagCamera {
     }
 
     private void logEstimatedRobotPose() {
-        if (robotPose == null)
-            Logger.recordOutput("Poses/Robot/" + name + "Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
-        else
-            Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);
+        Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);
     }
 
     private void logSolvePNPPose() {
