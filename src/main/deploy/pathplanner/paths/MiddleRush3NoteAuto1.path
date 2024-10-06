@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.8833583320118348,
+        "y": 3.054621923197335
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.8438663100604122,
+        "y": 3.3344173101647874
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.9219209708544644,
+        "y": 3.700791945412156
+      },
+      "prevControl": {
+        "x": 4.477600594156059,
+        "y": 3.529412474501909
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": " MiddleRush3NoteAutoFirstEjectPoint"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 19.983106521899998,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "MiddleRush3NoteAuto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

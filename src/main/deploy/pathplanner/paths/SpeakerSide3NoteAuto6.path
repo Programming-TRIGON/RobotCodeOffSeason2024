@@ -1,0 +1,76 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.541385984180419,
+        "y": 6.3159551671216025
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.876307137773286,
+        "y": 6.7588906909262585
+      },
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoSecondFeed"
+    },
+    {
+      "anchor": {
+        "x": 5.340436970626591,
+        "y": 7.455085440206217
+      },
+      "prevControl": {
+        "x": 5.006843653263278,
+        "y": 7.077979951012905
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "RecollectNote",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 55.78,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SpeakerSide3NoteAuto",
+  "previewStartingState": {
+    "rotation": 9.89,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

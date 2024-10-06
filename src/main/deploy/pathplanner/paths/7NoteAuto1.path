@@ -1,0 +1,76 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.172432558641841,
+        "y": 4.20214579146498
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.09865958924317,
+        "y": 4.1046482092964185
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.6456402107795283,
+        "y": 4.097305368134887
+      },
+      "prevControl": {
+        "x": 2.660093197431981,
+        "y": 4.082852381482435
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "7NoteAutoFirstNoteCollection"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "7NoteAuto",
+  "previewStartingState": {
+    "rotation": -49.101008357498635,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

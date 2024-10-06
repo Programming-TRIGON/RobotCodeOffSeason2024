@@ -1,0 +1,76 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.055465713793683,
+        "y": 4.934389260549541
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.470193534026643,
+        "y": 4.815347015853042
+      },
+      "isLocked": false,
+      "linkedName": "MiddleRush3NoteAutoSecondShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 5.413577382974244,
+        "y": 4.494638537970663
+      },
+      "prevControl": {
+        "x": 5.021347710539944,
+        "y": 4.6267942712563865
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "MiddleRushLastCollection"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "RecollectNote",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -22.750976342787602,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "MiddleRush3NoteAuto",
+  "previewStartingState": {
+    "rotation": -8.889999999999986,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

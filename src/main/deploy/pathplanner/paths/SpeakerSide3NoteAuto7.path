@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.340436970626591,
+        "y": 7.455085440206217
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.0793639396466075,
+        "y": 7.339052981992889
+      },
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+    },
+    {
+      "anchor": {
+        "x": 4.064437424649498,
+        "y": 6.865168659914785
+      },
+      "prevControl": {
+        "x": 4.803786851389956,
+        "y": 7.237524581056229
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 18.74000000000001,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SpeakerSide3NoteAuto",
+  "previewStartingState": {
+    "rotation": 55.78,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6781204203738587,
+        "y": 1.7744559954678114
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.5177352357790754,
+        "y": 1.9989952539005116
+      },
+      "isLocked": false,
+      "linkedName": "Zayde4NoteAutoEjectPoint"
+    },
+    {
+      "anchor": {
+        "x": 2.968725221886938,
+        "y": 2.905050317142888
+      },
+      "prevControl": {
+        "x": 3.2198817841816214,
+        "y": 2.47643858708145
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -43.870000000000005,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Zayde3NoteAuto",
+  "previewStartingState": {
+    "rotation": -56.21431622100295,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

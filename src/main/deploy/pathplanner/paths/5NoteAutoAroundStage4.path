@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 5.791356380812524
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.200948934992683,
+        "y": 6.402957492855952
+      },
+      "isLocked": false,
+      "linkedName": "5NoteAutoAroundStageSecondCollection"
+    },
+    {
+      "anchor": {
+        "x": 4.52634938524034,
+        "y": 6.4835892142093074
+      },
+      "prevControl": {
+        "x": 4.995349382469785,
+        "y": 6.43232885750208
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "5NoteAroundStageThirdShotPoint"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 11.180000000000007,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "5NoteAutoAroundStage",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

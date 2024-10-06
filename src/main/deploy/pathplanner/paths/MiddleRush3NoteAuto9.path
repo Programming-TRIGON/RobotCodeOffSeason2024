@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.413577382974244,
+        "y": 4.494638537970663
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.119863736512963,
+        "y": 4.670866725847431
+      },
+      "isLocked": false,
+      "linkedName": "MiddleRushLastCollection"
+    },
+    {
+      "anchor": {
+        "x": 4.26,
+        "y": 4.98
+      },
+      "prevControl": {
+        "x": 4.687754393176631,
+        "y": 4.7718348440230445
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -8.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "MiddleRush3NoteAuto",
+  "previewStartingState": {
+    "rotation": -25.906507999514293,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.895296810271618,
+        "y": 6.990384785778517
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.164048427036783,
+        "y": 6.78789880547959
+      },
+      "isLocked": false,
+      "linkedName": "FrontRow4NoteAutoFirstCollection"
+    },
+    {
+      "anchor": {
+        "x": 1.3973572133190786,
+        "y": 5.565873600441298
+      },
+      "prevControl": {
+        "x": 1.38082933409683,
+        "y": 6.33827302990295
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "CloseShotPoint"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -0.19781020330750715,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "FrontRow4NoteAuto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

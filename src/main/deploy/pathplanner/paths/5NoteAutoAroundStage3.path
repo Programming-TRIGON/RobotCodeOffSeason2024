@@ -1,0 +1,82 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.52634938524034,
+        "y": 6.464089697775596
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.640145802652965,
+        "y": 6.1826722580099895
+      },
+      "isLocked": false,
+      "linkedName": "5NoteAroundStageSecondShotPoint"
+    },
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 5.791356380812524
+      },
+      "prevControl": {
+        "x": 7.477132973032795,
+        "y": 5.951308798052357
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "5NoteAutoAroundStageSecondCollection"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.65,
+      "rotationDegrees": -12.576356977946725,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -13.24248653489419,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "5NoteAutoAroundStage",
+  "previewStartingState": {
+    "rotation": 10.680000000000007,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

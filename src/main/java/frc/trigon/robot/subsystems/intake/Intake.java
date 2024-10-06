@@ -30,15 +30,15 @@ public class Intake extends MotorSubsystem {
     }
 
     @Override
+    public void updateMechanism() {
+        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
+    }
+
+    @Override
     public void stop() {
         masterMotor.stopMotor();
         targetState = IntakeConstants.IntakeState.STOP;
         IntakeConstants.MECHANISM.setTargetVelocity(0);
-    }
-
-    @Override
-    public void updateMechanism() {
-        IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
     }
 
     public IntakeConstants.IntakeState getTargetState() {
