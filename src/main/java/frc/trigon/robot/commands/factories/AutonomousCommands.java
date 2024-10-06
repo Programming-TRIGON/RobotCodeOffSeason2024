@@ -14,10 +14,13 @@ import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
+import java.awt.*;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -55,7 +58,7 @@ public class AutonomousCommands {
                     NOTE_DETECTION_CAMERA.startTrackingBestObject();
                     overrideRotation(AutonomousCommands::calculateRotationOverride);
                 }
-        );
+        ).andThen(getSetCurrentLEDColorCommand());
     }
 
     public static Command getStopAligningToNoteCommand() {
@@ -92,5 +95,13 @@ public class AutonomousCommands {
 
     private static void overrideRotation(Supplier<Optional<Rotation2d>> rotationOverride) {
         PPHolonomicDriveController.setRotationTargetOverride(rotationOverride);
+    }
+
+    private static Command getSetCurrentLEDColorCommand() {
+        return GeneralCommands.getContinuousConditionalCommand(
+                LEDStripCommands.getStaticColorCommand(Color.green, LEDStripConstants.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(Color.red, LEDStripConstants.LED_STRIPS),
+                NOTE_DETECTION_CAMERA::hasTargets
+        ).asProxy();
     }
 }
