@@ -87,7 +87,7 @@ public class PoseEstimator implements AutoCloseable {
                 closestCameraToTag = i;
         }
 
-        final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getEstimatedRobotPose().getRotation();
+        final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getSolvePNPHeading();
         resetPose(new Pose2d(getCurrentPose().getTranslation(), bestRobotHeading));
     }
 
