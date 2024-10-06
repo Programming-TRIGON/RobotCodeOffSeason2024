@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.884948624598104,
-        "y": 7.168516673215683
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 5.218082231036257,
-        "y": 7.2503757543127625
-      },
-      "isLocked": false,
-      "linkedName": "7noteAutofourthShotPoint"
-    },
-    {
-      "anchor": {
         "x": 8.3,
         "y": 7.443288126012872
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.744019590603283,
+        "y": 7.215293290985443
+      },
+      "isLocked": false,
+      "linkedName": "7NoteAutoFourthNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 4.750593824228029,
+        "y": 6.434840423125027
+      },
       "prevControl": {
-        "x": 8.18012452247285,
-        "y": 7.411552377938812
+        "x": 5.732625026503613,
+        "y": 6.455173252226847
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutoFourthNoteCollection"
+      "linkedName": "7NoteAutofifthNoteShot"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
-      "waypointRelativePos": 0.75,
+      "name": "StopAligning",
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
+                "name": "StopAligningToNote"
               }
             }
           ]
@@ -63,14 +57,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 2.5731130355179954,
+    "rotation": 10.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 25.04,
-    "velocity": 0.0
+    "rotation": 0,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

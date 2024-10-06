@@ -86,12 +86,6 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "7NoteAuto5"
-                      }
-                    },
-                    {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.1
@@ -101,6 +95,12 @@
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "7NoteAuto5"
                       }
                     },
                     {
@@ -110,12 +110,6 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "7NoteAuto7"
-                      }
-                    },
-                    {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.1
@@ -125,6 +119,12 @@
                       "type": "named",
                       "data": {
                         "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "7NoteAuto7"
                       }
                     },
                     {
@@ -134,12 +134,6 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "7NoteAuto9"
-                      }
-                    },
-                    {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.1
@@ -154,13 +148,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "7NoteAuto10"
+                        "pathName": "7NoteAuto9"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "7NoteAuto11"
+                        "pathName": "7NoteAuto10"
                       }
                     },
                     {

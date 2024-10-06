@@ -8,29 +8,53 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8381720068283434,
-        "y": 7.133434209888363
+        "x": 4.226879112239024,
+        "y": 7.077104620883935
       },
       "isLocked": false,
       "linkedName": "7NoteAutoThirdNoteCollection"
     },
     {
       "anchor": {
-        "x": 3.884948624598104,
-        "y": 7.168516673215683
+        "x": 8.3,
+        "y": 7.443288126012872
       },
       "prevControl": {
-        "x": 3.5809006090946656,
-        "y": 7.1217400554459225
+        "x": 8.18012452247285,
+        "y": 7.411552377938812
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7noteAutofourthShotPoint"
+      "linkedName": "7NoteAutoFourthNoteCollection"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.75,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
@@ -38,15 +62,15 @@
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 25.04,
+    "velocity": 0,
+    "rotation": 2.5731130355179954,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
-    "velocity": 0
+    "rotation": 27.03,
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }

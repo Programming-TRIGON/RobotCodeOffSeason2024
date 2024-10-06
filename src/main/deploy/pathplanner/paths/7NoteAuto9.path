@@ -3,37 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.280006298729937,
-        "y": 5.781606622595669
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 7.229476795135926,
-        "y": 6.010795383414129
-      },
-      "isLocked": false,
-      "linkedName": "7NoteAutoFifthNoteCollection"
-    },
-    {
-      "anchor": {
         "x": 4.4678508359392035,
         "y": 6.434840423125027
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.831875544092969,
+        "y": 6.4083966344570875
+      },
+      "isLocked": false,
+      "linkedName": "7NoteAutosixthNoteShot"
+    },
+    {
+      "anchor": {
+        "x": 8.299162513817985,
+        "y": 4.104648209296419
+      },
       "prevControl": {
-        "x": 5.311635466575775,
-        "y": 6.396702480014646
+        "x": 7.779102053930604,
+        "y": 4.607496850321336
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutosixthNoteShot"
+      "linkedName": "7NoteAutoSixthCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.2,
+      "rotationDegrees": -21.53684819755253,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Stopaligning",
-      "waypointRelativePos": 0.05,
+      "name": "Collect",
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,7 +47,13 @@
             {
               "type": "named",
               "data": {
-                "name": "StopAligningToNote"
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
               }
             }
           ]
@@ -57,13 +69,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 12.0,
+    "rotation": -46.893161426011915,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 10.780000000000001,
     "velocity": 0
   },
   "useDefaultConstraints": true

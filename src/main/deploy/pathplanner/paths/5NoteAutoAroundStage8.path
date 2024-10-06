@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.87374311779035,
-        "y": 2.863708052997502
+        "x": 4.804435512269952,
+        "y": 4.258847873688592
       },
       "isLocked": false,
       "linkedName": "5NoteAutoAroundStageFourthCollection"
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "StopAligningToNote",
-      "waypointRelativePos": 0.10000000000000009,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {

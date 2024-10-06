@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.345058554160043,
-        "y": 5.991758387810157
+        "x": 5.200948934992683,
+        "y": 6.402957492855952
       },
       "isLocked": false,
       "linkedName": "5NoteAutoAroundStageSecondCollection"
@@ -20,8 +20,8 @@
         "y": 6.4835892142093074
       },
       "prevControl": {
-        "x": 5.4359198521617085,
-        "y": 6.476385904471273
+        "x": 4.995349382469785,
+        "y": 6.43232885750208
       },
       "nextControl": null,
       "isLocked": false,

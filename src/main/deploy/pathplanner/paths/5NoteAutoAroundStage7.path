@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.318434393577196,
-        "y": 4.244162191365528
+        "x": 7.682829247590518,
+        "y": 2.8196510060283098
       },
       "isLocked": false,
       "linkedName": "5NoteAroundStageFourthShotPoint"
@@ -20,8 +20,8 @@
         "y": 2.47643858708145
       },
       "prevControl": {
-        "x": 7.624086518298261,
-        "y": 2.834336688351374
+        "x": 7.976542894051799,
+        "y": 2.599365771182348
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "Collect",
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.8,
       "command": {
         "type": "parallel",
         "data": {

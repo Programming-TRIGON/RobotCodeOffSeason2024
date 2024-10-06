@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.433172648098427,
-        "y": 7.166612973655286
+        "x": 5.1128348410542985,
+        "y": 6.60855704537885
       },
       "isLocked": false,
       "linkedName": "5NoteAutoAroundStageFirstCollection"
@@ -20,8 +20,8 @@
         "y": 6.464089697775596
       },
       "prevControl": {
-        "x": 5.318434393577196,
-        "y": 6.535128633763529
+        "x": 4.8191211945930155,
+        "y": 6.549814316086593
       },
       "nextControl": null,
       "isLocked": false,
@@ -63,7 +63,7 @@
   "reversed": false,
   "folder": "5NoteAutoAroundStage",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -5.910000000000025,
     "velocity": 0
   },
   "useDefaultConstraints": true
