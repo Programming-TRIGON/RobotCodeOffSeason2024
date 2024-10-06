@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.cancoder.CANcoderEncoder;
+import org.trigon.hardware.phoenix6.cancoder.CANcoderSignal;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
@@ -146,6 +147,7 @@ public class PitcherConstants {
         MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.ROTOR_POSITION, 100);
     }
 
     private static void configureFollowerMotor() {
@@ -172,5 +174,8 @@ public class PitcherConstants {
 
         ENCODER.applyConfiguration(config);
         ENCODER.setSimulationInputsFromTalonFX(MASTER_MOTOR);
+
+        ENCODER.registerSignal(CANcoderSignal.POSITION, 100);
+        ENCODER.registerSignal(CANcoderSignal.VELOCITY, 100);
     }
 }
