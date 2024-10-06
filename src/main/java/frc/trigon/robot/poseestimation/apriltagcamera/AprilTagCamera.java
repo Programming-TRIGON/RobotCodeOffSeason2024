@@ -200,8 +200,8 @@ public class AprilTagCamera {
             logEstimatedRobotPose();
             logSolvePNPPose();
         } else {
-            Logger.recordOutput("Poses/Robot/" + name + "Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
-            Logger.recordOutput("Poses/Robot/" + name + "SolvePNPPose", AprilTagCameraConstants.EMPTY_POSE_LIST);
+            Logger.recordOutput("Poses/Robot/" + name + "/Pose", AprilTagCameraConstants.EMPTY_POSE_LIST);
+            Logger.recordOutput("Poses/Robot/" + name + "/SolvePNPPose", AprilTagCameraConstants.EMPTY_POSE_LIST);
         }
     }
 
@@ -218,10 +218,10 @@ public class AprilTagCamera {
     }
 
     private void logEstimatedRobotPose() {
-        Logger.recordOutput("Poses/Robot/" + name + "Pose", robotPose);
+        Logger.recordOutput("Poses/Robot/" + name + "/Pose", robotPose);
     }
 
     private void logSolvePNPPose() {
-        Logger.recordOutput("Poses/Robot/" + name + "SolvePNPPose", inputs.cameraSolvePNPPose.plus(robotCenterToCamera.inverse()));
+        Logger.recordOutput("Poses/Robot/" + name + "/SolvePNPPose", inputs.cameraSolvePNPPose.plus(robotCenterToCamera.inverse()));
     }
 }
