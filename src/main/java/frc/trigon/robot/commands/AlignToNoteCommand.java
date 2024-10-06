@@ -3,7 +3,6 @@ package frc.trigon.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
@@ -24,20 +23,15 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ?
             new PIDController(0.0075, 0, 0) :
             new PIDController(0, 0, 0);
-    private boolean didCollect = false;
     private Rotation2d trackedNoteYaw = new Rotation2d();
 
     public AlignToNoteCommand() {
         addCommands(
-                new InstantCommand(() -> {
-                    didCollect = false;
-                    didCollect = RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
-                }),
                 getSetCurrentLEDColorCommand().asProxy(),
                 GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
                 new RunCommand(() -> {
                     CAMERA.trackObject();
-                    updateTrackedNoteYaw();
+                    trackedNoteYaw = CAMERA.getTrackedObjectYaw();
                 })
         );
     }
@@ -63,11 +57,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
         return new MirrorableRotation2d(currentRotation.plus(trackedNoteYaw), false);
     }
 
-    private void updateTrackedNoteYaw() {
-        trackedNoteYaw = CAMERA.getTrackedObjectYaw();
-    }
-
     private boolean hasTarget() {
-        return CAMERA.hasTargets() && !didCollect;
+        return CAMERA.hasTargets() && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
     }
 }
