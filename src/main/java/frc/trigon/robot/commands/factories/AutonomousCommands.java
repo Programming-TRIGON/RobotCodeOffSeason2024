@@ -29,6 +29,7 @@ import java.util.function.Supplier;
  */
 public class AutonomousCommands {
     private static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
+    private static boolean IS_ALIGNING_TO_NOTE = false;
 
     public static Command getResetPoseToAutoPoseCommand(Supplier<String> pathName) {
         return new InstantCommand(
@@ -57,12 +58,18 @@ public class AutonomousCommands {
                 () -> {
                     NOTE_DETECTION_CAMERA.startTrackingBestObject();
                     overrideRotation(AutonomousCommands::calculateRotationOverride);
+                    IS_ALIGNING_TO_NOTE = true;
                 }
         ).andThen(getSetCurrentLEDColorCommand());
     }
 
     public static Command getStopAligningToNoteCommand() {
-        return new InstantCommand(() -> overrideRotation(Optional::empty));
+        return new InstantCommand(
+                () -> {
+                    overrideRotation(Optional::empty);
+                    IS_ALIGNING_TO_NOTE = false;
+                }
+        );
     }
 
     public static Command getPrepareForShooterEjectionCommand(boolean isClose) {
@@ -102,6 +109,6 @@ public class AutonomousCommands {
                 LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
                 LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
                 NOTE_DETECTION_CAMERA::hasTargets
-        ).asProxy().until(RobotContainer.INTAKE::hasNote);
+        ).asProxy().until(() -> !IS_ALIGNING_TO_NOTE);
     }
 }
