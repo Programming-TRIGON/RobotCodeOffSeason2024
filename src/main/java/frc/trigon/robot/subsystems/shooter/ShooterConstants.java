@@ -28,14 +28,14 @@ public class ShooterConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double
-            RIGHT_P = RobotHardwareStats.isSimulation() ? 15 : 0.30587,
+            RIGHT_P = RobotHardwareStats.isSimulation() ? 15 : 10,
             RIGHT_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             RIGHT_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             RIGHT_KS = RobotHardwareStats.isSimulation() ? 0.35586 : 6.3793,
             RIGHT_KV = RobotHardwareStats.isSimulation() ? 0 : 0.071122,
             RIGHT_KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0.90291;
     private static final double
-            LEFT_P = RobotHardwareStats.isSimulation() ? 15 : 0.18528,
+            LEFT_P = RobotHardwareStats.isSimulation() ? 15 : 10,
             LEFT_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             LEFT_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             LEFT_KS = RobotHardwareStats.isSimulation() ? 0.35586 : 5.0484,
