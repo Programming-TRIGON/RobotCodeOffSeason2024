@@ -1,6 +1,6 @@
 package frc.trigon.robot.subsystems.pitcher;
 
-import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -23,7 +23,7 @@ public class Pitcher extends MotorSubsystem {
     private final TalonFXMotor
             masterMotor = PitcherConstants.MASTER_MOTOR,
             followerMotor = PitcherConstants.FOLLOWER_MOTOR;
-    private final MotionMagicExpoVoltage positionRequest = new MotionMagicExpoVoltage(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
+    private final MotionMagicVoltage positionRequest = new MotionMagicVoltage(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
     private Rotation2d targetPitch = PitcherConstants.DEFAULT_PITCH;
 
@@ -34,7 +34,7 @@ public class Pitcher extends MotorSubsystem {
     @Override
     public void updateLog(SysIdRoutineLog log) {
         log.motor("Pitcher")
-                .angularPosition(Units.Rotations.of(masterMotor.getSignal(TalonFXSignal.POSITION)))
+                .angularPosition(Units.Rotations.of(masterMotor.getSignal(TalonFXSignal.ROTOR_POSITION) / PitcherConstants.GEAR_RATIO))
                 .angularVelocity(Units.RotationsPerSecond.of(masterMotor.getSignal(TalonFXSignal.ROTOR_VELOCITY) / PitcherConstants.GEAR_RATIO))
                 .voltage(Units.Volts.of(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE)));
     }
