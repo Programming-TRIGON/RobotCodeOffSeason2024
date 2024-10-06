@@ -45,17 +45,17 @@ public class PitcherConstants {
             P = RobotHardwareStats.isSimulation() ? 100 : 80,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 20 : 5,
-            KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.055145,
-            KV = RobotHardwareStats.isSimulation() ? 32 : 30.85,
-            KA = RobotHardwareStats.isSimulation() ? 0 : 0.67839,
-            KG = RobotHardwareStats.isSimulation() ? 0.2 : 0.19735;
+            KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.038694,
+            KV = RobotHardwareStats.isSimulation() ? 32 : 24.947,
+            KA = RobotHardwareStats.isSimulation() ? 0 : 1.8959,
+            KG = RobotHardwareStats.isSimulation() ? 0.2 : 0.2976;
     private static final double
             EXPO_KV = KV + 15,
-            EXPO_KA = KA;
+            EXPO_KA = KA + 2;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
-    static final double GEAR_RATIO = 279;
+    static final double GEAR_RATIO = 204;
     private static final Rotation2d
             REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(13),
             FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(72);
