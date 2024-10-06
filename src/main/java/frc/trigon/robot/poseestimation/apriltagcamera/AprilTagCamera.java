@@ -66,7 +66,7 @@ public class AprilTagCamera {
     }
 
     public Rotation2d getSolvePNPHeading() {
-        return inputs.cameraSolvePNPPose.toPose2d().getRotation();
+        return inputs.cameraSolvePNPPose.getRotation().toRotation2d().minus(robotCenterToCamera.inverse().getRotation().toRotation2d());
     }
 
     public String getName() {
