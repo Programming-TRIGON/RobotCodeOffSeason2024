@@ -80,6 +80,17 @@ public class PoseEstimator implements AutoCloseable {
             poseEstimator6328.addOdometryObservation(new PoseEstimator6328.OdometryObservation(swerveWheelPositions[i], gyroRotations[i], timestamps[i]));
     }
 
+    public void setGyroHeadingToBestSolvePNPHeading() {
+        int closestCameraToTag = 0;
+        for (int i = 0; i < aprilTagCameras.length; i++) {
+            if (aprilTagCameras[i].getDistanceToBestTagMeters() < aprilTagCameras[closestCameraToTag].getDistanceToBestTagMeters())
+                closestCameraToTag = i;
+        }
+
+        final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getEstimatedRobotPose().getRotation();
+        resetPose(new Pose2d(getCurrentPose().getTranslation(), bestRobotHeading));
+    }
+
     private void updateFromVision() {
         getViableVisionObservations().stream()
                 .sorted(Comparator.comparingDouble(PoseEstimator6328.VisionObservation::timestamp))
