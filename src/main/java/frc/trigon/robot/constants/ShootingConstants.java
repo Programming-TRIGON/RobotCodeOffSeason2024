@@ -13,7 +13,7 @@ public class ShootingConstants {
 
     public static final double
             CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 45,
-            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 35,
+            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 30,
             MANUAL_LOW_DELIVERY_SHOOTING_ROTATIONS_PER_SECOND = 45;
     public static final Rotation2d
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57),

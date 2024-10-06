@@ -43,13 +43,13 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_OPPOSES_MASTER = true;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 100 : 0.3,
+            P = RobotHardwareStats.isSimulation() ? 100 : 0.5,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 20 : 0.1,
-            KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.38,
-            KV = RobotHardwareStats.isSimulation() ? 32 : 22,
+            D = RobotHardwareStats.isSimulation() ? 20 : 0.6,
+            KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.3,
+            KV = RobotHardwareStats.isSimulation() ? 32 : 23,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KG = RobotHardwareStats.isSimulation() ? 0.2 : 0.308;
+            KG = RobotHardwareStats.isSimulation() ? 0.2 : 0.37;
     private static final double
             MOTION_MAGIC_CRUISE_VELOCITY = 0.35,
             MOTION_MAGIC_ACCELERATION = 3,
@@ -57,7 +57,7 @@ public class PitcherConstants {
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseClosedLoopSign;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
-    static final double GEAR_RATIO = 227.77777;
+    static final double GEAR_RATIO = 200;
     private static final Rotation2d
             REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(13),
             FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
