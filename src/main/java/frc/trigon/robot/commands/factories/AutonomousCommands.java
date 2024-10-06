@@ -102,6 +102,6 @@ public class AutonomousCommands {
                 LEDStripCommands.getStaticColorCommand(Color.green, LEDStripConstants.LED_STRIPS),
                 LEDStripCommands.getStaticColorCommand(Color.red, LEDStripConstants.LED_STRIPS),
                 NOTE_DETECTION_CAMERA::hasTargets
-        ).asProxy();
+        ).asProxy().until(RobotContainer.INTAKE::hasNote);
     }
 }

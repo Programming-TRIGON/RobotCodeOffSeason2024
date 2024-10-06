@@ -23,16 +23,12 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ?
             new PIDController(0.0075, 0, 0) :
             new PIDController(0, 0, 0);
-    private Rotation2d trackedNoteYaw = new Rotation2d();
 
     public AlignToNoteCommand() {
         addCommands(
                 getSetCurrentLEDColorCommand().asProxy(),
                 GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
-                new RunCommand(() -> {
-                    CAMERA.trackObject();
-                    trackedNoteYaw = CAMERA.getTrackedObjectYaw();
-                })
+                new RunCommand(CAMERA::trackObject)
         );
     }
 
@@ -47,14 +43,14 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
-                () -> -Y_PID_CONTROLLER.calculate(trackedNoteYaw.getDegrees()),
+                () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
                 this::getTargetAngle
         );
     }
 
     private MirrorableRotation2d getTargetAngle() {
         final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
-        return new MirrorableRotation2d(currentRotation.plus(trackedNoteYaw), false);
+        return new MirrorableRotation2d(currentRotation.plus(CAMERA.getTrackedObjectYaw()), false);
     }
 
     private boolean hasTarget() {
