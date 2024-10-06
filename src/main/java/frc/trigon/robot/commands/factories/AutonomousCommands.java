@@ -5,6 +5,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -14,13 +15,12 @@ import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
+import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
-import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
-import java.awt.*;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -99,8 +99,8 @@ public class AutonomousCommands {
 
     private static Command getSetCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getStaticColorCommand(Color.green, LEDStripConstants.LED_STRIPS),
-                LEDStripCommands.getStaticColorCommand(Color.red, LEDStripConstants.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
                 NOTE_DETECTION_CAMERA::hasTargets
         ).asProxy().until(RobotContainer.INTAKE::hasNote);
     }
