@@ -18,8 +18,10 @@ import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.intake.Intake;
+import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.shooter.Shooter;
+import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -51,12 +53,13 @@ public class RobotContainer {
     }
 
     private void bindDefaultCommands() {
-//        SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
-//        INTAKE.setDefaultCommand(CommandConstants.DEFAULT_INTAKE_COMMAND);
-//        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
-//        AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
-//        PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
-//        SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
+        SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+        INTAKE.setDefaultCommand(CommandConstants.DEFAULT_INTAKE_COMMAND);
+        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
+        AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
+        PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
+        SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());
+        LEDStrip.setDefaultCommandForAllLEDS(CommandConstants.DEFAULT_LEDS_COMMAND);
     }
 
     private void bindControllerCommands() {

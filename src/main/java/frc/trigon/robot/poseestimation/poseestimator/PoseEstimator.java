@@ -1,14 +1,10 @@
 package frc.trigon.robot.poseestimation.poseestimator;
 
 import com.pathplanner.lib.util.PathPlannerLogging;
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveWheelPositions;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.trigon.robot.RobotContainer;
@@ -26,7 +22,7 @@ import java.util.Map;
  */
 public class PoseEstimator implements AutoCloseable {
     private final Field2d field = new Field2d();
-    private final AprilTagCamera[] robotPoseSources;
+    private final AprilTagCamera[] aprilTagCameras;
     private final PoseEstimator6328 poseEstimator6328 = PoseEstimator6328.getInstance();
 
     /**
@@ -35,7 +31,7 @@ public class PoseEstimator implements AutoCloseable {
      * @param aprilTagCameras the sources that should update the pose estimator apart from the odometry. This should be cameras etc.
      */
     public PoseEstimator(AprilTagCamera... aprilTagCameras) {
-        this.robotPoseSources = aprilTagCameras;
+        this.aprilTagCameras = aprilTagCameras;
         putAprilTagsOnFieldWidget();
         SmartDashboard.putData("Field", field);
         PathPlannerLogging.setLogActivePathCallback((pose) -> {
@@ -92,7 +88,7 @@ public class PoseEstimator implements AutoCloseable {
 
     private List<PoseEstimator6328.VisionObservation> getViableVisionObservations() {
         List<PoseEstimator6328.VisionObservation> viableVisionObservations = new ArrayList<>();
-        for (AprilTagCamera aprilTagCamera : robotPoseSources) {
+        for (AprilTagCamera aprilTagCamera : aprilTagCameras) {
             final PoseEstimator6328.VisionObservation visionObservation = getVisionObservation(aprilTagCamera);
             if (visionObservation != null)
                 viableVisionObservations.add(visionObservation);
@@ -113,13 +109,6 @@ public class PoseEstimator implements AutoCloseable {
                 aprilTagCamera.getLatestResultTimestampSeconds(),
                 aprilTagCamera.getStandardDeviations()
         );
-    }
-
-    private Matrix<N3, N1> averageDistanceToStdDevs(double averageDistance, int visibleTags) {
-        final double translationStd = PoseEstimatorConstants.TRANSLATIONS_STD_EXPONENT * Math.pow(averageDistance, 2) / (visibleTags * visibleTags);
-        final double thetaStd = PoseEstimatorConstants.THETA_STD_EXPONENT * Math.pow(averageDistance, 2) / visibleTags;
-
-        return VecBuilder.fill(translationStd, translationStd, thetaStd);
     }
 
     private void putAprilTagsOnFieldWidget() {

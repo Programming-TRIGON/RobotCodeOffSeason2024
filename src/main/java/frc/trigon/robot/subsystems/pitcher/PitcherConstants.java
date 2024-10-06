@@ -182,5 +182,8 @@ public class PitcherConstants {
         ENCODER.registerSignal(CANcoderSignal.POSITION, 100);
 
         ENCODER.setSimulationInputsFromTalonFX(MASTER_MOTOR);
+
+        ENCODER.registerSignal(CANcoderSignal.POSITION, 100);
+        ENCODER.registerSignal(CANcoderSignal.VELOCITY, 100);
     }
 }
