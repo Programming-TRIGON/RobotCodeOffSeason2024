@@ -15,6 +15,8 @@ import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.phoenix6.cancoder.CANcoderEncoder;
+import org.trigon.hardware.phoenix6.cancoder.CANcoderSignal;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -23,6 +25,7 @@ public class Pitcher extends MotorSubsystem {
     private final TalonFXMotor
             masterMotor = PitcherConstants.MASTER_MOTOR,
             followerMotor = PitcherConstants.FOLLOWER_MOTOR;
+    private final CANcoderEncoder encoder = PitcherConstants.ENCODER;
     private final MotionMagicExpoVoltage positionRequest = new MotionMagicExpoVoltage(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(PitcherConstants.FOC_ENABLED);
     private Rotation2d targetPitch = PitcherConstants.DEFAULT_PITCH;
@@ -53,6 +56,7 @@ public class Pitcher extends MotorSubsystem {
     @Override
     public void updatePeriodically() {
         masterMotor.update();
+        encoder.update();
     }
 
     @Override
@@ -86,6 +90,14 @@ public class Pitcher extends MotorSubsystem {
 
     public boolean atTargetPitch() {
         return Math.abs(masterMotor.getSignal(TalonFXSignal.POSITION) - targetPitch.getRotations()) < PitcherConstants.PITCH_TOLERANCE.getRotations();
+    }
+
+    Rotation2d getRotorPosition() {
+        return Rotation2d.fromRotations(masterMotor.getSignal(TalonFXSignal.ROTOR_POSITION));
+    }
+
+    Rotation2d getEncoderPosition() {
+        return Rotation2d.fromRotations(encoder.getSignal(CANcoderSignal.POSITION));
     }
 
     void reachTargetPitchFromShootingCalculations() {

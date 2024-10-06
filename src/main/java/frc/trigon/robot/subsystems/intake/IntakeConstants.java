@@ -71,6 +71,12 @@ public class IntakeConstants {
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> Math.abs(MASTER_MOTOR.getSignal(TalonFXSignal.TORQUE_CURRENT)) > IntakeConstants.NOTE_COLLECTION_CURRENT
     ).debounce(NOTE_COLLECTION_TIME_THRESHOLD_SECONDS);
+    static final double
+            COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS = 0.2,
+            FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS = 0.2;
+    static final double
+            COLLECTION_INDICATION_BLINKING_TIME_SECONDS = 2,
+            FEEDING_INDICATION_BLINKING_TIME_SECONDS = 2;
 
     static {
         configureMasterMotor();
