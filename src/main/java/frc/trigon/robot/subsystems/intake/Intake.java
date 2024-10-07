@@ -85,7 +85,7 @@ public class Intake extends MotorSubsystem {
      * Indicates to the driver that a note has been collected by rumbling the controller and flashing the robot's LEDs.
      */
     void indicateCollection() {
-        if (DriverStation.isAutonomous())
+        if (!DriverStation.isAutonomous())
             OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
         getCollectionIndicationLEDsCommand().schedule();
     }
