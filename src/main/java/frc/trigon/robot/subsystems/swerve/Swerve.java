@@ -44,6 +44,10 @@ public class Swerve extends MotorSubsystem {
 
         updatePoseEstimatorStates();
         RobotContainer.POSE_ESTIMATOR.periodic();
+    }
+
+    @Override
+    public void updateMechanism() {
         updateNetworkTables();
     }
 
@@ -294,7 +298,7 @@ public class Swerve extends MotorSubsystem {
 
     private void configurePathPlanner() {
         AutoBuilder.configureHolonomic(
-                () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose(),
+                RobotContainer.POSE_ESTIMATOR::getCurrentPose,
                 (pose) -> {
                 },
                 this::getSelfRelativeVelocity,

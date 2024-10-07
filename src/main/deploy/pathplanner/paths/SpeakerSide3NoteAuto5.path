@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 4.104648209296419
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.9545143705672015,
+        "y": 4.806297475842816
+      },
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoSecondNoteCollection"
+    },
+    {
+      "anchor": {
+        "x": 4.541385984180419,
+        "y": 6.3159551671216025
+      },
+      "prevControl": {
+        "x": 6.726628154111008,
+        "y": 6.770915422172725
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoSecondFeed"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 9.569999999999993,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SpeakerSide3NoteAuto",
+  "previewStartingState": {
+    "rotation": -65.77225468204594,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

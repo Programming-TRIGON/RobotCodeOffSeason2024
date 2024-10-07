@@ -1,7 +1,21 @@
 {
   "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotLength": 0.82,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": []
+  "pathFolders": [
+    "3NoteAutoThroughAmp",
+    "5NoteAutoAroundStage",
+    "7NoteAuto",
+    "FrontRow4NoteAuto",
+    "MiddleRush3NoteAuto",
+    "SourceSide3NoteAuto",
+    "SpeakerSide3NoteAuto",
+    "Zayde3NoteAuto"
+  ],
+  "autoFolders": [],
+  "defaultMaxVel": 4.0,
+  "defaultMaxAccel": 4.0,
+  "defaultMaxAngVel": 400.0,
+  "defaultMaxAngAccel": 600.0,
+  "maxModuleSpeed": 4.5
 }

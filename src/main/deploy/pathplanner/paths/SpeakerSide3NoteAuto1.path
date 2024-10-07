@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3617289206409402,
+        "y": 7.63117695249475
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.502624772470449,
+        "y": 7.790056815268025
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.340436970626591,
+        "y": 7.455085440206217
+      },
+      "prevControl": {
+        "x": 4.820129451138314,
+        "y": 7.483991413511122
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SpeakerSide3NoteAutoEjectNotePoint"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 5.826342029555829,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SpeakerSide3NoteAuto",
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,103 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.2699301408104018,
+        "y": 6.932078092184688
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6306711948340775,
+        "y": 7.780307057051169
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.366128157434463,
+        "y": 7.673059716665752
+      },
+      "prevControl": {
+        "x": 2.3174507560666098,
+        "y": 7.682769692604344
+      },
+      "nextControl": {
+        "x": 4.419102044854923,
+        "y": 7.663309958448895
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.255570858190017,
+        "y": 7.445640937793504
+      },
+      "prevControl": {
+        "x": 7.991228576374863,
+        "y": 7.475012302439632
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "5NoteAutoAroundStageFirstCollection"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.75,
+      "rotationDegrees": -6.024797168719817,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 1.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -5.910000000000025,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "5NoteAutoAroundStage",
+  "previewStartingState": {
+    "rotation": 55.06,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
