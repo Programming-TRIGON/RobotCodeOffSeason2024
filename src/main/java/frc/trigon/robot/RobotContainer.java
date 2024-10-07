@@ -13,6 +13,7 @@ import frc.trigon.robot.commands.factories.AmpCommands;
 import frc.trigon.robot.commands.factories.AutonomousCommands;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
+import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -27,7 +28,10 @@ import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
-    public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator();
+    public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator(
+            CameraConstants.FRONT_TAG_CAMERA,
+            CameraConstants.REAR_TAG_CAMERA
+    );
     public static final Swerve SWERVE = new Swerve();
     public static final Intake INTAKE = new Intake();
     public static final Climber CLIMBER = new Climber();
