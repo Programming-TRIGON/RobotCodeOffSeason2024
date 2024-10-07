@@ -122,7 +122,7 @@ public class IntakeConstants {
     }
 
     public enum IntakeState {
-        COLLECT(2.5), //TODO: calibrate
+        COLLECT(3), //TODO: calibrate
         EJECT(-2), //TODO: calibrate
         STOP(0),
         FEED_SHOOTING(8), //TODO: calibrate
