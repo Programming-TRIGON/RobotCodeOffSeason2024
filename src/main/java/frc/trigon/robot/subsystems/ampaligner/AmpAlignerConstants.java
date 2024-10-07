@@ -118,7 +118,7 @@ public class AmpAlignerConstants {
 
     public enum AmpAlignerState {
         OPEN(Rotation2d.fromDegrees(17.7)),
-        CLOSE(Rotation2d.fromDegrees(173.7));
+        CLOSE(Rotation2d.fromDegrees(173));
 
         public final Rotation2d targetAngle;
 
