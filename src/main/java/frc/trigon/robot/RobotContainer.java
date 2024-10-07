@@ -53,7 +53,7 @@ public class RobotContainer {
     }
 
     private void bindDefaultCommands() {
-//        SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
+        SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
         INTAKE.setDefaultCommand(CommandConstants.DEFAULT_INTAKE_COMMAND);
 //        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
         AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
@@ -64,6 +64,7 @@ public class RobotContainer {
 
     private void bindControllerCommands() {
         OperatorConstants.RESET_HEADING_TRIGGER.onTrue(CommandConstants.RESET_HEADING_COMMAND);
+        OperatorConstants.SET_GYRO_HEADING_TO_SOLVE_PNP_HEADING_TRIGGER.whileTrue(CommandConstants.SET_GYRO_HEADING_TO_SOLVE_PNP_HEADING_COMMAND);
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
