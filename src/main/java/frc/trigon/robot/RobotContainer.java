@@ -12,7 +12,6 @@ import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.AmpCommands;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
-import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -34,8 +33,8 @@ public class RobotContainer {
     public static final Shooter SHOOTER = new Shooter();
     public static final AmpAligner AMP_ALIGNER = new AmpAligner();
     public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator(
-            CameraConstants.FRONT_TAG_CAMERA,
-            CameraConstants.REAR_TAG_CAMERA
+//            CameraConstants.FRONT_TAG_CAMERA,
+//            CameraConstants.REAR_TAG_CAMERA
     );
     private LoggedDashboardChooser<Command> autoChooser;
 
