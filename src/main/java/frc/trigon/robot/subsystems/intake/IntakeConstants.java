@@ -49,8 +49,8 @@ public class IntakeConstants {
             GEAR_RATIO,
             MOMENT_OF_INERTIA
     );
-    private static final double NOTE_DISTANCE_THRESHOLD_CENTIMETERS = 5;
-    private static final DoubleSupplier DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER = () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS ? NOTE_DISTANCE_THRESHOLD_CENTIMETERS - 1 : NOTE_DISTANCE_THRESHOLD_CENTIMETERS + 1;
+    private static final double NOTE_DISTANCE_THRESHOLD = 825;
+    private static final DoubleSupplier DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER = () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS ? NOTE_DISTANCE_THRESHOLD - 1 : NOTE_DISTANCE_THRESHOLD + 1;
 
     private static final double MAX_DISPLAYABLE_VELOCITY = 12;
     static final SpeedMechanism2d MECHANISM = new SpeedMechanism2d(
@@ -59,10 +59,10 @@ public class IntakeConstants {
 
     public static final double RUMBLE_DURATION_SECONDS = 0.6;
     public static final double RUMBLE_POWER = 1;
-    static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.6;
+    static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.22;
     static final BooleanEvent HAS_NOTE_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
-            () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
+            () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
     static final double NOTE_STOPPING_SECONDS = 1;
     private static final double NOTE_COLLECTION_CURRENT = 10; //TODO: calibrate
@@ -122,7 +122,7 @@ public class IntakeConstants {
     }
 
     public enum IntakeState {
-        COLLECT(5), //TODO: calibrate
+        COLLECT(2.5), //TODO: calibrate
         EJECT(-2), //TODO: calibrate
         STOP(0),
         FEED_SHOOTING(8), //TODO: calibrate

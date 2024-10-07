@@ -33,7 +33,7 @@ public class SwerveModule {
     public SwerveModule(int moduleID, double offsetRotations) {
         driveMotor = new TalonFXMotor(moduleID, "Module" + moduleID + "Drive", RobotConstants.CANIVORE_NAME);
         steerMotor = new TalonFXMotor(moduleID + 4, "Module" + moduleID + "Steer", RobotConstants.CANIVORE_NAME);
-        steerEncoder = new CANcoderEncoder(moduleID, "Module" + moduleID + "SteerEncoder", RobotConstants.CANIVORE_NAME);
+        steerEncoder = new CANcoderEncoder(moduleID + 4, "Module" + moduleID + "SteerEncoder", RobotConstants.CANIVORE_NAME);
         configureHardware(offsetRotations);
     }
 
@@ -182,7 +182,7 @@ public class SwerveModule {
         steerMotor.registerThreadedSignal(TalonFXSignal.POSITION, PoseEstimatorConstants.ODOMETRY_FREQUENCY_HERTZ);
         steerMotor.registerSignal(TalonFXSignal.VELOCITY, 100);
         steerMotor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
-        
+
         steerEncoder.registerSignal(CANcoderSignal.POSITION, 100);
         steerEncoder.registerSignal(CANcoderSignal.VELOCITY, 100);
     }

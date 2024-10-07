@@ -15,7 +15,6 @@ import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.pigeon2.Pigeon2Gyro;
 import org.trigon.hardware.phoenix6.pigeon2.Pigeon2Signal;
-import org.trigon.utilities.Conversions;
 
 import java.util.function.DoubleSupplier;
 
@@ -27,10 +26,10 @@ public class SwerveConstants {
             GYRO_MOUNT_POSITION_PITCH = 0,
             GYRO_MOUNT_POSITION_ROLL = 0;
     private static final double
-            FRONT_LEFT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(0),
-            FRONT_RIGHT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(0),
-            REAR_LEFT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(0),
-            REAR_RIGHT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(0);
+            FRONT_LEFT_STEER_ENCODER_OFFSET = 0.936,
+            FRONT_RIGHT_STEER_ENCODER_OFFSET = 0.562,
+            REAR_LEFT_STEER_ENCODER_OFFSET = 0.956,
+            REAR_RIGHT_STEER_ENCODER_OFFSET = -0.007;
     private static final int
             FRONT_LEFT_ID = 1,
             FRONT_RIGHT_ID = 2,
