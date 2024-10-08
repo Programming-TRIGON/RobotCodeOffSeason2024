@@ -37,8 +37,8 @@ public class IntakeConstants {
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double GEAR_RATIO = 1.5;
     private static final double
-            DISTANCE_SENSOR_SCALING_SLOPE = 0.0002,
-            DISTANCE_SENSOR_SCALING_INTERCEPT_POINT = -200;
+            DISTANCE_SENSOR_SCALING_SLOPE = 0.002,
+            DISTANCE_SENSOR_SCALING_INTERCEPT_POINT = -2000;
     static final boolean FOC_ENABLED = true;
 
     private static final int MOTOR_AMOUNT = 2;
@@ -49,7 +49,7 @@ public class IntakeConstants {
             GEAR_RATIO,
             MOMENT_OF_INERTIA
     );
-    private static final double NOTE_DISTANCE_THRESHOLD_CENTIMETERS = 5;
+    private static final double NOTE_DISTANCE_THRESHOLD_CENTIMETERS = 27;
     private static final DoubleSupplier DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER = () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS ? NOTE_DISTANCE_THRESHOLD_CENTIMETERS - 1 : NOTE_DISTANCE_THRESHOLD_CENTIMETERS + 1;
 
     private static final double MAX_DISPLAYABLE_VELOCITY = 12;
@@ -59,7 +59,7 @@ public class IntakeConstants {
 
     public static final double RUMBLE_DURATION_SECONDS = 0.6;
     public static final double RUMBLE_POWER = 1;
-    static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.01;
+    static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0;
     static final BooleanEvent HAS_NOTE_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
@@ -122,7 +122,7 @@ public class IntakeConstants {
     }
 
     public enum IntakeState {
-        COLLECT(4), //TODO: calibrate
+        COLLECT(3), //TODO: calibrate
         EJECT(-2), //TODO: calibrate
         STOP(0),
         FEED_SHOOTING(8), //TODO: calibrate
