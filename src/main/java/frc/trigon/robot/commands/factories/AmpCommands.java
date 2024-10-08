@@ -1,6 +1,7 @@
 package frc.trigon.robot.commands.factories;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.CommandConstants;
@@ -16,6 +17,8 @@ import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 
 public class AmpCommands {
+    private static boolean IS_FEEDING_NOTE = false;
+
     public static Command getAutonomousScoreInAmpCommand() {
         return new ParallelCommandGroup(
                 getAutonomousPrepareForAmpCommand(),
@@ -25,7 +28,7 @@ public class AmpCommands {
     }
 
     public static Command getScoreInAmpCommand() {
-        return new ParallelCommandGroup(
+        return new InstantCommand(() -> IS_FEEDING_NOTE = false).andThen(new ParallelCommandGroup(
                 getPrepareForAmpCommand(),
                 GeneralCommands.runWhenContinueTriggerPressed(getFeedToAmpCommand()),
                 GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND)
@@ -44,7 +47,7 @@ public class AmpCommands {
         return new ParallelCommandGroup(
                 GeneralCommands.runWhen(
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
-                                .alongWith(PitcherCommands.getSetTargetPitchCommand(ShootingConstants.AMP_PITCH)),
+                                .alongWith(PitcherCommands.getSetTargetPitchCommand(ShootingConstants.PREPARE_AMP_PITCH)),
                         () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation().getDistance(
                                 FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MINIMUM_DISTANCE_FROM_AMP_FOR_AUTONOMOUS_AMP_PREPARATION_METERS
                 ),
@@ -55,13 +58,13 @@ public class AmpCommands {
     private static Command getPrepareForAmpCommand() {
         return new ParallelCommandGroup(
                 AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.AMP_PITCH),
+                GeneralCommands.getContinuousConditionalCommand(PitcherCommands.getSetTargetPitchCommand(ShootingConstants.SHOOT_AMP_PITCH), PitcherCommands.getSetTargetPitchCommand(ShootingConstants.PREPARE_AMP_PITCH), () -> IS_FEEDING_NOTE),
                 ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
 
     private static Command getFeedToAmpCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP).alongWith(GeneralCommands.getVisualizeNoteShootingCommand()), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
+        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP).alongWith(GeneralCommands.getVisualizeNoteShootingCommand()).alongWith(new InstantCommand(() -> IS_FEEDING_NOTE = true)), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());// && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 
     private static Command getPathfindToAmpCommand() {

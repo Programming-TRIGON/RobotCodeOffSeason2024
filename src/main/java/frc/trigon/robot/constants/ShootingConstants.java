@@ -19,7 +19,8 @@ public class ShootingConstants {
             CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = 5;
     public static final Rotation2d
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57),
-            AMP_PITCH = Rotation2d.fromDegrees(49),
+            PREPARE_AMP_PITCH = Rotation2d.fromDegrees(55),
+            SHOOT_AMP_PITCH = Rotation2d.fromDegrees(45),
             MANUAL_LOW_DELIVERY_PITCH = Rotation2d.fromDegrees(12),
             EJECT_FROM_SHOOTER_PITCH = Rotation2d.fromDegrees(12),
             CLOSE_EJECT_FROM_SHOOTER_PITCH = Rotation2d.fromDegrees(12);
