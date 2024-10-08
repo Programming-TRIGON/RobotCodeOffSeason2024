@@ -30,8 +30,8 @@ public class AmpCommands {
     public static Command getScoreInAmpCommand() {
         return new InstantCommand(() -> IS_FEEDING_NOTE = false).andThen(new ParallelCommandGroup(
                 getPrepareForAmpCommand(),
-                GeneralCommands.runWhenContinueTriggerPressed(getFeedToAmpCommand()),
-                GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND)
+                GeneralCommands.runWhenContinueTriggerPressed(getFeedToAmpCommand())
+//                GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND)
         ));
     }
 

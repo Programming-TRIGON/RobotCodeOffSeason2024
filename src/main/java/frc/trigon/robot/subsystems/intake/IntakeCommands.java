@@ -59,6 +59,6 @@ public class IntakeCommands {
 
 
     private static Command getWaitForNoteToStopCommand() {
-        return new WaitCommand(IntakeConstants.NOTE_STOPPING_SECONDS);
+        return getSetTargetVoltageCommand(-3).withTimeout(0.1);
     }
 }
