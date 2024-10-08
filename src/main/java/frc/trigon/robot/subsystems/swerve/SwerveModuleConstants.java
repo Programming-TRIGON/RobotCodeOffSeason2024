@@ -55,8 +55,8 @@ public class SwerveModuleConstants {
             STEER_MOTOR_GEARBOX = DCMotor.getFalcon500Foc(STEER_MOTOR_AMOUNT);
 
     static final SysIdRoutine.Config DRIVE_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(3).per(Units.Second),
-            Units.Volts.of(2),
+            Units.Volts.of(5).per(Units.Second),
+            Units.Volts.of(8),
             Units.Second.of(1000)
     );
 

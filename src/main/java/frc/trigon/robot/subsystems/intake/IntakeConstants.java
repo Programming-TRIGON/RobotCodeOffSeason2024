@@ -59,7 +59,7 @@ public class IntakeConstants {
 
     public static final double RUMBLE_DURATION_SECONDS = 0.6;
     public static final double RUMBLE_POWER = 1;
-    static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.22;
+    static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.01;
     static final BooleanEvent HAS_NOTE_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD
@@ -122,7 +122,7 @@ public class IntakeConstants {
     }
 
     public enum IntakeState {
-        COLLECT(3), //TODO: calibrate
+        COLLECT(4), //TODO: calibrate
         EJECT(-2), //TODO: calibrate
         STOP(0),
         FEED_SHOOTING(8), //TODO: calibrate

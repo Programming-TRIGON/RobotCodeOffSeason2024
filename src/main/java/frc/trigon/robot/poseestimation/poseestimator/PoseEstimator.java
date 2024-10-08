@@ -81,6 +81,8 @@ public class PoseEstimator implements AutoCloseable {
     }
 
     public void setGyroHeadingToBestSolvePNPHeading() {
+        if (aprilTagCameras.length == 0)
+            return;
         int closestCameraToTag = 0;
         for (int i = 0; i < aprilTagCameras.length; i++) {
             if (aprilTagCameras[i].getDistanceToBestTagMeters() < aprilTagCameras[closestCameraToTag].getDistanceToBestTagMeters())
