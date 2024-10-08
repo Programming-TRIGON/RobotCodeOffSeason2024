@@ -64,7 +64,7 @@ public class IntakeConstants {
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
-    static final double NOTE_STOPPING_SECONDS = 1;
+    static final double CORRECT_NOTE_POSITION_TIMEOUT_SECONDS = 1;
     private static final double NOTE_COLLECTION_CURRENT = 10; //TODO: calibrate
     private static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.25; //TODO: calibrate
     static final BooleanEvent EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT = new BooleanEvent(
@@ -122,11 +122,12 @@ public class IntakeConstants {
     }
 
     public enum IntakeState {
-        COLLECT(4.8), //TODO: calibrate
-        EJECT(-2), //TODO: calibrate
+        COLLECT(4.8),
+        EJECT(-2),
         STOP(0),
-        FEED_SHOOTING(8), //TODO: calibrate
-        FEED_AMP(4); //TODO: calibrate
+        FEED_SHOOTING(8),
+        FEED_AMP(4),
+        CORRECT_NOTE_POSITION(-3);
 
         public final double voltage;
 

@@ -46,7 +46,7 @@ public class IntakeCommands {
                         RobotContainer.INTAKE::hasNote,
                         RobotContainer.INTAKE
                 ),
-                getWaitForNoteToStopCommand().andThen(getStopIntakeCommand())
+                getCorrectNotePositionCommand().andThen(getStopIntakeCommand())
         );
     }
 
@@ -58,7 +58,7 @@ public class IntakeCommands {
     }
 
 
-    private static Command getWaitForNoteToStopCommand() {
-        return getSetTargetVoltageCommand(-3).withTimeout(0.1);
+    private static Command getCorrectNotePositionCommand() {
+        return getSetTargetStateCommand(IntakeConstants.IntakeState.CORRECT_NOTE_POSITION).withTimeout(IntakeConstants.CORRECT_NOTE_POSITION_TIMEOUT_SECONDS);
     }
 }
