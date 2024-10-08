@@ -122,12 +122,14 @@ public class AprilTagCamera {
         if (!isWithinBestTagRangeForSolvePNP())
             return new Pose2d(fieldRelativeRobotTranslation, gyroHeading);
 
-        final Rotation2d solvePNPHeading = inputs.cameraSolvePNPPose.getRotation().toRotation2d().minus(robotCenterToCamera.getRotation().toRotation2d());
+        final Rotation2d solvePNPHeading = inputs.cameraSolvePNPPose.toPose2d().getRotation().minus(robotCenterToCamera.getRotation().toRotation2d());
         return new Pose2d(fieldRelativeRobotTranslation, solvePNPHeading);
     }
 
     private Translation2d getFieldRelativeRobotTranslation(Rotation2d gyroHeading) {
-        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]).plus(AprilTagCameraConstants.TAG_OFFSET);
+        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]);//.plus(AprilTagCameraConstants.TAG_OFFSET);
+        if (bestTagPose == null)
+            return null;
 
         final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(gyroHeading, bestTagPose);
         final Translation2d fieldRelativeRobotPose = getFieldRelativeRobotPose(tagRelativeCameraTranslation, bestTagPose);
@@ -194,8 +196,8 @@ public class AprilTagCamera {
 
     private void logCameraInfo() {
         Logger.processInputs("Cameras/" + name, inputs);
-        if (!FieldConstants.TAG_ID_TO_POSE.isEmpty())
-            logUsedTags();
+//        if (!FieldConstants.TAG_ID_TO_POSE.isEmpty())
+//            logUsedTags();
         if (!inputs.hasResult || inputs.distanceFromBestTag == 0 || robotPose == null) {
             logEstimatedRobotPose();
             logSolvePNPPose();

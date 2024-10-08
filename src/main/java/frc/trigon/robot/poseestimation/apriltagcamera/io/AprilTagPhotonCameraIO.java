@@ -81,8 +81,8 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
      * @return the estimated pose
      */
     private Pose3d getSolvePNPPose(PhotonPipelineResult result) {
-        if (result.getMultiTagResult().isPresent()) {
-            final Transform3d cameraPoseTransform = result.getMultiTagResult().get().estimatedPose.best;
+        if (result.getMultiTagResult().estimatedPose.isPresent) {
+            final Transform3d cameraPoseTransform = result.getMultiTagResult().estimatedPose.best;
             return new Pose3d().plus(cameraPoseTransform).relativeTo(FieldConstants.APRIL_TAG_FIELD_LAYOUT.getOrigin());
         }
 

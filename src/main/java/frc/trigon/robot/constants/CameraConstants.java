@@ -26,14 +26,14 @@ public class CameraConstants {
     public static final AprilTagCamera
             FRONT_TAG_CAMERA = new AprilTagCamera(
             AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
-            "frontTagCamera",
+            "FrontTagCamera",
             FRONT_CENTER_TO_CAMERA,
             THETA_STD_EXPONENT,
             TRANSLATIONS_STD_EXPONENT
     ),
             REAR_TAG_CAMERA = new AprilTagCamera(
                     AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
-                    "rearTagCamera",
+                    "RearTagCamera",
                     REAR_CENTER_TO_CAMERA,
                     THETA_STD_EXPONENT,
                     TRANSLATIONS_STD_EXPONENT

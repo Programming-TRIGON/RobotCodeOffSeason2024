@@ -19,6 +19,7 @@ import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.intake.Intake;
+import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.shooter.Shooter;
@@ -79,6 +80,7 @@ public class RobotContainer {
         OperatorConstants.ALIGN_TO_MIDDLE_STAGE.whileTrue(CommandConstants.ALIGN_TO_MIDDLE_STAGE_COMMAND);
 
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
+        OperatorConstants.OPERATOR_CONTROLLER.l().whileTrue(IntakeCommands.getSetTargetVoltageCommand(2));
         OperatorConstants.COLLECT_NOTE_TRIGGER.whileTrue(GeneralCommands.getNoteCollectionCommand());
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_ON_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_ON_COMMAND);
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND);
