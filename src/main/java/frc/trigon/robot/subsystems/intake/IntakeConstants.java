@@ -64,7 +64,7 @@ public class IntakeConstants {
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
-    static final double CORRECT_NOTE_POSITION_TIMEOUT_SECONDS = 1;
+    static final double CORRECT_NOTE_POSITION_TIMEOUT_SECONDS = 0.1;
     private static final double NOTE_COLLECTION_CURRENT = 10; //TODO: calibrate
     private static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.25; //TODO: calibrate
     static final BooleanEvent EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT = new BooleanEvent(
