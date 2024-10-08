@@ -28,13 +28,13 @@ public class Intake extends MotorSubsystem {
     public void updatePeriodically() {
         masterMotor.update();
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
+        Logger.recordOutput("HasNote", hasNote());
+        Logger.recordOutput("distanceSensorScaledValue", IntakeConstants.DISTANCE_SENSOR.getScaledValue());
     }
 
     @Override
     public void updateMechanism() {
         IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
-        Logger.recordOutput("HasNote", hasNote());
-        Logger.recordOutput("distanceSensorScaledValue", IntakeConstants.DISTANCE_SENSOR.getScaledValue());
     }
 
     @Override
