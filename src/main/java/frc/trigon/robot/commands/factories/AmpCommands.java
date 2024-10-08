@@ -32,7 +32,7 @@ public class AmpCommands {
                 getPrepareForAmpCommand(),
                 GeneralCommands.runWhenContinueTriggerPressed(getFeedToAmpCommand()),
                 GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND)
-        );
+        ));
     }
 
     /**
