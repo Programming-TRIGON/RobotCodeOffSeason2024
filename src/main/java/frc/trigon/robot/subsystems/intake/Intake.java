@@ -14,8 +14,6 @@ import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
-import static frc.trigon.robot.subsystems.intake.IntakeConstants.DISTANCE_SENSOR;
-
 public class Intake extends MotorSubsystem {
     private final TalonFXMotor masterMotor = IntakeConstants.MASTER_MOTOR;
     private final VoltageOut voltageRequest = new VoltageOut(0).withEnableFOC(IntakeConstants.FOC_ENABLED);
@@ -29,14 +27,14 @@ public class Intake extends MotorSubsystem {
     @Override
     public void updatePeriodically() {
         masterMotor.update();
-        DISTANCE_SENSOR.updateSensor();
+        IntakeConstants.DISTANCE_SENSOR.updateSensor();
     }
 
     @Override
     public void updateMechanism() {
         IntakeConstants.MECHANISM.update(masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
         Logger.recordOutput("HasNote", hasNote());
-        Logger.recordOutput("distanceSensorScaledValue", DISTANCE_SENSOR.getScaledValue());
+        Logger.recordOutput("distanceSensorScaledValue", IntakeConstants.DISTANCE_SENSOR.getScaledValue());
     }
 
     @Override
