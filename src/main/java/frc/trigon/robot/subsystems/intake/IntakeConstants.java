@@ -37,8 +37,8 @@ public class IntakeConstants {
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double GEAR_RATIO = 1.5;
     private static final double
-            DISTANCE_SENSOR_SCALING_SLOPE = 0.0004,
-            DISTANCE_SENSOR_SCALING_INTERCEPT_POINT = 400;
+            DISTANCE_SENSOR_SCALING_SLOPE = 0.0002,
+            DISTANCE_SENSOR_SCALING_INTERCEPT_POINT = -200;
     static final boolean FOC_ENABLED = true;
 
     private static final int MOTOR_AMOUNT = 2;
@@ -49,8 +49,8 @@ public class IntakeConstants {
             GEAR_RATIO,
             MOMENT_OF_INERTIA
     );
-    private static final double NOTE_DISTANCE_THRESHOLD = 825;
-    private static final DoubleSupplier DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER = () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS ? NOTE_DISTANCE_THRESHOLD - 1 : NOTE_DISTANCE_THRESHOLD + 1;
+    private static final double NOTE_DISTANCE_THRESHOLD_CENTIMETERS = 5;
+    private static final DoubleSupplier DISTANCE_SENSOR_SIMULATION_VALUE_SUPPLIER = () -> SimulationObjectDetectionCameraIO.HAS_OBJECTS ? NOTE_DISTANCE_THRESHOLD_CENTIMETERS - 1 : NOTE_DISTANCE_THRESHOLD_CENTIMETERS + 1;
 
     private static final double MAX_DISPLAYABLE_VELOCITY = 12;
     static final SpeedMechanism2d MECHANISM = new SpeedMechanism2d(
@@ -62,7 +62,7 @@ public class IntakeConstants {
     static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0.01;
     static final BooleanEvent HAS_NOTE_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
-            () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD
+            () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
     static final double NOTE_STOPPING_SECONDS = 1;
     private static final double NOTE_COLLECTION_CURRENT = 10; //TODO: calibrate
