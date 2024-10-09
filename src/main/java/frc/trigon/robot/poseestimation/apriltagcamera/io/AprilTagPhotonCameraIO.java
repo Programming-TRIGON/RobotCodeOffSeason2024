@@ -95,7 +95,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private int[] getVisibleTagIDs(PhotonPipelineResult result) {
         final int[] visibleTagIDs = new int[result.getTargets().size()];
 
-        for (int i = 1; i < visibleTagIDs.length; i++)
+        for (int i = 0; i < visibleTagIDs.length; i++)
             visibleTagIDs[i] = result.getTargets().get(i).getFiducialId();
         return visibleTagIDs;
     }

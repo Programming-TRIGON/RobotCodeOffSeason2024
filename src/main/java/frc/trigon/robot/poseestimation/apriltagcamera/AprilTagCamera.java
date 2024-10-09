@@ -127,7 +127,7 @@ public class AprilTagCamera {
     }
 
     private Translation2d getFieldRelativeRobotTranslation(Rotation2d gyroHeading) {
-        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]);//.plus(AprilTagCameraConstants.TAG_OFFSET);
+        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]).plus(AprilTagCameraConstants.TAG_OFFSET);
         if (bestTagPose == null)
             return null;
 

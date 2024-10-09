@@ -114,7 +114,7 @@ public class PoseEstimator implements AutoCloseable {
         if (!aprilTagCamera.hasNewResult())
             return null;
         final Pose2d robotPose = aprilTagCamera.getEstimatedRobotPose();
-        if (robotPose == null)
+        if (robotPose == null || robotPose.getTranslation() == null || robotPose.getRotation() == null)
             return null;
 
         return new PoseEstimator6328.VisionObservation(
