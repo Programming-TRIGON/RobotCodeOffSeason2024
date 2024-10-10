@@ -31,7 +31,7 @@ public class SwerveCommands {
     public static Command getClosedLoopFieldRelativeDriveCommand(DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier thetaSupplier) {
         return new InitExecuteCommand(
                 () -> SWERVE.initializeDrive(true),
-                () -> SWERVE.fieldRelativeDrive(xSupplier.getAsDouble(), ySupplier.getAsDouble(), thetaSupplier.getAsDouble()),
+                () -> SWERVE.fieldRelativeDrive(-xSupplier.getAsDouble(), -ySupplier.getAsDouble(), thetaSupplier.getAsDouble()),
                 SWERVE
         );
     }

@@ -54,6 +54,8 @@ public class AprilTagCamera {
         aprilTagCameraIO.updateInputs(inputs);
 
         robotPose = calculateBestRobotPose();
+        if (inputs.cameraSolvePNPPose != null)
+            Logger.recordOutput("SolvePNPPose", inputs.cameraSolvePNPPose);
         logCameraInfo();
     }
 
@@ -117,23 +119,20 @@ public class AprilTagCamera {
         if (inputs.visibleTagIDs.length == 0 || !inputs.hasResult)
             return null;
 
-        final Translation2d fieldRelativeRobotTranslation = getFieldRelativeRobotTranslation(gyroHeading);
-
         if (!isWithinBestTagRangeForSolvePNP())
-            return new Pose2d(fieldRelativeRobotTranslation, gyroHeading);
-
-        final Rotation2d solvePNPHeading = inputs.cameraSolvePNPPose.toPose2d().getRotation().minus(robotCenterToCamera.getRotation().toRotation2d());
-        return new Pose2d(fieldRelativeRobotTranslation, solvePNPHeading);
+            return new Pose2d(getFieldRelativeRobotTranslation(gyroHeading), gyroHeading);
+        final Rotation2d solvePNPHeading = inputs.cameraSolvePNPPose.getRotation().toRotation2d().minus(robotCenterToCamera.getRotation().toRotation2d());
+        return new Pose2d(getFieldRelativeRobotTranslation(solvePNPHeading), solvePNPHeading);
     }
 
-    private Translation2d getFieldRelativeRobotTranslation(Rotation2d gyroHeading) {
+    private Translation2d getFieldRelativeRobotTranslation(Rotation2d currentHeading) {
         final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]).plus(AprilTagCameraConstants.TAG_OFFSET);
         if (bestTagPose == null)
             return null;
 
-        final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(gyroHeading, bestTagPose);
+        final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(currentHeading, bestTagPose);
         final Translation2d fieldRelativeRobotPose = getFieldRelativeRobotPose(tagRelativeCameraTranslation, bestTagPose);
-        final Translation2d fieldRelativeCameraToRobotTranslation = robotCenterToCamera.getTranslation().toTranslation2d().rotateBy(gyroHeading);
+        final Translation2d fieldRelativeCameraToRobotTranslation = robotCenterToCamera.getTranslation().toTranslation2d().rotateBy(currentHeading);
         return fieldRelativeRobotPose.minus(fieldRelativeCameraToRobotTranslation);
     }
 
@@ -160,8 +159,8 @@ public class AprilTagCamera {
     }
 
     private double calculateRobotPlaneDistanceToTag(Pose3d usedTagPose, double robotPlaneTargetYaw) {
-        double zDistanceToUsedTagMeters = Math.abs(usedTagPose.getZ() - robotCenterToCamera.getTranslation().getZ());
-        double robotPlaneDistanceFromUsedTagMeters = zDistanceToUsedTagMeters / Math.tan(-robotCenterToCamera.getRotation().getY() - inputs.bestTargetRelativePitchRadians);
+        final double zDistanceToUsedTagMeters = Math.abs(usedTagPose.getZ() - robotCenterToCamera.getTranslation().getZ());
+        final double robotPlaneDistanceFromUsedTagMeters = zDistanceToUsedTagMeters / Math.tan(-robotCenterToCamera.getRotation().getY() - inputs.bestTargetRelativePitchRadians);
         return robotPlaneDistanceFromUsedTagMeters / Math.cos(robotPlaneTargetYaw);
     }
 
