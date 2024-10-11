@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.trigon.robot.Robot;
 
 public class LEDStripConstants {
-    private static final int PORT = 0;
+    private static final int PORT = 9;
     private static final int
-            RIGHT_CLIMBER_NUMBER_OF_LEDS = 24,
-            LEFT_CLIMBER_NUMBER_OF_LEDS = 24;
+            RIGHT_CLIMBER_NUMBER_OF_LEDS = 22,
+            LEFT_CLIMBER_NUMBER_OF_LEDS = 23;
     private static final boolean
             RIGHT_CLIMBER_INVERTED = false,
             LEFT_CLIMBER_INVERTED = false;
