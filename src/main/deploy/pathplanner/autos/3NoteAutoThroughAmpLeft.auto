@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3617289206409402,
-      "y": 7.63117695249475
+      "x": 0.7531929553170285,
+      "y": 6.932078092184688
     },
     "rotation": 0
   },
@@ -11,44 +11,6 @@
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "PrepareForCloseEjectFromShooter"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "SpeakerSide3NoteAuto1"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.05
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
         {
           "type": "race",
           "data": {
@@ -66,13 +28,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SpeakerSide3NoteAuto2"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "SpeakerSide3NoteAuto3"
+                        "pathName": "3NoteAutoThroughAmp1"
                       }
                     },
                     {
@@ -90,13 +46,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SpeakerSide3NoteAuto4"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "SpeakerSide3NoteAuto5"
+                        "pathName": "3NoteAutoThroughAmp2"
                       }
                     },
                     {
@@ -114,13 +64,37 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SpeakerSide3NoteAuto6"
+                        "pathName": "3NoteAutoThroughAmpLeft3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "SpeakerSide3NoteAuto7"
+                        "pathName": "3NoteAutoThroughAmpLeft4"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3NoteAutoThroughAmpLeft5"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3NoteAutoThroughAmp4"
                       }
                     },
                     {
@@ -150,6 +124,6 @@
       ]
     }
   },
-  "folder": "Misc",
+  "folder": "3NoteAutoThroughAmpVarients",
   "choreoAuto": false
 }
