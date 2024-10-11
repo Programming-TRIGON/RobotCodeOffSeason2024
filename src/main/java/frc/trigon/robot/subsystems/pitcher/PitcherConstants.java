@@ -45,7 +45,7 @@ public class PitcherConstants {
     private static final double
             P = RobotHardwareStats.isSimulation() ? 100 : 0.5,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 20 : 0.6,
+            D = RobotHardwareStats.isSimulation() ? 20 : 0.5,
             KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.3,
             KV = RobotHardwareStats.isSimulation() ? 32 : 23,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0,

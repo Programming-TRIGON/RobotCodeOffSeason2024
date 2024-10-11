@@ -7,7 +7,6 @@ import frc.trigon.robot.commands.AlignToNoteCommand;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
-import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.climber.ClimberCommands;
 import frc.trigon.robot.subsystems.climber.ClimberConstants;
@@ -43,7 +42,7 @@ public class GeneralCommands {
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 LEDStripCommands.getStaticColorCommand(Color.kOrange, LEDStrip.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.SHOOTER_VELOCITY_FOR_INTAKE).until(RobotContainer.INTAKE::hasNote)
+                ShooterCommands.getSetTargetVelocityCommand(-10).until(RobotContainer.INTAKE::hasNote)
         ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
     }
 

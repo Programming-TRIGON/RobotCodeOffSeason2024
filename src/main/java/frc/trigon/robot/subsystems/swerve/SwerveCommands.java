@@ -48,7 +48,7 @@ public class SwerveCommands {
     public static Command getClosedLoopFieldRelativeDriveCommand(DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<MirrorableRotation2d> angleSupplier) {
         return new InitExecuteCommand(
                 () -> SWERVE.initializeDrive(true),
-                () -> SWERVE.fieldRelativeDrive(xSupplier.getAsDouble(), ySupplier.getAsDouble(), angleSupplier.get()),
+                () -> SWERVE.fieldRelativeDrive(-xSupplier.getAsDouble(), -ySupplier.getAsDouble(), angleSupplier.get()),
                 SWERVE
         );
     }

@@ -190,13 +190,13 @@ public class AprilTagCamera {
     }
 
     private boolean isWithinBestTagRangeForSolvePNP() {
-        return inputs.distanceFromBestTag < AprilTagCameraConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS;
+        return inputs.distanceFromBestTag < AprilTagCameraConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_SOLVE_PNP_METERS;
     }
 
     private void logCameraInfo() {
         Logger.processInputs("Cameras/" + name, inputs);
-//        if (!FieldConstants.TAG_ID_TO_POSE.isEmpty())
-//            logUsedTags();
+        if (!FieldConstants.TAG_ID_TO_POSE.isEmpty())
+            logUsedTags();
         if (!inputs.hasResult || inputs.distanceFromBestTag == 0 || robotPose == null) {
             logEstimatedRobotPose();
             logSolvePNPPose();
