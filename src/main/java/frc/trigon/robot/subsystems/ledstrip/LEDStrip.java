@@ -29,7 +29,7 @@ public class LEDStrip extends SubsystemBase {
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
 
-        addLEDStripToLEDStripsArrayArray(this);
+        addLEDStripToLEDStripsArray(this);
     }
 
     public static void setDefaultCommandForAllLEDS(Command command) {
@@ -91,7 +91,7 @@ public class LEDStrip extends SubsystemBase {
         LED.setData(LEDStripConstants.LED_BUFFER);
     }
 
-    private void addLEDStripToLEDStripsArrayArray(LEDStrip ledStrip) {
+    private void addLEDStripToLEDStripsArray(LEDStrip ledStrip) {
         final LEDStrip[] newLEDStrips = new LEDStrip[LED_STRIPS.length + 1];
         System.arraycopy(LED_STRIPS, 0, newLEDStrips, 0, LED_STRIPS.length);
         newLEDStrips[LED_STRIPS.length] = ledStrip;
