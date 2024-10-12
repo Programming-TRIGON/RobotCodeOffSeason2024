@@ -19,6 +19,7 @@ import org.trigon.hardware.phoenix6.cancoder.CANcoderEncoder;
 import org.trigon.hardware.phoenix6.cancoder.CANcoderSignal;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
+import org.trigon.utilities.Conversions;
 
 public class Pitcher extends MotorSubsystem {
     private final ShootingCalculations shootingCalculations = ShootingCalculations.getInstance();
@@ -57,6 +58,7 @@ public class Pitcher extends MotorSubsystem {
     public void updatePeriodically() {
         masterMotor.update();
         encoder.update();
+        Logger.recordOutput("PitcherAngleDegrees", Conversions.rotationsToDegrees(encoder.getSignal(CANcoderSignal.POSITION)));
     }
 
     @Override
