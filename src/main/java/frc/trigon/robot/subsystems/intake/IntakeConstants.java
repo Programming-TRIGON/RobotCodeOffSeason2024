@@ -92,6 +92,8 @@ public class IntakeConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
+        config.HardwareLimitSwitch.ReverseLimitEnable = false;
+
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
         MASTER_MOTOR.applyConfiguration(config);
@@ -110,6 +112,8 @@ public class IntakeConstants {
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
+
+        config.HardwareLimitSwitch.ReverseLimitEnable = false;
 
         FOLLOWER_MOTOR.applyConfiguration(config);
 

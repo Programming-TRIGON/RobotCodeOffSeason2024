@@ -22,7 +22,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private static final ObjectDetectionCamera CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
     private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ?
             new PIDController(0.0075, 0, 0) :
-            new PIDController(0, 0, 0);
+            new PIDController(0.01, 0, 0);
 
     public AlignToNoteCommand() {
         addCommands(
@@ -41,10 +41,6 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private Command getDriveWhileAligningToNoteCommand() {
-//        XboxController controller = OperatorConstants.DRIVER_CONTROLLER;
-//        final double stickX = controller.getLeftX();
-//        final double stickY = controller.getLeftY();
-//        final double stickValue = Math.tan(stickY / stickX);
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),//stickValue),
                 () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
