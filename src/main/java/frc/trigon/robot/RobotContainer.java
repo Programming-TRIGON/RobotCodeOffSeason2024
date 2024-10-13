@@ -97,7 +97,8 @@ public class RobotContainer {
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
         OperatorConstants.MANUAL_LOW_DELIVERY_TRIGGER.whileTrue(ShootingCommands.getManualLowDeliveryCommand());
 
-        OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
+        OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(true));
+        OperatorConstants.AMP_WITHOUT_ALIGN_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(false));
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
