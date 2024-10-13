@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.4148769485187436,
+        "y": 6.2105959841373375
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.029111716180679,
+        "y": 6.191096467703624
+      },
+      "isLocked": false,
+      "linkedName": "PIDfirstcollection"
+    },
+    {
+      "anchor": {
+        "x": 4.584847934541476,
+        "y": 6.015600819800215
+      },
+      "prevControl": {
+        "x": 4.077860507264958,
+        "y": 6.113098401968776
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 5.389999999999986,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "PIDAuto",
+  "previewStartingState": {
+    "rotation": 24.102234501160947,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

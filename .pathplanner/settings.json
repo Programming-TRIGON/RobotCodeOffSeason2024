@@ -4,11 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "3NoteAutoThroughAmp",
+    "3NoteAutoThroughAmpLeft",
     "5NoteAutoAroundStage",
     "7NoteAuto",
     "FrontRow4NoteAuto",
     "MiddleRush3NoteAuto",
-    "3NoteAutoThroughAmpLeft",
+    "PIDAuto",
     "SourceSide3NoteAuto",
     "SourceSide3NoteAutoRight",
     "SpeakerSide3NoteAuto",
@@ -16,9 +17,10 @@
   ],
   "autoFolders": [
     "3NoteAutoThroughAmpVarients",
-    "FarNotesAroundStageVarients",
     "Backup",
-    "Misc",
+    "FarNotesAroundStageVarients",
+    "misc",
+    "OtherAutos",
     "SourceSide3NoteAutoVarients"
   ],
   "defaultMaxVel": 4.0,
