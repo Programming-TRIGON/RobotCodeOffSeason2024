@@ -16,7 +16,7 @@ import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SimpleMotorSimulation;
 
 public class ClimberConstants {
-    private static final int
+    public static final int
             RIGHT_MOTOR_ID = 14,
             LEFT_MOTOR_ID = 15;
     private static final String

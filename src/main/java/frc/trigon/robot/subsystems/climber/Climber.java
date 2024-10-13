@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
@@ -133,12 +134,14 @@ public class Climber extends MotorSubsystem {
     }
 
     private void configurePositionResettingTrigger(TalonFXMotor motor) {
-        final Trigger positionResettingTrigger = new Trigger(() -> hasHitReverseLimit(motor)).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
-        positionResettingTrigger.onFalse(new InstantCommand(() -> motor.setPosition(ClimberConstants.LIMIT_SWITCH_PRESSED_POSITION)));
-    }
-
-    private boolean hasHitReverseLimit(TalonFXMotor motor) {
-        return motor.getSignal(TalonFXSignal.REVERSE_LIMIT) == 0;
+        final Trigger positionResettingTrigger;
+        if (motor.getID() == ClimberConstants.RIGHT_MOTOR_ID)
+            positionResettingTrigger = new Trigger(RobotContainer.INTAKE::hasHitRightClimberReverseLimit).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
+        else if (motor.getID() == ClimberConstants.LEFT_MOTOR_ID)
+            positionResettingTrigger = new Trigger(RobotContainer.INTAKE::hasHitLeftClimberReverseLimit).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
+        else
+            return;
+        positionResettingTrigger.onTrue(new InstantCommand(() -> motor.setPosition(ClimberConstants.LIMIT_SWITCH_PRESSED_POSITION)));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
