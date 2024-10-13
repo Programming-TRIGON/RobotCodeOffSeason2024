@@ -27,7 +27,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     public AlignToNoteCommand() {
         addCommands(
                 getSetCurrentLEDColorCommand().asProxy(),
-                GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.SELF_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
+                GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND), this::hasTarget).asProxy(),
                 new RunCommand(CAMERA::trackObject)
         );
     }
@@ -41,7 +41,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private Command getDriveWhileAligningToNoteCommand() {
-        return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
+        return SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
                 () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),//stickValue),
                 () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
                 this::getTargetAngle
