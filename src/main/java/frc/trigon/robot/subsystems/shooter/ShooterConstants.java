@@ -74,7 +74,7 @@ public class ShooterConstants {
         configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_SIMULATION, LEFT_P, LEFT_I, LEFT_D, LEFT_KS, LEFT_KV, LEFT_KA);
     }
 
-    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, FlywheelSimulation simulation, double P, double I, double D, double KS, double KV, double KA) {
+    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, FlywheelSimulation simulation, double p, double i, double d, double kS, double kV, double kA) {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.Audio.BeepOnBoot = false;
@@ -83,12 +83,12 @@ public class ShooterConstants {
         config.MotorOutput.Inverted = invertedValue;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
-        config.Slot0.kP = RIGHT_P;
-        config.Slot0.kI = RIGHT_I;
-        config.Slot0.kD = RIGHT_D;
-        config.Slot0.kS = RIGHT_KS;
-        config.Slot0.kV = RIGHT_KV;
-        config.Slot0.kA = RIGHT_KA;
+        config.Slot0.kP = p;
+        config.Slot0.kI = i;
+        config.Slot0.kD = d;
+        config.Slot0.kS = kS;
+        config.Slot0.kV = kV;
+        config.Slot0.kA = kA;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
