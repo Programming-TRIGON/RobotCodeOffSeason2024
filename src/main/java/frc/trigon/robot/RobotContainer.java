@@ -30,7 +30,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
     public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator(
-            CameraConstants.FRONT_TAG_CAMERA,
+//            CameraConstants.FRONT_TAG_CAMERA,
             CameraConstants.REAR_TAG_CAMERA
     );
     public static final Swerve SWERVE = new Swerve();
@@ -102,7 +102,6 @@ public class RobotContainer {
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
-
 //        configureSysIdBindings(SWERVE);
     }
 

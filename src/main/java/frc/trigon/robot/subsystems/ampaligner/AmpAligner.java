@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import org.trigon.hardware.RobotHardwareStats;
@@ -113,7 +114,8 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private boolean hasHitForwardLimit() {
-        return motor.getSignal(TalonFXSignal.FORWARD_LIMIT) == 0;
+        return OperatorConstants.OPERATOR_CONTROLLER.y().getAsBoolean();
+//        return motor.getSignal(TalonFXSignal.FORWARD_LIMIT) == 0;
     }
 
     private double calculateKGOutput() {

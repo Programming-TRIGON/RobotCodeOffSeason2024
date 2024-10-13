@@ -31,7 +31,7 @@ public class AmpCommands {
         return new InstantCommand(() -> IS_FEEDING_NOTE = false).andThen(new ParallelCommandGroup(
                 getPrepareForAmpCommand(),
                 GeneralCommands.runWhenContinueTriggerPressed(getFeedToAmpCommand()),
-                GeneralCommands.runWhen(GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND), () -> shouldAlignToAmp)
+                shouldAlignToAmp ? GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND) : null
         ));
     }
 
