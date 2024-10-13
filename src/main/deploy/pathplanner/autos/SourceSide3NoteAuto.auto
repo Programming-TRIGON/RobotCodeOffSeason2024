@@ -5,7 +5,7 @@
       "x": 0.7547034812379487,
       "y": 3.84449444955228
     },
-    "rotation": 0
+    "rotation": -38.65999999999997
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "PrepareForShootingCloseShot"
+                  "name": "PreparePitch"
                 }
               },
               {
@@ -32,15 +32,35 @@
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "race",
                       "data": {
-                        "waitTime": 0.1
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PrepareForShooting"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.2
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "FeedNote"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -56,15 +76,35 @@
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "race",
                       "data": {
-                        "waitTime": 0.1
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PrepareForShooting"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.2
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "FeedNote"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -80,15 +120,35 @@
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "race",
                       "data": {
-                        "waitTime": 0.1
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PrepareForShooting"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.2
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "FeedNote"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
