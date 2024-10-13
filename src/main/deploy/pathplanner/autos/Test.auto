@@ -1,0 +1,38 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7547034812379487,
+      "y": 3.84449444955228
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepareForShootingCloseShot"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceSide3NoteAuto1"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "SourceSide3NoteAutoVarients",
+  "choreoAuto": false
+}

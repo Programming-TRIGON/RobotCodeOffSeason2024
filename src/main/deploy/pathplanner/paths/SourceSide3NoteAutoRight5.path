@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "StopAligning",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {

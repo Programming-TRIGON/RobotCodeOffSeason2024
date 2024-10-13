@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "preparePitch"
+                  "name": "PreparePitch"
                 }
               },
               {
