@@ -120,10 +120,28 @@
           "data": {
             "name": "StopShooting"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3NoteAutoThroughAmp1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
         }
       ]
     }
   },
-  "folder": "3NoteAutoThroughAmpVarients",
+  "folder": null,
   "choreoAuto": false
 }

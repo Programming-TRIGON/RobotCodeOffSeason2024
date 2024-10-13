@@ -12,21 +12,21 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "SourceSide3NoteAuto1"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "PrepareForShooting"
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "SourceSide3NoteAuto1"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.1
           }
         },
         {
