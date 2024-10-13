@@ -15,6 +15,7 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import org.trigon.hardware.RobotHardwareStats;
+import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 public class AlignToNoteCommand extends ParallelCommandGroup {
@@ -40,8 +41,12 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private Command getDriveWhileAligningToNoteCommand() {
+//        XboxController controller = OperatorConstants.DRIVER_CONTROLLER;
+//        final double stickX = controller.getLeftX();
+//        final double stickY = controller.getLeftY();
+//        final double stickValue = Math.tan(stickY / stickX);
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
-                () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),//stickValue),
                 () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
                 this::getTargetAngle
         );
