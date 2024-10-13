@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "StopAligning",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -42,23 +42,6 @@
               "type": "named",
               "data": {
                 "name": "StopAligningToNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Prepare Shooting",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrepareForShooting"
               }
             }
           ]

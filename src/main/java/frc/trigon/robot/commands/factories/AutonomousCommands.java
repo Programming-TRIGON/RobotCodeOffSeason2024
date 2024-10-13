@@ -9,10 +9,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
-import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
@@ -73,21 +71,10 @@ public class AutonomousCommands {
         );
     }
 
-    public static Command getPrepareForShooterEjectionCommand(boolean isClose) {
-        return isClose ? getPrepareForCloseShooterEjectionCommand() : getPrepareForShooterEjectionCommand();
-    }
-
-    private static Command getPrepareForShooterEjectionCommand() {
+    public static Command getPreparePitchCommand() {
         return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
-        );
-    }
-
-    private static Command getPrepareForCloseShooterEjectionCommand() {
-        return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+                ShootingCommands.getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand()
         );
     }
 
@@ -98,12 +85,12 @@ public class AutonomousCommands {
         );
     }
 
+    public static Command getPrepareShootingCommand() {
+        return ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand();
+    }
+
     public static Command getPrepareShootingCommand(double velocity) {
-        return new StartEndCommand(
-                () -> ShooterCommands.getSetTargetVelocityCommand(velocity),
-                () -> {
-                }
-        );
+        return ShooterCommands.getSetTargetVelocityCommand(velocity);
     }
 
     private static Optional<Rotation2d> calculateRotationOverride() {

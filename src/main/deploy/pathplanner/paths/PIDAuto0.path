@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.284709527165534,
-        "y": 0.7804612792324187
+        "x": 1.8939146666891922,
+        "y": 5.547612425391122
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.830445717229463,
-        "y": 2.0523241046482106
+        "x": 2.371652819315141,
+        "y": 5.762107106161956
       },
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoRightFirstCollection"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.1683522521974625,
-        "y": 2.71716149066101
+        "x": 3.4148769485187436,
+        "y": 6.2105959841373375
       },
       "prevControl": {
-        "x": 3.6019418517710275,
-        "y": 2.5003666908742277
+        "x": 2.8981397630253705,
+        "y": 6.035100336233927
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoRightSecondFeed"
+      "linkedName": "PIDfirstcollection"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "StopAligning",
-      "waypointRelativePos": 0.05,
+      "name": "Collect",
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,7 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "StopAligningToNote"
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
               }
             }
           ]
@@ -57,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.74000000000001,
+    "rotation": 12.094757077012037,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "SourceSide3NoteAutoRight",
+  "folder": "PIDAuto",
   "previewStartingState": {
-    "rotation": -21.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

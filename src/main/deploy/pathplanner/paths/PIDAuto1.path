@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.284709527165534,
-        "y": 0.7804612792324187
+        "x": 3.4148769485187436,
+        "y": 6.2105959841373375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.830445717229463,
-        "y": 2.0523241046482106
+        "x": 4.029111716180679,
+        "y": 6.191096467703624
       },
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoRightFirstCollection"
+      "linkedName": "PIDfirstcollection"
     },
     {
       "anchor": {
-        "x": 3.1683522521974625,
-        "y": 2.71716149066101
+        "x": 4.584847934541476,
+        "y": 6.015600819800215
       },
       "prevControl": {
-        "x": 3.6019418517710275,
-        "y": 2.5003666908742277
+        "x": 4.077860507264958,
+        "y": 6.113098401968776
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoRightSecondFeed"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "StopAligning",
+      "name": "New Event Marker",
       "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
@@ -57,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.74000000000001,
+    "rotation": 5.389999999999986,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "SourceSide3NoteAutoRight",
+  "folder": "PIDAuto",
   "previewStartingState": {
-    "rotation": -21.0,
+    "rotation": 24.102234501160947,
     "velocity": 0
   },
   "useDefaultConstraints": true
