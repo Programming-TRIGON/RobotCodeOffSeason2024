@@ -41,8 +41,8 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private Command getDriveWhileAligningToNoteCommand() {
-        return SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
-                () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),//stickValue),
+        return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
+                () -> CommandConstants.calculateDriveStickAxisValue(getScaledJoystickValue()),
                 () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
                 this::getTargetAngle
         );
@@ -55,5 +55,13 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private boolean hasTarget() {
         return CAMERA.hasTargets() && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
+    }
+
+    private double getScaledJoystickValue() {
+        final XboxController controller = OperatorConstants.DRIVER_CONTROLLER;
+        final Rotation2d robotRelativeToFieldRelativeRotation = Rotation2d.fromDegrees(90);
+        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle().plus(robotRelativeToFieldRelativeRotation);
+
+        return controller.getLeftX() * -robotHeading.getCos() - controller.getLeftY() * -robotHeading.getSin();
     }
 }

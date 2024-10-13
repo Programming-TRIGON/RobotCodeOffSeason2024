@@ -134,6 +134,11 @@ public class Swerve extends MotorSubsystem {
         return swerveModulesPositions;
     }
 
+    public Rotation2d getDriveRelativeAngle() {
+        final Rotation2d currentAngle = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
+        return Mirrorable.isRedAlliance() ? currentAngle.rotateBy(Rotation2d.fromDegrees(180)) : currentAngle;
+    }
+
     public void runWheelRadiusCharacterization(double omegaRadiansPerSecond) {
         selfRelativeDrive(new ChassisSpeeds(0, 0, omegaRadiansPerSecond));
     }
@@ -327,11 +332,6 @@ public class Swerve extends MotorSubsystem {
 
     private ChassisSpeeds fieldRelativeSpeedsToSelfRelativeSpeeds(ChassisSpeeds fieldRelativeSpeeds) {
         return ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getDriveRelativeAngle());
-    }
-
-    private Rotation2d getDriveRelativeAngle() {
-        final Rotation2d currentAngle = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
-        return Mirrorable.isRedAlliance() ? currentAngle.rotateBy(Rotation2d.fromDegrees(180)) : currentAngle;
     }
 
     private ChassisSpeeds powersToSpeeds(double xPower, double yPower, double thetaPower) {
