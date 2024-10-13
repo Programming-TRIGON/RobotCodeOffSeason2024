@@ -17,7 +17,8 @@ public class AutonomousConstants {
         NamedCommands.registerCommand("Collect", AutonomousCommands.getNoteCollectionCommand());
         NamedCommands.registerCommand("AlignToNote", AutonomousCommands.getAlignToNoteCommand());
         NamedCommands.registerCommand("StopAligningToNote", AutonomousCommands.getStopAligningToNoteCommand());
-        NamedCommands.registerCommand("PrepareForShooting", ShootingCommands.getWarmSpeakerShotCommand());
+        NamedCommands.registerCommand("PrepareForShooting", AutonomousCommands.getPrepareShootingCommand(ShootingConstants.CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND));
+        NamedCommands.registerCommand("PreparePitch", AutonomousCommands.getPreparePitchCommand(ShootingConstants.CLOSE_SHOT_PITCH));
         NamedCommands.registerCommand("StopShooting", ShooterCommands.getStopCommand());
         NamedCommands.registerCommand("FeedNote", AutonomousCommands.getFeedNoteCommand());
         NamedCommands.registerCommand("PrepareForCloseShot", ShootingCommands.getPrepareCloseSpeakerShotCommand());
