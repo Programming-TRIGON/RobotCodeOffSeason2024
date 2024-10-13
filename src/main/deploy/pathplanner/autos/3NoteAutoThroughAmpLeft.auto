@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2699301408104018,
+      "x": 0.7531929553170285,
       "y": 6.932078092184688
     },
-    "rotation": 52.489999999999995
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -26,27 +26,9 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.5
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FeedNote"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5NoteAutoAroundStage2"
+                        "pathName": "3NoteAutoThroughAmp1"
                       }
                     },
                     {
@@ -64,13 +46,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage3"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5NoteAutoAroundStage4"
+                        "pathName": "3NoteAutoThroughAmp2"
                       }
                     },
                     {
@@ -88,13 +64,37 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage5"
+                        "pathName": "3NoteAutoThroughAmpLeft3"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage6"
+                        "pathName": "3NoteAutoThroughAmpLeft4"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3NoteAutoThroughAmpLeft5"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3NoteAutoThroughAmp4"
                       }
                     },
                     {
@@ -114,10 +114,16 @@
               }
             ]
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopShooting"
+          }
         }
       ]
     }
   },
-  "folder": "FarNotesAroundStageVarients",
+  "folder": "3NoteAutoThroughAmpVarients",
   "choreoAuto": false
 }

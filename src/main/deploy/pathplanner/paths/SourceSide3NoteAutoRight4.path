@@ -1,0 +1,76 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.1683522521974625,
+        "y": 2.71716149066101
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.0038815570588895,
+        "y": 1.560922558464836
+      },
+      "isLocked": false,
+      "linkedName": "SourceSide3NoteAutoRightSecondFeed"
+    },
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 2.442554744264419
+      },
+      "prevControl": {
+        "x": 6.2179324358648715,
+        "y": 1.5753755451172882
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SourceSide3NoteAutoRightSecondCollection"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 22.1663458220825,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SourceSide3NoteAutoRight",
+  "previewStartingState": {
+    "rotation": -44.00999999999999,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

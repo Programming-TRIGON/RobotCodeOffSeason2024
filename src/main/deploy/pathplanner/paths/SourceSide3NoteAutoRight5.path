@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 2.442554744264419
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.333556329084489,
+        "y": 1.474204638550123
+      },
+      "isLocked": false,
+      "linkedName": "SourceSide3NoteAutoRightSecondCollection"
+    },
+    {
+      "anchor": {
+        "x": 3.038275372325393,
+        "y": 2.746067463965915
+      },
+      "prevControl": {
+        "x": 4.758180783967202,
+        "y": 1.5753755451172882
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "StopAligning",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 600.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -42.51999999999998,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SourceSide3NoteAutoRight",
+  "previewStartingState": {
+    "rotation": 37.87498365109831,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

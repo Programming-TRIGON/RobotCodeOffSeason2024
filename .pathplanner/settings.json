@@ -8,11 +8,19 @@
     "7NoteAuto",
     "FrontRow4NoteAuto",
     "MiddleRush3NoteAuto",
+    "3NoteAutoThroughAmpLeft",
     "SourceSide3NoteAuto",
+    "SourceSide3NoteAutoRight",
     "SpeakerSide3NoteAuto",
     "Zayde3NoteAuto"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "3NoteAutoThroughAmpVarients",
+    "FarNotesAroundStageVarients",
+    "Backup",
+    "Misc",
+    "SourceSide3NoteAutoVarients"
+  ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 400.0,
