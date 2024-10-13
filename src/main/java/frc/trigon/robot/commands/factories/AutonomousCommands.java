@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
@@ -91,6 +90,13 @@ public class AutonomousCommands {
         );
     }
 
+    public static Command getPreparePitchCommand() {
+        return new ParallelCommandGroup(
+                ShootingCommands.getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand()
+        );
+    }
+
     public static Command getPreparePitchCommand(Rotation2d pitch) {
         return new ParallelCommandGroup(
                 ShootingCommands.getUpdateShootingCalculationsCommand(false),
@@ -98,12 +104,12 @@ public class AutonomousCommands {
         );
     }
 
+    public static Command getPrepareShootingCommand() {
+        return ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand();
+    }
+
     public static Command getPrepareShootingCommand(double velocity) {
-        return new StartEndCommand(
-                () -> ShooterCommands.getSetTargetVelocityCommand(velocity),
-                () -> {
-                }
-        );
+        return ShooterCommands.getSetTargetVelocityCommand(velocity);
     }
 
     private static Optional<Rotation2d> calculateRotationOverride() {
