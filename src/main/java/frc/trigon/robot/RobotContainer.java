@@ -102,7 +102,7 @@ public class RobotContainer {
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
-//        configureSysIdBindings(CLIMBER);
+//        configureSysIdBindings(SWERVE);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
