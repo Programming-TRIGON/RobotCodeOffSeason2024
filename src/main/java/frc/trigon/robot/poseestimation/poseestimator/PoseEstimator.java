@@ -85,6 +85,8 @@ public class PoseEstimator implements AutoCloseable {
             return;
         int closestCameraToTag = 0;
         for (int i = 0; i < aprilTagCameras.length; i++) {
+            if (aprilTagCameras[closestCameraToTag].getDistanceToBestTagMeters() == 0)
+                closestCameraToTag++;
             if (aprilTagCameras[i].getDistanceToBestTagMeters() < aprilTagCameras[closestCameraToTag].getDistanceToBestTagMeters())
                 closestCameraToTag = i;
         }

@@ -67,7 +67,7 @@ public class AmpAlignerConstants {
 
     static final Rotation2d READY_FOR_DEFAULT_PITCHER_MOVEMENT_ANGLE = Rotation2d.fromDegrees(80);
     static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(173.7);
-    static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
+    static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.01;
     static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.3);
 
     static {

@@ -13,15 +13,15 @@ public class ShootingConstants {
 
     public static final double
             CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 45,
-            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 30,
+            AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 40,
             MANUAL_LOW_DELIVERY_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND = 10,
             EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = 10,
             CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = 5,
             FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = -10;
     public static final Rotation2d
             CLOSE_SHOT_PITCH = Rotation2d.fromDegrees(57),
-            PREPARE_AMP_PITCH = Rotation2d.fromDegrees(55),
-            SHOOT_AMP_PITCH = Rotation2d.fromDegrees(45),
+            PREPARE_AMP_PITCH = Rotation2d.fromDegrees(50),
+            SHOOT_AMP_PITCH = Rotation2d.fromDegrees(44),
             MANUAL_LOW_DELIVERY_PITCH = Rotation2d.fromDegrees(13),
             EJECT_FROM_SHOOTER_PITCH = Rotation2d.fromDegrees(13),
             CLOSE_EJECT_FROM_SHOOTER_PITCH = Rotation2d.fromDegrees(13);

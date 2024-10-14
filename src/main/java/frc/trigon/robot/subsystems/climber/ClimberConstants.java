@@ -34,7 +34,7 @@ public class ClimberConstants {
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
     private static final double //TODO: calibrate
-            LEFT_GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 0.39596,
+            LEFT_GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 1,
             LEFT_GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             LEFT_GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             LEFT_GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0.078964,

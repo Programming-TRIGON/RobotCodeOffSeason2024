@@ -114,8 +114,7 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private boolean hasHitForwardLimit() {
-        return OperatorConstants.OPERATOR_CONTROLLER.y().getAsBoolean();
-//        return motor.getSignal(TalonFXSignal.FORWARD_LIMIT) == 0;
+        return motor.getSignal(TalonFXSignal.FORWARD_LIMIT) == 0;
     }
 
     private double calculateKGOutput() {
