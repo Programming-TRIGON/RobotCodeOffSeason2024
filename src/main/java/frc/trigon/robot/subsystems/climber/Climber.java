@@ -2,6 +2,7 @@ package frc.trigon.robot.subsystems.climber;
 
 import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -39,8 +40,6 @@ public class Climber extends MotorSubsystem {
     public Climber() {
         setName("Climber");
         GeneralCommands.getDelayedCommand(3, this::configureChangingDefaultCommand).schedule();
-        configurePositionResettingTrigger(rightMotor);
-        configurePositionResettingTrigger(leftMotor);
     }
 
     @Override
@@ -131,17 +130,6 @@ public class Climber extends MotorSubsystem {
                 .withPosition(targetRightPositionRotations));
         leftMotor.setControl(determineRequest(affectedByRobotWeight)
                 .withPosition(targetLeftPositionRotations));
-    }
-
-    private void configurePositionResettingTrigger(TalonFXMotor motor) {
-        final Trigger positionResettingTrigger;
-        if (motor.getID() == ClimberConstants.RIGHT_MOTOR_ID)
-            positionResettingTrigger = new Trigger(RobotContainer.INTAKE::hasHitRightClimberReverseLimit).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
-        else if (motor.getID() == ClimberConstants.LEFT_MOTOR_ID)
-            positionResettingTrigger = new Trigger(RobotContainer.INTAKE::hasHitLeftClimberReverseLimit).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
-        else
-            return;
-        positionResettingTrigger.onTrue(new InstantCommand(() -> motor.setPosition(ClimberConstants.LIMIT_SWITCH_PRESSED_POSITION)));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {

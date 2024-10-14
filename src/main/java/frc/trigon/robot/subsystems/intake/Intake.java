@@ -63,14 +63,6 @@ public class Intake extends MotorSubsystem {
         return IntakeConstants.EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT.getAsBoolean();
     }
 
-    public boolean hasHitRightClimberReverseLimit() {
-        return masterMotor.getSignal(TalonFXSignal.REVERSE_LIMIT) == 0;
-    }
-
-    public boolean hasHitLeftClimberReverseLimit() {
-        return IntakeConstants.FOLLOWER_MOTOR.getSignal(TalonFXSignal.REVERSE_LIMIT) == 0;
-    }
-
     void sendStaticBrakeRequest() {
         masterMotor.setControl(staticBrakeRequest);
     }

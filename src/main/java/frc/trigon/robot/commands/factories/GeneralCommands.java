@@ -33,7 +33,7 @@ public class GeneralCommands {
                             Logger.recordOutput("IsClimbing", true);
                         }
                 ),
-                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB).until(() -> OperatorConstants.CONTINUE_TRIGGER.getAsBoolean() && RobotContainer.CLIMBER.atTargetState()),
+                ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.PREPARE_FOR_CLIMB).until(OperatorConstants.CONTINUE_TRIGGER),
                 ClimberCommands.getSetTargetStateCommand(ClimberConstants.ClimberState.CLIMB)
         );
     }
