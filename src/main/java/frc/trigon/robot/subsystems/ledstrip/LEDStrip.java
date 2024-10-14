@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
@@ -35,6 +36,15 @@ public class LEDStrip extends SubsystemBase {
     public static void setDefaultCommandForAllLEDS(Command command) {
         for (LEDStrip ledStrip : LED_STRIPS)
             ledStrip.setDefaultCommand(command);
+    }
+
+    public static void changeDefaultCommandForAllLEDs(Command newDefaultCommand) {
+        for (LEDStrip ledStrip : LED_STRIPS) {
+            final Command currentDefaultCommand = ledStrip.getDefaultCommand();
+            if (currentDefaultCommand != null)
+                currentDefaultCommand.cancel();
+            ledStrip.setDefaultCommand(newDefaultCommand);
+        }
     }
 
     public int getNumberOfLEDS() {

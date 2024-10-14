@@ -5,7 +5,9 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
@@ -22,6 +24,7 @@ public class Intake extends MotorSubsystem {
 
     public Intake() {
         setName("Intake");
+        configureLEDsTrigger();
     }
 
     @Override
@@ -89,16 +92,16 @@ public class Intake extends MotorSubsystem {
     }
 
     private Command getCollectionIndicationLEDsCommand() {
-        return new SequentialCommandGroup(
-                LEDStripCommands.getBlinkingCommand(Color.kOrange, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS),
-                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS)
-        );
+        return LEDStripCommands.getBlinkingCommand(Color.kWhite, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
     }
 
     private Command getFeedingIndicationLEDsCommand() {
-        return new SequentialCommandGroup(
-                LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS),
-                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS)
-        );
+        return LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS);
+    }
+
+    private void configureLEDsTrigger() {
+        Trigger trigger = new Trigger(this::hasNote);
+        trigger.onTrue(new InstantCommand(() -> LEDStrip.changeDefaultCommandForAllLEDs(LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS))));
+        trigger.onFalse(new InstantCommand(() -> LEDStrip.changeDefaultCommandForAllLEDs(LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS))));
     }
 }

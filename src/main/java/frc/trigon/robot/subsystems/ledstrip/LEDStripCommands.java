@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import org.trigon.commands.ExecuteEndCommand;
 import org.trigon.commands.InitExecuteCommand;
 
 import java.util.function.Consumer;
@@ -12,16 +13,17 @@ import java.util.function.Supplier;
 public class LEDStripCommands {
     public static Command getStaticColorCommand(Color color, LEDStrip... ledStrips) {
         return new StartEndCommand(
-                () -> runForLEDs((ledStrip -> ledStrip.staticColor(color)), ledStrips),
                 () -> {
                 },
+                () -> runForLEDs((ledStrip -> ledStrip.staticColor(color)), ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
 
     public static Command getBlinkingCommand(Color color, double blinkingIntervalSeconds, LEDStrip... ledStrips) {
-        return new RunCommand(
+        return new ExecuteEndCommand(
                 () -> runForLEDs((ledStrip -> ledStrip.blink(color, blinkingIntervalSeconds)), ledStrips),
+                () -> runForLEDs((LEDStrip::clearLedColors)),
                 ledStrips
         ).ignoringDisable(true);
     }
