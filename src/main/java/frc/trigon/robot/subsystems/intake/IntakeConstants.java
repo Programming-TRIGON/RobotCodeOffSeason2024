@@ -65,8 +65,8 @@ public class IntakeConstants {
             () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
     static final double CORRECT_NOTE_POSITION_TIMEOUT_SECONDS = 0.07;
-    private static final double NOTE_COLLECTION_CURRENT = 10; //TODO: calibrate
-    private static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.2; //TODO: calibrate
+    private static final double NOTE_COLLECTION_CURRENT = 50;
+    private static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.1;
     static final BooleanEvent EARLY_NOTE_COLLECTION_DETECTION_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> Math.abs(MASTER_MOTOR.getSignal(TalonFXSignal.TORQUE_CURRENT)) > IntakeConstants.NOTE_COLLECTION_CURRENT

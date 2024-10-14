@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect",
+      "name": "AlignToNote",
       "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
@@ -42,12 +42,6 @@
               "type": "named",
               "data": {
                 "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
               }
             }
           ]

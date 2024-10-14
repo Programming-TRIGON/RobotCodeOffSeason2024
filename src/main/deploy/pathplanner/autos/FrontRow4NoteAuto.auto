@@ -58,9 +58,35 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "FrontRow4NoteAuto1"
+                        "commands": [
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.1
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "Collect"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "FrontRow4NoteAuto1"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -86,7 +112,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.2
+                                    "waitTime": 0.3
                                   }
                                 },
                                 {
@@ -102,9 +128,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "FrontRow4NoteAuto3"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Collect"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "FrontRow4NoteAuto3"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -130,7 +169,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.2
+                                    "waitTime": 0.5
                                   }
                                 },
                                 {
@@ -146,9 +185,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "FrontRow4NoteAuto5"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Collect"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "FrontRow4NoteAuto5"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -174,7 +226,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.2
+                                    "waitTime": 0.3
                                   }
                                 },
                                 {

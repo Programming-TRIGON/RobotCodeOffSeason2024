@@ -15,6 +15,7 @@ import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
+import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
@@ -23,6 +24,7 @@ import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
+import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.Swerve;
@@ -61,7 +63,7 @@ public class RobotContainer {
     private void bindDefaultCommands() {
         SWERVE.setDefaultCommand(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND);
         INTAKE.setDefaultCommand(CommandConstants.DEFAULT_INTAKE_COMMAND);
-//        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
+        CLIMBER.setDefaultCommand(CommandConstants.DEFAULT_CLIMBER_COMMAND);
         AMP_ALIGNER.setDefaultCommand(CommandConstants.DEFAULT_AMP_ALIGNER_COMMAND);
         PITCHER.setDefaultCommand(GeneralCommands.getDefaultPitcherCommand());
         SHOOTER.setDefaultCommand(ShooterCommands.getStopCommand());

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4148769485187436,
-        "y": 6.2105959841373375
+        "x": 3.385627673868176,
+        "y": 1.8622038194195158
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.029111716180679,
-        "y": 6.191096467703624
+        "x": 3.999862441530111,
+        "y": 1.8427043029858021
       },
       "isLocked": false,
       "linkedName": "PIDfirstcollection"
     },
     {
       "anchor": {
-        "x": 4.584847934541476,
-        "y": 6.015600819800215
+        "x": 4.818842131746022,
+        "y": 1.40396518322728
       },
       "prevControl": {
-        "x": 4.077860507264958,
-        "y": 6.113098401968776
+        "x": 4.311854704469504,
+        "y": 1.5014627653958412
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,25 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "StopAligningToNote"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
@@ -57,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 5.389999999999986,
+    "rotation": -45.744059202888785,
     "rotateFast": false
   },
   "reversed": false,

@@ -33,6 +33,7 @@ public class Intake extends MotorSubsystem {
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
         Logger.recordOutput("HasNote", hasNote());
         Logger.recordOutput("distanceSensorScaledValue", IntakeConstants.DISTANCE_SENSOR.getScaledValue());
+        Logger.recordOutput("currentnote", isEarlyNoteCollectionDetected());
     }
 
     @Override
