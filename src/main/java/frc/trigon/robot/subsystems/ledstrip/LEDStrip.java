@@ -67,16 +67,16 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void staticColor(Color color) {
-        for (int index = 0; index <= numberOfLEDs; index++)
+        for (int index = 0; index < numberOfLEDs; index++)
             setLEDColor(color, index);
     }
 
     void rainbow() {
-        for (int led = 0; led <= numberOfLEDs; led++) {
+        for (int led = 0; led < numberOfLEDs; led++) {
             final int hue = (int) (rainbowFirstPixelHue + (led * 180 / numberOfLEDs) % 180);
             LEDStripConstants.LED_BUFFER.setHSV(led + indexOffset, hue, 255, 128);
-            LED.setData(LEDStripConstants.LED_BUFFER);
         }
+        LED.setData(LEDStripConstants.LED_BUFFER);
         rainbowFirstPixelHue += 3;
         rainbowFirstPixelHue %= 180;
     }
