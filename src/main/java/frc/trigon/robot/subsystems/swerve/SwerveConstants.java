@@ -28,7 +28,7 @@ public class SwerveConstants {
     private static final double
             FRONT_LEFT_STEER_ENCODER_OFFSET = -1.561,
             FRONT_RIGHT_STEER_ENCODER_OFFSET = -3.431,
-            REAR_LEFT_STEER_ENCODER_OFFSET = -1.537,
+            REAR_LEFT_STEER_ENCODER_OFFSET = -1.239,
             REAR_RIGHT_STEER_ENCODER_OFFSET = -2.008;
     private static final int
             FRONT_LEFT_ID = 1,
