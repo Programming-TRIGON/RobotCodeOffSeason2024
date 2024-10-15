@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.45095045059448935,
-        "y": 7.0490751907869615
+        "x": 0.6849446477990359,
+        "y": 6.688334136763285
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4509504505944886,
-        "y": 7.0490751907869615
+        "x": 1.6849446477990346,
+        "y": 6.688334136763285
       },
       "isLocked": false,
       "linkedName": null
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": -1.3639275316029946,
+    "rotation": 59.74356283647073,
     "velocity": 0
   },
   "useDefaultConstraints": true

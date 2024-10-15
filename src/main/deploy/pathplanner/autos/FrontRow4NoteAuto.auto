@@ -146,6 +146,12 @@
                                   "data": {
                                     "name": "FeedNote"
                                   }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
                                 }
                               ]
                             }
@@ -242,6 +248,12 @@
                                   "data": {
                                     "name": "FeedNote"
                                   }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
                                 }
                               ]
                             }
@@ -337,6 +349,12 @@
                                   "type": "named",
                                   "data": {
                                     "name": "FeedNote"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
                                   }
                                 }
                               ]

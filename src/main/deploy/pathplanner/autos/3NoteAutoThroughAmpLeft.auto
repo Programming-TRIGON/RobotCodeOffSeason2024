@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7531929553170285,
-      "y": 6.932078092184688
+      "x": 0.6849446477990359,
+      "y": 6.688334136763285
     },
     "rotation": 60.1093232393867
   },
@@ -183,7 +183,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "3NoteAutoThroughAmp3"
+                                    "pathName": "3NoteAutoThroughAmpLeft3"
                                   }
                                 },
                                 {
@@ -228,7 +228,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "3NoteAutoThroughAmp4"
+                                    "pathName": "3NoteAutoThroughAmpLeft4"
                                   }
                                 },
                                 {
@@ -279,7 +279,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "3NoteAutoThroughAmp5"
+                                    "pathName": "3NoteAutoThroughAmpLeft5"
                                   }
                                 },
                                 {
@@ -324,7 +324,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "3NoteAutoThroughAmp6"
+                                    "pathName": "3NoteAutoThroughAmp4"
                                   }
                                 },
                                 {

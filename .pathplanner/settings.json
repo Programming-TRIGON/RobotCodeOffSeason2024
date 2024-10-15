@@ -23,8 +23,8 @@
     "OtherAutos",
     "SourceSide3NoteAutoVarients"
   ],
-  "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 3.0,
+  "defaultMaxVel": 1.0,
+  "defaultMaxAccel": 2.0,
   "defaultMaxAngVel": 400.0,
   "defaultMaxAngAccel": 600.0,
   "maxModuleSpeed": 4.5
