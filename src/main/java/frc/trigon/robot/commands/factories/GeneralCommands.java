@@ -99,9 +99,9 @@ public class GeneralCommands {
             MotorSubsystem.setAllSubsystemsBrakeAsync(IS_BRAKING);
 
             if (IS_BRAKING)
-                CommandConstants.STATIC_WHITE_LED_COLOR_COMMAND.schedule();
-            else
                 CommandConstants.STATIC_WHITE_LED_COLOR_COMMAND.cancel();
+            else
+                CommandConstants.STATIC_WHITE_LED_COLOR_COMMAND.schedule();
         }).ignoringDisable(true);
     }
 

@@ -82,7 +82,7 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue %= 180;
     }
 
-    public void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
+    void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         final int ledsPerSection = (int) Math.floor(numberOfLEDs / 3.0);
         setThreeSectionColor(ledsPerSection, firstSectionColor, secondSectionColor, thirdSectionColor);
     }
@@ -93,7 +93,7 @@ public class LEDStrip extends SubsystemBase {
         setLEDColors(inverted ? firstSectionColor : thirdSectionColor, ledsPerSection * 2, numberOfLEDs - 1);
     }
 
-    public void setLEDColors(Color color, int startIndex, int endIndex) {
+    private void setLEDColors(Color color, int startIndex, int endIndex) {
         for (int i = 0; i <= endIndex - startIndex; i++)
             LEDStripConstants.LED_BUFFER.setLED(startIndex + indexOffset + i, color);
     }
