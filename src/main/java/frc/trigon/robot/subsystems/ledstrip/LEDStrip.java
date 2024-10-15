@@ -1,5 +1,6 @@
 package frc.trigon.robot.subsystems.ledstrip;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -8,6 +9,7 @@ import frc.trigon.robot.commands.factories.GeneralCommands;
 
 public class LEDStrip extends SubsystemBase {
     public static LEDStrip[] LED_STRIPS = new LEDStrip[0];
+    private static final AddressableLED LED = LEDStripConstants.LED;
     private final int indexOffset;
     private final boolean inverted;
     private final int numberOfLEDs;
@@ -24,7 +26,7 @@ public class LEDStrip extends SubsystemBase {
 
     @Override
     public void periodic() {
-        LEDStripConstants.LED.setData(LEDStripConstants.LED_BUFFER);
+        LED.setData(LEDStripConstants.LED_BUFFER);
     }
 
     public LEDStrip(boolean inverted, int numberOfLEDs, int indexOffset) {
