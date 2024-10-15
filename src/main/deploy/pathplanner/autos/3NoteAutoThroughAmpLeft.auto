@@ -5,7 +5,7 @@
       "x": 0.7531929553170285,
       "y": 6.932078092184688
     },
-    "rotation": 0
+    "rotation": 41.22999999999999
   },
   "command": {
     "type": "sequential",
@@ -26,13 +26,103 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "3NoteAutoThroughAmp1"
+                        "commands": [
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "PrepareForShooting"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "3NoteAutoThroughAmp1"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.2
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "FeedNote"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "Collect"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "3NoteAutoThroughAmp2"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
@@ -64,25 +154,83 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3NoteAutoThroughAmp2"
-                      }
-                    },
-                    {
-                      "type": "parallel",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "Collect"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "3NoteAutoThroughAmpLeft3"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "PrepareForShooting"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "3NoteAutoThroughAmpLeft4"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {
@@ -102,27 +250,9 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3NoteAutoThroughAmpLeft3"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3NoteAutoThroughAmpLeft4"
-                      }
-                    },
-                    {
-                      "type": "parallel",
+                      "type": "race",
                       "data": {
                         "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "PrepareForShooting"
-                            }
-                          },
                           {
                             "type": "sequential",
                             "data": {
@@ -130,13 +260,32 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.2
+                                    "waitTime": 0.05
                                   }
                                 },
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "FeedNote"
+                                    "name": "Collect"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "3NoteAutoThroughAmpLeft5"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
                                   }
                                 }
                               ]
@@ -146,31 +295,38 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3NoteAutoThroughAmpLeft5"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3NoteAutoThroughAmp4"
-                      }
-                    },
-                    {
-                      "type": "parallel",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "PrepareForShooting"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "3NoteAutoThroughAmp4"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {
