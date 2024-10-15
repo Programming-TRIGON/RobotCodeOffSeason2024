@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.trigon.robot.commands.factories.GeneralCommands;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
 
 public class LEDStrip extends SubsystemBase {
     public static LEDStrip[] LED_STRIPS = new LEDStrip[0];
@@ -13,8 +14,10 @@ public class LEDStrip extends SubsystemBase {
     private final int indexOffset;
     private final boolean inverted;
     private final int numberOfLEDs;
+    private int lastBreatheLED;
     private double rainbowFirstPixelHue = 0;
     private boolean areLEDsOnForBlinking = false;
+    private double lastBreatheMovementTime = 0;
     private double lastBlinkTime = 0;
 
     static {
@@ -34,6 +37,7 @@ public class LEDStrip extends SubsystemBase {
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
 
+        lastBreatheLED = indexOffset;
         addLEDStripToLEDStripsArray(this);
     }
 
@@ -82,6 +86,23 @@ public class LEDStrip extends SubsystemBase {
         }
         rainbowFirstPixelHue += 3;
         rainbowFirstPixelHue %= 180;
+    }
+
+    void breathe(Color color, int breathingLEDs) {
+        double moveLEDTimeSeconds = IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS / numberOfLEDs;
+        double currentTime = Timer.getFPGATimestamp();
+        if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
+            lastBreatheMovementTime = currentTime;
+            lastBreatheLED++;
+        }
+        if (lastBreatheLED >= numberOfLEDs + indexOffset)
+            lastBreatheLED = indexOffset;
+        LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED, color);
+        if (lastBreatheLED - indexOffset < breathingLEDs)
+            LEDStripConstants.LED_BUFFER.setLED(numberOfLEDs + indexOffset - breathingLEDs + lastBreatheLED - indexOffset, Color.kBlack);
+        else
+            LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - breathingLEDs, Color.kBlack);
+
     }
 
     void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {

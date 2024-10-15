@@ -35,6 +35,13 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
+    public static Command getBreathingCommand(Color color, int breathingLEDs, LEDStrip... ledStrips) {
+        return new RunCommand(
+                () -> runForLEDs((ledStrip) -> ledStrip.breathe(color, breathingLEDs), ledStrips),
+                ledStrips
+        ).ignoringDisable(true);
+    }
+
     public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor, LEDStrip... ledStrips) {
         return new InitExecuteCommand(
                 () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
