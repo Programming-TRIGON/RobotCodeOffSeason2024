@@ -2,9 +2,7 @@ package frc.trigon.robot.constants;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.commands.factories.AutonomousCommands;
-import frc.trigon.robot.commands.factories.ShootingCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 
 public class AutonomousConstants {

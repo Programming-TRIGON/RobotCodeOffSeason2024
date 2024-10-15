@@ -81,9 +81,22 @@
                             }
                           },
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "Collect"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "Collect"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -145,15 +158,41 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "Collect"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "FrontRow4NoteAuto3"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
-                            "type": "path",
+                            "type": "sequential",
                             "data": {
-                              "pathName": "FrontRow4NoteAuto3"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "Collect"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -215,15 +254,41 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "Collect"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "FrontRow4NoteAuto5"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
-                            "type": "path",
+                            "type": "sequential",
                             "data": {
-                              "pathName": "FrontRow4NoteAuto5"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "Collect"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
