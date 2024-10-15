@@ -34,12 +34,6 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.05
-                                  }
-                                },
-                                {
                                   "type": "named",
                                   "data": {
                                     "name": "PrepareForShooting"

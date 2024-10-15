@@ -29,8 +29,8 @@ public class ClimberConstants {
             LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME);
 
     private static final InvertedValue
-            RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive,
-            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
+            RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
+            LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
     private static final double //TODO: calibrate

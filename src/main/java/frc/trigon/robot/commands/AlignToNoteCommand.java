@@ -2,7 +2,6 @@ package frc.trigon.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -12,7 +11,6 @@ import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
-import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
@@ -57,10 +55,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private boolean shouldAlignToNote() {
-        lastTimeCameraHadObjectsSeconds = CAMERA.hasTargets() ? Timer.getFPGATimestamp() : lastTimeCameraHadObjectsSeconds;
-        if (CAMERA.hasTargets() || Timer.getFPGATimestamp() - lastTimeCameraHadObjectsSeconds < IntakeConstants.EXTRA_NOTE_ALIGNMENT_TIME_SECONDS)
-            return !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
-        return false;
+        return CAMERA.hasTargets() && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
     }
 
     private double getScaledJoystickValue() {
