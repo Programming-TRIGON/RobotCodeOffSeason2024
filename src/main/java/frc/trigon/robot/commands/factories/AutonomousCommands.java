@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.CameraConstants;
+import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
@@ -42,7 +44,11 @@ public class AutonomousCommands {
     }
 
     public static Command getNoteCollectionCommand() {
-        return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).onlyIf(() -> !RobotContainer.INTAKE.hasNote());
+        return new ParallelCommandGroup(
+                LEDStripCommands.getStaticColorCommand(Color.kOrange, LEDStrip.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
+                ShooterCommands.getSendStaticBreakRequestCommand().until(RobotContainer.INTAKE::hasNote).andThen(ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).withTimeout(0.1))
+        );
     }
 
     public static Command getFeedNoteCommand() {
