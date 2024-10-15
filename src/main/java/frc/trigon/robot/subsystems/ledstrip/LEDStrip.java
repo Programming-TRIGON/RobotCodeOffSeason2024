@@ -89,6 +89,7 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void breathe(Color color, int breathingLEDs) {
+        clearLedColors();
         double moveLEDTimeSeconds = IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS / numberOfLEDs;
         double currentTime = Timer.getFPGATimestamp();
         if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
@@ -97,12 +98,12 @@ public class LEDStrip extends SubsystemBase {
         }
         if (lastBreatheLED >= numberOfLEDs + indexOffset)
             lastBreatheLED = indexOffset;
-        LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED, color);
-        if (lastBreatheLED - indexOffset < breathingLEDs)
-            LEDStripConstants.LED_BUFFER.setLED(numberOfLEDs + indexOffset - breathingLEDs + lastBreatheLED - indexOffset, Color.kBlack);
-        else
-            LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - breathingLEDs, Color.kBlack);
-
+        for (int i = 0; i < breathingLEDs; i++) {
+            if (lastBreatheLED - i >= indexOffset)
+                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i, color);
+            else
+                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i + numberOfLEDs, color);
+        }
     }
 
     void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
