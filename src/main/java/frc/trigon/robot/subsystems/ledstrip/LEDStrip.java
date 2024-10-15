@@ -82,12 +82,12 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue %= 180;
     }
 
-    void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
+    public void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         final int ledsPerSection = (int) Math.floor(numberOfLEDs / 3.0);
         setThreeSectionColor(ledsPerSection, firstSectionColor, secondSectionColor, thirdSectionColor);
     }
 
-    public void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
+    private void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         setLEDColors(inverted ? thirdSectionColor : firstSectionColor, 0, ledsPerSection);
         setLEDColors(secondSectionColor, ledsPerSection, ledsPerSection * 2);
         setLEDColors(inverted ? firstSectionColor : thirdSectionColor, ledsPerSection * 2, numberOfLEDs - 1);
@@ -99,18 +99,10 @@ public class LEDStrip extends SubsystemBase {
     }
 
     public void setLEDColors(Color color, int startIndex, int endIndex) {
-        final AddressableLEDBuffer buffer = new AddressableLEDBuffer(LEDStripConstants.LED_BUFFER.getLength());
-        for (int i = 0; i < buffer.getLength(); i++) {
-            if (i > startIndex + indexOffset && i < endIndex + indexOffset) {
-                buffer.setLED(i, color);
-                continue;
-            }
-            buffer.setLED(i, LEDStripConstants.LED_BUFFER.getLED(i));
+        for (int i = 0; i < endIndex - startIndex + 1; i++) {
+            LEDStripConstants.LED_BUFFER.setLED(startIndex + indexOffset + i, color);
         }
-        LED.setData(buffer);
-//        for (int i = 0; i < endIndex - startIndex; i++) {
-//            buffer.setLED(startIndex + indexOffset + i, color);
-//        }
+        LED.setData(LEDStripConstants.LED_BUFFER);
     }
 
     private void addLEDStripToLEDStripsArray(LEDStrip ledStrip) {

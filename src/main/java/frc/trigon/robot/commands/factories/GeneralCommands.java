@@ -47,6 +47,13 @@ public class GeneralCommands {
         ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
     }
 
+    public static Command getHighEjectNoteCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.HIGH_EJECT_PITCH),
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT)
+        );
+    }
+
     public static Command getVisualizeNoteShootingCommand() {
         return new InstantCommand(
                 () -> new VisualizeNoteShootingCommand()
