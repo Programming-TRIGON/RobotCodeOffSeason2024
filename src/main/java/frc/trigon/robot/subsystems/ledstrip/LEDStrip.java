@@ -1,10 +1,10 @@
 package frc.trigon.robot.subsystems.ledstrip;
 
 import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
@@ -87,18 +87,30 @@ public class LEDStrip extends SubsystemBase {
         setThreeSectionColor(ledsPerSection, firstSectionColor, secondSectionColor, thirdSectionColor);
     }
 
-    private void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        for (int i = 0; i < ledsPerSection; i++)
-            setLEDColor(inverted ? thirdSectionColor : firstSectionColor, i);
-        for (int i = ledsPerSection; i < 2 * ledsPerSection; i++)
-            setLEDColor(secondSectionColor, i);
-        for (int i = 2 * ledsPerSection; i <= numberOfLEDs; i++)
-            setLEDColor(inverted ? firstSectionColor : thirdSectionColor, i);
+    public void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
+        setLEDColors(inverted ? thirdSectionColor : firstSectionColor, 0, ledsPerSection);
+        setLEDColors(secondSectionColor, ledsPerSection, ledsPerSection * 2);
+        setLEDColors(inverted ? firstSectionColor : thirdSectionColor, ledsPerSection * 2, numberOfLEDs - 1);
     }
 
-    private void setLEDColor(Color color, int index) {
+    public void setLEDColor(Color color, int index) {
         LEDStripConstants.LED_BUFFER.setLED(index + indexOffset, color);
         LED.setData(LEDStripConstants.LED_BUFFER);
+    }
+
+    public void setLEDColors(Color color, int startIndex, int endIndex) {
+        final AddressableLEDBuffer buffer = new AddressableLEDBuffer(LEDStripConstants.LED_BUFFER.getLength());
+        for (int i = 0; i < buffer.getLength(); i++) {
+            if (i > startIndex + indexOffset && i < endIndex + indexOffset) {
+                buffer.setLED(i, color);
+                continue;
+            }
+            buffer.setLED(i, LEDStripConstants.LED_BUFFER.getLED(i));
+        }
+        LED.setData(buffer);
+//        for (int i = 0; i < endIndex - startIndex; i++) {
+//            buffer.setLED(startIndex + indexOffset + i, color);
+//        }
     }
 
     private void addLEDStripToLEDStripsArray(LEDStrip ledStrip) {
