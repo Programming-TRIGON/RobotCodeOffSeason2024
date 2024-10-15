@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
@@ -92,11 +91,11 @@ public class Intake extends MotorSubsystem {
     }
 
     private Command getCollectionIndicationLEDsCommand() {
-        return LEDStripCommands.getBlinkingCommand(Color.kWhite, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
+        return LEDStripCommands.getBlinkingCommand(Color.kOrangeRed, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
     }
 
     private Command getFeedingIndicationLEDsCommand() {
-        return LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS);
+        return LEDStripCommands.getBlinkingCommand(Color.kPurple, IntakeConstants.FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS);
     }
 
     private void configureLEDsTrigger() {

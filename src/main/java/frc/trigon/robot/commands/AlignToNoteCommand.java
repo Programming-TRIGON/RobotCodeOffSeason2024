@@ -23,7 +23,6 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ?
             new PIDController(0.0075, 0, 0) :
             new PIDController(0.0002, 0, 0);
-    private double lastTimeCameraHadObjectsSeconds = 0;
 
     public AlignToNoteCommand() {
         addCommands(

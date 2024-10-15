@@ -41,7 +41,7 @@ public class GeneralCommands {
     public static Command getNoteCollectionCommand() {
         return new ParallelCommandGroup(
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
-                LEDStripCommands.getStaticColorCommand(Color.kOrange, LEDStrip.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                LEDStripCommands.getStaticColorCommand(Color.kOrangeRed, LEDStrip.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
                 ShooterCommands.getSendStaticBreakRequestCommand().until(RobotContainer.INTAKE::hasNote).andThen(ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).withTimeout(0.1))
         ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
@@ -99,9 +99,9 @@ public class GeneralCommands {
             MotorSubsystem.setAllSubsystemsBrakeAsync(IS_BRAKING);
 
             if (IS_BRAKING)
-                CommandConstants.STATIC_WHITE_LED_COLOR_COMMAND.cancel();
-            else
                 CommandConstants.STATIC_WHITE_LED_COLOR_COMMAND.schedule();
+            else
+                CommandConstants.STATIC_WHITE_LED_COLOR_COMMAND.cancel();
         }).ignoringDisable(true);
     }
 

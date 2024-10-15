@@ -85,7 +85,7 @@ public class CommandConstants {
                 SHOULD_ALIGN_TO_NOTE = false;
                 Logger.recordOutput("ShouldAlignToNote", false);
             }).ignoringDisable(true),
-            DEFAULT_LEDS_COMMAND = LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
+            DEFAULT_LEDS_COMMAND = LEDStripCommands.getStaticColorCommand(Color.kBlue, LEDStrip.LED_STRIPS),
             DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
             DEFAULT_CLIMBER_COMMAND = ClimberCommands.getStopCommand(),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),

@@ -1,6 +1,5 @@
 package frc.trigon.robot.subsystems.ledstrip;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -9,7 +8,6 @@ import frc.trigon.robot.commands.factories.GeneralCommands;
 
 public class LEDStrip extends SubsystemBase {
     public static LEDStrip[] LED_STRIPS = new LEDStrip[0];
-    private static final AddressableLED LED = LEDStripConstants.LED;
     private final int indexOffset;
     private final boolean inverted;
     private final int numberOfLEDs;
@@ -22,6 +20,11 @@ public class LEDStrip extends SubsystemBase {
                 1,
                 () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, LEDStripConstants.LOW_BATTERY_BLINKING_INTERVAL_SECONDS, LED_STRIPS).withTimeout(LEDStripConstants.LOW_BATTERY_BLINKING_TIME_SECONDS))
         );
+    }
+
+    @Override
+    public void periodic() {
+        LEDStripConstants.LED.setData(LEDStripConstants.LED_BUFFER);
     }
 
     public LEDStrip(boolean inverted, int numberOfLEDs, int indexOffset) {
@@ -67,8 +70,7 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void staticColor(Color color) {
-        for (int index = 0; index < numberOfLEDs; index++)
-            setLEDColor(color, index);
+        setLEDColors(color, 0, numberOfLEDs - 1);
     }
 
     void rainbow() {
@@ -76,7 +78,6 @@ public class LEDStrip extends SubsystemBase {
             final int hue = (int) (rainbowFirstPixelHue + (led * 180 / numberOfLEDs) % 180);
             LEDStripConstants.LED_BUFFER.setHSV(led + indexOffset, hue, 255, 128);
         }
-        LED.setData(LEDStripConstants.LED_BUFFER);
         rainbowFirstPixelHue += 3;
         rainbowFirstPixelHue %= 180;
     }
@@ -92,16 +93,9 @@ public class LEDStrip extends SubsystemBase {
         setLEDColors(inverted ? firstSectionColor : thirdSectionColor, ledsPerSection * 2, numberOfLEDs - 1);
     }
 
-    public void setLEDColor(Color color, int index) {
-        LEDStripConstants.LED_BUFFER.setLED(index + indexOffset, color);
-        LED.setData(LEDStripConstants.LED_BUFFER);
-    }
-
     public void setLEDColors(Color color, int startIndex, int endIndex) {
-        for (int i = 0; i <= endIndex - startIndex; i++) {
+        for (int i = 0; i <= endIndex - startIndex; i++)
             LEDStripConstants.LED_BUFFER.setLED(startIndex + indexOffset + i, color);
-        }
-        LED.setData(LEDStripConstants.LED_BUFFER);
     }
 
     private void addLEDStripToLEDStripsArray(LEDStrip ledStrip) {
