@@ -92,11 +92,6 @@ public class Shooter extends MotorSubsystem {
         return atVelocity(getCurrentLeftMotorVelocityRotationsPerSecond(), targetLeftVelocityRotationsPerSecond);
     }
 
-    void sendStaticBrakeRequest() {
-        rightMotor.setControl(staticBrakeRequest);
-        leftMotor.setControl(staticBrakeRequest);
-    }
-
     void reachTargetShootingVelocityFromShootingCalculations() {
         final double
                 targetRightVelocityRotationsPerSecond = shootingCalculations.getTargetShootingState().targetShootingVelocityRotationsPerSecond(),
