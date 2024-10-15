@@ -127,9 +127,11 @@ public class Climber extends MotorSubsystem {
 
     void setTargetPosition(double targetRightPositionRotations, double targetLeftPositionRotations, boolean affectedByRobotWeight) {
         rightMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetRightPositionRotations));
-        leftMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetLeftPositionRotations));
+                .withPosition(targetRightPositionRotations)
+                .withFeedForward(affectedByRobotWeight ? ClimberConstants.ON_CHAIN_KG : 0));
+        leftMotor.setControl(determineRequest(affectedByRobotWeight).withFeedForward(ClimberConstants.ON_CHAIN_KG)
+                .withPosition(targetLeftPositionRotations)
+                .withFeedForward(affectedByRobotWeight ? ClimberConstants.ON_CHAIN_KG : 0));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {
