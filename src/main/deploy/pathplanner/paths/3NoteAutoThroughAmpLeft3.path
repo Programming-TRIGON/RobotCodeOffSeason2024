@@ -8,32 +8,38 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.772633770619654,
-        "y": 7.125322419658923
+        "x": 5.837872416485573,
+        "y": 6.829386194384925
       },
       "isLocked": false,
       "linkedName": "3NoteAutoThroughAmpFirstCollection"
     },
     {
       "anchor": {
-        "x": 8.255803553860629,
-        "y": 7.443288126012872
+        "x": 8.270256540513081,
+        "y": 5.771473152964195
       },
       "prevControl": {
-        "x": 7.576513181195377,
-        "y": 7.298758259488349
+        "x": 7.708937127275964,
+        "y": 6.080960310068768
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3NoteAutoThroughAmpLeftSecondCollection"
+      "linkedName": "3NoteAutoThroughAmpSecondCollection"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": -20.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "AlignToNote",
-      "waypointRelativePos": 0.85,
+      "name": "AlignToNOte",
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {
@@ -47,24 +53,41 @@
           ]
         }
       }
+    },
+    {
+      "name": "StopALigningToFIrstNote",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopAligningToNote"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 5.194428907734835,
+    "rotation": -20.799028408841473,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3NoteAutoThroughAmpLeft",
+  "folder": "3NoteAutoThroughAmp",
   "previewStartingState": {
-    "rotation": 28.0,
-    "velocity": 0
+    "rotation": 25.769327624338693,
+    "velocity": 1.0
   },
   "useDefaultConstraints": true
 }

@@ -66,33 +66,27 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "path",
                                   "data": {
-                                    "waitTime": 0.1
+                                    "pathName": "FrontRow4NoteAuto1"
                                   }
                                 },
                                 {
-                                  "type": "named",
+                                  "type": "wait",
                                   "data": {
-                                    "name": "Collect"
+                                    "waitTime": 0.05
                                   }
                                 }
                               ]
                             }
                           },
                           {
-                            "type": "path",
+                            "type": "named",
                             "data": {
-                              "pathName": "FrontRow4NoteAuto1"
+                              "name": "Collect"
                             }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FrontRow4NoteAuto2"
                       }
                     },
                     {
@@ -100,15 +94,34 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "PrepareForShootingCloseShot"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "PrepareForShootingCloseShot"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "FrontRow4NoteAuto2"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {
@@ -147,21 +160,9 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FrontRow4NoteAuto4"
-                      }
-                    },
-                    {
                       "type": "race",
                       "data": {
                         "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "PrepareForShootingCloseShot"
-                            }
-                          },
                           {
                             "type": "sequential",
                             "data": {
@@ -169,7 +170,32 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.5
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "PrepareForShootingCloseShot"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "FrontRow4NoteAuto4"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.3
                                   }
                                 },
                                 {
@@ -204,25 +230,38 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FrontRow4NoteAuto6"
-                      }
-                    },
-                    {
                       "type": "race",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "sequential",
                             "data": {
-                              "name": "PrepareForShootingCloseShot"
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.05
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "PrepareForShootingCloseShot"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "FrontRow4NoteAuto6"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {
