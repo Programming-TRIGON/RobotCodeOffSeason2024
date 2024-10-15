@@ -106,6 +106,8 @@ public class RobotContainer {
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
+        LEDStrip.LED_STRIPS[0].threeSectionColor(Color.kDeepPink, Color.kHotPink, Color.kLightPink);
+        LEDStrip.LED_STRIPS[1].threeSectionColor(Color.kMediumPurple, Color.kPurple, Color.kPink);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
