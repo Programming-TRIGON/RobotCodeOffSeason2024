@@ -16,11 +16,11 @@ public class CameraConstants {
     private static final Transform3d
             FRONT_CENTER_TO_CAMERA = new Transform3d(
             new Translation3d(0.0465, 0.325, 0.192),
-            new Rotation3d(0, Units.degreesToRadians(-31.5), 0)
+            new Rotation3d(0, Units.degreesToRadians(-32.65), 0)
     ),
             REAR_CENTER_TO_CAMERA = new Transform3d(
                     new Translation3d(-0.325 + 0.00975, 0, 0.095),
-                    new Rotation3d(Math.PI - Units.degreesToRadians(0), Units.degreesToRadians(-33.15), Math.PI + Units.degreesToRadians(0))
+                    new Rotation3d(Math.PI - Units.degreesToRadians(0), Units.degreesToRadians(-31.38), Math.PI + Units.degreesToRadians(0))
             );
 
     public static final AprilTagCamera

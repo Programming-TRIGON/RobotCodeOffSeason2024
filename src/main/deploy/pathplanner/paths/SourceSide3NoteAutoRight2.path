@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8981397630253705,
-        "y": 2.778681091803989
+        "x": 0.6946944060158917,
+        "y": 4.426390230452671
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.049984437997045,
-        "y": 2.2980248777398966
+        "x": 4.107109781915527,
+        "y": 1.6672086550823948
       },
       "isLocked": false,
-      "linkedName": "SourceSide3NoteAutoFirstFeed"
+      "linkedName": "SourceSide3NoteAutoStartPoint"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 0.7804612792324187
       },
       "prevControl": {
-        "x": 7.374171368061045,
-        "y": 1.0117090656716528
+        "x": 6.242306831407013,
+        "y": 1.296717842841861
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "AlignToNote",
-      "waypointRelativePos": 0.85,
+      "waypointRelativePos": 0.75,
       "command": {
         "type": "parallel",
         "data": {

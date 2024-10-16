@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7547034812379487,
-      "y": 3.84449444955228
+      "x": 0.6946944060158917,
+      "y": 4.426390230452671
     },
-    "rotation": 0
+    "rotation": -60.10109816138545
   },
   "command": {
     "type": "sequential",
@@ -53,12 +53,6 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "SourceSide3NoteAuto1"
-                                  }
-                                },
-                                {
                                   "type": "wait",
                                   "data": {
                                     "waitTime": 0.2
@@ -87,7 +81,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.05
+                                    "waitTime": 0.2
                                   }
                                 },
                                 {

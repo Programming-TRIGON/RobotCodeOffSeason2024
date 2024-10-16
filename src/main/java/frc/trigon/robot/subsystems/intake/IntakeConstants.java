@@ -74,7 +74,7 @@ public class IntakeConstants {
     static final double
             COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS = 0.2;
     static final double COLLECTION_INDICATION_BLINKING_TIME_SECONDS = 2;
-    public static final double FEEDING_INDICATION_BREATHING_TIME_SECONDS = 1;
+    public static final double FEEDING_INDICATION_BREATHING_TIME_SECONDS = 0.6;
 
     static {
         configureMasterMotor();
