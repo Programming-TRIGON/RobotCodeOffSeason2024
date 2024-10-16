@@ -5,6 +5,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import org.littletonrobotics.junction.Logger;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
@@ -19,7 +20,6 @@ public class FieldConstants {
         try {
             APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout.loadFromResource("2024-crescendo.json");
         } catch (IOException e) {
-            System.out.println("test");
             throw new RuntimeException(e);
         }
     }
@@ -32,7 +32,7 @@ public class FieldConstants {
             SPEAKER_TAG_ID = 7,
             AMP_TAG_ID = 6;
     private static final Translation3d
-            SPEAKER_TAG_TO_SPEAKER = new Translation3d(0.15, 0.0, 0.82),
+            SPEAKER_TAG_TO_SPEAKER = new Translation3d(0.15, 0.0, 0.80),
             AMP_TAG_TO_AMP = new Translation3d(0, 0.03, -0.32);
     public static final MirrorableTranslation3d
             SPEAKER_TRANSLATION = new MirrorableTranslation3d(TAG_ID_TO_POSE.get(SPEAKER_TAG_ID).getTranslation().plus(SPEAKER_TAG_TO_SPEAKER), true),

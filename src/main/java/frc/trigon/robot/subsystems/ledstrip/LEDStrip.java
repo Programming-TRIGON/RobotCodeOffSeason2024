@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 
@@ -15,9 +16,9 @@ public class LEDStrip extends SubsystemBase {
     private final boolean inverted;
     private final int numberOfLEDs;
     private int lastBreatheLED;
+    private double lastBreatheMovementTime = 0;
     private double rainbowFirstPixelHue = 0;
     private boolean areLEDsOnForBlinking = false;
-    private double lastBreatheMovementTime = 0;
     private double lastBlinkTime = 0;
 
     static {
@@ -37,7 +38,7 @@ public class LEDStrip extends SubsystemBase {
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
 
-        lastBreatheLED = indexOffset;
+        resetBreatheSettings(0);
         addLEDStripToLEDStripsArray(this);
     }
 
@@ -88,7 +89,13 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue %= 180;
     }
 
-    void breathe(Color color, int breathingLEDs, double cycleTimeSeconds) {
+    void resetBreatheSettings(int breathingLEDs) {
+        lastBreatheLED = indexOffset + breathingLEDs;
+        lastBreatheMovementTime = Timer.getFPGATimestamp();
+        System.out.println(lastBreatheLED);
+    }
+
+    void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop) {
         clearLedColors();
         double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
         double currentTime = Timer.getFPGATimestamp();
@@ -96,27 +103,17 @@ public class LEDStrip extends SubsystemBase {
             lastBreatheMovementTime = currentTime;
             lastBreatheLED++;
         }
-        if (lastBreatheLED >= numberOfLEDs + indexOffset)
-            lastBreatheLED = indexOffset;
-        for (int i = 0; i < breathingLEDs; i++) {
-            if (lastBreatheLED - i >= indexOffset)
-                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i, color);
+        if (lastBreatheLED >= numberOfLEDs + indexOffset) {
+            if (shouldLoop)
+                lastBreatheLED = indexOffset;
             else
-                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i + numberOfLEDs, color);
-        }
-    }
-
-    void singleBreathe(Color color, int breathingLEDs, double timeSeconds) {
-        clearLedColors();
-        double moveLEDTimeSeconds = timeSeconds / numberOfLEDs;
-        double currentTime = Timer.getFPGATimestamp();
-        if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
-            lastBreatheMovementTime = currentTime;
-            lastBreatheLED++;
+                setDefaultCommandForAllLEDS(CommandConstants.DEFAULT_LEDS_COMMAND);
         }
         for (int i = 0; i < breathingLEDs; i++) {
-            if (lastBreatheLED - i <= indexOffset + numberOfLEDs)
+            if (lastBreatheLED - i >= indexOffset && lastBreatheLED - i < indexOffset + numberOfLEDs)
                 LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i, color);
+            else if (lastBreatheLED - i < indexOffset + numberOfLEDs)
+                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i + numberOfLEDs, color);
         }
     }
 

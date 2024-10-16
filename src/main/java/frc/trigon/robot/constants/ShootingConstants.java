@@ -8,7 +8,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 public class ShootingConstants {
     public static final double G_FORCE = 9.80665;
     public static final double
-            SPEAKER_SHOT_STANDING_VELOCITY_ROTATIONS_PER_SECOND = 45,
+            SPEAKER_SHOT_STANDING_VELOCITY_ROTATIONS_PER_SECOND = 50,
             DELIVERY_STANDING_VELOCITY_ROTATIONS_PER_SECOND = 35,
             FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = -10;
 

@@ -121,6 +121,10 @@ public class GeneralCommands {
         return new WaitUntilCommand(condition).andThen(command);
     }
 
+    public static Command runWhen(Command command,BooleanSupplier condition, double debounceTimeSeconds) {
+        return new WaitUntilCommand(condition).andThen(new WaitCommand(debounceTimeSeconds).andThen(command.onlyIf(condition).repeatedly()));
+    }
+
     public static Command duplicate(Command command) {
         return new FunctionalCommand(
                 command::initialize,

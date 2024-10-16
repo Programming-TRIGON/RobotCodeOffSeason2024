@@ -91,7 +91,8 @@ public class ShootingCommands {
                         .alongWith(GeneralCommands.getVisualizeNoteShootingCommand()),
                 () -> RobotContainer.SHOOTER.atTargetVelocity() &&
                         RobotContainer.PITCHER.atTargetPitch() &&
-                        RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+                        RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()),
+                0.2
         );
     }
 

@@ -10,7 +10,7 @@ import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 
 public class CameraConstants {
     public static final double
-            TRANSLATIONS_STD_EXPONENT = 0.0003,
+            TRANSLATIONS_STD_EXPONENT = 0.0004,
             THETA_STD_EXPONENT = 0.01;
 
     private static final Transform3d
@@ -20,7 +20,7 @@ public class CameraConstants {
     ),
             REAR_CENTER_TO_CAMERA = new Transform3d(
                     new Translation3d(-0.325 + 0.00975, 0, 0.095),
-                    new Rotation3d(Math.PI - Units.degreesToRadians(0), Units.degreesToRadians(-33.5), Math.PI + Units.degreesToRadians(0))
+                    new Rotation3d(Math.PI - Units.degreesToRadians(0), Units.degreesToRadians(-34.1), Math.PI + Units.degreesToRadians(0))
             );
 
     public static final AprilTagCamera
