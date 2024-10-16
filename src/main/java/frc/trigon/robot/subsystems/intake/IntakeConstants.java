@@ -90,6 +90,7 @@ public class IntakeConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
+        config.HardwareLimitSwitch.ForwardLimitEnable = false;
         config.HardwareLimitSwitch.ReverseLimitEnable = false;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
@@ -112,6 +113,7 @@ public class IntakeConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
+        config.HardwareLimitSwitch.ForwardLimitEnable = false;
         config.HardwareLimitSwitch.ReverseLimitEnable = false;
 
         FOLLOWER_MOTOR.applyConfiguration(config);
