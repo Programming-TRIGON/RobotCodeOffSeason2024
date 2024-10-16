@@ -35,9 +35,16 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
-    public static Command getBreathingCommand(Color color, int breathingLEDs, LEDStrip... ledStrips) {
+    public static Command getBreathingCommand(Color color, int breathingLEDs, double cycleTimeSeconds, LEDStrip... ledStrips) {
         return new RunCommand(
-                () -> runForLEDs((ledStrip) -> ledStrip.breathe(color, breathingLEDs), ledStrips),
+                () -> runForLEDs((ledStrip) -> ledStrip.breathe(color, breathingLEDs, cycleTimeSeconds), ledStrips),
+                ledStrips
+        ).ignoringDisable(true);
+    }
+
+    public static Command getSingleBreatheCommand(Color color, int breathingLEDs, double timeSeconds, LEDStrip... ledStrips) {
+        return new RunCommand(
+                () -> runForLEDs((ledStrip) -> ledStrip.singleBreathe(color, breathingLEDs, timeSeconds)),
                 ledStrips
         ).ignoringDisable(true);
     }

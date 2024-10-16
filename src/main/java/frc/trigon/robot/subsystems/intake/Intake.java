@@ -95,7 +95,7 @@ public class Intake extends MotorSubsystem {
     }
 
     private Command getFeedingIndicationLEDsCommand() {
-        return LEDStripCommands.getBreathingCommand(Color.kPurple, 5, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS);
+        return LEDStripCommands.getSingleBreatheCommand(Color.kPurple, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS);
     }
 
     private void configureLEDsTrigger() {

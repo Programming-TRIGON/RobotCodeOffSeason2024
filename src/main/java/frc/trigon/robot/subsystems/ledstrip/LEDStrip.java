@@ -88,9 +88,9 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue %= 180;
     }
 
-    void breathe(Color color, int breathingLEDs) {
+    void breathe(Color color, int breathingLEDs, double cycleTimeSeconds) {
         clearLedColors();
-        double moveLEDTimeSeconds = IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS / numberOfLEDs;
+        double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
         double currentTime = Timer.getFPGATimestamp();
         if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
             lastBreatheMovementTime = currentTime;
@@ -103,6 +103,20 @@ public class LEDStrip extends SubsystemBase {
                 LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i, color);
             else
                 LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i + numberOfLEDs, color);
+        }
+    }
+
+    void singleBreathe(Color color, int breathingLEDs, double timeSeconds) {
+        clearLedColors();
+        double moveLEDTimeSeconds = timeSeconds / numberOfLEDs;
+        double currentTime = Timer.getFPGATimestamp();
+        if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
+            lastBreatheMovementTime = currentTime;
+            lastBreatheLED++;
+        }
+        for (int i = 0; i < breathingLEDs; i++) {
+            if (lastBreatheLED - i <= indexOffset + numberOfLEDs)
+                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i, color);
         }
     }
 
