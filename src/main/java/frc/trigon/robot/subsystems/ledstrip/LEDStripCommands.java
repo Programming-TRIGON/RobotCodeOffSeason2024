@@ -36,9 +36,9 @@ public class LEDStripCommands {
     }
 
     public static Command getBreatheCommand(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop, LEDStrip... ledStrips) {
-        return new InitExecuteCommand(
-                () -> runForLEDs((LEDStrip) -> LEDStrip.resetBreatheSettings(breathingLEDs)),
+        return new ExecuteEndCommand(
                 () -> runForLEDs((ledStrip) -> ledStrip.breathe(color, breathingLEDs, cycleTimeSeconds, shouldLoop), ledStrips),
+                () -> runForLEDs(LEDStrip::resetBreatheSettings, ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }

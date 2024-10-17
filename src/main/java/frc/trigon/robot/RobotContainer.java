@@ -90,6 +90,10 @@ public class RobotContainer {
         OperatorConstants.CLIMB_TRIGGER.whileTrue(GeneralCommands.getClimbCommand());
         OperatorConstants.MOVE_CLIMBER_DOWN_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_DOWN_MANUALLY_COMMAND);
         OperatorConstants.MOVE_CLIMBER_UP_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_UP_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_RIGHT_CLIMBER_DOWN_MANUALLY.whileTrue(CommandConstants.MOVE_RIGHT_CLIMBER_DOWN_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_RIGHT_CLIMBER_UP_MANUALLY.whileTrue(CommandConstants.MOVE_RIGHT_CLIMBER_DOWN_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_LEFT_CLIMBER_DOWN_MANUALLY.whileTrue(CommandConstants.MOVE_LEFT_CLIMBER_DOWN_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_LEFT_CLIMBER_UP_MANUALLY.whileTrue(CommandConstants.MOVE_LEFT_CLIMBER_UP_MANUALLY_COMMAND);
         OperatorConstants.OVERRIDE_IS_CLIMBING_TRIGGER.onTrue(CommandConstants.OVERRIDE_IS_CLIMBING_COMMAND);
 
         OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(CommandConstants.SHOOT_AT_SPEAKER_COMMAND);

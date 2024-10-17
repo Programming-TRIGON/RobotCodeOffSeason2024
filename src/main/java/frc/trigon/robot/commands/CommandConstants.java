@@ -90,6 +90,10 @@ public class CommandConstants {
             DEFAULT_CLIMBER_COMMAND = ClimberCommands.getStopCommand(),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
             MOVE_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE).alongWith(new InstantCommand(() -> RobotContainer.CLIMBER.setIsClimbing(true))),
+            MOVE_RIGHT_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE, 0),
+            MOVE_RIGHT_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE, 0),
+            MOVE_LEFT_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(0, ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),
+            MOVE_LEFT_CLIMBER_UP_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(0, ClimberConstants.MOVE_CLIMBER_UP_VOLTAGE),
             OVERRIDE_IS_CLIMBING_COMMAND = new InstantCommand(() -> {
                 RobotContainer.CLIMBER.setIsClimbing(false);
                 Logger.recordOutput("IsClimbing", false);

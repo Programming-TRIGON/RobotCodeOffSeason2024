@@ -146,7 +146,7 @@ public class PitcherConstants {
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
         MASTER_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        MASTER_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 1000);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
@@ -177,10 +177,6 @@ public class PitcherConstants {
         config.MagnetSensor.AbsoluteSensorRange = ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE;
 
         ENCODER.applyConfiguration(config);
-
-        ENCODER.registerSignal(CANcoderSignal.VELOCITY, 100);
-        ENCODER.registerSignal(CANcoderSignal.POSITION, 100);
-
         ENCODER.setSimulationInputsFromTalonFX(MASTER_MOTOR);
 
         ENCODER.registerSignal(CANcoderSignal.POSITION, 100);

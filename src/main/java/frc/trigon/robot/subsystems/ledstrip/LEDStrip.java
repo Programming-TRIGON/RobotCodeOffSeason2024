@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
-import frc.trigon.robot.subsystems.intake.IntakeConstants;
 
 public class LEDStrip extends SubsystemBase {
     public static LEDStrip[] LED_STRIPS = new LEDStrip[0];
@@ -38,7 +37,7 @@ public class LEDStrip extends SubsystemBase {
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
 
-        resetBreatheSettings(0);
+        resetBreatheSettings();
         addLEDStripToLEDStripsArray(this);
     }
 
@@ -89,10 +88,9 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue %= 180;
     }
 
-    void resetBreatheSettings(int breathingLEDs) {
-        lastBreatheLED = indexOffset + breathingLEDs;
+    void resetBreatheSettings() {
+        lastBreatheLED = indexOffset;
         lastBreatheMovementTime = Timer.getFPGATimestamp();
-        System.out.println(lastBreatheLED);
     }
 
     void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop) {
@@ -104,10 +102,8 @@ public class LEDStrip extends SubsystemBase {
             lastBreatheLED++;
         }
         if (lastBreatheLED >= numberOfLEDs + indexOffset) {
-            if (shouldLoop)
-                lastBreatheLED = indexOffset;
-            else
-                setDefaultCommandForAllLEDS(CommandConstants.DEFAULT_LEDS_COMMAND);
+            if (!shouldLoop)
+                CommandConstants.DEFAULT_LEDS_COMMAND.schedule();
         }
         for (int i = 0; i < breathingLEDs; i++) {
             if (lastBreatheLED - i >= indexOffset && lastBreatheLED - i < indexOffset + numberOfLEDs)
