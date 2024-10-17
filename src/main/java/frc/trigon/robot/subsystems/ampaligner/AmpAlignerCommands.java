@@ -1,7 +1,10 @@
 package frc.trigon.robot.subsystems.ampaligner;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import org.trigon.commands.ExecuteEndCommand;
 import org.trigon.commands.NetworkTablesCommand;
@@ -28,6 +31,13 @@ public class AmpAlignerCommands {
                 () -> RobotContainer.AMP_ALIGNER.setTargetState(targetState),
                 RobotContainer.AMP_ALIGNER::stop,
                 RobotContainer.AMP_ALIGNER
+        );
+    }
+
+    public static Command getSetTargetVoltageCommand(double voltage) {
+        return new StartEndCommand(
+                () -> RobotContainer.AMP_ALIGNER.drive(Units.Volts.of(voltage)),
+                RobotContainer.AMP_ALIGNER::stop
         );
     }
 }
