@@ -102,6 +102,7 @@ public class PitcherConstants {
     public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(13);
     static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(1);
     public static final Transform3d VISUALIZATION_PITCHER_PIVOT_POINT_TO_HELD_NOTE = new Transform3d(0.24, 0, 0.02, new Rotation3d());
+    public static final Rotation2d BLOCK_PITCH = Rotation2d.fromDegrees(70);
 
     static {
         configureMasterMotor();

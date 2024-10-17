@@ -13,6 +13,7 @@ import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
+import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 
@@ -33,6 +34,13 @@ public class AmpCommands {
                 GeneralCommands.runWhenContinueTriggerPressed(getFeedToAmpCommand()),
                 shouldAlignToAmp ? GeneralCommands.duplicate(CommandConstants.FACE_AMP_COMMAND) : GeneralCommands.duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND)
         ));
+    }
+
+    public static Command getBlockCommand() {
+        return new ParallelCommandGroup(
+                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
+                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.BLOCK_PITCH)
+        );
     }
 
     /**

@@ -106,6 +106,7 @@ public class RobotContainer {
         OperatorConstants.AMP_WITHOUT_ALIGN_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(false));
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
         OperatorConstants.LOWER_AMP_ALIGNER_TRIGGER.whileTrue(AmpAlignerCommands.getSetTargetVoltageCommand(AmpAlignerConstants.LOWER_AMP_ALIGNER_VOLTAGE));
+        OperatorConstants.BLOCK_TRIGGER.whileTrue(AmpCommands.getBlockCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
     }
@@ -117,7 +118,7 @@ public class RobotContainer {
         OperatorConstants.BACKWARD_DYNAMIC_CHARACTERIZATION_TRIGGER.whileTrue(subsystem.getDynamicCharacterizationCommand(SysIdRoutine.Direction.kReverse));
         subsystem.setDefaultCommand(edu.wpi.first.wpilibj2.command.Commands.idle(subsystem));
     }
-         
+
     private void buildAutoChooser() {
         autoChooser = new LoggedDashboardChooser<>("AutoChooser", AutoBuilder.buildAutoChooser("FrontRow4NoteAuto"));
     }
