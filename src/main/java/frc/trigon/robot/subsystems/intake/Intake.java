@@ -71,8 +71,10 @@ public class Intake extends MotorSubsystem {
 
     void setTargetState(IntakeConstants.IntakeState targetState) {
         this.targetState = targetState;
-        if (targetState == IntakeConstants.IntakeState.FEED_SHOOTING || targetState == IntakeConstants.IntakeState.FEED_AMP || targetState == IntakeConstants.IntakeState.EJECT)
+        if (targetState == IntakeConstants.IntakeState.FEED_SHOOTING || targetState == IntakeConstants.IntakeState.FEED_AMP)
             getFeedingIndicationLEDsCommand().schedule();
+        if (targetState == IntakeConstants.IntakeState.EJECT)
+            getEjectingIndicationLEDsCommand().schedule();
         setTargetVoltage(targetState.voltage);
     }
 
@@ -96,6 +98,10 @@ public class Intake extends MotorSubsystem {
 
     private Command getFeedingIndicationLEDsCommand() {
         return LEDStripCommands.getBreatheCommand(Color.kPurple, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, false, LEDStrip.LED_STRIPS);
+    }
+
+    private Command getEjectingIndicationLEDsCommand() {
+        return LEDStripCommands.getBreatheCommand(Color.kBlue, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, false, LEDStrip.LED_STRIPS);
     }
 
     private void configureLEDsTrigger() {
