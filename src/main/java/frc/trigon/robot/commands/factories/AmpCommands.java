@@ -38,7 +38,7 @@ public class AmpCommands {
 
     public static Command getBlockCommand() {
         return new ParallelCommandGroup(
-                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.CLOSE),
+                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
                 PitcherCommands.getSetTargetPitchCommand(PitcherConstants.BLOCK_PITCH)
         );
     }
