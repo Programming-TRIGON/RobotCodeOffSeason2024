@@ -135,7 +135,7 @@ public class IntakeConstants {
         STOP(0),
         FEED_SHOOTING(8),
         FEED_AMP(5),
-        CORRECT_NOTE_POSITION(-3);
+        CORRECT_NOTE_POSITION(-1);
 
         public final double voltage;
 
