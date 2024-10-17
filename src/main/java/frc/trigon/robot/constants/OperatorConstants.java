@@ -57,6 +57,6 @@ public class OperatorConstants {
             AUTONOMOUS_AMP_TRIGGER = OPERATOR_CONTROLLER.z(),
             LOWER_AMP_ALIGNER_TRIGGER = OPERATOR_CONTROLLER.one(),
             BLOCK_TRIGGER = OPERATOR_CONTROLLER.b(),
-    //ALIGN_TO_AMP_TRIGGER = DRIVER_CONTROLLER.x().and(OperatorConsta CDRFQA    nts.AMP_TRIGGER.or(OperatorConstants.AUTONOMOUS_AMP_TRIGGER).negate()),
+    //ALIGN_TO_AMP_TRIGGER = DRIVER_CONTROLLER.x().and(OperatorConstants.AMP_TRIGGER.or(OperatorConstants.AUTONOMOUS_AMP_TRIGGER).negate()),
     RESET_POSE_TO_AUTO_POSE_TRIGGER = OPERATOR_CONTROLLER.period();
 }
