@@ -28,7 +28,7 @@ public class LEDStripCommands {
     public static Command getRainbowCommand(LEDStrip... ledStrips) {
         return new ExecuteEndCommand(
                 () -> runForLEDs((LEDStrip::rainbow), ledStrips),
-                () -> runForLEDs(LEDStrip::rainbow, ledStrips),
+                () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }

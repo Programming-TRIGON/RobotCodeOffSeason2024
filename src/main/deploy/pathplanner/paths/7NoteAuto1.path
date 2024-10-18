@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.172432558641841,
-        "y": 4.20214579146498
+        "x": 0.6751948895821795,
+        "y": 4.387391197585246
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.09865958924317,
-        "y": 4.1046482092964185
+        "x": 1.6014219201835096,
+        "y": 4.289893615416685
       },
       "isLocked": false,
       "linkedName": null
@@ -36,25 +36,7 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Collect",
-      "waypointRelativePos": 0.85,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 2.0,
@@ -69,7 +51,7 @@
   "reversed": false,
   "folder": "7NoteAuto",
   "previewStartingState": {
-    "rotation": -49.101008357498635,
+    "rotation": -59.03624346792648,
     "velocity": 0
   },
   "useDefaultConstraints": true

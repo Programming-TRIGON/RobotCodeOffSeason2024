@@ -36,7 +36,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "New Path"
+                                    "pathName": "test1"
                                   }
                                 },
                                 {
@@ -74,7 +74,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "New New Path"
+                                    "pathName": "test2"
                                   }
                                 },
                                 {
@@ -104,6 +104,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "misc",
   "choreoAuto": false
 }
