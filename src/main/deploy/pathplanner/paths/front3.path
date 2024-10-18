@@ -3,50 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.385627673868176,
-        "y": 1.8622038194195158
+        "x": 2.0791600728094584,
+        "y": 5.615860732909115
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.999862441530111,
-        "y": 1.8427043029858021
+        "x": 1.6111716784003651,
+        "y": 4.777381526259489
       },
       "isLocked": false,
-      "linkedName": "PIDfirstcollection"
+      "linkedName": "nne"
     },
     {
       "anchor": {
-        "x": 4.818842131746022,
-        "y": 1.40396518322728
+        "x": 2.7337543047179125,
+        "y": 4.097305368134887
       },
       "prevControl": {
-        "x": 4.311854704469504,
-        "y": 1.5014627653958412
+        "x": 1.757418051653207,
+        "y": 4.260644340766117
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "FrontRow4NoteAutoThirdCollection"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.744059202888785,
+    "rotation": -0.4057415406159514,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "PIDAuto",
+  "folder": "FrontRow4NoteAuto",
   "previewStartingState": {
-    "rotation": 24.102234501160947,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

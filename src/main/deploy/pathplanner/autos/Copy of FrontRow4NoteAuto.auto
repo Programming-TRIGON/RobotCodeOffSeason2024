@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "PreparePitchForCloseShot"
+                  "name": "PreparePitch"
                 }
               },
               {
@@ -119,7 +119,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "PrepareForShootingCloseShot"
+                                    "name": "PrepareForShooting"
                                   }
                                 }
                               ]
@@ -130,12 +130,6 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "FrontRow4NoteAuto2"
-                                  }
-                                },
-                                {
                                   "type": "wait",
                                   "data": {
                                     "waitTime": 0.3
@@ -145,12 +139,6 @@
                                   "type": "named",
                                   "data": {
                                     "name": "FeedNote"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.05
                                   }
                                 }
                               ]
@@ -170,7 +158,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "FrontRow4NoteAuto3"
+                                    "pathName": "front1"
                                   }
                                 },
                                 {
@@ -221,7 +209,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "PrepareForShootingCloseShot"
+                                    "name": "PrepareForShooting"
                                   }
                                 }
                               ]
@@ -234,7 +222,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "FrontRow4NoteAuto4"
+                                    "pathName": "front2"
                                   }
                                 },
                                 {
@@ -247,12 +235,6 @@
                                   "type": "named",
                                   "data": {
                                     "name": "FeedNote"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.05
                                   }
                                 }
                               ]
@@ -272,7 +254,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "FrontRow4NoteAuto5"
+                                    "pathName": "front3"
                                   }
                                 },
                                 {
@@ -323,7 +305,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "PrepareForShootingCloseShot"
+                                    "name": "PrepareForShooting"
                                   }
                                 }
                               ]
@@ -336,7 +318,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "FrontRow4NoteAuto6"
+                                    "pathName": "front4"
                                   }
                                 },
                                 {

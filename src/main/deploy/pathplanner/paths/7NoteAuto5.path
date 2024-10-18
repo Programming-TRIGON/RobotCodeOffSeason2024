@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "AlignToNote"
+                "name": null
               }
             },
             {
@@ -56,7 +56,7 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 4.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 600.0
