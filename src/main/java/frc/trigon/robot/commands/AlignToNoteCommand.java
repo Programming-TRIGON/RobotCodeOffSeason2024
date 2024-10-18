@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
@@ -15,7 +16,6 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import org.trigon.hardware.RobotHardwareStats;
-import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 public class AlignToNoteCommand extends ParallelCommandGroup {
@@ -23,11 +23,12 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ?
             new PIDController(0.0075, 0, 0) :
             new PIDController(0.0002, 0, 0);
+    private MirrorableRotation2d targetAngle = null;
 
     public AlignToNoteCommand() {
         addCommands(
                 getSetCurrentLEDColorCommand(),
-                GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND), this::shouldAlignToNote).asProxy(),
+                new InstantCommand(this::resetTargetAngle).andThen(GeneralCommands.duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND).until(this::shouldAlignToNote).andThen(getDriveWhileAligningToNoteCommand())).asProxy(),
                 new RunCommand(CAMERA::trackObject)
         );
     }
@@ -37,31 +38,28 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                 LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
                 LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
                 CAMERA::hasTargets
-        ).asProxy();
+        );
     }
 
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
-                () -> CommandConstants.calculateDriveStickAxisValue(getScaledJoystickValue()),
+                () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
                 () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
-                this::getTargetAngle
+                () -> targetAngle
         );
     }
 
-    private MirrorableRotation2d getTargetAngle() {
+    private void calculateTargetAngle() {
         final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
-        return new MirrorableRotation2d(currentRotation.plus(CAMERA.getTrackedObjectYaw()), false);
+        targetAngle = new MirrorableRotation2d(currentRotation.plus(CAMERA.getTrackedObjectYaw()), false);
     }
 
     private boolean shouldAlignToNote() {
-        return CAMERA.hasTargets() && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
+        calculateTargetAngle();
+        return /*CAMERA.hasTargets()*/targetAngle.get() != null && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
     }
 
-    private double getScaledJoystickValue() {
-        final XboxController controller = OperatorConstants.DRIVER_CONTROLLER;
-        final Rotation2d robotRelativeToFieldRelativeRotation = Rotation2d.fromDegrees(90);
-        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle().plus(robotRelativeToFieldRelativeRotation);
-
-        return controller.getLeftX() * -robotHeading.getCos() - controller.getLeftY() * -robotHeading.getSin();
+    private void resetTargetAngle() {
+        targetAngle = null;
     }
 }
