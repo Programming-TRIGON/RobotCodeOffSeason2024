@@ -63,6 +63,10 @@ public class AprilTagCamera {
         return (inputs.hasResult && inputs.distanceFromBestTag != 0) && isNewTimestamp();
     }
 
+    public boolean hasResult() {
+        return inputs.hasResult;
+    }
+
     public Pose2d getEstimatedRobotPose() {
         return robotPose;
     }

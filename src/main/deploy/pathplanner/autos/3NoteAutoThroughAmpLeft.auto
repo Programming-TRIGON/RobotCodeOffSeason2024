@@ -53,15 +53,9 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "3NoteAutoThroughAmp1"
-                                  }
-                                },
-                                {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.2
+                                    "waitTime": 0.3
                                   }
                                 },
                                 {

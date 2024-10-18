@@ -26,7 +26,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     public AlignToNoteCommand() {
         addCommands(
-                getSetCurrentLEDColorCommand().asProxy(),
+                getSetCurrentLEDColorCommand(),
                 GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND), this::shouldAlignToNote).asProxy(),
                 new RunCommand(CAMERA::trackObject)
         );
@@ -37,7 +37,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                 LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
                 LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
                 CAMERA::hasTargets
-        );
+        ).asProxy();
     }
 
     private Command getDriveWhileAligningToNoteCommand() {
