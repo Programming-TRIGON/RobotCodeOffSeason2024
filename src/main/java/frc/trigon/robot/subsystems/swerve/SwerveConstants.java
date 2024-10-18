@@ -80,7 +80,7 @@ public class SwerveConstants {
                     new PIDConstants(5, 0, 0),
             AUTO_TRANSLATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
                     new PIDConstants(5, 0, 0.1) :
-                    new PIDConstants(1, 0, 0),
+                    new PIDConstants(0.1, 0, 0),
             AUTO_ROTATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
                     new PIDConstants(2.5, 0, 0.2) :
                     new PIDConstants(2, 0, 0);
