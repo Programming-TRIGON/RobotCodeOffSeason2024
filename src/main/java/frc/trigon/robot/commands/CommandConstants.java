@@ -27,7 +27,7 @@ import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 public class CommandConstants {
-    public static boolean SHOULD_ALIGN_TO_NOTE = true;
+    public static boolean SHOULD_ALIGN_TO_NOTE = false;
     private static final XboxController DRIVER_CONTROLLER = OperatorConstants.DRIVER_CONTROLLER;
     private static final double
             MINIMUM_TRANSLATION_SHIFT_POWER = 0.18,
