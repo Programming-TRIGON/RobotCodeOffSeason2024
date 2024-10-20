@@ -5,7 +5,7 @@ import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.numbers.N3;
 
 public class PoseEstimatorConstants {
-    public static final double ODOMETRY_FREQUENCY_HERTZ = 50;
+    public static final double ODOMETRY_FREQUENCY_HERTZ = 250;
 
     /**
      * The vector represents how ambiguous each value of the odometry is.

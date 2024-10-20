@@ -26,6 +26,7 @@ import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
+import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.Swerve;
@@ -111,6 +112,8 @@ public class RobotContainer {
         OperatorConstants.BLOCK_TRIGGER.whileTrue(AmpCommands.getBlockCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
+
+        OperatorConstants.OPERATOR_CONTROLLER.t().whileTrue(PitcherCommands.getDebuggingCommand());
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {

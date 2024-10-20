@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.284709527165534,
-        "y": 0.7804612792324187
+        "x": 8.281950694955519,
+        "y": 0.6899551121039572
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.830445717229463,
-        "y": 2.0523241046482106
+        "x": 4.827686885019448,
+        "y": 1.961817937519749
       },
       "isLocked": false,
       "linkedName": "SourceSide3NoteAutoRightFirstCollection"
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "SourceSide3NoteAutoRight",
   "previewStartingState": {
-    "rotation": -21.0,
+    "rotation": -29.744881296942257,
     "velocity": 0
   },
   "useDefaultConstraints": true

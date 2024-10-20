@@ -57,6 +57,9 @@ public class Pitcher extends MotorSubsystem {
     @Override
     public void updatePeriodically() {
         masterMotor.update();
+        followerMotor.update();
+        Logger.recordOutput("MasterPitcherMotorVotlage", masterMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
+        Logger.recordOutput("FollowerPitcherMotorVoltage", followerMotor.getSignal(TalonFXSignal.MOTOR_VOLTAGE));
         encoder.update();
         Logger.recordOutput("PitcherAngleDegrees", Conversions.rotationsToDegrees(encoder.getSignal(CANcoderSignal.POSITION)));
     }

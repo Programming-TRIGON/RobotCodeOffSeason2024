@@ -168,6 +168,8 @@ public class PitcherConstants {
 
         final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_OPPOSES_MASTER);
         FOLLOWER_MOTOR.setControl(followerRequest);
+
+        FOLLOWER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
     }
 
     public static void configureEncoder() {

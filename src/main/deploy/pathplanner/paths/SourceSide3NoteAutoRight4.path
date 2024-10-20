@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.0038815570588895,
-        "y": 1.560922558464836
+        "x": 5.042669914399658,
+        "y": 1.2863569886683932
       },
       "isLocked": false,
       "linkedName": "SourceSide3NoteAutoRightSecondFeed"
     },
     {
       "anchor": {
-        "x": 8.270256540513081,
-        "y": 2.442554744264419
+        "x": 8.293644849397962,
+        "y": 2.385607506257749
       },
       "prevControl": {
-        "x": 6.2179324358648715,
-        "y": 1.5753755451172882
+        "x": 6.317332748625612,
+        "y": 1.217715596219285
       },
       "nextControl": null,
       "isLocked": false,

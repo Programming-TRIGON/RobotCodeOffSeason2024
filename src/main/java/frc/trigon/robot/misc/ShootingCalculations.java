@@ -137,7 +137,7 @@ public class ShootingCalculations {
     private TargetShootingState calculateTargetShootingState(Translation3d shootingVector) {
         final MirrorableRotation2d targetRobotAngle = new MirrorableRotation2d(getYaw(shootingVector), false);
         final Rotation2d targetPitch = getPitch(shootingVector);
-        final double targetVelocity = tangentialVelocityToAngularVelocity(shootingVector.getNorm()) + ShootingConstants.SPEAKER_SHOT_STANDING_EXTRA_VELOCITY_BUFFER_ROTATIONS_PER_SECOND;
+        final double targetVelocity = tangentialVelocityToAngularVelocity(shootingVector.getNorm()) + ShootingConstants.SPEAKER_SHOT_STANDING_EXTRA_VELOCITY_BUFFER_ROTATIONS_PER_SECOND.get();
 
         return new TargetShootingState(targetRobotAngle, targetPitch, targetVelocity);
     }
