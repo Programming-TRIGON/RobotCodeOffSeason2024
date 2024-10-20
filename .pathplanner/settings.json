@@ -25,7 +25,7 @@
     "SourceSide3NoteAutoVarients"
   ],
   "defaultMaxVel": 4.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 400.0,
   "defaultMaxAngAccel": 600.0,
   "maxModuleSpeed": 4.5

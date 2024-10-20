@@ -46,7 +46,7 @@ public class AutonomousCommands {
         return new ParallelCommandGroup(
                 LEDStripCommands.getStaticColorCommand(Color.kOrangeRed, LEDStrip.LED_STRIPS).asProxy(),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
-                ShooterCommands.getSendStaticBreakRequestCommand().until(RobotContainer.INTAKE::hasNote).andThen(ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).withTimeout(0.1))
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).until(() -> !RobotContainer.INTAKE.hasNote())
         );
     }
 

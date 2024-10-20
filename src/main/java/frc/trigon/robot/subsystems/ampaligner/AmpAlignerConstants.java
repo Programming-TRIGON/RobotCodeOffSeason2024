@@ -65,7 +65,7 @@ public class AmpAlignerConstants {
 
     public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(-0.4838, 0, 0.1472, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(6.3), 0));
 
-    public static final double LOWER_AMP_ALIGNER_VOLTAGE = -1;
+    public static final Rotation2d REALIGN_AMP_ALIGNER_ANGLE = Rotation2d.fromDegrees(5);
     static final Rotation2d READY_FOR_DEFAULT_PITCHER_MOVEMENT_ANGLE = Rotation2d.fromDegrees(80);
     static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(173.7);
     static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.01;

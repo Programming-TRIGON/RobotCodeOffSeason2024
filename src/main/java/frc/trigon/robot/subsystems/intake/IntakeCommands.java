@@ -41,7 +41,7 @@ public class IntakeCommands {
                             if (!interrupted) {
                                 RobotContainer.INTAKE.indicateCollection();
 //                                RobotContainer.INTAKE.sendStaticBrakeRequest()
-                                getCorrectNotePositionCommand().andThen(getStopIntakeCommand());
+                                getCorrectNotePositionCommand().schedule();
                             }
                         },
                         RobotContainer.INTAKE::hasNote,
@@ -59,6 +59,6 @@ public class IntakeCommands {
 
 
     private static Command getCorrectNotePositionCommand() {
-        return getSetTargetStateCommand(IntakeConstants.IntakeState.CORRECT_NOTE_POSITION).onlyWhile(RobotContainer.INTAKE::hasNote);
+        return getSetTargetStateCommand(IntakeConstants.IntakeState.CORRECT_NOTE_POSITION).onlyWhile(RobotContainer.INTAKE::hasNote).andThen(getStopIntakeCommand());
     }
 }

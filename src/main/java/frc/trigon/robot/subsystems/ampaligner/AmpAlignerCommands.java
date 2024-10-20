@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.trigon.robot.RobotContainer;
 import org.trigon.commands.ExecuteEndCommand;
@@ -38,6 +39,12 @@ public class AmpAlignerCommands {
         return new StartEndCommand(
                 () -> RobotContainer.AMP_ALIGNER.drive(Units.Volts.of(voltage)),
                 RobotContainer.AMP_ALIGNER::stop
+        );
+    }
+
+    public static Command getSetPositionCommand(Rotation2d position) {
+        return new InstantCommand(
+                () -> RobotContainer.AMP_ALIGNER.setPosition(position)
         );
     }
 }

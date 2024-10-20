@@ -24,6 +24,7 @@ import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.pitcher.Pitcher;
 import frc.trigon.robot.subsystems.shooter.Shooter;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
@@ -76,8 +77,6 @@ public class RobotContainer {
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
-//        OperatorConstants.ALIGN_TO_AMP_TRIGGER.whileTrue(CommandConstants.FACE_AMP_COMMAND);
-        OperatorConstants.ALIGN_TO_SPEAKER_TRIGGER.whileTrue(CommandConstants.FACE_SPEAKER_COMMAND);
         OperatorConstants.ALIGN_TO_RIGHT_STAGE.whileTrue(CommandConstants.ALIGN_TO_RIGHT_STAGE_COMMAND);
         OperatorConstants.ALIGN_TO_LEFT_STAGE.whileTrue(CommandConstants.ALIGN_TO_LEFT_STAGE_COMMAND);
         OperatorConstants.ALIGN_TO_MIDDLE_STAGE.whileTrue(CommandConstants.ALIGN_TO_MIDDLE_STAGE_COMMAND);
@@ -87,6 +86,7 @@ public class RobotContainer {
         OperatorConstants.COLLECT_NOTE_TRIGGER.whileTrue(GeneralCommands.getNoteCollectionCommand());
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_ON_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_ON_COMMAND);
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND);
+
         OperatorConstants.LED_AUTO_SETUP_TRIGGER.whileTrue(new LEDAutoSetupCommand(() -> autoChooser.get().getName()));
 
         OperatorConstants.CLIMB_TRIGGER.whileTrue(GeneralCommands.getClimbCommand());
@@ -107,7 +107,7 @@ public class RobotContainer {
         OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(true));
         OperatorConstants.AMP_WITHOUT_ALIGN_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(false));
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
-        OperatorConstants.LOWER_AMP_ALIGNER_TRIGGER.whileTrue(AmpAlignerCommands.getSetTargetVoltageCommand(AmpAlignerConstants.LOWER_AMP_ALIGNER_VOLTAGE));
+        OperatorConstants.REALIGN_AMP_ALIGNER_TRIGGER.whileTrue(AmpAlignerCommands.getSetPositionCommand(AmpAlignerConstants.REALIGN_AMP_ALIGNER_ANGLE));
         OperatorConstants.BLOCK_TRIGGER.whileTrue(AmpCommands.getBlockCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));

@@ -2,6 +2,7 @@ package frc.trigon.robot.constants;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -13,16 +14,16 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class FieldConstants {
-    //    public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-    public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT;
-
-    static {
-        try {
-            APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout.loadFromResource("2024-crescendo.json");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+//    public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT;
+//
+//    static {
+//        try {
+//            APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout.loadFromResource("2024-crescendo.json");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public static final HashMap<Integer, Pose3d> TAG_ID_TO_POSE = fieldLayoutToTagIdToPoseMap();
     public static final double
