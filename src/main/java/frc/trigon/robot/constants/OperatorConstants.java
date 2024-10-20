@@ -6,8 +6,7 @@ import org.trigon.hardware.misc.KeyboardController;
 import org.trigon.hardware.misc.XboxController;
 
 public class OperatorConstants {
-    private static final int
-            DRIVER_CONTROLLER_PORT = 0;
+    private static final int DRIVER_CONTROLLER_PORT = 0;
     private static final int DRIVER_CONTROLLER_EXPONENT = 1;
     private static final double DRIVER_CONTROLLER_DEADBAND = 0;
     public static final XboxController DRIVER_CONTROLLER = new XboxController(
@@ -31,6 +30,7 @@ public class OperatorConstants {
             TURN_AUTONOMOUS_NOTE_ALIGNING_ON_TRIGGER = OPERATOR_CONTROLLER.o(),
             TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER = OPERATOR_CONTROLLER.p(),
             LED_AUTO_SETUP_TRIGGER = OPERATOR_CONTROLLER.backtick(),
+            LED_INDICATION_TRIGGER = DRIVER_CONTROLLER.x(),
             CLIMB_TRIGGER = OPERATOR_CONTROLLER.c(),
             OVERRIDE_IS_CLIMBING_TRIGGER = OPERATOR_CONTROLLER.i(),
             MOVE_CLIMBER_DOWN_MANUALLY_TRIGGER = OPERATOR_CONTROLLER.f1(),
@@ -52,7 +52,7 @@ public class OperatorConstants {
             WARM_SPEAKER_SHOT_TRIGGER = OPERATOR_CONTROLLER.w().and(SPEAKER_SHOT_TRIGGER.negate()),
             DELIVERY_TRIGGER = OPERATOR_CONTROLLER.d(),
             MANUAL_LOW_DELIVERY_TRIGGER = OPERATOR_CONTROLLER.m(),
-            AMP_TRIGGER = OPERATOR_CONTROLLER.a().or(DRIVER_CONTROLLER.x()),
+            AMP_TRIGGER = OPERATOR_CONTROLLER.a(),
             AMP_WITHOUT_ALIGN_TRIGGER = OPERATOR_CONTROLLER.q(),
             AUTONOMOUS_AMP_TRIGGER = OPERATOR_CONTROLLER.z(),
             BLOCK_TRIGGER = OPERATOR_CONTROLLER.b(),

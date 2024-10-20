@@ -6,6 +6,7 @@
 package frc.trigon.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.CommandConstants;
@@ -89,6 +90,7 @@ public class RobotContainer {
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND);
 
         OperatorConstants.LED_AUTO_SETUP_TRIGGER.whileTrue(new LEDAutoSetupCommand(() -> autoChooser.get().getName()));
+        OperatorConstants.LED_INDICATION_TRIGGER.onTrue(LEDStripCommands.getBlinkingCommand(Color.kBlue, 0.25, LEDStrip.LED_STRIPS).withTimeout(1));
 
         OperatorConstants.CLIMB_TRIGGER.whileTrue(GeneralCommands.getClimbCommand());
         OperatorConstants.MOVE_CLIMBER_DOWN_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_DOWN_MANUALLY_COMMAND);
@@ -112,8 +114,6 @@ public class RobotContainer {
         OperatorConstants.BLOCK_TRIGGER.whileTrue(AmpCommands.getBlockCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
-
-        OperatorConstants.OPERATOR_CONTROLLER.t().whileTrue(PitcherCommands.getDebuggingCommand());
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {
