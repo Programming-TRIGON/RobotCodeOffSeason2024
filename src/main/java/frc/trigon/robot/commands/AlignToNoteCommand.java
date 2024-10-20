@@ -60,8 +60,8 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private double getScaledJoystickValue() {
         final XboxController controller = OperatorConstants.DRIVER_CONTROLLER;
-        final Rotation2d robotRelativeToFieldRelativeRotation = Rotation2d.fromDegrees(90);
-        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle().plus(robotRelativeToFieldRelativeRotation);
+        final var x = Rotation2d.fromDegrees(90);
+        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle().plus(x);
 
         return controller.getLeftX() * -robotHeading.getCos() - controller.getLeftY() * -robotHeading.getSin();
     }
