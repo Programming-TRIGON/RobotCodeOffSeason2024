@@ -33,21 +33,21 @@ public class ClimberConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
-    private static final double //TODO: calibrate
+    private static final double
             LEFT_GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 50,
             LEFT_GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             LEFT_GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             LEFT_GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0.078964,
             LEFT_GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 7.9056,
             LEFT_GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0.18439;
-    private static final double //TODO: calibrate
+    private static final double
             RIGHT_GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 50,
             RIGHT_GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
             RIGHT_GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
             RIGHT_GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0.079947,
             RIGHT_GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 7.9986,
             RIGHT_GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0.21705;
-    private static final double //TODO: calibrate
+    private static final double
             ON_CHAIN_P = RobotHardwareStats.isSimulation() ? RIGHT_GROUNDED_P : 1,
             ON_CHAIN_I = RobotHardwareStats.isSimulation() ? LEFT_GROUNDED_I : 0,
             ON_CHAIN_D = RobotHardwareStats.isSimulation() ? LEFT_GROUNDED_D : 0,

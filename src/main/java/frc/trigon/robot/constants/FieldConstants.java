@@ -33,7 +33,7 @@ public class FieldConstants {
             SPEAKER_TAG_ID = 7,
             AMP_TAG_ID = 6;
     private static final Translation3d
-            SPEAKER_TAG_TO_SPEAKER = new Translation3d(0.15, 0.0, 0.79),
+            SPEAKER_TAG_TO_SPEAKER = new Translation3d(0.15, 0.0, 0.82),
             AMP_TAG_TO_AMP = new Translation3d(0, 0.03, -0.32);
     public static final MirrorableTranslation3d
             SPEAKER_TRANSLATION = new MirrorableTranslation3d(TAG_ID_TO_POSE.get(SPEAKER_TAG_ID).getTranslation().plus(SPEAKER_TAG_TO_SPEAKER), true),

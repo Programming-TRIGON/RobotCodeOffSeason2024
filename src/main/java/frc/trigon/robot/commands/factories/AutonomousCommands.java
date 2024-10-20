@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
@@ -54,7 +55,7 @@ public class AutonomousCommands {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
                 GeneralCommands.getVisualizeNoteShootingCommand()
-        ).withTimeout(0.7);
+        ).withTimeout(AutonomousConstants.AUTONOMOUS_FEEDING_TIME_SECONDS);
     }
 
     public static Command getAlignToNoteCommand() {

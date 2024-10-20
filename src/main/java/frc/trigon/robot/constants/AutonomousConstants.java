@@ -7,6 +7,7 @@ import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 
 public class AutonomousConstants {
     public static final PathConstraints REAL_TIME_CONSTRAINTS = new PathConstraints(2.5, 2.5, 4, 4);
+    public static final double AUTONOMOUS_FEEDING_TIME_SECONDS = 0.7;
 
     static {
         registerCommands();

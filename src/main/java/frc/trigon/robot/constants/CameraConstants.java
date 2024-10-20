@@ -10,7 +10,7 @@ import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 
 public class CameraConstants {
     public static final double
-            TRANSLATIONS_STD_EXPONENT = 0.0002,
+            TRANSLATIONS_STD_EXPONENT = 0.001,
             THETA_STD_EXPONENT = 0.01;
 
     private static final Transform3d
