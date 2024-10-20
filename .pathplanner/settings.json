@@ -18,11 +18,11 @@
   ],
   "autoFolders": [
     "3NoteAutoThroughAmpVarients",
-    "Backup",
+    "frontRow",
     "FarNotesAroundStageVarients",
-    "misc",
     "OtherAutos",
-    "SourceSide3NoteAutoVarients"
+    "SourceSide3NoteAutoVarients",
+    "misc"
   ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 4.0,

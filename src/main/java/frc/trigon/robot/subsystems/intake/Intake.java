@@ -23,7 +23,6 @@ public class Intake extends MotorSubsystem {
 
     public Intake() {
         setName("Intake");
-        configureLEDsTrigger();
     }
 
     @Override
@@ -102,11 +101,5 @@ public class Intake extends MotorSubsystem {
 
     private Command getEjectingIndicationLEDsCommand() {
         return LEDStripCommands.getBreatheCommand(Color.kBlue, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, false, LEDStrip.LED_STRIPS);
-    }
-
-    private void configureLEDsTrigger() {
-        Trigger trigger = new Trigger(this::hasNote);
-        trigger.onTrue(new InstantCommand(() -> LEDStrip.changeDefaultCommandForAllLEDs(LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS))));
-        trigger.onFalse(new InstantCommand(() -> LEDStrip.changeDefaultCommandForAllLEDs(LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS))));
     }
 }
