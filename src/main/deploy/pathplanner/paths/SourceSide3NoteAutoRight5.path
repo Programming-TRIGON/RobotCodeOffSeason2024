@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.281950694955519,
-        "y": 0.6899551121039572
+        "x": 8.270256540513081,
+        "y": 0.7952025020859156
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.919731497582653,
-        "y": 1.4383809964201122
+        "x": 5.908037343140215,
+        "y": 1.5436283864020706
       },
       "isLocked": false,
       "linkedName": "SourceSide3NoteAutoRightFirstCollection"

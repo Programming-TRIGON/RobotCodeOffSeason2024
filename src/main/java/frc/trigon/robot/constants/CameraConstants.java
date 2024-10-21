@@ -11,7 +11,7 @@ import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 public class CameraConstants {
     public static final double
             TRANSLATIONS_STD_EXPONENT = 0.02,
-            THETA_STD_EXPONENT = 0.01;
+            THETA_STD_EXPONENT = 0.02;
 
     private static final Transform3d
             FRONT_CENTER_TO_CAMERA = new Transform3d(
