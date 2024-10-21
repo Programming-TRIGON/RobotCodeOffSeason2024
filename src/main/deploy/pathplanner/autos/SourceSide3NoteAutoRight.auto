@@ -73,25 +73,6 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.2
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "Collect"
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            "type": "sequential",
-                            "data": {
-                              "commands": [
-                                {
                                   "type": "path",
                                   "data": {
                                     "pathName": "SourceSide3NoteAutoRight2"

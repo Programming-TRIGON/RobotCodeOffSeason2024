@@ -133,7 +133,7 @@ public class IntakeConstants {
         COLLECT(4.5),
         EJECT(-2),
         STOP(0),
-        FEED_SHOOTING(8),
+        FEED_SHOOTING(7),
         FEED_AMP(5),
         CORRECT_NOTE_POSITION(-1.1);
 

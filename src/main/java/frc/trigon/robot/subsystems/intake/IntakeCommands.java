@@ -15,7 +15,7 @@ public class IntakeCommands {
 
     public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
         if (targetState == IntakeConstants.IntakeState.COLLECT)
-            return getCollectionCommand();
+            return getCollectionCommand().andThen(getCorrectNotePositionCommand());
         return new StartEndCommand(
                 () -> RobotContainer.INTAKE.setTargetState(targetState),
                 RobotContainer.INTAKE::stop,
@@ -41,7 +41,6 @@ public class IntakeCommands {
                             if (!interrupted) {
                                 RobotContainer.INTAKE.indicateCollection();
 //                                RobotContainer.INTAKE.sendStaticBrakeRequest()
-                                getCorrectNotePositionCommand().schedule();
                             }
                         },
                         RobotContainer.INTAKE::hasNote,

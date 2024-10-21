@@ -45,9 +45,8 @@ public class AutonomousCommands {
 
     public static Command getNoteCollectionCommand() {
         return new ParallelCommandGroup(
-                LEDStripCommands.getStaticColorCommand(Color.kOrangeRed, LEDStrip.LED_STRIPS).asProxy(),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).until(() -> !RobotContainer.INTAKE.hasNote())
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
         );
     }
 
