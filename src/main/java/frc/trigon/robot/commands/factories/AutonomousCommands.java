@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
@@ -37,20 +38,23 @@ public class AutonomousCommands {
                     if (DriverStation.isEnabled())
                         return;
                     final Pose2d autoStartPose = PathPlannerAuto.getStaringPoseFromAutoFile(pathName.get());
-                    RobotContainer.POSE_ESTIMATOR.resetPose(new MirrorablePose2d(autoStartPose, true).get());
+                    RobotContainer.POSE_ESTIMATOR.resetPose(autoStartPose);
                 }
         ).ignoringDisable(true);
     }
 
     public static Command getNoteCollectionCommand() {
-        return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).onlyIf(() -> !RobotContainer.INTAKE.hasNote());
+        return new ParallelCommandGroup(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+        );
     }
 
     public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
                 GeneralCommands.getVisualizeNoteShootingCommand()
-        ).until(() -> !RobotContainer.INTAKE.hasNote());
+        ).withTimeout(AutonomousConstants.AUTONOMOUS_FEEDING_TIME_SECONDS);
     }
 
     public static Command getAlignToNoteCommand() {
@@ -72,22 +76,26 @@ public class AutonomousCommands {
         );
     }
 
-    public static Command getPrepareForShooterEjectionCommand(boolean isClose) {
-        return isClose ? getPrepareForCloseShooterEjectionCommand() : getPrepareForShooterEjectionCommand();
-    }
-
-    private static Command getPrepareForShooterEjectionCommand() {
+    public static Command getPreparePitchCommand() {
         return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+                ShootingCommands.getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand()
         );
     }
 
-    private static Command getPrepareForCloseShooterEjectionCommand() {
+    public static Command getPreparePitchCommand(Rotation2d pitch) {
         return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+                ShootingCommands.getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getSetTargetPitchCommand(pitch)
         );
+    }
+
+    public static Command getPrepareShootingCommand() {
+        return ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand();
+    }
+
+    public static Command getPrepareShootingCommand(double velocity) {
+        return ShooterCommands.getSetTargetVelocityCommand(velocity);
     }
 
     private static Optional<Rotation2d> calculateRotationOverride() {

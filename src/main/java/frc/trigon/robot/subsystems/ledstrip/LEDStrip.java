@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
 public class LEDStrip extends SubsystemBase {
@@ -13,6 +14,8 @@ public class LEDStrip extends SubsystemBase {
     private final int indexOffset;
     private final boolean inverted;
     private final int numberOfLEDs;
+    private int lastBreatheLED;
+    private double lastBreatheMovementTime = 0;
     private double rainbowFirstPixelHue = 0;
     private boolean areLEDsOnForBlinking = false;
     private double lastBlinkTime = 0;
@@ -24,17 +27,32 @@ public class LEDStrip extends SubsystemBase {
         );
     }
 
+    @Override
+    public void periodic() {
+        LED.setData(LEDStripConstants.LED_BUFFER);
+    }
+
     public LEDStrip(boolean inverted, int numberOfLEDs, int indexOffset) {
         this.indexOffset = indexOffset;
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
 
-        addLEDStripToLEDStripsArrayArray(this);
+        resetBreatheSettings();
+        addLEDStripToLEDStripsArray(this);
     }
 
     public static void setDefaultCommandForAllLEDS(Command command) {
         for (LEDStrip ledStrip : LED_STRIPS)
             ledStrip.setDefaultCommand(command);
+    }
+
+    public static void changeDefaultCommandForAllLEDs(Command newDefaultCommand) {
+        for (LEDStrip ledStrip : LED_STRIPS) {
+            final Command currentDefaultCommand = ledStrip.getDefaultCommand();
+            if (currentDefaultCommand != null)
+                currentDefaultCommand.cancel();
+            ledStrip.setDefaultCommand(newDefaultCommand);
+        }
     }
 
     public int getNumberOfLEDS() {
@@ -58,18 +76,41 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void staticColor(Color color) {
-        for (int index = 0; index <= numberOfLEDs; index++)
-            setLEDColor(color, index);
+        setLEDColors(color, 0, numberOfLEDs - 1);
     }
 
     void rainbow() {
-        for (int led = 0; led <= numberOfLEDs; led++) {
+        for (int led = 0; led < numberOfLEDs; led++) {
             final int hue = (int) (rainbowFirstPixelHue + (led * 180 / numberOfLEDs) % 180);
             LEDStripConstants.LED_BUFFER.setHSV(led + indexOffset, hue, 255, 128);
-            LED.setData(LEDStripConstants.LED_BUFFER);
         }
         rainbowFirstPixelHue += 3;
         rainbowFirstPixelHue %= 180;
+    }
+
+    void resetBreatheSettings() {
+        lastBreatheLED = indexOffset;
+        lastBreatheMovementTime = Timer.getFPGATimestamp();
+    }
+
+    void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop) {
+        clearLedColors();
+        double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
+        double currentTime = Timer.getFPGATimestamp();
+        if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
+            lastBreatheMovementTime = currentTime;
+            lastBreatheLED++;
+        }
+        if (lastBreatheLED >= numberOfLEDs + indexOffset) {
+            if (!shouldLoop)
+                CommandConstants.DEFAULT_LEDS_COMMAND.schedule();
+        }
+        for (int i = 0; i < breathingLEDs; i++) {
+            if (lastBreatheLED - i >= indexOffset && lastBreatheLED - i < indexOffset + numberOfLEDs)
+                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i, color);
+            else if (lastBreatheLED - i < indexOffset + numberOfLEDs)
+                LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i + numberOfLEDs, color);
+        }
     }
 
     void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
@@ -78,20 +119,17 @@ public class LEDStrip extends SubsystemBase {
     }
 
     private void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        for (int i = 0; i < ledsPerSection; i++)
-            setLEDColor(inverted ? thirdSectionColor : firstSectionColor, i);
-        for (int i = ledsPerSection; i < 2 * ledsPerSection; i++)
-            setLEDColor(secondSectionColor, i);
-        for (int i = 2 * ledsPerSection; i <= numberOfLEDs; i++)
-            setLEDColor(inverted ? firstSectionColor : thirdSectionColor, i);
+        setLEDColors(inverted ? thirdSectionColor : firstSectionColor, 0, ledsPerSection);
+        setLEDColors(secondSectionColor, ledsPerSection, ledsPerSection * 2);
+        setLEDColors(inverted ? firstSectionColor : thirdSectionColor, ledsPerSection * 2, numberOfLEDs - 1);
     }
 
-    private void setLEDColor(Color color, int index) {
-        LEDStripConstants.LED_BUFFER.setLED(index + indexOffset, color);
-        LED.setData(LEDStripConstants.LED_BUFFER);
+    private void setLEDColors(Color color, int startIndex, int endIndex) {
+        for (int i = 0; i <= endIndex - startIndex; i++)
+            LEDStripConstants.LED_BUFFER.setLED(startIndex + indexOffset + i, color);
     }
 
-    private void addLEDStripToLEDStripsArrayArray(LEDStrip ledStrip) {
+    private void addLEDStripToLEDStripsArray(LEDStrip ledStrip) {
         final LEDStrip[] newLEDStrips = new LEDStrip[LED_STRIPS.length + 1];
         System.arraycopy(LED_STRIPS, 0, newLEDStrips, 0, LED_STRIPS.length);
         newLEDStrips[LED_STRIPS.length] = ledStrip;

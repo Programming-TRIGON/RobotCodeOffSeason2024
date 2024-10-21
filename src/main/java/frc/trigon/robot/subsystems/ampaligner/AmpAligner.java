@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import org.trigon.hardware.RobotHardwareStats;
@@ -68,6 +69,10 @@ public class AmpAligner extends MotorSubsystem {
         PitcherConstants.PITCHER_AND_AMP_ALIGNER_MECHANISM.setSecondJointCurrentAngle(getCurrentAngle());
     }
 
+    public void setPosition(Rotation2d position) {
+        motor.setPosition(position.getRotations());
+    }
+
     public AmpAlignerConstants.AmpAlignerState getTargetState() {
         return targetState;
     }
@@ -108,7 +113,7 @@ public class AmpAligner extends MotorSubsystem {
     }
 
     private void configurePositionResettingTrigger() {
-        final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitForwardLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
+        final Trigger hitLimitSwitchTrigger = new Trigger(this::hasHitForwardLimit).debounce(AmpAlignerConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS).or(OperatorConstants.RESET_AMP_ALIGNER_POSITION_TRIGGER);
         hitLimitSwitchTrigger.onTrue(new InstantCommand(() -> motor.setPosition(AmpAlignerConstants.LIMIT_SWITCH_PRESSED_ANGLE.getRotations())).ignoringDisable(true));
     }
 
