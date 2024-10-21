@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0489663771350335,
-        "y": 4.853074093612575
+        "x": 1.663059280534515,
+        "y": 4.584108541436456
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0138839138077134,
-        "y": 5.203898726885772
+        "x": 1.8852482149408742,
+        "y": 4.326837143702777
       },
       "isLocked": false,
-      "linkedName": "7NoteAutoSecondShot"
+      "linkedName": "SourceSide3NoteAutoRightSecondFeed"
     },
     {
       "anchor": {
-        "x": 2.8937455058008714,
-        "y": 5.551187918118234
+        "x": 2.7155331803541096,
+        "y": 4.1046482092964185
       },
       "prevControl": {
-        "x": 1.8735540604984342,
-        "y": 5.73013567679557
+        "x": 2.130825458232113,
+        "y": 4.385307915914978
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7NoteAutoSecondNoteCollection"
+      "linkedName": "eee"
     }
   ],
   "rotationTargets": [],
@@ -39,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -1.591140271194542,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "7NoteAuto",
+  "folder": "SourceSide3NoteAutoRight",
   "previewStartingState": {
-    "rotation": -21.430000000000007,
-    "velocity": 0.0
+    "rotation": -60.25511870305777,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

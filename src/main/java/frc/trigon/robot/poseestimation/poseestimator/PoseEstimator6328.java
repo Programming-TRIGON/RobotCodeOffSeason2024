@@ -19,6 +19,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveWheelPositions;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.trigon.robot.subsystems.swerve.SwerveConstants;
 import org.littletonrobotics.junction.AutoLogOutput;
 
@@ -89,6 +90,8 @@ public class PoseEstimator6328 {
     }
 
     public void addVisionObservation(VisionObservation observation) {
+//        if (DriverStation.isAutonomous() || DriverStation.isDisabled())
+//            return;
         // If measurement is old enough to be outside the pose buffer's timespan, skip.
         try {
             if (poseBuffer.getInternalBuffer().lastKey() - poseBufferSizeSeconds

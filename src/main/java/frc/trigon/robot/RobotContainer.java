@@ -114,6 +114,8 @@ public class RobotContainer {
         OperatorConstants.BLOCK_TRIGGER.whileTrue(AmpCommands.getBlockCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
+
+        OperatorConstants.OPERATOR_CONTROLLER.t().whileTrue(CommandConstants.WHEEL_RADIUS_CHARACTERIZATION_COMMAND);
     }
 
     private void configureSysIdBindings(MotorSubsystem subsystem) {

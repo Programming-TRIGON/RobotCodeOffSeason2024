@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 8.281950694955519,
-        "y": 2.4440782784699477
+        "y": 2.525937359567027
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.405188702115292,
-        "y": 0.841979119855676
+        "x": 5.299941312133336,
+        "y": 0.46776617769759743
       },
       "isLocked": false,
       "linkedName": "SourceSide3NoteAutoRightSecondCollection"
     },
     {
       "anchor": {
-        "x": 3.1683522521974625,
-        "y": 2.71716149066101
+        "x": 1.663059280534515,
+        "y": 4.584108541436456
       },
       "prevControl": {
-        "x": 4.270855721198622,
-        "y": 1.777511475250871
+        "x": 2.271155311541392,
+        "y": 2.315442579603108
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,14 +32,14 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 400.0,
-    "maxAngularAcceleration": 600.0
+    "maxAngularAcceleration": 400.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.74000000000001,
+    "rotation": -31.019999999999982,
     "rotateFast": false
   },
   "reversed": false,
@@ -48,5 +48,5 @@
     "rotation": 35.706691400603006,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
