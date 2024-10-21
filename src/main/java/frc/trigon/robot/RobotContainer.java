@@ -90,7 +90,7 @@ public class RobotContainer {
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND);
 
         OperatorConstants.LED_AUTO_SETUP_TRIGGER.whileTrue(new LEDAutoSetupCommand(() -> autoChooser.get().getName()));
-        OperatorConstants.LED_INDICATION_TRIGGER.onTrue(LEDStripCommands.getBlinkingCommand(Color.kBlue, 0.25, LEDStrip.LED_STRIPS).withTimeout(1));
+//        OperatorConstants.LED_INDICATION_TRIGGER.onTrue(LEDStripCommands.getBlinkingCommand(Color.kBlue, 0.25, LEDStrip.LED_STRIPS).withTimeout(1));
 
         OperatorConstants.CLIMB_TRIGGER.whileTrue(GeneralCommands.getClimbCommand());
         OperatorConstants.MOVE_CLIMBER_DOWN_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_DOWN_MANUALLY_COMMAND);
