@@ -29,7 +29,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {
         final PhotonPipelineResult latestResult = photonCamera.getLatestResult();
 
-        inputs.hasResult = latestResult.hasTargets() && !latestResult.getTargets().isEmpty() && getBestTarget(latestResult).poseAmbiguity < 0.4;
+        inputs.hasResult = latestResult.hasTargets() && !latestResult.getTargets().isEmpty() && getBestTarget(latestResult).poseAmbiguity < 0.5;
         if (inputs.hasResult)
             updateHasResultInputs(inputs, latestResult);
         else
