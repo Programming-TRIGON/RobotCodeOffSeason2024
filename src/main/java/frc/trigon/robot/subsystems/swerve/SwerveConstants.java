@@ -15,7 +15,6 @@ import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.pigeon2.Pigeon2Gyro;
 import org.trigon.hardware.phoenix6.pigeon2.Pigeon2Signal;
-import org.trigon.utilities.Conversions;
 
 import java.util.function.DoubleSupplier;
 
@@ -23,14 +22,14 @@ public class SwerveConstants {
     private static final int PIGEON_ID = 0;
     static final Pigeon2Gyro GYRO = new Pigeon2Gyro(SwerveConstants.PIGEON_ID, "SwerveGyro", RobotConstants.CANIVORE_NAME);
     private static final double
-            GYRO_MOUNT_POSITION_YAW = 0,
-            GYRO_MOUNT_POSITION_PITCH = 0,
-            GYRO_MOUNT_POSITION_ROLL = 0;
+            GYRO_MOUNT_POSITION_YAW = 86.152039 ,
+            GYRO_MOUNT_POSITION_PITCH = 0.087891 ,
+            GYRO_MOUNT_POSITION_ROLL = -0.351562 ;
     private static final double
-            FRONT_LEFT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(225.263672 - 360),
-            FRONT_RIGHT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(-256.904297 + 360),
-            REAR_LEFT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(108.369141),
-            REAR_RIGHT_STEER_ENCODER_OFFSET = -Conversions.degreesToRotations(-36.035156);
+            FRONT_LEFT_STEER_ENCODER_OFFSET = -1.561,
+            FRONT_RIGHT_STEER_ENCODER_OFFSET = -3.431,
+            REAR_LEFT_STEER_ENCODER_OFFSET = -0.971 + 0.437,
+            REAR_RIGHT_STEER_ENCODER_OFFSET = -2.008;
     private static final int
             FRONT_LEFT_ID = 1,
             FRONT_RIGHT_ID = 2,
@@ -78,13 +77,13 @@ public class SwerveConstants {
             new PIDConstants(5, 0, 0),
             PROFILED_ROTATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
                     new PIDConstants(4, 0, 0.05) :
-                    new PIDConstants(5, 0, 0),
+                    new PIDConstants(3, 0, 0),
             AUTO_TRANSLATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
                     new PIDConstants(5, 0, 0.1) :
-                    new PIDConstants(6.5, 0, 0),
+                    new PIDConstants(2, 0, 0.1),
             AUTO_ROTATION_PID_CONSTANTS = RobotHardwareStats.isSimulation() ?
                     new PIDConstants(2.5, 0, 0.2) :
-                    new PIDConstants(3, 0, 0);
+                    new PIDConstants(6.5, 0, 0);
     private static final double
             MAX_ROTATION_VELOCITY = RobotHardwareStats.isSimulation() ? 720 : 720,
             MAX_ROTATION_ACCELERATION = RobotHardwareStats.isSimulation() ? 720 : 720;

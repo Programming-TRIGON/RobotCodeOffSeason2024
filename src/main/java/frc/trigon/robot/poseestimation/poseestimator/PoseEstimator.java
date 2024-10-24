@@ -38,6 +38,7 @@ public class PoseEstimator implements AutoCloseable {
             field.getObject("path").setPoses(pose);
             Logger.recordOutput("Path", pose.toArray(new Pose2d[0]));
         });
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> Logger.recordOutput("TargetPPPose", pose));
     }
 
     @Override
@@ -81,11 +82,18 @@ public class PoseEstimator implements AutoCloseable {
     }
 
     public void setGyroHeadingToBestSolvePNPHeading() {
+        double firstCameraTagDistance = 10;
+        double secondCameraTagDistance = 10;
         int closestCameraToTag = 0;
-        for (int i = 0; i < aprilTagCameras.length; i++) {
-            if (aprilTagCameras[i].getDistanceToBestTagMeters() < aprilTagCameras[closestCameraToTag].getDistanceToBestTagMeters())
-                closestCameraToTag = i;
-        }
+
+        if (aprilTagCameras[0].hasResult())
+            firstCameraTagDistance = aprilTagCameras[0].getDistanceToBestTagMeters();
+        if (aprilTagCameras[1].hasResult())
+            secondCameraTagDistance = aprilTagCameras[1].getDistanceToBestTagMeters();
+        if (firstCameraTagDistance > secondCameraTagDistance)
+            closestCameraToTag = 1;
+        else if (secondCameraTagDistance > firstCameraTagDistance)
+            closestCameraToTag = 0;
 
         final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getSolvePNPHeading();
         resetPose(new Pose2d(getCurrentPose().getTranslation(), bestRobotHeading));
@@ -112,7 +120,7 @@ public class PoseEstimator implements AutoCloseable {
         if (!aprilTagCamera.hasNewResult())
             return null;
         final Pose2d robotPose = aprilTagCamera.getEstimatedRobotPose();
-        if (robotPose == null)
+        if (robotPose == null || robotPose.getTranslation() == null || robotPose.getRotation() == null)
             return null;
 
         return new PoseEstimator6328.VisionObservation(

@@ -5,11 +5,14 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
+import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -27,6 +30,9 @@ public class Intake extends MotorSubsystem {
     public void updatePeriodically() {
         masterMotor.update();
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
+        Logger.recordOutput("ShouldAlignToNote", CommandConstants.SHOULD_ALIGN_TO_NOTE);
+        Logger.recordOutput("HasNote", hasNote());
+        Logger.recordOutput("distanceSensorScaledValue", IntakeConstants.DISTANCE_SENSOR.getScaledValue());
     }
 
     @Override
@@ -66,8 +72,10 @@ public class Intake extends MotorSubsystem {
 
     void setTargetState(IntakeConstants.IntakeState targetState) {
         this.targetState = targetState;
-        if (targetState == IntakeConstants.IntakeState.FEED_SHOOTING || targetState == IntakeConstants.IntakeState.FEED_AMP || targetState == IntakeConstants.IntakeState.EJECT)
+        if (targetState == IntakeConstants.IntakeState.FEED_SHOOTING || targetState == IntakeConstants.IntakeState.FEED_AMP)
             getFeedingIndicationLEDsCommand().schedule();
+        if (targetState == IntakeConstants.IntakeState.EJECT)
+            getEjectingIndicationLEDsCommand().schedule();
         setTargetVoltage(targetState.voltage);
     }
 
@@ -80,22 +88,20 @@ public class Intake extends MotorSubsystem {
      * Indicates to the driver that a note has been collected by rumbling the controller and flashing the robot's LEDs.
      */
     void indicateCollection() {
-        if (DriverStation.isAutonomous())
+        if (!DriverStation.isAutonomous())
             OperatorConstants.DRIVER_CONTROLLER.rumble(IntakeConstants.RUMBLE_DURATION_SECONDS, IntakeConstants.RUMBLE_POWER);
         getCollectionIndicationLEDsCommand().schedule();
     }
 
     private Command getCollectionIndicationLEDsCommand() {
-        return new SequentialCommandGroup(
-                LEDStripCommands.getBlinkingCommand(Color.kOrange, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS),
-                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS)
-        );
+        return LEDStripCommands.getBlinkingCommand(Color.kOrangeRed, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
     }
 
     private Command getFeedingIndicationLEDsCommand() {
-        return new SequentialCommandGroup(
-                LEDStripCommands.getBlinkingCommand(Color.kYellow, IntakeConstants.FEEDING_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.FEEDING_INDICATION_BLINKING_TIME_SECONDS),
-                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS)
-        );
+        return LEDStripCommands.getBreatheCommand(Color.kPurple, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, false, LEDStrip.LED_STRIPS);
+    }
+
+    private Command getEjectingIndicationLEDsCommand() {
+        return LEDStripCommands.getBreatheCommand(Color.kBlue, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, false, LEDStrip.LED_STRIPS);
     }
 }
