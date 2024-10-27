@@ -20,6 +20,7 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
+import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class AutonomousCommands {
                     if (DriverStation.isEnabled())
                         return;
                     final Pose2d autoStartPose = PathPlannerAuto.getStaringPoseFromAutoFile(pathName.get());
-                    RobotContainer.POSE_ESTIMATOR.resetPose(autoStartPose);
+                    RobotContainer.POSE_ESTIMATOR.resetPose(new MirrorablePose2d(autoStartPose, true).get());
                 }
         ).ignoringDisable(true);
     }
@@ -76,7 +77,7 @@ public class AutonomousCommands {
         );
     }
 
-    public static Command getPreparePitchCommand() {
+    public static Command getPreparePitchForSpeakerShotCommand() {
         return new ParallelCommandGroup(
                 ShootingCommands.getUpdateShootingCalculationsCommand(false),
                 PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand()
@@ -90,12 +91,12 @@ public class AutonomousCommands {
         );
     }
 
-    public static Command getPrepareShootingCommand() {
+    public static Command getPrepareShooterForSpeakerShotCommand() {
         return ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand();
     }
 
-    public static Command getPrepareShootingCommand(double velocity) {
-        return ShooterCommands.getSetTargetVelocityCommand(velocity);
+    public static Command getPrepareShooterCommand(double targetVelocityRotationsPerSecond) {
+        return ShooterCommands.getSetTargetVelocityCommand(targetVelocityRotationsPerSecond, targetVelocityRotationsPerSecond * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO);
     }
 
     private static Optional<Rotation2d> calculateRotationOverride() {

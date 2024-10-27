@@ -13,7 +13,6 @@ import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
-import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 
@@ -36,13 +35,6 @@ public class AmpCommands {
         ));
     }
 
-    public static Command getBlockCommand() {
-        return new ParallelCommandGroup(
-                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
-                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.BLOCK_PITCH)
-        );
-    }
-
     /**
      * Creates a command that prepares to score in the amp for the autonomous score in amp command.
      * This command waits until we're within a certain distance from the amp to ensure that the robot doesn't hit the stage.
@@ -57,7 +49,7 @@ public class AmpCommands {
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
                                 .alongWith(PitcherCommands.getSetTargetPitchCommand(ShootingConstants.PREPARE_AMP_PITCH)),
                         () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation().getDistance(
-                                FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MINIMUM_DISTANCE_FROM_AMP_FOR_AUTONOMOUS_AMP_PREPARATION_METERS
+                                FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MAXIMUM_DISTANCE_FROM_AMP_FOR_AUTONOMOUS_AMP_PREPARATION_METERS
                 ),
                 ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)
         );

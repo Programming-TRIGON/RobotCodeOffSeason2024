@@ -5,14 +5,10 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
-import org.littletonrobotics.junction.Logger;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 
@@ -30,9 +26,6 @@ public class Intake extends MotorSubsystem {
     public void updatePeriodically() {
         masterMotor.update();
         IntakeConstants.DISTANCE_SENSOR.updateSensor();
-        Logger.recordOutput("ShouldAlignToNote", CommandConstants.SHOULD_ALIGN_TO_NOTE);
-        Logger.recordOutput("HasNote", hasNote());
-        Logger.recordOutput("distanceSensorScaledValue", IntakeConstants.DISTANCE_SENSOR.getScaledValue());
     }
 
     @Override

@@ -9,6 +9,8 @@ import frc.trigon.robot.commands.VisualizeNoteShootingCommand;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.climber.ClimberCommands;
 import frc.trigon.robot.subsystems.climber.ClimberConstants;
 import frc.trigon.robot.subsystems.intake.IntakeCommands;
@@ -51,6 +53,13 @@ public class GeneralCommands {
         return new ParallelCommandGroup(
                 PitcherCommands.getSetTargetPitchCommand(ShootingConstants.HIGH_EJECT_PITCH),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.EJECT)
+        );
+    }
+
+    public static Command getBlockCommand() {
+        return new ParallelCommandGroup(
+                AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN),
+                PitcherCommands.getSetTargetPitchCommand(PitcherConstants.BLOCK_PITCH)
         );
     }
 
@@ -121,8 +130,8 @@ public class GeneralCommands {
         return new WaitUntilCommand(condition).andThen(command);
     }
 
-    public static Command runWhen(Command command,BooleanSupplier condition, double debounceTimeSeconds) {
-        return new WaitUntilCommand(condition).andThen(new WaitCommand(debounceTimeSeconds).andThen(command.onlyIf(condition).repeatedly()));
+    public static Command runWhen(Command command, BooleanSupplier condition, double debounceTimeSeconds) {
+        return new WaitUntilCommand(condition).andThen(new WaitCommand(debounceTimeSeconds).andThen(command.onlyIf(condition)));
     }
 
     public static Command duplicate(Command command) {

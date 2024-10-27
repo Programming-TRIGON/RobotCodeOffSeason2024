@@ -25,7 +25,7 @@ public class SwerveModuleConstants {
             DRIVE_MOTOR_NEUTRAL_MODE_VALUE = NeutralModeValue.Brake,
             STEER_MOTOR_NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            DRIVE_SLIP_CURRENT = RobotHardwareStats.isSimulation() ? 1000 : 70,
+            DRIVE_SLIP_CURRENT = RobotHardwareStats.isSimulation() ? 1000 : 80,
             STEER_CURRENT_LIMIT = RobotHardwareStats.isSimulation() ? 1000 : 30;
     private static final double
             STEER_MOTOR_P = RobotHardwareStats.isSimulation() ? 75 : 75,

@@ -10,7 +10,6 @@ import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraInputsAutoLogged;
-import org.littletonrobotics.junction.Logger;
 import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -29,7 +28,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {
         final PhotonPipelineResult latestResult = photonCamera.getLatestResult();
 
-        inputs.hasResult = latestResult.hasTargets() && !latestResult.getTargets().isEmpty() && getBestTarget(latestResult).poseAmbiguity < 0.5;
+        inputs.hasResult = latestResult.hasTargets() && !latestResult.getTargets().isEmpty() && getPoseAmbiguity(latestResult) < AprilTagCameraConstants.MAXIMUM_AMBIGUITY;
         if (inputs.hasResult)
             updateHasResultInputs(inputs, latestResult);
         else
@@ -41,8 +40,8 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
 
         inputs.cameraSolvePNPPose = getSolvePNPPose(latestResult);
         inputs.latestResultTimestampSeconds = latestResult.getTimestampSeconds();
-        inputs.bestTargetRelativePitchRadians = -bestTargetRelativeRotation3d.getY();
-        inputs.bestTargetRelativeYawRadians = -bestTargetRelativeRotation3d.getZ();
+        inputs.bestTargetRelativePitchRadians = bestTargetRelativeRotation3d.getY();
+        inputs.bestTargetRelativeYawRadians = bestTargetRelativeRotation3d.getZ();
         inputs.visibleTagIDs = getVisibleTagIDs(latestResult);
         inputs.distanceFromBestTag = getDistanceFromBestTag(latestResult);
     }
@@ -50,6 +49,10 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private void updateNoResultInputs(AprilTagCameraInputsAutoLogged inputs) {
         inputs.visibleTagIDs = new int[]{};
         inputs.cameraSolvePNPPose = new Pose3d();
+    }
+
+    private double getPoseAmbiguity(PhotonPipelineResult result) {
+        return getBestTarget(result).getPoseAmbiguity();
     }
 
     private Point getTagCenter(List<TargetCorner> tagCorners) {
@@ -90,7 +93,6 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
 
         final Pose3d rawTagPose = FieldConstants.TAG_ID_TO_POSE.get(getBestTarget(result).getFiducialId());
         final Pose3d tagPose = rawTagPose.transformBy(AprilTagCameraConstants.TAG_OFFSET);
-        Logger.recordOutput("TagPose", tagPose);
         final Transform3d targetToCamera = getBestTarget(result).getBestCameraToTarget().inverse();
         return tagPose.transformBy(targetToCamera);
     }

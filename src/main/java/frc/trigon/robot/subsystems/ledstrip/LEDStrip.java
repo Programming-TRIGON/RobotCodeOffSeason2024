@@ -37,22 +37,13 @@ public class LEDStrip extends SubsystemBase {
         this.inverted = inverted;
         this.numberOfLEDs = numberOfLEDs;
 
-        resetBreatheSettings();
+        resetLEDSettings();
         addLEDStripToLEDStripsArray(this);
     }
 
     public static void setDefaultCommandForAllLEDS(Command command) {
         for (LEDStrip ledStrip : LED_STRIPS)
             ledStrip.setDefaultCommand(command);
-    }
-
-    public static void changeDefaultCommandForAllLEDs(Command newDefaultCommand) {
-        for (LEDStrip ledStrip : LED_STRIPS) {
-            final Command currentDefaultCommand = ledStrip.getDefaultCommand();
-            if (currentDefaultCommand != null)
-                currentDefaultCommand.cancel();
-            ledStrip.setDefaultCommand(newDefaultCommand);
-        }
     }
 
     public int getNumberOfLEDS() {
@@ -88,9 +79,12 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue %= 180;
     }
 
-    void resetBreatheSettings() {
+    void resetLEDSettings() {
         lastBreatheLED = indexOffset;
         lastBreatheMovementTime = Timer.getFPGATimestamp();
+        rainbowFirstPixelHue = 0;
+        areLEDsOnForBlinking = false;
+        lastBlinkTime = 0;
     }
 
     void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop) {

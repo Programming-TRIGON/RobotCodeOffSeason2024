@@ -72,7 +72,7 @@ public class RobotContainer {
 
     private void bindControllerCommands() {
         OperatorConstants.RESET_HEADING_TRIGGER.onTrue(CommandConstants.RESET_HEADING_COMMAND);
-        OperatorConstants.SET_GYRO_HEADING_TO_SOLVE_PNP_HEADING_TRIGGER.whileTrue(CommandConstants.SET_GYRO_HEADING_TO_SOLVE_PNP_HEADING_COMMAND);
+        OperatorConstants.SET_GYRO_HEADING_TO_SOLVE_PNP_HEADING_TRIGGER.onTrue(CommandConstants.SET_GYRO_HEADING_TO_SOLVE_PNP_HEADING_COMMAND);
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
@@ -87,7 +87,6 @@ public class RobotContainer {
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND);
 
         OperatorConstants.LED_AUTO_SETUP_TRIGGER.whileTrue(new LEDAutoSetupCommand(() -> autoChooser.get().getName()));
-//        OperatorConstants.LED_INDICATION_TRIGGER.onTrue(LEDStripCommands.getBlinkingCommand(Color.kBlue, 0.25, LEDStrip.LED_STRIPS).withTimeout(1));
 
         OperatorConstants.CLIMB_TRIGGER.whileTrue(GeneralCommands.getClimbCommand());
         OperatorConstants.MOVE_CLIMBER_DOWN_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_DOWN_MANUALLY_COMMAND);
@@ -108,7 +107,7 @@ public class RobotContainer {
         OperatorConstants.AMP_WITHOUT_ALIGN_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(false));
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
         OperatorConstants.REALIGN_AMP_ALIGNER_TRIGGER.whileTrue(AmpAlignerCommands.getSetPositionCommand(AmpAlignerConstants.REALIGN_AMP_ALIGNER_ANGLE));
-        OperatorConstants.BLOCK_TRIGGER.whileTrue(AmpCommands.getBlockCommand());
+        OperatorConstants.BLOCK_TRIGGER.whileTrue(GeneralCommands.getBlockCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
     }

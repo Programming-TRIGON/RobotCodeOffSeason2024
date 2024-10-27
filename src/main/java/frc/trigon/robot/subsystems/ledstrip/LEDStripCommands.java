@@ -37,7 +37,7 @@ public class LEDStripCommands {
         return new ExecuteEndCommand(
                 () -> runForLEDs((LEDStrip) -> LEDStrip.breathe(color, breathingLEDs, cycleTimeSeconds, shouldLoop), ledStrips),
                 () -> {
-                    runForLEDs(LEDStrip::resetBreatheSettings, ledStrips);
+                    runForLEDs(LEDStrip::resetLEDSettings, ledStrips);
                     runForLEDs(LEDStrip::clearLedColors, ledStrips);
                 },
                 ledStrips
