@@ -100,6 +100,7 @@ public class IntakeConstants {
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.TORQUE_CURRENT, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.REVERSE_LIMIT, 100);
     }
 
     private static void configureFollowerMotor() {
@@ -113,6 +114,8 @@ public class IntakeConstants {
         config.HardwareLimitSwitch.ReverseLimitEnable = false;
 
         FOLLOWER_MOTOR.applyConfiguration(config);
+
+        FOLLOWER_MOTOR.registerSignal(TalonFXSignal.REVERSE_LIMIT, 100);
 
         final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_OPPOSES_MASTER);
         FOLLOWER_MOTOR.setControl(followerRequest);
