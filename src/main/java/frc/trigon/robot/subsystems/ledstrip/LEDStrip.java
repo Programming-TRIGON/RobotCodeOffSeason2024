@@ -96,8 +96,11 @@ public class LEDStrip extends SubsystemBase {
             lastBreatheLED++;
         }
         if (lastBreatheLED >= numberOfLEDs + indexOffset) {
-            if (!shouldLoop)
+            if (!shouldLoop) {
                 CommandConstants.DEFAULT_LEDS_COMMAND.schedule();
+                return;
+            }
+            lastBreatheLED = indexOffset;
         }
         for (int i = 0; i < breathingLEDs; i++) {
             if (lastBreatheLED - i >= indexOffset && lastBreatheLED - i < indexOffset + numberOfLEDs)
