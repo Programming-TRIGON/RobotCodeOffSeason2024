@@ -8,6 +8,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.trigon.robot.misc.objectdetectioncamera.SimulationObjectDetectionCameraIO;
+import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.misc.simplesensor.SimpleSensor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
@@ -62,7 +63,7 @@ public class IntakeConstants {
     static final double NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS = 0;
     static final BooleanEvent HAS_NOTE_BOOLEAN_EVENT = new BooleanEvent(
             CommandScheduler.getInstance().getActiveButtonLoop(),
-            () -> DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS
+            () -> !RobotHardwareStats.isSimulation() && (DISTANCE_SENSOR.getScaledValue() < NOTE_DISTANCE_THRESHOLD_CENTIMETERS)
     ).debounce(NOTE_DETECTION_CONFIRMATION_DELAY_SECONDS);
     private static final double NOTE_COLLECTION_CURRENT = 50;
     private static final double NOTE_COLLECTION_TIME_THRESHOLD_SECONDS = 0.1;
@@ -73,7 +74,18 @@ public class IntakeConstants {
     static final double
             COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS = 0.2;
     static final double COLLECTION_INDICATION_BLINKING_TIME_SECONDS = 2;
-    public static final double FEEDING_INDICATION_BREATHING_TIME_SECONDS = 0.3;
+    public static final int
+            FEEDING_INDICATION_BREATHING_LEDS_AMOUNT = 4,
+            EJECTING_INDICATION_BREATHING_LEDS_AMOUNT = 6,
+            INTAKE_INDICATION_BREATHING_LEDS_AMOUNT = 4;
+    public static final double
+            FEEDING_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 0.3,
+            EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 1,
+            INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 0.7;
+    public static final boolean
+            FEEDING_INDICATION_BREATHING_SHOULD_LOOP = false,
+            EJECTING_INDICATION_BREATHING_SHOULD_LOOP = true,
+            INTAKE_INDICATION_BREATHING_SHOULD_LOOP = true;
 
     static {
         configureMasterMotor();

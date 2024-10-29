@@ -11,6 +11,7 @@ import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
@@ -33,8 +34,8 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private Command getSetCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
-                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getBreatheCommand(Color.kGreen, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getBreatheCommand(Color.kRed, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS),
                 CAMERA::hasTargets
         ).asProxy();
     }
@@ -48,7 +49,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private double fieldRelativePowersToSelfRelativeXPower(double xPower, double yPower) {
-        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle();
+        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle().rotateBy(Rotation2d.fromDegrees(90));
         final double xValue = CommandConstants.calculateDriveStickAxisValue(xPower);
         final double yValue = CommandConstants.calculateDriveStickAxisValue(yPower);
 

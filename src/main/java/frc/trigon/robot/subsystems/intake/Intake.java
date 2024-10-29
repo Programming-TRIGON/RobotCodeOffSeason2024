@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
@@ -69,6 +70,8 @@ public class Intake extends MotorSubsystem {
             getFeedingIndicationLEDsCommand().schedule();
         if (targetState == IntakeConstants.IntakeState.EJECT)
             getEjectingIndicationLEDsCommand().schedule();
+        if (targetState == IntakeConstants.IntakeState.STOP)
+            CommandConstants.DEFAULT_LEDS_COMMAND.schedule();
         setTargetVoltage(targetState.voltage);
     }
 
@@ -91,10 +94,10 @@ public class Intake extends MotorSubsystem {
     }
 
     private Command getFeedingIndicationLEDsCommand() {
-        return LEDStripCommands.getBreatheCommand(Color.kPurple, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, false, LEDStrip.LED_STRIPS);
+        return LEDStripCommands.getBreatheCommand(Color.kPurple, IntakeConstants.FEEDING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.FEEDING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.FEEDING_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS);
     }
 
     private Command getEjectingIndicationLEDsCommand() {
-        return LEDStripCommands.getBreatheCommand(Color.kBlue, 5, IntakeConstants.FEEDING_INDICATION_BREATHING_TIME_SECONDS, false, LEDStrip.LED_STRIPS);
+        return LEDStripCommands.getBreatheCommand(Color.kBlue, IntakeConstants.EJECTING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.EJECTING_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS);
     }
 }
