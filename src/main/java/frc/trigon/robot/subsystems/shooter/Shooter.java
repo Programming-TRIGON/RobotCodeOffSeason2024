@@ -1,6 +1,5 @@
 package frc.trigon.robot.subsystems.shooter;
 
-import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import edu.wpi.first.units.Measure;
@@ -20,7 +19,6 @@ public class Shooter extends MotorSubsystem {
             leftMotor = ShooterConstants.LEFT_MOTOR;
     private final VelocityTorqueCurrentFOC velocityRequest = new VelocityTorqueCurrentFOC(0);
     private final TorqueCurrentFOC torqueRequest = new TorqueCurrentFOC(0);
-    private final StaticBrake staticBrakeRequest = new StaticBrake();
     private double
             targetRightVelocityRotationsPerSecond = 0,
             targetLeftVelocityRotationsPerSecond = 0;
@@ -102,11 +100,6 @@ public class Shooter extends MotorSubsystem {
     void setTargetVelocity(double targetRightVelocityRotationsPerSecond, double targetLeftVelocityRotationsPerSecond) {
         setTargetRightVelocity(targetRightVelocityRotationsPerSecond);
         setTargetLeftVelocity(targetLeftVelocityRotationsPerSecond);
-    }
-
-    void sendStaticBrakeRequest() {
-        rightMotor.setControl(staticBrakeRequest);
-        leftMotor.setControl(staticBrakeRequest);
     }
 
     private boolean atVelocity(double currentVelocity, double targetVelocity) {

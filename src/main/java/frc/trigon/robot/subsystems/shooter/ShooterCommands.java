@@ -40,15 +40,6 @@ public class ShooterCommands {
         );
     }
 
-    public static Command getSendStaticBreakRequestCommand() {
-        return new StartEndCommand(
-                RobotContainer.SHOOTER::sendStaticBrakeRequest,
-                () -> {
-                },
-                RobotContainer.SHOOTER
-        );
-    }
-
     public static Command getStopCommand() {
         return new StartEndCommand(
                 RobotContainer.SHOOTER::stop,
