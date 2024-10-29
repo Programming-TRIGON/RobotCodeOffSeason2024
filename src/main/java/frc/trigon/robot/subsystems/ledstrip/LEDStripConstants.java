@@ -11,7 +11,7 @@ public class LEDStripConstants {
     private static final int PORT = 9;
     private static final int
             RIGHT_CLIMBER_NUMBER_OF_LEDS = 22,
-            LEFT_CLIMBER_NUMBER_OF_LEDS = 23;
+            LEFT_CLIMBER_NUMBER_OF_LEDS = 22;
     private static final boolean
             RIGHT_CLIMBER_INVERTED = false,
             LEFT_CLIMBER_INVERTED = false;

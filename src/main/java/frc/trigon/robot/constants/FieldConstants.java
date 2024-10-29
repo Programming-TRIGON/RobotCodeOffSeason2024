@@ -9,7 +9,6 @@ import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class FieldConstants {
     private static final boolean SHOULD_USE_HOME_TAG_LAYOUT = false;
@@ -47,7 +46,7 @@ public class FieldConstants {
     private static HashMap<Integer, Pose3d> fieldLayoutToTagIdToPoseMap() {
         final HashMap<Integer, Pose3d> tagIdToPose = new HashMap<>();
         for (AprilTag aprilTag : APRIL_TAG_FIELD_LAYOUT.getTags())
-            Objects.requireNonNull(tagIdToPose.put(aprilTag.ID, aprilTag.pose)).transformBy(TAG_OFFSET);
+            tagIdToPose.put(aprilTag.ID, aprilTag.pose.transformBy(TAG_OFFSET));
         return tagIdToPose;
     }
 }
