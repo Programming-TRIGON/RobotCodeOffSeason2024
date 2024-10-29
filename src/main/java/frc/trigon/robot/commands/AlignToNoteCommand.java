@@ -4,7 +4,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
@@ -16,7 +15,6 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import org.trigon.hardware.RobotHardwareStats;
-import org.trigon.hardware.misc.XboxController;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 public class AlignToNoteCommand extends ParallelCommandGroup {
@@ -43,10 +41,18 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
-                () -> CommandConstants.calculateDriveStickAxisValue(getScaledJoystickValue()),
+                () -> fieldRelativePowersToSelfRelativeXPower(OperatorConstants.DRIVER_CONTROLLER.getLeftX(), OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
                 () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
                 this::getTargetAngle
         );
+    }
+
+    private double fieldRelativePowersToSelfRelativeXPower(double xPower, double yPower) {
+        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle();
+        final double xValue = CommandConstants.calculateDriveStickAxisValue(xPower);
+        final double yValue = CommandConstants.calculateDriveStickAxisValue(yPower);
+
+        return (xValue * robotHeading.getCos()) + (yValue * robotHeading.getSin());
     }
 
     private MirrorableRotation2d getTargetAngle() {
@@ -56,13 +62,5 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private boolean shouldAlignToNote() {
         return CAMERA.hasTargets() && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
-    }
-
-    private double getScaledJoystickValue() {
-        final XboxController controller = OperatorConstants.DRIVER_CONTROLLER;
-        final var x = Rotation2d.fromDegrees(90);
-        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle().plus(x);
-
-        return controller.getLeftX() * -robotHeading.getCos() - controller.getLeftY() * -robotHeading.getSin();
     }
 }
