@@ -91,27 +91,33 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
             return new Pose3d().plus(cameraPoseTransform).relativeTo(FieldConstants.APRIL_TAG_FIELD_LAYOUT.getOrigin());
         }
 
-        final Pose3d rawTagPose = FieldConstants.TAG_ID_TO_POSE.get(getBestTarget(result).getFiducialId());
-        final Pose3d tagPose = rawTagPose.transformBy(AprilTagCameraConstants.TAG_OFFSET);
+        final Pose3d tagPose = FieldConstants.TAG_ID_TO_POSE.get(getBestTarget(result).getFiducialId());
         final Transform3d targetToCamera = getBestTarget(result).getBestCameraToTarget().inverse();
         return tagPose.transformBy(targetToCamera);
     }
 
     private int[] getVisibleTagIDs(PhotonPipelineResult result) {
-//        final int[] visibleTagIDs = new int[result.getTargets().size()];
-//        for (int i = 0; i < visibleTagIDs.length; i++)
-//            visibleTagIDs[i] = result.getTargets().get(i).getFiducialId();
-//        return visibleTagIDs;
-        return new int[]{getBestTarget(result).getFiducialId()};
+        final int[] visibleTagIDs = new int[result.getTargets().size()];
+        visibleTagIDs[0] = getBestTarget(result).getFiducialId();
+        int idAddition = 1;
+        for (int i = 0; i < visibleTagIDs.length; i++) {
+            final int currentID = result.getTargets().get(i).getFiducialId();
+            if (currentID == visibleTagIDs[0]) {
+                idAddition = 0;
+                continue;
+            }
+            visibleTagIDs[i + idAddition] = currentID;
+        }
+        return visibleTagIDs;
     }
 
     private PhotonTrackedTarget getBestTarget(PhotonPipelineResult result) {
-        var x = result.getBestTarget();
+        PhotonTrackedTarget bestTarget = result.getBestTarget();
         for (PhotonTrackedTarget target : result.getTargets()) {
-            if (target.getArea() > x.area)
-                x = target;
+            if (target.getArea() > bestTarget.area)
+                bestTarget = target;
         }
-        return x;
+        return bestTarget;
     }
 
     private double getDistanceFromBestTag(PhotonPipelineResult result) {

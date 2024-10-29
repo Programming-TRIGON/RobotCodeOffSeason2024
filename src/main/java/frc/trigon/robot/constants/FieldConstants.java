@@ -3,17 +3,17 @@ package frc.trigon.robot.constants;
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.geometry.*;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FieldConstants {
     private static final boolean SHOULD_USE_HOME_TAG_LAYOUT = false;
+    private static final Transform3d TAG_OFFSET = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
     public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT;
 
     static {
@@ -47,7 +47,7 @@ public class FieldConstants {
     private static HashMap<Integer, Pose3d> fieldLayoutToTagIdToPoseMap() {
         final HashMap<Integer, Pose3d> tagIdToPose = new HashMap<>();
         for (AprilTag aprilTag : APRIL_TAG_FIELD_LAYOUT.getTags())
-            tagIdToPose.put(aprilTag.ID, aprilTag.pose);
+            Objects.requireNonNull(tagIdToPose.put(aprilTag.ID, aprilTag.pose)).transformBy(TAG_OFFSET);
         return tagIdToPose;
     }
 }

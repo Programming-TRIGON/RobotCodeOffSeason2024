@@ -128,7 +128,7 @@ public class AprilTagCamera {
     }
 
     private Translation2d getFieldRelativeRobotTranslation(Rotation2d currentHeading) {
-        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]).plus(AprilTagCameraConstants.TAG_OFFSET);
+        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]);
         if (bestTagPose == null)
             return null;
 
