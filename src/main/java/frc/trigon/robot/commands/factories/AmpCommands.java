@@ -64,7 +64,7 @@ public class AmpCommands {
     }
 
     private static Command getFeedToAmpCommand() {
-        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP).alongWith(GeneralCommands.getVisualizeNoteShootingCommand()).alongWith(new InstantCommand(() -> IS_FEEDING_NOTE = true)), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch());// && RobotContainer.AMP_ALIGNER.atTargetState());
+        return GeneralCommands.runWhen(IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_AMP).alongWith(GeneralCommands.getVisualizeNoteShootingCommand()).alongWith(new InstantCommand(() -> IS_FEEDING_NOTE = true)), () -> RobotContainer.SHOOTER.atTargetVelocity() && RobotContainer.PITCHER.atTargetPitch() && RobotContainer.AMP_ALIGNER.atTargetState());
     }
 
     private static Command getPathfindToAmpCommand() {
