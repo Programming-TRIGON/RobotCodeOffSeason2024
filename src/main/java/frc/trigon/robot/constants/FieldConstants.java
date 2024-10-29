@@ -9,19 +9,22 @@ import edu.wpi.first.math.geometry.Translation3d;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class FieldConstants {
-    public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-//    public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT;
-//
-//    static {
-//        try {
-//            APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout.loadFromResource("2024-crescendo-home-tag-layout.json");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private static final boolean SHOULD_USE_HOME_TAG_LAYOUT = false;
+    public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT;
+
+    static {
+        try {
+            APRIL_TAG_FIELD_LAYOUT = SHOULD_USE_HOME_TAG_LAYOUT ?
+                    AprilTagFieldLayout.loadFromResource("2024-crescendo-home-tag-layout.json") :
+                    AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static final HashMap<Integer, Pose3d> TAG_ID_TO_POSE = fieldLayoutToTagIdToPoseMap();
     public static final double
