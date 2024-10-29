@@ -9,12 +9,13 @@
     "7NoteAuto",
     "FrontRow4NoteAuto",
     "MiddleRush3NoteAuto",
-    "test",
-    "PIDAuto",
+    "FrontRow4NoteAutoFarShoot",
     "SourceSide3NoteAuto",
+    "SourceSide3NoteAutoFront",
     "SourceSide3NoteAutoRight",
     "SpeakerSide3NoteAuto",
-    "Zayde3NoteAuto"
+    "Zayde3NoteAuto",
+    "test"
   ],
   "autoFolders": [
     "3NoteAutoThroughAmpVarients",

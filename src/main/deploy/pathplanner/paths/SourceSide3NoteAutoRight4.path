@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8648132671253284,
-        "y": 3.6561526804729216
+        "x": 2.835933559191062,
+        "y": 1.474204638550123
       },
       "isLocked": false,
       "linkedName": "SourceSide3NoteAutoRightSecondFeed"
@@ -20,8 +20,8 @@
         "y": 0.8185908109707958
       },
       "prevControl": {
-        "x": 6.492745065262509,
-        "y": 1.4734634597515983
+        "x": 6.304650355779585,
+        "y": 1.170691918848627
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -22.619864947542787,
+    "rotation": -8.458072159819006,
     "rotateFast": false
   },
   "reversed": false,

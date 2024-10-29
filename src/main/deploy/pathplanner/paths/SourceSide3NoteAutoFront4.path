@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.385627673868176,
-        "y": 1.8622038194195158
+        "x": 1.663059280534515,
+        "y": 4.584108541436456
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.999862441530111,
-        "y": 1.8427043029858021
+        "x": 1.8852482149408742,
+        "y": 4.326837143702777
       },
       "isLocked": false,
-      "linkedName": "PIDfirstcollection"
+      "linkedName": "SourceSide3NoteAutoRightSecondFeed"
     },
     {
       "anchor": {
-        "x": 4.818842131746022,
-        "y": 1.40396518322728
+        "x": 2.7155331803541096,
+        "y": 4.1046482092964185
       },
       "prevControl": {
-        "x": 4.311854704469504,
-        "y": 1.5014627653958412
+        "x": 2.130825458232113,
+        "y": 4.385307915914978
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SourceSide3NoteAutoFrontSecondCollection"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.744059202888785,
+    "rotation": -1.591140271194542,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "PIDAuto",
+  "folder": "SourceSide3NoteAutoFront",
   "previewStartingState": {
-    "rotation": 24.102234501160947,
+    "rotation": -60.25511870305777,
     "velocity": 0
   },
   "useDefaultConstraints": true
