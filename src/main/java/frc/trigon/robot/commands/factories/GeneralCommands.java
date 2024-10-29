@@ -45,7 +45,7 @@ public class GeneralCommands {
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 LEDStripCommands.getStaticColorCommand(Color.kOrangeRed, LEDStrip.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).onlyIf(() -> !RobotContainer.INTAKE.hasNote())
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).unless(RobotContainer.INTAKE::hasNote)
         ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
     }
 
