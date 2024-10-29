@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "nne"
+      "linkedName": "FrontRow4NoteAutoFarShootSecondFeed"
     }
   ],
   "rotationTargets": [],
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "FrontRow4NoteAuto",
+  "folder": "FrontRow4NoteAutoFarShoot",
   "previewStartingState": {
     "rotation": -19.82440273715712,
     "velocity": 0
