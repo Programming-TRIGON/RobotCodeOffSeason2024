@@ -17,9 +17,9 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
-    public static Command getBlinkingCommand(Color color, double blinkingIntervalSeconds, LEDStrip... ledStrips) {
+    public static Command getBlinkingCommand(Color firstColor, Color secondColor, double blinkingIntervalSeconds, LEDStrip... ledStrips) {
         return new ExecuteEndCommand(
-                () -> runForLEDs((LEDStrip -> LEDStrip.blink(color, blinkingIntervalSeconds)), ledStrips),
+                () -> runForLEDs((LEDStrip -> LEDStrip.blink(firstColor, secondColor, blinkingIntervalSeconds)), ledStrips),
                 () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
                 ledStrips
         ).ignoringDisable(true);

@@ -90,7 +90,7 @@ public class Intake extends MotorSubsystem {
     }
 
     private Command getCollectionIndicationLEDsCommand() {
-        return LEDStripCommands.getBlinkingCommand(Color.kOrangeRed, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
+        return LEDStripCommands.getBlinkingCommand(Color.kOrangeRed, Color.kBlack, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
     }
 
     private Command getFeedingIndicationLEDsCommand() {
