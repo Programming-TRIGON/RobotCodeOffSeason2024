@@ -50,6 +50,14 @@ public class LEDStrip extends SubsystemBase {
         return numberOfLEDs;
     }
 
+    void resetLEDSettings() {
+        lastBreatheLED = indexOffset;
+        lastBreatheMovementTime = Timer.getFPGATimestamp();
+        rainbowFirstPixelHue = 0;
+        areLEDsOnForBlinking = false;
+        lastBlinkTime = 0;
+    }
+
     void clearLEDColors() {
         staticColor(Color.kBlack);
     }
@@ -77,14 +85,6 @@ public class LEDStrip extends SubsystemBase {
         }
         rainbowFirstPixelHue += 3;
         rainbowFirstPixelHue %= 180;
-    }
-
-    void resetLEDSettings() {
-        lastBreatheLED = indexOffset;
-        lastBreatheMovementTime = Timer.getFPGATimestamp();
-        rainbowFirstPixelHue = 0;
-        areLEDsOnForBlinking = false;
-        lastBlinkTime = 0;
     }
 
     void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop) {
@@ -115,15 +115,15 @@ public class LEDStrip extends SubsystemBase {
         setThreeSectionColor(ledsPerSection, firstSectionColor, secondSectionColor, thirdSectionColor);
     }
 
+    private void setLEDColors(Color color, int startIndex, int endIndex) {
+        for (int i = 0; i <= endIndex - startIndex; i++)
+            LEDStripConstants.LED_BUFFER.setLED(startIndex + indexOffset + i, color);
+    }
+
     private void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
         setLEDColors(inverted ? thirdSectionColor : firstSectionColor, 0, ledsPerSection);
         setLEDColors(secondSectionColor, ledsPerSection, ledsPerSection * 2);
         setLEDColors(inverted ? firstSectionColor : thirdSectionColor, ledsPerSection * 2, numberOfLEDs - 1);
-    }
-
-    private void setLEDColors(Color color, int startIndex, int endIndex) {
-        for (int i = 0; i <= endIndex - startIndex; i++)
-            LEDStripConstants.LED_BUFFER.setLED(startIndex + indexOffset + i, color);
     }
 
     private void addLEDStripToLEDStripsArray(LEDStrip ledStrip) {
