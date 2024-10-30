@@ -42,14 +42,14 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
-                () -> fieldRelativePowersToSelfRelativeXPower(OperatorConstants.DRIVER_CONTROLLER.getLeftX(), OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                () -> fieldRelativePowersToSelfRelativeXPower(OperatorConstants.DRIVER_CONTROLLER.getLeftY(), OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
                 () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
                 this::getTargetAngle
         );
     }
 
     private double fieldRelativePowersToSelfRelativeXPower(double xPower, double yPower) {
-        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle().rotateBy(Rotation2d.fromDegrees(90));
+        final Rotation2d robotHeading = RobotContainer.SWERVE.getDriveRelativeAngle();
         final double xValue = CommandConstants.calculateDriveStickAxisValue(xPower);
         final double yValue = CommandConstants.calculateDriveStickAxisValue(yPower);
 
