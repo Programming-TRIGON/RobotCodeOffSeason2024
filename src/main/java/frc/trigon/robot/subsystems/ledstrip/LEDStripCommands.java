@@ -2,6 +2,7 @@ package frc.trigon.robot.subsystems.ledstrip;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import org.trigon.commands.ExecuteEndCommand;
 import org.trigon.commands.InitExecuteCommand;
 
@@ -34,12 +35,14 @@ public class LEDStripCommands {
     }
 
     public static Command getBreatheCommand(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop, LEDStrip... ledStrips) {
-        return new ExecuteEndCommand(
-                () -> runForLEDs((LEDStrip) -> LEDStrip.breathe(color, breathingLEDs, cycleTimeSeconds, shouldLoop), ledStrips),
+        return new FunctionalCommand(
                 () -> {
-                    runForLEDs(LEDStrip::resetLEDSettings, ledStrips);
-                    runForLEDs(LEDStrip::clearLEDColors, ledStrips);
+                    if (!shouldLoop)
+                        runForLEDs(LEDStrip::resetLEDSettings, ledStrips);
                 },
+                () -> runForLEDs((LEDStrip) -> LEDStrip.breathe(color, breathingLEDs, cycleTimeSeconds, shouldLoop), ledStrips),
+                (interrupted) -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
+                () -> false,
                 ledStrips
         ).ignoringDisable(true);
     }
