@@ -50,7 +50,7 @@ public class LEDStrip extends SubsystemBase {
         return numberOfLEDs;
     }
 
-    void clearLedColors() {
+    void clearLEDColors() {
         staticColor(Color.kBlack);
     }
 
@@ -88,7 +88,7 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop) {
-        clearLedColors();
+        clearLEDColors();
         double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
         double currentTime = Timer.getFPGATimestamp();
         if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {

@@ -12,7 +12,7 @@ public class LEDStripCommands {
     public static Command getStaticColorCommand(Color color, LEDStrip... ledStrips) {
         return new ExecuteEndCommand(
                 () -> runForLEDs((LEDStrip -> LEDStrip.staticColor(color)), ledStrips),
-                () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
+                () -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
@@ -20,7 +20,7 @@ public class LEDStripCommands {
     public static Command getBlinkingCommand(Color firstColor, Color secondColor, double blinkingIntervalSeconds, LEDStrip... ledStrips) {
         return new ExecuteEndCommand(
                 () -> runForLEDs((LEDStrip -> LEDStrip.blink(firstColor, secondColor, blinkingIntervalSeconds)), ledStrips),
-                () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
+                () -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
@@ -28,7 +28,7 @@ public class LEDStripCommands {
     public static Command getRainbowCommand(LEDStrip... ledStrips) {
         return new ExecuteEndCommand(
                 () -> runForLEDs((LEDStrip::rainbow), ledStrips),
-                () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
+                () -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
@@ -38,7 +38,7 @@ public class LEDStripCommands {
                 () -> runForLEDs((LEDStrip) -> LEDStrip.breathe(color, breathingLEDs, cycleTimeSeconds, shouldLoop), ledStrips),
                 () -> {
                     runForLEDs(LEDStrip::resetLEDSettings, ledStrips);
-                    runForLEDs(LEDStrip::clearLedColors, ledStrips);
+                    runForLEDs(LEDStrip::clearLEDColors, ledStrips);
                 },
                 ledStrips
         ).ignoringDisable(true);
@@ -46,7 +46,7 @@ public class LEDStripCommands {
 
     public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor, LEDStrip... ledStrips) {
         return new InitExecuteCommand(
-                () -> runForLEDs(LEDStrip::clearLedColors, ledStrips),
+                () -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
                 () -> runForLEDs((LEDStrip) -> LEDStrip.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get()), ledStrips),
                 ledStrips
         ).ignoringDisable(true);
