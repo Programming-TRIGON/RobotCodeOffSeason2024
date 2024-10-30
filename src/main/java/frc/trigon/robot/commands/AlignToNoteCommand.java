@@ -34,8 +34,8 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private Command getSetCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getBreatheCommand(Color.kGreen, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS),
-                LEDStripCommands.getBreatheCommand(Color.kRed, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getBreatheCommand(Color.kGreen, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.INTAKE_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getBreatheCommand(Color.kRed, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.INTAKE_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS),
                 CAMERA::hasTargets
         ).asProxy();
     }

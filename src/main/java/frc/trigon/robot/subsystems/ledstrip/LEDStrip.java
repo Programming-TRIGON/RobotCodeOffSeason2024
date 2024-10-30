@@ -87,20 +87,23 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue %= 180;
     }
 
-    void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop) {
+    void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop, boolean inverted) {
         clearLEDColors();
         double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
         double currentTime = Timer.getFPGATimestamp();
         if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
             lastBreatheMovementTime = currentTime;
-            lastBreatheLED++;
+            if (inverted)
+                lastBreatheLED--;
+            else
+                lastBreatheLED++;
         }
-        if (lastBreatheLED >= numberOfLEDs + indexOffset) {
+        if (inverted ? (lastBreatheLED < indexOffset) : (lastBreatheLED >= numberOfLEDs + indexOffset)) {
             if (!shouldLoop) {
                 CommandConstants.DEFAULT_LEDS_COMMAND.schedule();
                 return;
             }
-            lastBreatheLED = indexOffset;
+            lastBreatheLED = inverted ? indexOffset + numberOfLEDs : indexOffset;
         }
         for (int i = 0; i < breathingLEDs; i++) {
             if (lastBreatheLED - i >= indexOffset && lastBreatheLED - i < indexOffset + numberOfLEDs)

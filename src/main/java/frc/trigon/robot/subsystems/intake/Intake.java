@@ -94,10 +94,10 @@ public class Intake extends MotorSubsystem {
     }
 
     private Command getFeedingIndicationLEDsCommand() {
-        return LEDStripCommands.getBreatheCommand(Color.kPurple, IntakeConstants.FEEDING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.FEEDING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.FEEDING_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS);
+        return LEDStripCommands.getBreatheCommand(Color.kPurple, IntakeConstants.FEEDING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.FEEDING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.FEEDING_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.FEEDING_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS);
     }
 
     private Command getEjectingIndicationLEDsCommand() {
-        return LEDStripCommands.getBreatheCommand(Color.kDarkBlue, IntakeConstants.EJECTING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.EJECTING_INDICATION_BREATHING_SHOULD_LOOP, LEDStrip.LED_STRIPS);
+        return LEDStripCommands.getBreatheCommand(Color.kDarkBlue, IntakeConstants.EJECTING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.EJECTING_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.EJECTING_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS);
     }
 }

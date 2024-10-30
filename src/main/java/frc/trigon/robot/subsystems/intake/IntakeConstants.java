@@ -84,8 +84,11 @@ public class IntakeConstants {
             INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 0.2;
     public static final boolean
             FEEDING_INDICATION_BREATHING_SHOULD_LOOP = false,
+            FEEDING_INDICATION_BREATHING_IS_INVERTED = false,
             EJECTING_INDICATION_BREATHING_SHOULD_LOOP = true,
-            INTAKE_INDICATION_BREATHING_SHOULD_LOOP = true;
+            EJECTING_INDICATION_BREATHING_IS_INVERTED = true,
+            INTAKE_INDICATION_BREATHING_SHOULD_LOOP = true,
+            INTAKE_INDICATION_BREATHING_IS_INVERTED = false;
 
     static {
         configureMasterMotor();

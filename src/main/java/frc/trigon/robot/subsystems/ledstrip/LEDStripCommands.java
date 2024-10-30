@@ -34,13 +34,13 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
-    public static Command getBreatheCommand(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop, LEDStrip... ledStrips) {
+    public static Command getBreatheCommand(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop, boolean inverted, LEDStrip... ledStrips) {
         return new FunctionalCommand(
                 () -> {
                     if (!shouldLoop)
                         runForLEDs(LEDStrip::resetLEDSettings, ledStrips);
                 },
-                () -> runForLEDs((LEDStrip) -> LEDStrip.breathe(color, breathingLEDs, cycleTimeSeconds, shouldLoop), ledStrips),
+                () -> runForLEDs((LEDStrip) -> LEDStrip.breathe(color, breathingLEDs, cycleTimeSeconds, shouldLoop, inverted), ledStrips),
                 (interrupted) -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
                 () -> false,
                 ledStrips
