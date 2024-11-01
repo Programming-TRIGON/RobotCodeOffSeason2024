@@ -22,6 +22,12 @@ public class LEDAutoSetupCommand extends SequentialCommandGroup {
     private static final double
             TOLERANCE_METERS = 0.1,
             TOLERANCE_DEGREES = 2;
+    private static final int AMOUNT_OF_SECTIONS = 3;
+    private final Supplier<Color>[] LEDColors = new Supplier[] {
+            () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getRotation().getDegrees() - getCurrentRobotPose().getRotation().getDegrees(), TOLERANCE_DEGREES),
+            () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getX() - getCurrentRobotPose().getX(), TOLERANCE_METERS),
+            () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS)
+    };
     private final Supplier<String> autoName;
     private Pose2d autoStartPose;
 
@@ -35,16 +41,14 @@ public class LEDAutoSetupCommand extends SequentialCommandGroup {
 
         addCommands(
                 getUpdateAutoStartPoseCommand(),
-                LEDStripCommands.getThreeSectionColorCommand(
-                        () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getRotation().getDegrees() - getCurrentRobotPose().getRotation().getDegrees(), TOLERANCE_DEGREES),
-                        () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getX() - getCurrentRobotPose().getX(), TOLERANCE_METERS),
-                        () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS),
+                LEDStripCommands.getSectionColorCommand(
+                        AMOUNT_OF_SECTIONS,
+                        LEDColors,
                         LEDStripConstants.RIGHT_CLIMBER_LEDS
                 ).alongWith(
-                        LEDStripCommands.getThreeSectionColorCommand(
-                                () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getRotation().getDegrees() - getCurrentRobotPose().getRotation().getDegrees(), TOLERANCE_DEGREES),
-                                () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getX() - getCurrentRobotPose().getX(), TOLERANCE_METERS),
-                                () -> getDesiredLEDColorFromRobotPose(this.autoStartPose.getY() - getCurrentRobotPose().getY(), TOLERANCE_METERS),
+                        LEDStripCommands.getSectionColorCommand(
+                                AMOUNT_OF_SECTIONS,
+                                LEDColors,
                                 LEDStripConstants.LEFT_CLIMBER_LEDS
                         )
                 )

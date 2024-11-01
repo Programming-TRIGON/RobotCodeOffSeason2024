@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
+import java.util.function.Supplier;
+
 public class LEDStrip extends SubsystemBase {
     public static LEDStrip[] LED_STRIPS = new LEDStrip[0];
     private static final AddressableLED LED = LEDStripConstants.LED;
@@ -113,20 +115,26 @@ public class LEDStrip extends SubsystemBase {
         }
     }
 
-    void threeSectionColor(Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        final int ledsPerSection = (int) Math.floor(numberOfLEDs / 3.0);
-        setThreeSectionColor(ledsPerSection, firstSectionColor, secondSectionColor, thirdSectionColor);
+    void sectionColor(int amountOfSections, Supplier<Color>... colors) {
+        if (amountOfSections != colors.length)
+            throw new IllegalArgumentException("Amount of sections must be equal to the amount of colors");
+        final int LEDSPerSection = (int) Math.floor(numberOfLEDs / amountOfSections);
+        setSectionColor(amountOfSections, LEDSPerSection, colors);
+    }
+
+    private void setSectionColor(int amountOfSections, int LEDSPerSection, Supplier<Color>... colors) {
+        if (inverted) {
+            for (int i = amountOfSections - 1; i >= 0; i--)
+                setLEDColors(colors[i].get(), LEDSPerSection * i, LEDSPerSection * (i + 1) - 1);
+            return;
+        }
+        for (int i = 0; i < amountOfSections - 1; i++)
+            setLEDColors(colors[i].get(), LEDSPerSection * i, LEDSPerSection * (i + 1) - 1);
     }
 
     private void setLEDColors(Color color, int startIndex, int endIndex) {
         for (int i = 0; i <= endIndex - startIndex; i++)
             LEDStripConstants.LED_BUFFER.setLED(startIndex + indexOffset + i, color);
-    }
-
-    private void setThreeSectionColor(int ledsPerSection, Color firstSectionColor, Color secondSectionColor, Color thirdSectionColor) {
-        setLEDColors(inverted ? thirdSectionColor : firstSectionColor, 0, ledsPerSection);
-        setLEDColors(secondSectionColor, ledsPerSection, ledsPerSection * 2);
-        setLEDColors(inverted ? firstSectionColor : thirdSectionColor, ledsPerSection * 2, numberOfLEDs - 1);
     }
 
     private void addLEDStripToLEDStripsArray(LEDStrip ledStrip) {

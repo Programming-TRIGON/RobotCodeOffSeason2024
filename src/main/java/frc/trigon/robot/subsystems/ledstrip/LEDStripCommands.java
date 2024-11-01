@@ -47,10 +47,10 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
-    public static Command getThreeSectionColorCommand(Supplier<Color> firstSectionColor, Supplier<Color> secondSectionColor, Supplier<Color> thirdSectionColor, LEDStrip... ledStrips) {
+    public static Command getSectionColorCommand(int amountOfSections, Supplier<Color>[] colors, LEDStrip... ledStrips) {
         return new InitExecuteCommand(
                 () -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
-                () -> runForLEDs((LEDStrip) -> LEDStrip.threeSectionColor(firstSectionColor.get(), secondSectionColor.get(), thirdSectionColor.get()), ledStrips),
+                () -> runForLEDs((LEDStrip) -> LEDStrip.sectionColor(amountOfSections, colors), ledStrips),
                 ledStrips
         ).ignoringDisable(true);
     }
