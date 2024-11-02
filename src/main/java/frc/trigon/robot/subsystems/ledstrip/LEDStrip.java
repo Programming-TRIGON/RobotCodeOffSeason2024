@@ -124,12 +124,12 @@ public class LEDStrip extends SubsystemBase {
 
     private void setSectionColor(int amountOfSections, int LEDSPerSection, Supplier<Color>... colors) {
         if (inverted) {
-            for (int i = amountOfSections - 1; i >= 0; i--)
-                setLEDColors(colors[i].get(), LEDSPerSection * i, LEDSPerSection * (i + 1) - 1);
+            for (int colorIndex = amountOfSections - 1, LEDIndex = 0; colorIndex >= 0; colorIndex--, LEDIndex++)
+                setLEDColors(colors[colorIndex].get(), LEDSPerSection * LEDIndex, colorIndex == 0 ? numberOfLEDs - 1 : LEDSPerSection * (LEDIndex + 1) - 1);
             return;
         }
-        for (int i = 0; i < amountOfSections - 1; i++)
-            setLEDColors(colors[i].get(), LEDSPerSection * i, LEDSPerSection * (i + 1) - 1);
+        for (int i = 0; i < amountOfSections; i++)
+            setLEDColors(colors[i].get(), LEDSPerSection * i, i == amountOfSections - 1 ? numberOfLEDs - 1 : LEDSPerSection * (i + 1) - 1);
     }
 
     private void setLEDColors(Color color, int startIndex, int endIndex) {
