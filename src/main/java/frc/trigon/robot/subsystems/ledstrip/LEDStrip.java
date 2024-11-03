@@ -115,14 +115,14 @@ public class LEDStrip extends SubsystemBase {
         }
     }
 
-    void sectionColor(int amountOfSections, Supplier<Color>... colors) {
+    void sectionColor(int amountOfSections, Supplier<Color>[] colors) {
         if (amountOfSections != colors.length)
             throw new IllegalArgumentException("Amount of sections must be equal to the amount of colors");
         final int LEDSPerSection = (int) Math.floor(numberOfLEDs / amountOfSections);
         setSectionColor(amountOfSections, LEDSPerSection, colors);
     }
 
-    private void setSectionColor(int amountOfSections, int LEDSPerSection, Supplier<Color>... colors) {
+    private void setSectionColor(int amountOfSections, int LEDSPerSection, Supplier<Color>[] colors) {
         if (inverted) {
             for (int i = 0; i < amountOfSections; i++)
                 setLEDColors(colors[amountOfSections - i - 1].get(), LEDSPerSection * i, i == amountOfSections - 1 ? numberOfLEDs - 1 : LEDSPerSection * (i + 1) - 1);
