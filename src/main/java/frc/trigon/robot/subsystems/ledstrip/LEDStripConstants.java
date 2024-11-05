@@ -13,7 +13,7 @@ public class LEDStripConstants {
             RIGHT_CLIMBER_NUMBER_OF_LEDS = 22,
             LEFT_CLIMBER_NUMBER_OF_LEDS = 22;
     private static final boolean
-            RIGHT_CLIMBER_INVERTED = true,
+            RIGHT_CLIMBER_INVERTED = false,
             LEFT_CLIMBER_INVERTED = false;
     static final AddressableLEDBuffer LED_BUFFER = new AddressableLEDBuffer(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);
     static final AddressableLED LED = new AddressableLED(PORT);
