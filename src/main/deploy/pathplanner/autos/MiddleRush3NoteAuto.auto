@@ -22,42 +22,35 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto1"
+                        "name": "PreparePitchForCloseEjectFromShooter"
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareShootingForCloseEjectFromShooter"
+                              "pathName": "MiddleRush3NoteAuto1"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.05
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.05
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
                             }
                           }
                         ]
@@ -80,48 +73,67 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto2"
+                        "name": "Collect"
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "MiddleRush3NoteAuto3"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareShootingForEjectFromShooter"
+                              "pathName": "MiddleRush3NoteAuto2"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.1
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.4
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PrepareShootingForCloseEjectFromShooter"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "MiddleRush3NoteAuto3"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.05
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
                             }
                           }
                         ]
@@ -144,136 +156,207 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto4"
+                        "name": "Collect"
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "MiddleRush3NoteAuto5"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "pathName": "MiddleRush3NoteAuto4"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.2
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.4
                             }
                           }
                         ]
                       }
-                    },
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto6"
+                        "name": "PreparePitch"
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "MiddleRush3NoteAuto7"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "pathName": "MiddleRush3NoteAuto5"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.2
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.4
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
                             }
                           }
                         ]
                       }
-                    },
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "MiddleRush3NoteAuto8"
+                        "name": "Collect"
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "MiddleRush3NoteAuto9"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "pathName": "MiddleRush3NoteAuto6"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.2
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.4
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PreparePitch"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "MiddleRush3NoteAuto7"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Collect"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "MiddleRush3NoteAuto8"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PreparePitch"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "MiddleRush3NoteAuto9"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
                             }
                           }
                         ]
