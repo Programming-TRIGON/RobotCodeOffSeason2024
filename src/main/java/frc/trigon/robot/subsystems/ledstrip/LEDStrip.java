@@ -91,6 +91,7 @@ public class LEDStrip extends SubsystemBase {
 
     void breathe(Color color, int breathingLEDs, double cycleTimeSeconds, boolean shouldLoop, boolean inverted) {
         clearLEDColors();
+        inverted = this.inverted != inverted;
         double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
         double currentTime = Timer.getFPGATimestamp();
         if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
