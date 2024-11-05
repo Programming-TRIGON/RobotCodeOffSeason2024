@@ -22,6 +22,12 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "PrepareShootingForCloseEjectFromShooter"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -32,22 +38,15 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.05
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "FeedNote"
-                            }
-                          }
-                        ]
+                        "waitTime": 0.05
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
                       }
                     }
                   ]
@@ -67,136 +66,207 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Zayde3NoteAuto2"
+                        "name": "Collect"
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Zayde3NoteAuto3"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "pathName": "Zayde3NoteAuto2"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.2
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.4
                             }
                           }
                         ]
                       }
-                    },
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Zayde3NoteAuto4"
+                        "name": "PrepareForShooting"
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Zayde3NoteAuto5"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "pathName": "Zayde3NoteAuto3"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.2
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.4
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
                             }
                           }
                         ]
                       }
-                    },
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Zayde3NoteAuto6"
+                        "name": "Collect"
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Zayde3NoteAuto7"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "pathName": "Zayde3NoteAuto4"
                             }
                           },
                           {
-                            "type": "sequential",
+                            "type": "wait",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.2
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
+                              "waitTime": 0.4
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PrepareForShooting"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Zayde3NoteAuto5"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Collect"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Zayde3NoteAuto6"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PrepareForShooting"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Zayde3NoteAuto7"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FeedNote"
                             }
                           }
                         ]
