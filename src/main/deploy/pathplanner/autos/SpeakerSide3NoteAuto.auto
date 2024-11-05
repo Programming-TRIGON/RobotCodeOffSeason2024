@@ -22,45 +22,31 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "PrepareShootingForCloseEjectFromShooter"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "PrepareShootingForCloseEjectFromShooter"
-                            }
-                          },
-                          {
-                            "type": "sequential",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "SpeakerSide3NoteAuto1"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.05
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "FeedNote"
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
+                        "pathName": "SpeakerSide3NoteAuto1"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.05
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
                       }
                     }
                   ]

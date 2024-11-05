@@ -18,6 +18,44 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "PreparePitchForCloseShot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepareForShootingCloseShot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.7
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
                   "name": "PreparePitch"
                 }
               },
@@ -32,7 +70,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "PrepareForShooting"
+                              "name": "Collect"
                             }
                           },
                           {
@@ -40,33 +78,21 @@
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "path",
                                   "data": {
-                                    "waitTime": 0.5
+                                    "pathName": "5NoteAutoAroundStage1"
                                   }
                                 },
                                 {
-                                  "type": "named",
+                                  "type": "wait",
                                   "data": {
-                                    "name": "FeedNote"
+                                    "waitTime": 0.4
                                   }
                                 }
                               ]
                             }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5NoteAutoAroundStage1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5NoteAutoAroundStage2"
                       }
                     },
                     {
@@ -83,6 +109,12 @@
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "5NoteAutoAroundStage2"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {
@@ -102,15 +134,35 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage3"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5NoteAutoAroundStage4"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Collect"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "5NoteAutoAroundStage3"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.4
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -127,6 +179,12 @@
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "5NoteAutoAroundStage4"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {
@@ -146,15 +204,35 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage5"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5NoteAutoAroundStage6"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Collect"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "5NoteAutoAroundStage5"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.4
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -171,6 +249,12 @@
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "5NoteAutoAroundStage6"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {
@@ -190,15 +274,35 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "5NoteAutoAroundStage7"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5NoteAutoAroundStage8"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Collect"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "5NoteAutoAroundStage7"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.4
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -215,6 +319,12 @@
                             "type": "sequential",
                             "data": {
                               "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "5NoteAutoAroundStage8"
+                                  }
+                                },
                                 {
                                   "type": "wait",
                                   "data": {

@@ -18,6 +18,44 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "PreparePitchForCloseShot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepareForShootingCloseShot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.7
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeedNote"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
                   "name": "PreparePitch"
                 }
               },
