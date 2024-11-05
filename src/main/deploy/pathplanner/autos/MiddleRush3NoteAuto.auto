@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PreparePitchForCloseEjectFromShooter"
+                        "name": "PrepareShootingForCloseEjectFromShooter"
                       }
                     },
                     {
