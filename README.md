@@ -1,6 +1,6 @@
 # RobotCodeOffSeason2024
 
-TRIGON 5990's robot code for the 2024 off-season robot, "PLACEHOLDER".
+TRIGON 5990's robot code for the 2024 off-season robot, "Killshon".
 
 # External Programs
 
