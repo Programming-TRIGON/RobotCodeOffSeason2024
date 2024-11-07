@@ -94,6 +94,12 @@ public class LEDStrip extends SubsystemBase {
             final int hue = (int) (rainbowFirstPixelHue + (led * 180 / numberOfLEDs) % 180);
             LEDStripConstants.LED_BUFFER.setHSV(led + indexOffset, hue, 255, 128);
         }
+        if (inverted) {
+            rainbowFirstPixelHue -= 3;
+            if (rainbowFirstPixelHue < 0)
+                rainbowFirstPixelHue += 180;
+            return;
+        }
         rainbowFirstPixelHue += 3;
         rainbowFirstPixelHue %= 180;
     }
