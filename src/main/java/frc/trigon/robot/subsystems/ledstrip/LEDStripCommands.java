@@ -47,6 +47,14 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
+    public static Command getAlternateColorCommand(Color firstColor, Color secondColor, double intervalSeconds, LEDStrip... ledStrips) {
+        return new ExecuteEndCommand(
+                () -> runForLEDs((LEDStrip -> LEDStrip.alternateColor(firstColor, secondColor, intervalSeconds)), ledStrips),
+                () -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
+                ledStrips
+        ).ignoringDisable(true);
+    }
+
     public static Command getSectionColorCommand(int amountOfSections, Supplier<Color>[] colors, LEDStrip... ledStrips) {
         return new InitExecuteCommand(
                 () -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),

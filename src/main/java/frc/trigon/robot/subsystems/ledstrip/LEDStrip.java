@@ -21,11 +21,18 @@ public class LEDStrip extends SubsystemBase {
     private double rainbowFirstPixelHue = 0;
     private boolean areLEDsOnForBlinking = false;
     private double lastBlinkTime = 0;
+    private boolean alternateColor = true;
+    private double lastAlternateColorTime = 0;
 
     static {
         GeneralCommands.getDelayedCommand(
                 1,
-                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getBlinkingCommand(Color.kRed, Color.kBlack, LEDStripConstants.LOW_BATTERY_BLINKING_INTERVAL_SECONDS, LED_STRIPS).withTimeout(LEDStripConstants.LOW_BATTERY_BLINKING_TIME_SECONDS))
+                () -> LEDStripConstants.LOW_BATTERY_TRIGGER.whileTrue(LEDStripCommands.getAlternateColorCommand(
+                        LEDStripConstants.LOW_BATTERY_FIRST_COLOR,
+                        LEDStripConstants.LOW_BATTERY_SECOND_COLOR,
+                        LEDStripConstants.LOW_BATTERY_ALTERNATE_COLOR_INTERVAL_SECONDS,
+                        LED_STRIPS
+                ).withTimeout(LEDStripConstants.LOW_BATTERY_ALTERNATING_TIME_SECONDS))
         );
     }
 
@@ -58,6 +65,8 @@ public class LEDStrip extends SubsystemBase {
         rainbowFirstPixelHue = 0;
         areLEDsOnForBlinking = false;
         lastBlinkTime = 0;
+        alternateColor = true;
+        lastAlternateColorTime = 0;
     }
 
     void clearLEDColors() {
@@ -114,6 +123,20 @@ public class LEDStrip extends SubsystemBase {
             else if (lastBreatheLED - i < indexOffset + numberOfLEDs)
                 LEDStripConstants.LED_BUFFER.setLED(lastBreatheLED - i + numberOfLEDs, color);
         }
+    }
+
+    void alternateColor(Color firstColor, Color secondColor, double IntervalSeconds) {
+        if (Timer.getFPGATimestamp() - lastAlternateColorTime > IntervalSeconds) {
+            alternateColor = !alternateColor;
+            lastAlternateColorTime = Timer.getFPGATimestamp();
+        }
+        if (alternateColor) {
+            for (int i = 0; i < numberOfLEDs; i++)
+                LEDStripConstants.LED_BUFFER.setLED(i + indexOffset, i % 2 == 0 ? firstColor : secondColor);
+            return;
+        }
+        for (int i = 0; i < numberOfLEDs; i++)
+            LEDStripConstants.LED_BUFFER.setLED(i + indexOffset, i % 2 == 0 ? secondColor : firstColor);
     }
 
     void sectionColor(int amountOfSections, Supplier<Color>[] colors) {
