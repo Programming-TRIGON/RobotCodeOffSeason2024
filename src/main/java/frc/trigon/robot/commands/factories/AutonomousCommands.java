@@ -5,7 +5,6 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -115,8 +114,8 @@ public class AutonomousCommands {
 
     private static Command getSetCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
-                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(IntakeConstants.NOTE_DETECTION_CAMERA_HAS_TARGETS_BREATHING_LEDS_COLOR, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(IntakeConstants.NOTE_DETECTION_CAMERA_HAS_NO_TARGETS_BREATHING_LEDS_COLOR, LEDStrip.LED_STRIPS),
                 NOTE_DETECTION_CAMERA::hasTargets
         ).asProxy().until(() -> !IS_ALIGNING_TO_NOTE);
     }

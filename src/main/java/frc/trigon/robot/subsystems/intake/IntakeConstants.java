@@ -6,6 +6,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.trigon.robot.misc.objectdetectioncamera.SimulationObjectDetectionCameraIO;
 import org.trigon.hardware.RobotHardwareStats;
@@ -71,24 +72,39 @@ public class IntakeConstants {
             CommandScheduler.getInstance().getActiveButtonLoop(),
             () -> Math.abs(MASTER_MOTOR.getSignal(TalonFXSignal.TORQUE_CURRENT)) > IntakeConstants.NOTE_COLLECTION_CURRENT
     ).debounce(NOTE_COLLECTION_TIME_THRESHOLD_SECONDS);
-    static final double
-            COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS = 0.2;
+    static final Color
+            COLLECTION_INDICATION_BLINKING_FIRST_COLOR = Color.kOrangeRed,
+            COLLECTION_INDICATION_BLINKING_SECOND_COLOR = Color.kBlack,
+            FEEDING_INDICATION_COLOR = Color.kPurple,
+            EJECTING_INDICATION_COLOR = Color.kDarkBlue;
+    static final double COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS = 0.2;
     static final double COLLECTION_INDICATION_BLINKING_TIME_SECONDS = 2;
-    public static final int
+    static final int
             FEEDING_INDICATION_BREATHING_LEDS_AMOUNT = 5,
-            EJECTING_INDICATION_BREATHING_LEDS_AMOUNT = 9,
-            INTAKE_INDICATION_BREATHING_LEDS_AMOUNT = 5;
-    public static final double
+            EJECTING_INDICATION_BREATHING_LEDS_AMOUNT = 9;
+    static final double
             FEEDING_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 0.05,
-            EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 1,
-            INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 0.2;
-    public static final boolean
+            EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS = 1;
+    static final boolean
             FEEDING_INDICATION_BREATHING_SHOULD_LOOP = false,
             FEEDING_INDICATION_BREATHING_IS_INVERTED = false,
             EJECTING_INDICATION_BREATHING_SHOULD_LOOP = true,
-            EJECTING_INDICATION_BREATHING_IS_INVERTED = true,
-            INTAKE_INDICATION_BREATHING_SHOULD_LOOP = true,
-            INTAKE_INDICATION_BREATHING_IS_INVERTED = false;
+            EJECTING_INDICATION_BREATHING_IS_INVERTED = true;
+    public static final Color
+            COLLECTION_BREATHING_LEDS_COLOR = Color.kOrangeRed,
+            NOTE_DETECTION_CAMERA_HAS_TARGETS_BREATHING_LEDS_COLOR = Color.kGreen,
+            NOTE_DETECTION_CAMERA_HAS_NO_TARGETS_BREATHING_LEDS_COLOR = Color.kRed;
+    public static final int
+            COLLECTION_BREATHING_LEDS_AMOUNT = 5,
+            ALIGN_TO_NOTE_BREATHING_LEDS_AMOUNT = 5;
+    public static final double
+            COLLECTION_BREATHING_CYCLE_TIME_SECONDS = 0.2,
+            ALIGN_TO_NOTE_BREATHING_CYCLE_TIME_SECONDS = 0.2;
+    public static final boolean
+            COLLECTION_BREATHING_SHOULD_LOOP = true,
+            COLLECTION_BREATHING_IS_INVERTED = false,
+            ALIGN_TO_NOTE_BREATHING_SHOULD_LOOP = true,
+            ALIGN_TO_NOTE_BREATHING_IS_INVERTED = false;
 
     static {
         configureMasterMotor();

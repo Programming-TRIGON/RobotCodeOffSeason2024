@@ -2,7 +2,6 @@ package frc.trigon.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -34,8 +33,22 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private Command getSetCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getBreatheCommand(Color.kGreen, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.INTAKE_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS),
-                LEDStripCommands.getBreatheCommand(Color.kRed, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.INTAKE_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getBreatheCommand(
+                        IntakeConstants.NOTE_DETECTION_CAMERA_HAS_TARGETS_BREATHING_LEDS_COLOR,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_LEDS_AMOUNT,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_CYCLE_TIME_SECONDS,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_SHOULD_LOOP,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_IS_INVERTED,
+                        LEDStrip.LED_STRIPS
+                ),
+                LEDStripCommands.getBreatheCommand(
+                        IntakeConstants.NOTE_DETECTION_CAMERA_HAS_NO_TARGETS_BREATHING_LEDS_COLOR,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_LEDS_AMOUNT,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_CYCLE_TIME_SECONDS,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_SHOULD_LOOP,
+                        IntakeConstants.ALIGN_TO_NOTE_BREATHING_IS_INVERTED,
+                        LEDStrip.LED_STRIPS
+                ),
                 CAMERA::hasTargets
         ).asProxy();
     }

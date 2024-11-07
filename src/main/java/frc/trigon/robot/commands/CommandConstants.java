@@ -17,6 +17,7 @@ import frc.trigon.robot.subsystems.intake.IntakeCommands;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
+import frc.trigon.robot.subsystems.ledstrip.LEDStripConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveConstants;
 import org.littletonrobotics.junction.Logger;
@@ -85,7 +86,14 @@ public class CommandConstants {
                 SHOULD_ALIGN_TO_NOTE = false;
                 Logger.recordOutput("ShouldAlignToNote", false);
             }).ignoringDisable(true),
-            DEFAULT_LEDS_COMMAND = LEDStripCommands.getBreatheCommand(Color.kLightSeaGreen, 7, 1.5, true, false, LEDStrip.LED_STRIPS),
+            DEFAULT_LEDS_COMMAND = LEDStripCommands.getBreatheCommand(
+                    LEDStripConstants.DEFAULT_COMMAND_COLOR,
+                    LEDStripConstants.DEFAULT_COMMAND_BREATHING_LEDS_AMOUNT,
+                    LEDStripConstants.DEFAULT_COMMAND_BREATHING_CYCLE_TIME_SECONDS,
+                    LEDStripConstants.DEFAULT_COMMAND_BREATHING_SHOULD_LOOP,
+                    LEDStripConstants.DEFAULT_COMMAND_BREATHING_IS_INVERTED,
+                    LEDStrip.LED_STRIPS
+            ),
             DEFAULT_INTAKE_COMMAND = IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.STOP),
             DEFAULT_CLIMBER_COMMAND = ClimberCommands.getStopCommand(),
             MOVE_CLIMBER_DOWN_MANUALLY_COMMAND = ClimberCommands.getSetTargetVoltageCommand(ClimberConstants.MOVE_CLIMBER_DOWN_VOLTAGE),

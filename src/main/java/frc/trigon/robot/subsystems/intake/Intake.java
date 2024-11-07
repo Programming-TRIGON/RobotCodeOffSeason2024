@@ -3,7 +3,6 @@ package frc.trigon.robot.subsystems.intake;
 import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.controls.VoltageOut;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.constants.OperatorConstants;
@@ -90,14 +89,33 @@ public class Intake extends MotorSubsystem {
     }
 
     private Command getCollectionIndicationLEDsCommand() {
-        return LEDStripCommands.getBlinkingCommand(Color.kOrangeRed, Color.kBlack, IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS, LEDStrip.LED_STRIPS).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
+        return LEDStripCommands.getBlinkingCommand(
+                IntakeConstants.COLLECTION_INDICATION_BLINKING_FIRST_COLOR,
+                IntakeConstants.COLLECTION_INDICATION_BLINKING_SECOND_COLOR,
+                IntakeConstants.COLLECTION_INDICATION_LEDS_BLINKING_INTERVAL_SECONDS,
+                LEDStrip.LED_STRIPS
+        ).withTimeout(IntakeConstants.COLLECTION_INDICATION_BLINKING_TIME_SECONDS);
     }
 
     private Command getFeedingIndicationLEDsCommand() {
-        return LEDStripCommands.getBreatheCommand(Color.kPurple, IntakeConstants.FEEDING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.FEEDING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.FEEDING_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.FEEDING_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS);
+        return LEDStripCommands.getBreatheCommand(
+                IntakeConstants.FEEDING_INDICATION_COLOR,
+                IntakeConstants.FEEDING_INDICATION_BREATHING_LEDS_AMOUNT,
+                IntakeConstants.FEEDING_INDICATION_BREATHING_CYCLE_TIME_SECONDS,
+                IntakeConstants.FEEDING_INDICATION_BREATHING_SHOULD_LOOP,
+                IntakeConstants.FEEDING_INDICATION_BREATHING_IS_INVERTED,
+                LEDStrip.LED_STRIPS
+        );
     }
 
     private Command getEjectingIndicationLEDsCommand() {
-        return LEDStripCommands.getBreatheCommand(Color.kDarkBlue, IntakeConstants.EJECTING_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.EJECTING_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.EJECTING_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS);
+        return LEDStripCommands.getBreatheCommand(
+                IntakeConstants.EJECTING_INDICATION_COLOR,
+                IntakeConstants.EJECTING_INDICATION_BREATHING_LEDS_AMOUNT,
+                IntakeConstants.EJECTING_INDICATION_BREATHING_CYCLE_TIME_SECONDS,
+                IntakeConstants.EJECTING_INDICATION_BREATHING_SHOULD_LOOP,
+                IntakeConstants.EJECTING_INDICATION_BREATHING_IS_INVERTED,
+                LEDStrip.LED_STRIPS
+        );
     }
 }

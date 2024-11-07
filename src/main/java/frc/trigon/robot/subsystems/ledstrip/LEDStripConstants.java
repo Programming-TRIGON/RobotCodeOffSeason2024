@@ -26,6 +26,12 @@ public class LEDStripConstants {
             LOW_BATTERY_SECOND_COLOR = Color.kYellow;
     static final double LOW_BATTERY_ALTERNATE_COLOR_INTERVAL_SECONDS = 0.2;
     static final double LOW_BATTERY_ALTERNATING_TIME_SECONDS = 10;
+    public static final Color DEFAULT_COMMAND_COLOR = Color.kLightSeaGreen;
+    public static final int DEFAULT_COMMAND_BREATHING_LEDS_AMOUNT = 7;
+    public static final double DEFAULT_COMMAND_BREATHING_CYCLE_TIME_SECONDS = 1.5;
+    public static final boolean
+            DEFAULT_COMMAND_BREATHING_SHOULD_LOOP = true,
+            DEFAULT_COMMAND_BREATHING_IS_INVERTED = false;
 
     public static final LEDStrip
             RIGHT_CLIMBER_LEDS = new LEDStrip(RIGHT_CLIMBER_INVERTED, RIGHT_CLIMBER_NUMBER_OF_LEDS, 0),

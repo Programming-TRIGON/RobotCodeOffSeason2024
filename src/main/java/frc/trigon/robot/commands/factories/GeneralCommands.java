@@ -1,6 +1,5 @@
 package frc.trigon.robot.commands.factories;
 
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.AlignToNoteCommand;
@@ -43,7 +42,14 @@ public class GeneralCommands {
     public static Command getNoteCollectionCommand() {
         return new ParallelCommandGroup(
                 new AlignToNoteCommand().onlyIf(() -> CommandConstants.SHOULD_ALIGN_TO_NOTE),
-                LEDStripCommands.getBreatheCommand(Color.kOrangeRed, IntakeConstants.INTAKE_INDICATION_BREATHING_LEDS_AMOUNT, IntakeConstants.INTAKE_INDICATION_BREATHING_CYCLE_TIME_SECONDS, IntakeConstants.INTAKE_INDICATION_BREATHING_SHOULD_LOOP, IntakeConstants.INTAKE_INDICATION_BREATHING_IS_INVERTED, LEDStrip.LED_STRIPS).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
+                LEDStripCommands.getBreatheCommand(
+                        IntakeConstants.COLLECTION_BREATHING_LEDS_COLOR,
+                        IntakeConstants.COLLECTION_BREATHING_LEDS_AMOUNT,
+                        IntakeConstants.COLLECTION_BREATHING_CYCLE_TIME_SECONDS,
+                        IntakeConstants.COLLECTION_BREATHING_SHOULD_LOOP,
+                        IntakeConstants.COLLECTION_BREATHING_IS_INVERTED,
+                        LEDStrip.LED_STRIPS
+                ).asProxy().onlyIf(() -> !CommandConstants.SHOULD_ALIGN_TO_NOTE),
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
                 ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND).unless(RobotContainer.INTAKE::hasNote)
         ).unless(RobotContainer.INTAKE::hasNote).alongWith(duplicate(CommandConstants.RUMBLE_COMMAND).onlyIf(RobotContainer.INTAKE::hasNote));
