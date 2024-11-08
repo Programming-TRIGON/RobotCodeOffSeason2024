@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.trigon.robot.commands.CommandConstants;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 
 import java.util.function.Supplier;
@@ -118,7 +117,7 @@ public class LEDStrip extends SubsystemBase {
         }
         if (inverted ? (lastBreatheLED < indexOffset) : (lastBreatheLED >= numberOfLEDs + indexOffset)) {
             if (!shouldLoop) {
-                CommandConstants.DEFAULT_LEDS_COMMAND.schedule();
+                getDefaultCommand().schedule();
                 return;
             }
             lastBreatheLED = inverted ? indexOffset + numberOfLEDs : indexOffset;
@@ -131,8 +130,8 @@ public class LEDStrip extends SubsystemBase {
         }
     }
 
-    void alternateColor(Color firstColor, Color secondColor, double IntervalSeconds) {
-        if (Timer.getFPGATimestamp() - lastAlternateColorTime > IntervalSeconds) {
+    void alternateColor(Color firstColor, Color secondColor, double intervalSeconds) {
+        if (Timer.getFPGATimestamp() - lastAlternateColorTime > intervalSeconds) {
             alternateColor = !alternateColor;
             lastAlternateColorTime = Timer.getFPGATimestamp();
         }
