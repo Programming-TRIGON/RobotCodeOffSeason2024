@@ -47,6 +47,19 @@ public class LEDStripCommands {
         ).ignoringDisable(true);
     }
 
+    public static Command getColorFlowCommand(Color color, double cycleTimeSeconds, boolean shouldLoop, boolean inverted, LEDStrip... ledStrips) {
+        return new FunctionalCommand(
+                () -> {
+                    if (!shouldLoop)
+                        runForLEDs(LEDStrip::resetLEDSettings, ledStrips);
+                },
+                () -> runForLEDs((LEDStrip) -> LEDStrip.colorFlow(color, cycleTimeSeconds, shouldLoop, inverted), ledStrips),
+                (interrupted) -> runForLEDs(LEDStrip::clearLEDColors, ledStrips),
+                () -> false,
+                ledStrips
+        ).ignoringDisable(true);
+    }
+
     public static Command getAlternateColorCommand(Color firstColor, Color secondColor, double intervalSeconds, LEDStrip... ledStrips) {
         return new ExecuteEndCommand(
                 () -> runForLEDs((LEDStrip -> LEDStrip.alternateColor(firstColor, secondColor, intervalSeconds)), ledStrips),

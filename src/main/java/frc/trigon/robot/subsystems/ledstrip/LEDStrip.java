@@ -22,6 +22,8 @@ public class LEDStrip extends SubsystemBase {
     private double lastBlinkTime = 0;
     private boolean alternateColor = true;
     private double lastAlternateColorTime = 0;
+    private double lastColorFlowTime = 0;
+    private int amountOfColorFlowLEDs = 0;
 
     static {
         GeneralCommands.getDelayedCommand(
@@ -66,6 +68,8 @@ public class LEDStrip extends SubsystemBase {
         lastBlinkTime = 0;
         alternateColor = true;
         lastAlternateColorTime = 0;
+        lastColorFlowTime = 0;
+        amountOfColorFlowLEDs = 0;
     }
 
     void clearLEDColors() {
@@ -130,6 +134,31 @@ public class LEDStrip extends SubsystemBase {
         }
     }
 
+    void colorFlow(Color color, double cycleTimeSeconds, boolean shouldLoop, boolean inverted) {
+        clearLEDColors();
+        inverted = this.inverted != inverted;
+        double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
+        if (Timer.getFPGATimestamp() - lastColorFlowTime > moveLEDTimeSeconds) {
+            lastColorFlowTime = Timer.getFPGATimestamp();
+            if (inverted)
+                amountOfColorFlowLEDs--;
+            else
+                amountOfColorFlowLEDs++;
+        }
+        if (inverted ? amountOfColorFlowLEDs < 0 : amountOfColorFlowLEDs >= numberOfLEDs) {
+            if (!shouldLoop) {
+                getDefaultCommand().schedule();
+                return;
+            }
+            amountOfColorFlowLEDs = inverted ? numberOfLEDs : 0;
+        }
+        if (inverted) {
+            setLEDColors(color, numberOfLEDs - amountOfColorFlowLEDs, numberOfLEDs - 1);
+            return;
+        }
+        setLEDColors(color, 0, amountOfColorFlowLEDs);
+    }
+
     void alternateColor(Color firstColor, Color secondColor, double intervalSeconds) {
         if (Timer.getFPGATimestamp() - lastAlternateColorTime > intervalSeconds) {
             alternateColor = !alternateColor;
@@ -149,6 +178,9 @@ public class LEDStrip extends SubsystemBase {
             throw new IllegalArgumentException("Amount of sections must be equal to the amount of colors");
         final int LEDSPerSection = (int) Math.floor(numberOfLEDs / amountOfSections);
         setSectionColor(amountOfSections, LEDSPerSection, colors);
+
+        for (int i = 0; i < amountOfSections; i++)
+            setLEDColors(colors[i].get(), LEDSPerSection * i, i == amountOfSections - 1 ? numberOfLEDs - 1 : LEDSPerSection * (i + 1) - 1);
     }
 
     private void setSectionColor(int amountOfSections, int LEDSPerSection, Supplier<Color>[] colors) {
