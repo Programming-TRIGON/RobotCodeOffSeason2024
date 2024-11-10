@@ -6,12 +6,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
+import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraInputsAutoLogged;
 import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
+import org.photonvision.simulation.PhotonCameraSim;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
@@ -20,9 +22,11 @@ import java.util.List;
 
 public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private final PhotonCamera photonCamera;
+    private final PhotonCameraSim cameraSim;
 
     public AprilTagPhotonCameraIO(String cameraName) {
         photonCamera = new PhotonCamera(cameraName);
+        cameraSim = new PhotonCameraSim(photonCamera, CameraConstants.SIM_CAMERA_PROPERTIES);
     }
 
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {

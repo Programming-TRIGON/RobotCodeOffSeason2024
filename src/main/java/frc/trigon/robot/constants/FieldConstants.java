@@ -4,6 +4,7 @@ import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.*;
+import org.photonvision.simulation.VisionSystemSim;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
@@ -26,6 +27,7 @@ public class FieldConstants {
     }
 
     public static final HashMap<Integer, Pose3d> TAG_ID_TO_POSE = fieldLayoutToTagIdToPoseMap();
+    public static final VisionSystemSim VISION_SIMULATION = new VisionSystemSim("VisionSim");
     public static final double
             FIELD_LENGTH_METERS = 16.54175,
             FIELD_WIDTH_METERS = 8.21;
@@ -48,5 +50,9 @@ public class FieldConstants {
         for (AprilTag aprilTag : APRIL_TAG_FIELD_LAYOUT.getTags())
             tagIdToPose.put(aprilTag.ID, aprilTag.pose.transformBy(TAG_OFFSET));
         return tagIdToPose;
+    }
+
+    static {
+        VISION_SIMULATION.addAprilTags(APRIL_TAG_FIELD_LAYOUT);
     }
 }

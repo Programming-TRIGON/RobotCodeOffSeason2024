@@ -1,5 +1,6 @@
 package frc.trigon.robot.constants;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -7,6 +8,7 @@ import edu.wpi.first.math.util.Units;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCamera;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
+import org.photonvision.simulation.SimCameraProperties;
 
 public class CameraConstants {
     public static final double
@@ -39,4 +41,28 @@ public class CameraConstants {
                     TRANSLATIONS_STD_EXPONENT
             );
     public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");
+
+    private static final int
+            CAMERA_WIDTH = 720,
+            CAMERA_HEIGHT = 1920,
+            CAMERA_FPS = 60,
+            AVERAGE_CAMERA_LATENCY_MILLISECONDS = 35,
+            CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS = 5;
+    private static final Rotation2d CAMERA_FOV = Rotation2d.fromDegrees(90);
+    private static final double
+            AVERAGE_PIXEL_ERROR = 0.25,
+            PIXEL_STANDARD_DEVIATIONS = 0.08;
+    public static final SimCameraProperties SIM_CAMERA_PROPERTIES = new SimCameraProperties();
+
+    static {
+        configureSimCameraProperties();
+    }
+
+    private static void configureSimCameraProperties() {
+        SIM_CAMERA_PROPERTIES.setCalibration(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FOV);
+        SIM_CAMERA_PROPERTIES.setCalibError(AVERAGE_PIXEL_ERROR, PIXEL_STANDARD_DEVIATIONS);
+        SIM_CAMERA_PROPERTIES.setFPS(CAMERA_FPS);
+        SIM_CAMERA_PROPERTIES.setAvgLatencyMs(AVERAGE_CAMERA_LATENCY_MILLISECONDS);
+        SIM_CAMERA_PROPERTIES.setLatencyStdDevMs(CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS);
+    }
 }
