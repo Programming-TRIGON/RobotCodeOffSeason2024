@@ -29,6 +29,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         cameraSim = new PhotonCameraSim(photonCamera, CameraConstants.SIM_CAMERA_PROPERTIES);
     }
 
+    @Override
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {
         final PhotonPipelineResult latestResult = photonCamera.getLatestResult();
 
@@ -37,6 +38,11 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
             updateHasResultInputs(inputs, latestResult);
         else
             updateNoResultInputs(inputs);
+    }
+
+    @Override
+    protected void addSimCamera(Transform3d robotToCamera) {
+        FieldConstants.VISION_SIMULATION.addCamera(cameraSim, robotToCamera);
     }
 
     private void updateHasResultInputs(AprilTagCameraInputsAutoLogged inputs, PhotonPipelineResult latestResult) {

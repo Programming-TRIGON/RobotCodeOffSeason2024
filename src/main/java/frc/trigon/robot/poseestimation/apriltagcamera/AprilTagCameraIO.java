@@ -1,10 +1,14 @@
 package frc.trigon.robot.poseestimation.apriltagcamera;
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import org.littletonrobotics.junction.AutoLog;
 
 public class AprilTagCameraIO {
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {
+    }
+
+    protected void addSimCamera(Transform3d robotToCamera) {
     }
 
     @AutoLog

@@ -44,6 +44,8 @@ public class AprilTagCamera {
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
         aprilTagCameraIO = aprilTagCameraType.createIOFunction.apply(name);
+        if (aprilTagCameraType == AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA)
+            aprilTagCameraIO.addSimCamera(robotCenterToCamera);
     }
 
     public void update() {
