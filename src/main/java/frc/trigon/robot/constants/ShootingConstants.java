@@ -4,15 +4,14 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 public class ShootingConstants {
     public static final double G_FORCE = 9.80665;
     public static final double
             SPEAKER_SHOT_STANDING_VELOCITY_ROTATIONS_PER_SECOND = 45,
             DELIVERY_STANDING_VELOCITY_ROTATIONS_PER_SECOND = 35,
-            FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = -10;
-    public static final LoggedDashboardNumber SPEAKER_SHOT_STANDING_EXTRA_VELOCITY_BUFFER_ROTATIONS_PER_SECOND = new LoggedDashboardNumber("SPEAKER_SHOT_STANDING_EXTRA_VELOCITY_BUFFER_ROTATIONS_PER_SECOND", 3);
+            FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND = -10,
+            SPEAKER_SHOT_STANDING_EXTRA_VELOCITY_BUFFER_ROTATIONS_PER_SECOND = 3;
 
     public static final double
             CLOSE_SHOT_VELOCITY_ROTATIONS_PER_SECOND = 45,
