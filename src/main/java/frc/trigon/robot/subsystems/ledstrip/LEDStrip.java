@@ -16,13 +16,10 @@ public class LEDStrip extends SubsystemBase {
     private final boolean inverted;
     private final int numberOfLEDs;
     private int lastBreatheLED;
-    private double lastBreatheMovementTime = 0;
+    private double lastLEDMovementTime = 0;
     private double rainbowFirstPixelHue = 0;
     private boolean areLEDsOnForBlinking = false;
-    private double lastBlinkTime = 0;
     private boolean alternateColor = true;
-    private double lastAlternateColorTime = 0;
-    private double lastColorFlowTime = 0;
     private int amountOfColorFlowLEDs = 0;
 
     static {
@@ -62,13 +59,10 @@ public class LEDStrip extends SubsystemBase {
 
     void resetLEDSettings() {
         lastBreatheLED = indexOffset;
-        lastBreatheMovementTime = Timer.getFPGATimestamp();
+        lastLEDMovementTime = Timer.getFPGATimestamp();
         rainbowFirstPixelHue = 0;
         areLEDsOnForBlinking = false;
-        lastBlinkTime = 0;
         alternateColor = true;
-        lastAlternateColorTime = 0;
-        lastColorFlowTime = 0;
         amountOfColorFlowLEDs = 0;
     }
 
@@ -78,8 +72,8 @@ public class LEDStrip extends SubsystemBase {
 
     void blink(Color firstColor, Color secondColor, double blinkingIntervalSeconds) {
         double currentTime = Timer.getFPGATimestamp();
-        if (currentTime - lastBlinkTime > blinkingIntervalSeconds) {
-            lastBlinkTime = currentTime;
+        if (currentTime - lastLEDMovementTime > blinkingIntervalSeconds) {
+            lastLEDMovementTime = currentTime;
             areLEDsOnForBlinking = !areLEDsOnForBlinking;
         }
         if (areLEDsOnForBlinking)
@@ -112,8 +106,8 @@ public class LEDStrip extends SubsystemBase {
         inverted = this.inverted != inverted;
         double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
         double currentTime = Timer.getFPGATimestamp();
-        if (currentTime - lastBreatheMovementTime > moveLEDTimeSeconds) {
-            lastBreatheMovementTime = currentTime;
+        if (currentTime - lastLEDMovementTime > moveLEDTimeSeconds) {
+            lastLEDMovementTime = currentTime;
             if (inverted)
                 lastBreatheLED--;
             else
@@ -138,8 +132,9 @@ public class LEDStrip extends SubsystemBase {
         clearLEDColors();
         inverted = this.inverted != inverted;
         double moveLEDTimeSeconds = cycleTimeSeconds / numberOfLEDs;
-        if (Timer.getFPGATimestamp() - lastColorFlowTime > moveLEDTimeSeconds) {
-            lastColorFlowTime = Timer.getFPGATimestamp();
+        double currentTime = Timer.getFPGATimestamp();
+        if (currentTime - lastLEDMovementTime > moveLEDTimeSeconds) {
+            lastLEDMovementTime = currentTime;
             if (inverted)
                 amountOfColorFlowLEDs--;
             else
@@ -160,9 +155,10 @@ public class LEDStrip extends SubsystemBase {
     }
 
     void alternateColor(Color firstColor, Color secondColor, double intervalSeconds) {
-        if (Timer.getFPGATimestamp() - lastAlternateColorTime > intervalSeconds) {
+        double currentTime = Timer.getFPGATimestamp();
+        if (currentTime - lastLEDMovementTime > intervalSeconds) {
             alternateColor = !alternateColor;
-            lastAlternateColorTime = Timer.getFPGATimestamp();
+            lastLEDMovementTime = currentTime;
         }
         if (alternateColor) {
             for (int i = 0; i < numberOfLEDs; i++)
