@@ -25,6 +25,22 @@ public class CameraConstants {
                     new Rotation3d(Math.PI - Units.degreesToRadians(0), Units.degreesToRadians(-33), Math.PI + Units.degreesToRadians(0))
             );
 
+    private static final int
+            CAMERA_WIDTH = 1600,
+            CAMERA_HEIGHT = 1200,
+            CAMERA_FPS = 60,
+            AVERAGE_CAMERA_LATENCY_MILLISECONDS = 35,
+            CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS = 5;
+    private static final Rotation2d CAMERA_FOV = Rotation2d.fromDegrees(90);
+    private static final double
+            AVERAGE_PIXEL_ERROR = 0.25,
+            PIXEL_STANDARD_DEVIATIONS = 0.08;
+    public static final SimCameraProperties SIM_CAMERA_PROPERTIES = new SimCameraProperties();
+
+    static {
+        configureSimCameraProperties();
+    }
+
     public static final AprilTagCamera
             FRONT_TAG_CAMERA = new AprilTagCamera(
             AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
@@ -41,22 +57,6 @@ public class CameraConstants {
                     TRANSLATIONS_STD_EXPONENT
             );
     public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");
-
-    private static final int
-            CAMERA_WIDTH = 720,
-            CAMERA_HEIGHT = 1920,
-            CAMERA_FPS = 60,
-            AVERAGE_CAMERA_LATENCY_MILLISECONDS = 35,
-            CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS = 5;
-    private static final Rotation2d CAMERA_FOV = Rotation2d.fromDegrees(90);
-    private static final double
-            AVERAGE_PIXEL_ERROR = 0.25,
-            PIXEL_STANDARD_DEVIATIONS = 0.08;
-    public static final SimCameraProperties SIM_CAMERA_PROPERTIES = new SimCameraProperties();
-
-    static {
-        configureSimCameraProperties();
-    }
 
     private static void configureSimCameraProperties() {
         SIM_CAMERA_PROPERTIES.setCalibration(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FOV);

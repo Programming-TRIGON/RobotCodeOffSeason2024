@@ -5,6 +5,8 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
 import org.littletonrobotics.junction.Logger;
@@ -43,7 +45,7 @@ public class AprilTagCamera {
         this.thetaStandardDeviationExponent = thetaStandardDeviationExponent;
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
-        aprilTagCameraIO = aprilTagCameraType.createIOFunction.apply(name);
+        aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, CameraConstants.SIM_CAMERA_PROPERTIES);
         if (aprilTagCameraType == AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA)
             aprilTagCameraIO.addSimCamera(robotCenterToCamera);
     }
@@ -52,8 +54,8 @@ public class AprilTagCamera {
         aprilTagCameraIO.updateInputs(inputs);
 
         robotPose = calculateBestRobotPose();
+        FieldConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
         logCameraInfo();
-        FieldConstants.VISION_SIMULATION.update(robotPose);
     }
 
     public boolean hasNewResult() {

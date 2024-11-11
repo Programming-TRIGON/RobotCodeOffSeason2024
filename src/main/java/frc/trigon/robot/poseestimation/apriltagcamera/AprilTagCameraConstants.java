@@ -3,8 +3,9 @@ package frc.trigon.robot.poseestimation.apriltagcamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import frc.trigon.robot.poseestimation.apriltagcamera.io.AprilTagLimelightIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.io.AprilTagPhotonCameraIO;
+import org.photonvision.simulation.SimCameraProperties;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 public class AprilTagCameraConstants {
     static final double MAXIMUM_DISTANCE_FROM_TAG_FOR_SOLVE_PNP_METERS = 2.5;
@@ -15,12 +16,12 @@ public class AprilTagCameraConstants {
 
     public enum AprilTagCameraType {
         PHOTON_CAMERA(AprilTagPhotonCameraIO::new),
-        LIMELIGHT(AprilTagLimelightIO::new);
+        LIMELIGHT((name, properties) -> new AprilTagLimelightIO(name));
 
-        final Function<String, AprilTagCameraIO> createIOFunction;
+        final BiFunction<String, SimCameraProperties, AprilTagCameraIO> createIOBiFunction;
 
-        AprilTagCameraType(Function<String, AprilTagCameraIO> createIOFunction) {
-            this.createIOFunction = createIOFunction;
+        AprilTagCameraType(BiFunction<String, SimCameraProperties, AprilTagCameraIO> createIOBiFunction) {
+            this.createIOBiFunction = createIOBiFunction;
         }
     }
 }

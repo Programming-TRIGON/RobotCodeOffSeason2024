@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
-import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
@@ -14,6 +13,7 @@ import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraInputsAutoLo
 import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
 import org.photonvision.simulation.PhotonCameraSim;
+import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
@@ -24,14 +24,17 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private final PhotonCamera photonCamera;
     private final PhotonCameraSim cameraSim;
 
-    public AprilTagPhotonCameraIO(String cameraName) {
+    public AprilTagPhotonCameraIO(String cameraName, SimCameraProperties cameraProperties) {
         photonCamera = new PhotonCamera(cameraName);
-        cameraSim = new PhotonCameraSim(photonCamera, CameraConstants.SIM_CAMERA_PROPERTIES);
+        cameraSim = new PhotonCameraSim(photonCamera, cameraProperties);
+        cameraSim.enableProcessedStream(true);
+        cameraSim.enableDrawWireframe(true);
     }
 
     @Override
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {
-        final PhotonPipelineResult latestResult = photonCamera.getLatestResult();
+        final List<PhotonPipelineResult> unreadResults = photonCamera.getAllUnreadResults();
+        final PhotonPipelineResult latestResult = unreadResults.isEmpty() ? new PhotonPipelineResult() : unreadResults.get(unreadResults.size() - 1);
 
         inputs.hasResult = latestResult.hasTargets() && !latestResult.getTargets().isEmpty() && getPoseAmbiguity(latestResult) < AprilTagCameraConstants.MAXIMUM_AMBIGUITY;
         if (inputs.hasResult)
