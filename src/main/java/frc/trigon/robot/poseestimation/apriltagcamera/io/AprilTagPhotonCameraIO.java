@@ -6,10 +6,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
+import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraInputsAutoLogged;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
 import org.photonvision.simulation.PhotonCameraSim;
@@ -26,15 +28,16 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
 
     public AprilTagPhotonCameraIO(String cameraName, SimCameraProperties cameraProperties) {
         photonCamera = new PhotonCamera(cameraName);
-        cameraSim = new PhotonCameraSim(photonCamera, cameraProperties);
-        cameraSim.enableProcessedStream(true);
-        cameraSim.enableDrawWireframe(true);
+        if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION && MotorSubsystem.isExtensiveLoggingEnabled()) {
+            cameraSim = new PhotonCameraSim(photonCamera, cameraProperties);
+            cameraSim.enableDrawWireframe(true);
+        } else
+            cameraSim = null;
     }
 
     @Override
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {
-        final List<PhotonPipelineResult> unreadResults = photonCamera.getAllUnreadResults();
-        final PhotonPipelineResult latestResult = unreadResults.isEmpty() ? new PhotonPipelineResult() : unreadResults.get(unreadResults.size() - 1);
+        final PhotonPipelineResult latestResult = getLatestPipelineResult();
 
         inputs.hasResult = latestResult.hasTargets() && !latestResult.getTargets().isEmpty() && getPoseAmbiguity(latestResult) < AprilTagCameraConstants.MAXIMUM_AMBIGUITY;
         if (inputs.hasResult)
@@ -46,6 +49,11 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     @Override
     protected void addSimCamera(Transform3d robotToCamera) {
         FieldConstants.VISION_SIMULATION.addCamera(cameraSim, robotToCamera);
+    }
+
+    private PhotonPipelineResult getLatestPipelineResult() {
+        final List<PhotonPipelineResult> unreadResults = photonCamera.getAllUnreadResults();
+        return unreadResults.isEmpty() ? new PhotonPipelineResult() : unreadResults.get(unreadResults.size() - 1);
     }
 
     private void updateHasResultInputs(AprilTagCameraInputsAutoLogged inputs, PhotonPipelineResult latestResult) {

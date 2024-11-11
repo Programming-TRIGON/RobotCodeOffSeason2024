@@ -46,7 +46,7 @@ public class AprilTagCamera {
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
         aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, CameraConstants.SIM_CAMERA_PROPERTIES);
-        if (aprilTagCameraType == AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA)
+        if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION && aprilTagCameraType == AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA)
             aprilTagCameraIO.addSimCamera(robotCenterToCamera);
     }
 
@@ -54,8 +54,9 @@ public class AprilTagCamera {
         aprilTagCameraIO.updateInputs(inputs);
 
         robotPose = calculateBestRobotPose();
-        FieldConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
         logCameraInfo();
+        if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION)
+            FieldConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
     }
 
     public boolean hasNewResult() {
