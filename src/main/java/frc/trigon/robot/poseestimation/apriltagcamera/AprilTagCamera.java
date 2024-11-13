@@ -45,7 +45,7 @@ public class AprilTagCamera {
         this.thetaStandardDeviationExponent = thetaStandardDeviationExponent;
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
-        aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, CameraConstants.SIM_CAMERA_PROPERTIES);
+        aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, CameraConstants.SIMULATION_CAMERA_PROPERTIES);
         if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION && aprilTagCameraType == AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA)
             aprilTagCameraIO.addSimCamera(robotCenterToCamera);
     }

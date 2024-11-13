@@ -37,10 +37,10 @@ public class CameraConstants {
             AVERAGE_PIXEL_ERROR = 0.25,
             PIXEL_STANDARD_DEVIATIONS = 0.08;
     public static final boolean SHOULD_USE_CAMERA_SIMULATION = true;
-    public static final SimCameraProperties SIM_CAMERA_PROPERTIES = new SimCameraProperties();
+    public static final SimCameraProperties SIMULATION_CAMERA_PROPERTIES = new SimCameraProperties();
 
     static {
-        configureSimCameraProperties();
+        configureSimulationCameraProperties();
     }
 
     public static final AprilTagCamera
@@ -60,12 +60,12 @@ public class CameraConstants {
             );
     public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");
 
-    private static void configureSimCameraProperties() {
-        SIM_CAMERA_PROPERTIES.setCalibration(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FOV);
-        SIM_CAMERA_PROPERTIES.setCalibError(AVERAGE_PIXEL_ERROR, PIXEL_STANDARD_DEVIATIONS);
-        SIM_CAMERA_PROPERTIES.setFPS(CAMERA_FPS);
-        SIM_CAMERA_PROPERTIES.setAvgLatencyMs(AVERAGE_CAMERA_LATENCY_MILLISECONDS);
-        SIM_CAMERA_PROPERTIES.setLatencyStdDevMs(CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS);
-        SIM_CAMERA_PROPERTIES.setExposureTimeMs(CAMERA_EXPOSURE_TIME_MILLISECONDS);
+    private static void configureSimulationCameraProperties() {
+        SIMULATION_CAMERA_PROPERTIES.setCalibration(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FOV);
+        SIMULATION_CAMERA_PROPERTIES.setCalibError(AVERAGE_PIXEL_ERROR, PIXEL_STANDARD_DEVIATIONS);
+        SIMULATION_CAMERA_PROPERTIES.setFPS(CAMERA_FPS);
+        SIMULATION_CAMERA_PROPERTIES.setAvgLatencyMs(AVERAGE_CAMERA_LATENCY_MILLISECONDS);
+        SIMULATION_CAMERA_PROPERTIES.setLatencyStdDevMs(CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS);
+        SIMULATION_CAMERA_PROPERTIES.setExposureTimeMs(CAMERA_EXPOSURE_TIME_MILLISECONDS);
     }
 }

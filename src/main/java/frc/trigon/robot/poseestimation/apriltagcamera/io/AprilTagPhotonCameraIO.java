@@ -31,8 +31,9 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION && MotorSubsystem.isExtensiveLoggingEnabled()) {
             cameraSim = new PhotonCameraSim(photonCamera, cameraProperties);
             cameraSim.enableDrawWireframe(true);
-        } else
-            cameraSim = null;
+            return;
+        }
+        cameraSim = null;
     }
 
     @Override
