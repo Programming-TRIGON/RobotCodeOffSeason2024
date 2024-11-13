@@ -30,7 +30,8 @@ public class CameraConstants {
             CAMERA_HEIGHT = 1200,
             CAMERA_FPS = 60,
             AVERAGE_CAMERA_LATENCY_MILLISECONDS = 35,
-            CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS = 5;
+            CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS = 5,
+            CAMERA_EXPOSURE_TIME_MILLISECONDS = 10;
     private static final Rotation2d CAMERA_FOV = Rotation2d.fromDegrees(90);
     private static final double
             AVERAGE_PIXEL_ERROR = 0.25,
@@ -65,5 +66,6 @@ public class CameraConstants {
         SIM_CAMERA_PROPERTIES.setFPS(CAMERA_FPS);
         SIM_CAMERA_PROPERTIES.setAvgLatencyMs(AVERAGE_CAMERA_LATENCY_MILLISECONDS);
         SIM_CAMERA_PROPERTIES.setLatencyStdDevMs(CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS);
+        SIM_CAMERA_PROPERTIES.setExposureTimeMs(CAMERA_EXPOSURE_TIME_MILLISECONDS);
     }
 }
