@@ -49,14 +49,16 @@ public class CameraConstants {
             "FrontTagCamera",
             FRONT_CENTER_TO_CAMERA,
             THETA_STD_EXPONENT,
-            TRANSLATIONS_STD_EXPONENT
+            TRANSLATIONS_STD_EXPONENT,
+            SIMULATION_CAMERA_PROPERTIES
     ),
             REAR_TAG_CAMERA = new AprilTagCamera(
                     AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
                     "RearTagCamera",
                     REAR_CENTER_TO_CAMERA,
                     THETA_STD_EXPONENT,
-                    TRANSLATIONS_STD_EXPONENT
+                    TRANSLATIONS_STD_EXPONENT,
+                    SIMULATION_CAMERA_PROPERTIES
             );
     public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");
 

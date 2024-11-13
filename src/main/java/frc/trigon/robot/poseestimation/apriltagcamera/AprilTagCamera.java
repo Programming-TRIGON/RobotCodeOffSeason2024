@@ -10,6 +10,7 @@ import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
 import org.littletonrobotics.junction.Logger;
+import org.photonvision.simulation.SimCameraProperties;
 
 /**
  * An april tag camera is a class that provides the robot's pose, from a camera using one or multiple apriltags.
@@ -39,13 +40,14 @@ public class AprilTagCamera {
     public AprilTagCamera(AprilTagCameraConstants.AprilTagCameraType aprilTagCameraType,
                           String name, Transform3d robotCenterToCamera,
                           double thetaStandardDeviationExponent,
-                          double translationStandardDeviationExponent) {
+                          double translationStandardDeviationExponent,
+                          SimCameraProperties simulationCameraProperties) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
         this.thetaStandardDeviationExponent = thetaStandardDeviationExponent;
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
-        aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, CameraConstants.SIMULATION_CAMERA_PROPERTIES);
+        aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, simulationCameraProperties);
         if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION && aprilTagCameraType == AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA)
             aprilTagCameraIO.addSimCamera(robotCenterToCamera);
     }
