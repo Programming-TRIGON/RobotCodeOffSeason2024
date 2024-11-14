@@ -87,9 +87,9 @@ public class PoseEstimator implements AutoCloseable {
             if (aprilTagCameras[i].hasResult() && aprilTagCameras[i].getDistanceToBestTagMeters() < aprilTagCameras[closestCameraToTag].getDistanceToBestTagMeters())
                 closestCameraToTag = i;
         }
-        
-        final Rotation2d bestCameraHeading = aprilTagCameras[closestCameraToTag].getSolvePNPHeading();
-        resetPose(new Pose2d(getCurrentPose().getTranslation(), bestCameraHeading));
+
+        final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getSolvePNPHeading();
+        resetPose(new Pose2d(getCurrentPose().getTranslation(), bestRobotHeading));
     }
 
     private void updateFromVision() {

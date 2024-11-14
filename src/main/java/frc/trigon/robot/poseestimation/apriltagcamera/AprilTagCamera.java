@@ -6,11 +6,12 @@ import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
+import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.simulation.SimCameraProperties;
+import org.trigon.hardware.RobotHardwareStats;
 
 /**
  * An april tag camera is a class that provides the robot's pose, from a camera using one or multiple apriltags.
@@ -48,8 +49,8 @@ public class AprilTagCamera {
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
         aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, simulationCameraProperties);
-        if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION && aprilTagCameraType == AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA)
-            aprilTagCameraIO.addSimCamera(robotCenterToCamera);
+        if (RobotHardwareStats.isSimulation())
+            aprilTagCameraIO.addSimulatedCameraToVisionSimulation(robotCenterToCamera);
     }
 
     public void update() {
@@ -57,8 +58,8 @@ public class AprilTagCamera {
 
         robotPose = calculateBestRobotPose();
         logCameraInfo();
-        if (CameraConstants.SHOULD_USE_CAMERA_SIMULATION)
-            FieldConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
+        if (RobotHardwareStats.isSimulation() && MotorSubsystem.isExtensiveLoggingEnabled())
+            AprilTagCameraConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
     }
 
     public boolean hasNewResult() {

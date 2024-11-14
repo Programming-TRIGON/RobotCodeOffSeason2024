@@ -8,7 +8,7 @@ public class AprilTagCameraIO {
     protected void updateInputs(AprilTagCameraInputsAutoLogged inputs) {
     }
 
-    protected void addSimCamera(Transform3d robotToCamera) {
+    protected void addSimulatedCameraToVisionSimulation(Transform3d robotToCamera) {
     }
 
     @AutoLog

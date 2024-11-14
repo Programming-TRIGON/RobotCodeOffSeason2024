@@ -12,17 +12,23 @@ import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraInputsAutoLogged;
 import org.opencv.core.Point;
 import org.photonvision.PhotonCamera;
+import org.photonvision.simulation.PhotonCameraSim;
+import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
 
 import java.util.List;
 
-public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
+public class AprilTagSimulationCameraIO extends AprilTagCameraIO {
     private final PhotonCamera photonCamera;
+    private final PhotonCameraSim cameraSim;
 
-    public AprilTagPhotonCameraIO(String cameraName) {
+    public AprilTagSimulationCameraIO(String cameraName, SimCameraProperties cameraProperties) {
         photonCamera = new PhotonCamera(cameraName);
+
+        cameraSim = new PhotonCameraSim(photonCamera, cameraProperties);
+        cameraSim.enableDrawWireframe(true);
     }
 
     @Override
@@ -34,6 +40,11 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
             updateHasResultInputs(inputs, latestResult);
         else
             updateNoResultInputs(inputs);
+    }
+
+    @Override
+    protected void addSimulatedCameraToVisionSimulation(Transform3d robotToCamera) {
+        AprilTagCameraConstants.VISION_SIMULATION.addCamera(cameraSim, robotToCamera);
     }
 
     private PhotonPipelineResult getLatestPipelineResult() {
