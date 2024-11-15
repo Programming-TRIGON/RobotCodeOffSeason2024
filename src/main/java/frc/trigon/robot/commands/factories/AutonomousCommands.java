@@ -38,7 +38,8 @@ public class AutonomousCommands {
                     if (DriverStation.isEnabled())
                         return;
                     final Pose2d autoStartPose = PathPlannerAuto.getStaringPoseFromAutoFile(pathName.get());
-                    RobotContainer.POSE_ESTIMATOR.resetPose(new MirrorablePose2d(autoStartPose, true).get());
+                    final MirrorablePose2d correctedAutoStartPose = new MirrorablePose2d(autoStartPose, true);
+                    RobotContainer.POSE_ESTIMATOR.resetPose(correctedAutoStartPose.get());
                 }
         ).ignoringDisable(true);
     }
