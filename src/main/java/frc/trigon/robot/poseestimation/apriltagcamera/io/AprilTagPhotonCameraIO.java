@@ -30,15 +30,20 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         final PhotonPipelineResult latestResult = getLatestPipelineResult();
 
         inputs.hasResult = latestResult != null && latestResult.hasTargets() && !latestResult.getTargets().isEmpty() && getPoseAmbiguity(latestResult) < AprilTagCameraConstants.MAXIMUM_AMBIGUITY;
-        if (inputs.hasResult)
+        if (inputs.hasResult) {
             updateHasResultInputs(inputs, latestResult);
-        else
-            updateNoResultInputs(inputs);
+            return;
+        }
+        updateNoResultInputs(inputs);
     }
 
     private PhotonPipelineResult getLatestPipelineResult() {
         final List<PhotonPipelineResult> unreadResults = photonCamera.getAllUnreadResults();
         return unreadResults.isEmpty() ? null : unreadResults.get(unreadResults.size() - 1);
+    }
+
+    private double getPoseAmbiguity(PhotonPipelineResult result) {
+        return getBestTarget(result).getPoseAmbiguity();
     }
 
     private void updateHasResultInputs(AprilTagCameraInputsAutoLogged inputs, PhotonPipelineResult latestResult) {
@@ -53,22 +58,9 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     }
 
     private void updateNoResultInputs(AprilTagCameraInputsAutoLogged inputs) {
-        inputs.visibleTagIDs = new int[]{};
         inputs.cameraSolvePNPPose = new Pose3d();
-    }
-
-    private double getPoseAmbiguity(PhotonPipelineResult result) {
-        return getBestTarget(result).getPoseAmbiguity();
-    }
-
-    private Point getTagCenter(List<TargetCorner> tagCorners) {
-        double tagCornerSumX = 0;
-        double tagCornerSumY = 0;
-        for (TargetCorner tagCorner : tagCorners) {
-            tagCornerSumX += tagCorner.x;
-            tagCornerSumY += tagCorner.y;
-        }
-        return new Point(tagCornerSumX / tagCorners.size(), tagCornerSumY / tagCorners.size());
+        inputs.visibleTagIDs = new int[0];
+        inputs.distanceFromBestTag = Double.POSITIVE_INFINITY;
     }
 
     /**
@@ -83,6 +75,16 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         if (photonCamera.getCameraMatrix().isPresent())
             return correctPixelRot(tagCenter, photonCamera.getCameraMatrix().get());
         return null;
+    }
+
+    private Point getTagCenter(List<TargetCorner> tagCorners) {
+        double tagCornerSumX = 0;
+        double tagCornerSumY = 0;
+        for (TargetCorner tagCorner : tagCorners) {
+            tagCornerSumX += tagCorner.x;
+            tagCornerSumY += tagCorner.y;
+        }
+        return new Point(tagCornerSumX / tagCorners.size(), tagCornerSumY / tagCorners.size());
     }
 
     /**

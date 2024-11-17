@@ -8,7 +8,6 @@ import edu.wpi.first.math.numbers.N3;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
-import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.simulation.SimCameraProperties;
 import org.trigon.hardware.RobotHardwareStats;
@@ -58,16 +57,12 @@ public class AprilTagCamera {
 
         robotPose = calculateBestRobotPose();
         logCameraInfo();
-        if (RobotHardwareStats.isSimulation() && MotorSubsystem.isExtensiveLoggingEnabled())
+        if (RobotHardwareStats.isSimulation())
             AprilTagCameraConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
     }
 
     public boolean hasNewResult() {
         return (inputs.hasResult && inputs.distanceFromBestTag != 0) && isNewTimestamp();
-    }
-
-    public boolean hasResult() {
-        return inputs.hasResult;
     }
 
     public Pose2d getEstimatedRobotPose() {
@@ -87,7 +82,7 @@ public class AprilTagCamera {
     }
 
     /**
-     * Calculates the range of how inaccurate the estimated pose could be using the distance from the target, the number of targets, and a calculated gain.
+     * Calculates the range of how inaccurate the estimated pose could be using the distance from the target, the number of targets, and a calibrated gain.
      * The theta deviation is infinity when we assume the robot's heading because we already assume that the heading is correct.
      *
      * @return the standard deviations for the pose estimation strategy used
@@ -128,7 +123,7 @@ public class AprilTagCamera {
 
         if (!isWithinBestTagRangeForSolvePNP())
             return new Pose2d(getFieldRelativeRobotTranslation(gyroHeading), gyroHeading);
-        final Rotation2d solvePNPHeading = inputs.cameraSolvePNPPose.getRotation().toRotation2d().minus(robotCenterToCamera.getRotation().toRotation2d());
+        final Rotation2d solvePNPHeading = getSolvePNPHeading();
         return new Pose2d(getFieldRelativeRobotTranslation(solvePNPHeading), solvePNPHeading);
     }
 
@@ -145,6 +140,9 @@ public class AprilTagCamera {
         return fieldRelativeRobotPose.minus(fieldRelativeCameraToRobotTranslation);
     }
 
+    /**
+     * If the roll of the camera is 180 degrees, then the result needs to be flipped
+     */
     private void setProperCameraRotation() {
         if (robotCenterToCamera.getRotation().getX() == Math.PI) {
             inputs.bestTargetRelativePitchRadians = -inputs.bestTargetRelativePitchRadians;

@@ -6,7 +6,6 @@ import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.io.AprilTagLimelightIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.io.AprilTagPhotonCameraIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.io.AprilTagSimulationCameraIO;
-import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 import org.trigon.hardware.RobotHardwareStats;
@@ -20,7 +19,7 @@ public class AprilTagCameraConstants {
 
     public static final double MAXIMUM_AMBIGUITY = 0.5;
 
-    public static final VisionSystemSim VISION_SIMULATION = new VisionSystemSim("VisionSim");
+    public static final VisionSystemSim VISION_SIMULATION = new VisionSystemSim("VisionSimulation");
 
     private static final int
             SIMULATION_CAMERA_RESOLUTION_WIDTH = 1600,
@@ -36,7 +35,7 @@ public class AprilTagCameraConstants {
     public static final SimCameraProperties SIMULATION_CAMERA_PROPERTIES = new SimCameraProperties();
 
     static {
-        if (RobotHardwareStats.isSimulation() && MotorSubsystem.isExtensiveLoggingEnabled()) {
+        if (RobotHardwareStats.isSimulation()) {
             configureSimulationCameraProperties();
             VISION_SIMULATION.addAprilTags(FieldConstants.APRIL_TAG_FIELD_LAYOUT);
         }
