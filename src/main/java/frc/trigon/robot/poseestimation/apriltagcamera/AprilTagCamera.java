@@ -9,7 +9,6 @@ import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
 import org.littletonrobotics.junction.Logger;
-import org.photonvision.simulation.SimCameraProperties;
 import org.trigon.hardware.RobotHardwareStats;
 
 /**
@@ -40,16 +39,18 @@ public class AprilTagCamera {
     public AprilTagCamera(AprilTagCameraConstants.AprilTagCameraType aprilTagCameraType,
                           String name, Transform3d robotCenterToCamera,
                           double thetaStandardDeviationExponent,
-                          double translationStandardDeviationExponent,
-                          SimCameraProperties simulationCameraProperties) {
+                          double translationStandardDeviationExponent) {
         this.name = name;
         this.robotCenterToCamera = robotCenterToCamera;
         this.thetaStandardDeviationExponent = thetaStandardDeviationExponent;
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
-        aprilTagCameraIO = aprilTagCameraType.createIOBiFunction.apply(name, simulationCameraProperties);
-        if (RobotHardwareStats.isSimulation())
+        if (RobotHardwareStats.isSimulation()) {
+            aprilTagCameraIO = AprilTagCameraConstants.AprilTagCameraType.SIMULATION_CAMERA.createIOFunction.apply(name);
             aprilTagCameraIO.addSimulatedCameraToVisionSimulation(robotCenterToCamera);
+            return;
+        }
+        aprilTagCameraIO = aprilTagCameraType.createIOFunction.apply(name);
     }
 
     public void update() {
@@ -118,7 +119,7 @@ public class AprilTagCamera {
      * @return the robot's pose
      */
     private Pose2d calculateAssumedRobotHeadingPose(Rotation2d gyroHeading) {
-        if (inputs.visibleTagIDs.length == 0 || !inputs.hasResult)
+        if (inputs.visibleTagIDs.length == 0 || !inputs.hasResult || inputs.poseAmbiguity > AprilTagCameraConstants.MAXIMUM_AMBIGUITY)
             return null;
 
         if (!isWithinBestTagRangeForSolvePNP())
@@ -141,18 +142,19 @@ public class AprilTagCamera {
     }
 
     /**
-     * If the roll of the camera is 180 degrees, then the result needs to be flipped
+     * When the roll of the camera changes, the target pitch and yaw are also effected.
+     * This method corrects the yaw and pitch based on the camera's mount position roll.
      */
     private void setProperCameraRotation() {
-        if (robotCenterToCamera.getRotation().getX() == Math.PI) {
-            inputs.bestTargetRelativePitchRadians = -inputs.bestTargetRelativePitchRadians;
-            inputs.bestTargetRelativeYawRadians = -inputs.bestTargetRelativeYawRadians;
-        }
+        Translation2d targetRotationVector = new Translation2d(inputs.bestTargetRelativeYawRadians, inputs.bestTargetRelativePitchRadians);
+        targetRotationVector.rotateBy(Rotation2d.fromRadians(robotCenterToCamera.getRotation().getX()));
+        inputs.bestTargetRelativeYawRadians = targetRotationVector.getY();
+        inputs.bestTargetRelativePitchRadians = targetRotationVector.getX();
     }
 
     private Translation2d calculateTagRelativeCameraTranslation(Rotation2d gyroHeading, Pose3d tagPose) {
         final double robotPlaneTargetYawRadians = getRobotPlaneTargetYawRadians();
-        final double robotPlaneCameraDistanceToUsedTagMeters = calculateRobotPlaneDistanceToTag(tagPose, robotPlaneTargetYawRadians);
+        final double robotPlaneCameraDistanceToUsedTagMeters = calculateRobotPlaneXYDistanceToTag(tagPose, robotPlaneTargetYawRadians);
         final double headingOffsetToUsedTagRadians = gyroHeading.getRadians() - robotPlaneTargetYawRadians + robotCenterToCamera.getRotation().getZ();
         return new Translation2d(robotPlaneCameraDistanceToUsedTagMeters, Rotation2d.fromRadians(headingOffsetToUsedTagRadians));
     }
@@ -172,7 +174,7 @@ public class AprilTagCamera {
         return Math.atan(Math.tan(targetAngleRadians) * Math.cos(cameraAngleRadians));
     }
 
-    private double calculateRobotPlaneDistanceToTag(Pose3d usedTagPose, double robotPlaneTargetYaw) {
+    private double calculateRobotPlaneXYDistanceToTag(Pose3d usedTagPose, double robotPlaneTargetYaw) {
         final double zDistanceToUsedTagMeters = Math.abs(usedTagPose.getZ() - robotCenterToCamera.getTranslation().getZ());
         final double robotPlaneDistanceFromUsedTagMeters = zDistanceToUsedTagMeters / Math.tan(-robotCenterToCamera.getRotation().getY() - inputs.bestTargetRelativePitchRadians);
         return robotPlaneDistanceFromUsedTagMeters / Math.cos(robotPlaneTargetYaw);

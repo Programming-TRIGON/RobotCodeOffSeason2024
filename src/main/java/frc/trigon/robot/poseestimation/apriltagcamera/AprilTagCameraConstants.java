@@ -10,17 +10,16 @@ import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 import org.trigon.hardware.RobotHardwareStats;
 
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class AprilTagCameraConstants {
-    static final double MAXIMUM_DISTANCE_FROM_TAG_FOR_SOLVE_PNP_METERS = 2.5;
+    static final double MAXIMUM_DISTANCE_FROM_TAG_FOR_SOLVE_PNP_METERS = 2;
     static final int CALCULATE_YAW_ITERATIONS = 3;
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
 
     public static final double MAXIMUM_AMBIGUITY = 0.5;
 
     public static final VisionSystemSim VISION_SIMULATION = new VisionSystemSim("VisionSimulation");
-
     private static final int
             SIMULATION_CAMERA_RESOLUTION_WIDTH = 1600,
             SIMULATION_CAMERA_RESOLUTION_HEIGHT = 1200,
@@ -51,14 +50,14 @@ public class AprilTagCameraConstants {
     }
 
     public enum AprilTagCameraType {
-        PHOTON_CAMERA((name, properties) -> new AprilTagPhotonCameraIO(name)),
+        PHOTON_CAMERA(AprilTagPhotonCameraIO::new),
         SIMULATION_CAMERA(AprilTagSimulationCameraIO::new),
-        LIMELIGHT((name, properties) -> new AprilTagLimelightIO(name));
+        LIMELIGHT(AprilTagLimelightIO::new);
 
-        final BiFunction<String, SimCameraProperties, AprilTagCameraIO> createIOBiFunction;
+        final Function<String, AprilTagCameraIO> createIOFunction;
 
-        AprilTagCameraType(BiFunction<String, SimCameraProperties, AprilTagCameraIO> createIOBiFunction) {
-            this.createIOBiFunction = createIOBiFunction;
+        AprilTagCameraType(Function<String, AprilTagCameraIO> createIOFunction) {
+            this.createIOFunction = createIOFunction;
         }
     }
 }

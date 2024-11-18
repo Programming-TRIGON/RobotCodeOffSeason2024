@@ -7,7 +7,6 @@ import edu.wpi.first.math.util.Units;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCamera;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
-import org.trigon.hardware.RobotHardwareStats;
 
 public class CameraConstants {
     public static final double
@@ -26,20 +25,18 @@ public class CameraConstants {
 
     public static final AprilTagCamera
             FRONT_TAG_CAMERA = new AprilTagCamera(
-            RobotHardwareStats.isSimulation() ? AprilTagCameraConstants.AprilTagCameraType.SIMULATION_CAMERA : AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
+            AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
             "FrontTagCamera",
             FRONT_CENTER_TO_CAMERA,
             THETA_STD_EXPONENT,
-            TRANSLATIONS_STD_EXPONENT,
-            AprilTagCameraConstants.SIMULATION_CAMERA_PROPERTIES
+            TRANSLATIONS_STD_EXPONENT
     ),
             REAR_TAG_CAMERA = new AprilTagCamera(
-                    RobotHardwareStats.isSimulation() ? AprilTagCameraConstants.AprilTagCameraType.SIMULATION_CAMERA : AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
+                    AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
                     "RearTagCamera",
                     REAR_CENTER_TO_CAMERA,
                     THETA_STD_EXPONENT,
-                    TRANSLATIONS_STD_EXPONENT,
-                    AprilTagCameraConstants.SIMULATION_CAMERA_PROPERTIES
+                    TRANSLATIONS_STD_EXPONENT
             );
 
     public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");

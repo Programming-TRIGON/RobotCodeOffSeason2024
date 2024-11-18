@@ -34,11 +34,8 @@ public class PoseEstimator implements AutoCloseable {
         this.aprilTagCameras = aprilTagCameras;
         putAprilTagsOnFieldWidget();
         SmartDashboard.putData("Field", field);
-        PathPlannerLogging.setLogActivePathCallback((pose) -> {
-            field.getObject("path").setPoses(pose);
-            Logger.recordOutput("Path", pose.toArray(new Pose2d[0]));
-        });
-        PathPlannerLogging.setLogTargetPoseCallback((pose) -> Logger.recordOutput("TargetPPPose", pose));
+
+        logTargetPath();
     }
 
     @Override
@@ -90,6 +87,14 @@ public class PoseEstimator implements AutoCloseable {
 
         final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getSolvePNPHeading();
         resetPose(new Pose2d(getCurrentPose().getTranslation(), bestRobotHeading));
+    }
+
+    private void logTargetPath() {
+        PathPlannerLogging.setLogActivePathCallback((pose) -> {
+            field.getObject("path").setPoses(pose);
+            Logger.recordOutput("Path", pose.toArray(new Pose2d[0]));
+        });
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> Logger.recordOutput("TargetPPPose", pose));
     }
 
     private void updateFromVision() {
