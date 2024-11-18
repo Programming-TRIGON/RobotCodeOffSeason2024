@@ -147,10 +147,10 @@ public class AprilTagCamera {
      * This method corrects the yaw and pitch based on the camera's mount position roll.
      */
     private void setProperCameraRotation() {
-        Translation2d targetRotationVector = new Translation2d(inputs.bestTargetRelativeYawRadians, inputs.bestTargetRelativePitchRadians);
-        targetRotationVector.rotateBy(Rotation2d.fromRadians(robotCenterToCamera.getRotation().getX()));
-        inputs.bestTargetRelativeYawRadians = targetRotationVector.getX();
-        inputs.bestTargetRelativePitchRadians = targetRotationVector.getY();
+        Translation2d targetRotation = new Translation2d(inputs.bestTargetRelativeYawRadians, inputs.bestTargetRelativePitchRadians);
+        targetRotation.rotateBy(Rotation2d.fromRadians(robotCenterToCamera.getRotation().getX()));
+        inputs.bestTargetRelativeYawRadians = targetRotation.getX();
+        inputs.bestTargetRelativePitchRadians = targetRotation.getY();
     }
 
     private Translation2d calculateTagRelativeCameraTranslation(Rotation2d gyroHeading, Pose3d tagPose) {
