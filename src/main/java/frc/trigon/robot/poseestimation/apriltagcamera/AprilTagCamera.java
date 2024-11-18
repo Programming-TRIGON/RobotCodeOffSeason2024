@@ -133,7 +133,8 @@ public class AprilTagCamera {
         if (bestTagPose == null)
             return null;
 
-        setProperCameraRotation();
+        if (robotCenterToCamera.getRotation().getX() != 0)
+            setProperCameraRotation();
 
         final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(currentHeading, bestTagPose);
         final Translation2d fieldRelativeRobotPose = getFieldRelativeRobotPose(tagRelativeCameraTranslation, bestTagPose);
@@ -148,8 +149,8 @@ public class AprilTagCamera {
     private void setProperCameraRotation() {
         Translation2d targetRotationVector = new Translation2d(inputs.bestTargetRelativeYawRadians, inputs.bestTargetRelativePitchRadians);
         targetRotationVector.rotateBy(Rotation2d.fromRadians(robotCenterToCamera.getRotation().getX()));
-        inputs.bestTargetRelativeYawRadians = targetRotationVector.getY();
-        inputs.bestTargetRelativePitchRadians = targetRotationVector.getX();
+        inputs.bestTargetRelativeYawRadians = targetRotationVector.getX();
+        inputs.bestTargetRelativePitchRadians = targetRotationVector.getY();
     }
 
     private Translation2d calculateTagRelativeCameraTranslation(Rotation2d gyroHeading, Pose3d tagPose) {

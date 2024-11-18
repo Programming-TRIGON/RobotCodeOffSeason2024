@@ -101,6 +101,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         final List<PhotonTrackedTarget> targets = result.getTargets();
         final int[] visibleTagIDs = new int[targets.size()];
         boolean hasSeenBestTarget = false;
+
         visibleTagIDs[0] = bestTarget.getFiducialId();
         for (int i = 0; i < visibleTagIDs.length; i++) {
             final int targetID = targets.get(i).getFiducialId();
