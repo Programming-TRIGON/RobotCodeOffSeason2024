@@ -57,6 +57,7 @@ public class AprilTagCamera {
         aprilTagCameraIO.updateInputs(inputs);
 
         robotPose = calculateBestRobotPose();
+
         logCameraInfo();
         if (RobotHardwareStats.isSimulation())
             AprilTagCameraConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
@@ -133,8 +134,7 @@ public class AprilTagCamera {
         if (bestTagPose == null)
             return null;
 
-        if (robotCenterToCamera.getRotation().getX() != 0)
-            setProperCameraRotation();
+        setProperCameraRotation();
 
         final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(currentHeading, bestTagPose);
         final Translation2d fieldRelativeRobotPose = getFieldRelativeRobotPose(tagRelativeCameraTranslation, bestTagPose);
@@ -143,14 +143,14 @@ public class AprilTagCamera {
     }
 
     /**
-     * When the roll of the camera changes, the target pitch and yaw are also effected.
+     * When the roll of the camera changes, the target pitch and yaw are also affected.
      * This method corrects the yaw and pitch based on the camera's mount position roll.
      */
     private void setProperCameraRotation() {
-        Translation2d targetRotation = new Translation2d(inputs.bestTargetRelativeYawRadians, inputs.bestTargetRelativePitchRadians);
+        final Translation2d targetRotation = new Translation2d(inputs.bestTargetRelativePitchRadians, inputs.bestTargetRelativeYawRadians);
         targetRotation.rotateBy(Rotation2d.fromRadians(robotCenterToCamera.getRotation().getX()));
-        inputs.bestTargetRelativeYawRadians = targetRotation.getX();
-        inputs.bestTargetRelativePitchRadians = targetRotation.getY();
+        inputs.bestTargetRelativePitchRadians = targetRotation.getX();
+        inputs.bestTargetRelativeYawRadians = targetRotation.getY();
     }
 
     private Translation2d calculateTagRelativeCameraTranslation(Rotation2d gyroHeading, Pose3d tagPose) {

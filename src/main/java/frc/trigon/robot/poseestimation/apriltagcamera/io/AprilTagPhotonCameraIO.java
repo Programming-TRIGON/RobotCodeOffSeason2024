@@ -77,7 +77,8 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
      * @return the estimated rotation
      */
     private Rotation3d getBestTargetRelativeRotation(PhotonTrackedTarget bestTag) {
-        return bestTag.getBestCameraToTarget().getRotation();
+        final Rotation3d cameraRotation = bestTag.getBestCameraToTarget().getRotation();
+        return new Rotation3d(0, cameraRotation.getX(), -cameraRotation.getY());
     }
 
     /**
@@ -100,9 +101,9 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private int[] getVisibleTagIDs(PhotonPipelineResult result, PhotonTrackedTarget bestTarget) {
         final List<PhotonTrackedTarget> targets = result.getTargets();
         final int[] visibleTagIDs = new int[targets.size()];
-        boolean hasSeenBestTarget = false;
-
         visibleTagIDs[0] = bestTarget.getFiducialId();
+
+        boolean hasSeenBestTarget = false;
         for (int i = 0; i < visibleTagIDs.length; i++) {
             final int targetID = targets.get(i).getFiducialId();
             if (targetID == visibleTagIDs[0]) {
