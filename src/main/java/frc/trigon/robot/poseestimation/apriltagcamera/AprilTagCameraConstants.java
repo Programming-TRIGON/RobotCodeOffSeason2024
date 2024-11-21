@@ -12,7 +12,7 @@ import org.trigon.hardware.RobotHardwareStats;
 
 import java.util.function.Function;
 
-public class AprilTagCameraConstants {
+    public class AprilTagCameraConstants {
     static final double MAXIMUM_DISTANCE_FROM_TAG_FOR_SOLVE_PNP_METERS = 2;
     static final int CALCULATE_YAW_ITERATIONS = 3;
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
@@ -24,13 +24,13 @@ public class AprilTagCameraConstants {
             SIMULATION_CAMERA_RESOLUTION_WIDTH = 1600,
             SIMULATION_CAMERA_RESOLUTION_HEIGHT = 1200,
             SIMULATION_CAMERA_FPS = 60,
-            SIMULATION_AVERAGE_CAMERA_LATENCY_MILLISECONDS = 0,//35,
-            SIMULATION_CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS = 0,//5,
-            SIMULATION_CAMERA_EXPOSURE_TIME_MILLISECONDS = 0;//10;
+            SIMULATION_AVERAGE_CAMERA_LATENCY_MILLISECONDS = 35,
+            SIMULATION_CAMERA_LATENCY_STANDARD_DEVIATIONS_MILLISECONDS = 5,
+            SIMULATION_CAMERA_EXPOSURE_TIME_MILLISECONDS = 10;
     private static final Rotation2d SIMULATION_CAMERA_FOV = Rotation2d.fromDegrees(70);
     private static final double
-            SIMULATION_CAMERA_AVERAGE_PIXEL_ERROR = 0,//0.25,
-            SIMULATION_CAMERA_PIXEL_STANDARD_DEVIATIONS = 0;//0.08;
+            SIMULATION_CAMERA_AVERAGE_PIXEL_ERROR = 0.25,
+            SIMULATION_CAMERA_PIXEL_STANDARD_DEVIATIONS = 0.08;
     public static final SimCameraProperties SIMULATION_CAMERA_PROPERTIES = new SimCameraProperties();
 
     static {

@@ -3,6 +3,7 @@ package frc.trigon.robot.poseestimation.apriltagcamera.io;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.util.Units;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraIO;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraInputsAutoLogged;
@@ -78,7 +79,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
      */
     private Rotation3d getBestTargetRelativeRotation(PhotonTrackedTarget bestTag) {
         final Rotation3d cameraRotation = bestTag.getBestCameraToTarget().getRotation();
-        return new Rotation3d(0, -cameraRotation.getY(), -cameraRotation.getZ());
+        return new Rotation3d(0, Units.degreesToRadians(cameraRotation.getY()), Units.degreesToRadians(cameraRotation.getZ()));
     }
 
     /**

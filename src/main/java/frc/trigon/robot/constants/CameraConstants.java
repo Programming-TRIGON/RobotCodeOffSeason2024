@@ -7,10 +7,11 @@ import edu.wpi.first.math.util.Units;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCamera;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
+import org.trigon.hardware.RobotHardwareStats;
 
 public class CameraConstants {
     public static final double
-            TRANSLATIONS_STD_EXPONENT = 0.02,
+            TRANSLATIONS_STD_EXPONENT = RobotHardwareStats.isSimulation() ? 0.2 : 0.002,
             THETA_STD_EXPONENT = 0.02;
 
     private static final Transform3d
