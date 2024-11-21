@@ -70,7 +70,7 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     }
 
     private MirrorableRotation2d getTargetAngle() {
-        final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
+        final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getRotation();
         return new MirrorableRotation2d(currentRotation.plus(CAMERA.getTrackedObjectYaw()), false);
     }
 

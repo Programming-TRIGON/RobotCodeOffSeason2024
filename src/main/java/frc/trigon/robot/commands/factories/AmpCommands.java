@@ -48,7 +48,7 @@ public class AmpCommands {
                 GeneralCommands.runWhen(
                         AmpAlignerCommands.getSetTargetStateCommand(AmpAlignerConstants.AmpAlignerState.OPEN)
                                 .alongWith(PitcherCommands.getSetTargetPitchCommand(ShootingConstants.PREPARE_AMP_PITCH)),
-                        () -> RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation().getDistance(
+                        () -> RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getTranslation().getDistance(
                                 FieldConstants.IN_FRONT_OF_AMP_POSE.get().getTranslation()) < FieldConstants.MAXIMUM_DISTANCE_FROM_AMP_FOR_AUTONOMOUS_AMP_PREPARATION_METERS
                 ),
                 ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.AMP_SHOOTING_VELOCITY_ROTATIONS_PER_SECOND)

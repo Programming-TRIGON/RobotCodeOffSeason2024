@@ -78,7 +78,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
      */
     private Rotation3d getBestTargetRelativeRotation(PhotonTrackedTarget bestTag) {
         final Rotation3d cameraRotation = bestTag.getBestCameraToTarget().getRotation();
-        return new Rotation3d(0, cameraRotation.getX(), -cameraRotation.getY());
+        return new Rotation3d(0, -cameraRotation.getY(), -cameraRotation.getZ());
     }
 
     /**

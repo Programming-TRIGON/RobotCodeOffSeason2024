@@ -45,7 +45,7 @@ public class PoseEstimator implements AutoCloseable {
 
     public void periodic() {
         updateFromVision();
-        field.setRobotPose(getCurrentPose());
+        field.setRobotPose(getCurrentEstimatedPose());
     }
 
     /**
@@ -61,8 +61,16 @@ public class PoseEstimator implements AutoCloseable {
     /**
      * @return the estimated pose of the robot, relative to the blue alliance's driver station right corner
      */
-    public Pose2d getCurrentPose() {
+    public Pose2d getCurrentEstimatedPose() {
         return poseEstimator6328.getEstimatedPose();
+    }
+
+    /**
+     * @return the odometry's estimated pose of the robot, relative to the blue alliance's driver station right corner
+     */
+
+    public Pose2d getCurrentOdometryPose() {
+        return poseEstimator6328.getOdometryPose();
     }
 
     /**
@@ -86,7 +94,7 @@ public class PoseEstimator implements AutoCloseable {
         }
 
         final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getSolvePNPHeading();
-        resetPose(new Pose2d(getCurrentPose().getTranslation(), bestRobotHeading));
+        resetPose(new Pose2d(getCurrentEstimatedPose().getTranslation(), bestRobotHeading));
     }
 
     private void logTargetPath() {

@@ -86,7 +86,7 @@ public class ShootingCalculations {
      */
     private Translation2d predictFutureTranslation(double predictionTime) {
         final Translation2d fieldRelativeVelocity = getRobotFieldRelativeVelocity().toTranslation2d();
-        final Translation2d currentPose = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation();
+        final Translation2d currentPose = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getTranslation();
         return currentPose.plus(fieldRelativeVelocity.times(predictionTime));
     }
 
@@ -101,7 +101,7 @@ public class ShootingCalculations {
      * @return the target state of the robot so the note will reach the shooting target, as a {@linkplain ShootingCalculations.TargetShootingState}
      */
     private TargetShootingState calculateTargetShootingState(MirrorableTranslation3d shootingTarget, double standingShootingVelocityRotationsPerSecond, boolean reachFromAbove) {
-        final Translation2d currentTranslation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getTranslation();
+        final Translation2d currentTranslation = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getTranslation();
         final MirrorableRotation2d standingTargetRobotAngle = getAngleToTarget(currentTranslation, shootingTarget);
         final double standingTangentialVelocity = angularVelocityToTangentialVelocity(standingShootingVelocityRotationsPerSecond);
         final Rotation2d standingTargetPitch = calculateTargetPitch(standingTangentialVelocity, reachFromAbove, currentTranslation, standingTargetRobotAngle, shootingTarget);

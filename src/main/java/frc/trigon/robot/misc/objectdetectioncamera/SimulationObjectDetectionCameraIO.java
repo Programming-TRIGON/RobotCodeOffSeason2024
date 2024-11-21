@@ -43,7 +43,7 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
 
     @Override
     protected void updateInputs(ObjectDetectionCameraInputsAutoLogged inputs) {
-        final Rotation2d closestObjectYaw = getClosestVisibleObjectYaw(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
+        final Rotation2d closestObjectYaw = getClosestVisibleObjectYaw(RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose());
         if (closestObjectYaw == null) {
             inputs.hasTargets = false;
         } else {
@@ -63,7 +63,7 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
     private void updateHeldObjectPose() {
         if (heldObject.length == 0)
             return;
-        heldObject[0] = getHeldObjectPose(RobotContainer.POSE_ESTIMATOR.getCurrentPose());
+        heldObject[0] = getHeldObjectPose(RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose());
     }
 
     private void updateObjectEjection() {
@@ -79,7 +79,7 @@ public class SimulationObjectDetectionCameraIO extends ObjectDetectionCameraIO {
     private void updateObjectCollection() {
         if (heldObject.length == 1 || !isCollecting())
             return;
-        final Pose2d robotPose = RobotContainer.POSE_ESTIMATOR.getCurrentPose();
+        final Pose2d robotPose = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose();
         final Translation2d robotTranslation = robotPose.getTranslation();
         for (Translation2d objectPlacement : objectsOnField) {
             if (objectPlacement.getDistance(robotTranslation) <= PICKING_UP_TOLERANCE_METERS) {

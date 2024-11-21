@@ -75,6 +75,6 @@ public class LEDAutoSetupCommand extends SequentialCommandGroup {
     }
 
     private Pose2d getCurrentRobotPose() {
-        return RobotContainer.POSE_ESTIMATOR.getCurrentPose();
+        return RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose();
     }
 }

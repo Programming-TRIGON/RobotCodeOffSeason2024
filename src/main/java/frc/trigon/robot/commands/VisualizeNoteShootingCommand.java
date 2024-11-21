@@ -71,7 +71,7 @@ public class VisualizeNoteShootingCommand extends Command {
     private void configureStartingStats() {
         startingTimeSeconds = Timer.getFPGATimestamp();
 
-        final Pose2d currentRobotPose = RobotContainer.POSE_ESTIMATOR.getCurrentPose();
+        final Pose2d currentRobotPose = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose();
         final Rotation2d currentRobotAngle = currentRobotPose.getRotation();
         final double startingTangentialVelocity = getStartingTangentialVelocity();
 
