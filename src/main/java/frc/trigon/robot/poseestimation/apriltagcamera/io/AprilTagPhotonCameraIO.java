@@ -14,7 +14,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import java.util.List;
 
 public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
-    protected final PhotonCamera photonCamera;
+    final PhotonCamera photonCamera;
 
     public AprilTagPhotonCameraIO(String cameraName) {
         photonCamera = new PhotonCamera(cameraName);

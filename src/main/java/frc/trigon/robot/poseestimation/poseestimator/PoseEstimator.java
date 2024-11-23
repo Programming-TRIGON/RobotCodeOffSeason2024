@@ -68,7 +68,6 @@ public class PoseEstimator implements AutoCloseable {
     /**
      * @return the odometry's estimated pose of the robot, relative to the blue alliance's driver station right corner
      */
-
     public Pose2d getCurrentOdometryPose() {
         return poseEstimator6328.getOdometryPose();
     }

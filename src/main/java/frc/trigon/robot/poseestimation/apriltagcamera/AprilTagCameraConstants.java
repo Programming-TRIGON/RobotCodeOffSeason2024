@@ -12,7 +12,7 @@ import org.trigon.hardware.RobotHardwareStats;
 
 import java.util.function.Function;
 
-    public class AprilTagCameraConstants {
+public class AprilTagCameraConstants {
     static final double MAXIMUM_DISTANCE_FROM_TAG_FOR_SOLVE_PNP_METERS = 2;
     static final int CALCULATE_YAW_ITERATIONS = 3;
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
