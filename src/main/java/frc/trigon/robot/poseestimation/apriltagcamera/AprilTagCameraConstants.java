@@ -17,7 +17,7 @@ public class AprilTagCameraConstants {
     static final int CALCULATE_YAW_ITERATIONS = 3;
     static final Pose2d[] EMPTY_POSE_LIST = new Pose2d[0];
 
-    public static final double MAXIMUM_AMBIGUITY = 0.5;
+    public static final double MAXIMUM_AMBIGUITY = 0.4;
 
     public static final VisionSystemSim VISION_SIMULATION = new VisionSystemSim("VisionSimulation");
     private static final int

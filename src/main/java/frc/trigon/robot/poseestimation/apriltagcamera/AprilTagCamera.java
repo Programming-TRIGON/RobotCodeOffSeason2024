@@ -57,14 +57,11 @@ public class AprilTagCamera {
         aprilTagCameraIO.updateInputs(inputs);
 
         robotPose = calculateBestRobotPose();
-
         logCameraInfo();
-        if (RobotHardwareStats.isSimulation())
-            AprilTagCameraConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentOdometryPose());
     }
 
     public boolean hasNewResult() {
-        return (inputs.hasResult && inputs.distanceFromBestTag != 0) && isNewTimestamp();
+        return (inputs.hasResult && inputs.distanceFromBestTag != Double.POSITIVE_INFINITY) && isNewTimestamp();
     }
 
     public Pose2d getEstimatedRobotPose() {
@@ -109,7 +106,7 @@ public class AprilTagCamera {
      * @return the robot's pose
      */
     private Pose2d calculateBestRobotPose() {
-        final Rotation2d gyroHeadingAtTimestamp =  RobotHardwareStats.isSimulation() ? RobotContainer.SWERVE.getHeading() : PoseEstimator6328.getInstance().samplePose(inputs.latestResultTimestampSeconds).getRotation();
+        final Rotation2d gyroHeadingAtTimestamp = RobotHardwareStats.isSimulation() ? RobotContainer.POSE_ESTIMATOR.getCurrentOdometryPose().getRotation() : PoseEstimator6328.getInstance().samplePose(inputs.latestResultTimestampSeconds).getRotation();
         return calculateAssumedRobotHeadingPose(gyroHeadingAtTimestamp);
     }
 
@@ -134,7 +131,7 @@ public class AprilTagCamera {
         if (bestTagPose == null)
             return null;
 
-        setProperCameraRotation();
+        correctTargetRelativeRotation();
 
         final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(currentHeading, bestTagPose);
         final Translation2d fieldRelativeRobotPose = getFieldRelativeRobotPose(tagRelativeCameraTranslation, bestTagPose);
@@ -146,7 +143,7 @@ public class AprilTagCamera {
      * When the roll of the camera changes, the target pitch and yaw are also affected.
      * This method corrects the yaw and pitch based on the camera's mount position roll.
      */
-    private void setProperCameraRotation() {
+    private void correctTargetRelativeRotation() {
         final Translation2d targetRotation = new Translation2d(inputs.bestTargetRelativePitchRadians, inputs.bestTargetRelativeYawRadians);
         targetRotation.rotateBy(Rotation2d.fromRadians(robotCenterToCamera.getRotation().getX()));
         inputs.bestTargetRelativePitchRadians = targetRotation.getX();
@@ -214,7 +211,7 @@ public class AprilTagCamera {
         Logger.processInputs("Cameras/" + name, inputs);
         if (!FieldConstants.TAG_ID_TO_POSE.isEmpty())
             logUsedTags();
-        if (!inputs.hasResult || inputs.distanceFromBestTag == 0 || robotPose == null) {
+        if (!inputs.hasResult || inputs.distanceFromBestTag == Double.POSITIVE_INFINITY || robotPose == null) {
             logEstimatedRobotPose();
             logSolvePNPPose();
         } else {
