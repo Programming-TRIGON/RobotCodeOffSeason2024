@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2699301408104018,
-        "y": 6.932078092184688
+        "x": 0.7113445212805922,
+        "y": 6.648373860128002
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6306711948340775,
-        "y": 7.780307057051169
+        "x": 1.0720855753042686,
+        "y": 7.496602824994483
       },
       "isLocked": false,
       "linkedName": null
@@ -57,36 +57,12 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Collect",
-      "waypointRelativePos": 1.85,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "AlignToNote"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
     "maxAngularVelocity": 400.0,
-    "maxAngularAcceleration": 600.0
+    "maxAngularAcceleration": 400.0
   },
   "goalEndState": {
     "velocity": 0,
@@ -96,7 +72,7 @@
   "reversed": false,
   "folder": "5NoteAutoAroundStage",
   "previewStartingState": {
-    "rotation": 55.06,
+    "rotation": 58.240519915187164,
     "velocity": 0
   },
   "useDefaultConstraints": true

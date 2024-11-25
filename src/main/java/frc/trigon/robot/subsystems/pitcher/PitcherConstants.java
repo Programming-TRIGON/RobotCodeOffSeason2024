@@ -20,6 +20,7 @@ import org.trigon.hardware.phoenix6.cancoder.CANcoderSignal;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
 import org.trigon.hardware.simulation.SingleJointedArmSimulation;
+import org.trigon.utilities.Conversions;
 import org.trigon.utilities.mechanisms.DoubleJointedArmMechanism2d;
 
 public class PitcherConstants {
@@ -42,25 +43,26 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_OPPOSES_MASTER = true;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 100 : 0,
+            P = RobotHardwareStats.isSimulation() ? 100 : 0.5,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 20 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0.2 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 32 : 0,
+            D = RobotHardwareStats.isSimulation() ? 20 : 0.5,
+            KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.3,
+            KV = RobotHardwareStats.isSimulation() ? 32 : 23,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KG = RobotHardwareStats.isSimulation() ? 0.2 : 0;
+            KG = RobotHardwareStats.isSimulation() ? 0.2 : 0.37;
     private static final double
-            EXPO_KV = KV + 5,
-            EXPO_KA = 0.2;
+            MOTION_MAGIC_CRUISE_VELOCITY = 0.35,
+            MOTION_MAGIC_ACCELERATION = 3,
+            MOTION_MAGIC_JERK = 32;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
-    private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
+    private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseClosedLoopSign;
     private static final FeedbackSensorSourceValue ENCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
-    private static final double GEAR_RATIO = 227.77777;
+    static final double GEAR_RATIO = 200;
     private static final Rotation2d
-            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(12),
+            REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(13),
             FORWARD_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(73);
     private static final SensorDirectionValue ENCODER_SENSOR_DIRECTION_VALUE = SensorDirectionValue.Clockwise_Positive;
-    private static final double ENCODER_MAGNET_OFFSET_VALUE = 0;
+    private static final double ENCODER_MAGNET_OFFSET_VALUE = -0.34932 + Conversions.degreesToRotations(360);
     private static final AbsoluteSensorRangeValue ENCODER_ABSOLUTE_SENSOR_RANGE_VALUE = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
     static final boolean FOC_ENABLED = true;
 
@@ -70,7 +72,7 @@ public class PitcherConstants {
             PITCHER_LENGTH_METERS = 0.5,
             PITCHER_MASS_KILOGRAMS = 11;
     private static final Rotation2d
-            PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(12),
+            PITCHER_MINIMUM_ANGLE = Rotation2d.fromDegrees(13),
             PITCHER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(73);
     private static final boolean SIMULATE_GRAVITY = true;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
@@ -84,9 +86,9 @@ public class PitcherConstants {
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(5).per(Units.Second.of(1)),
-            Units.Volts.of(9),
-            Units.Second.of(1000)
+            Units.Volts.of(1).per(Units.Second.of(1)),
+            Units.Volts.of(2.5),
+            Units.Second.of(100)
     );
 
     static final Pose3d PITCHER_VISUALIZATION_ORIGIN_POINT = new Pose3d(0.2521, 0, 0.15545, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(-12), 0));
@@ -97,9 +99,10 @@ public class PitcherConstants {
             new Color8Bit(Color.kGreen)
     );
 
-    public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(12);
-    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(2);
+    public static final Rotation2d DEFAULT_PITCH = Rotation2d.fromDegrees(13);
+    static final Rotation2d PITCH_TOLERANCE = Rotation2d.fromDegrees(1);
     public static final Transform3d VISUALIZATION_PITCHER_PIVOT_POINT_TO_HELD_NOTE = new Transform3d(0.24, 0, 0.02, new Rotation3d());
+    public static final Rotation2d BLOCK_PITCH = Rotation2d.fromDegrees(70);
 
     static {
         configureMasterMotor();
@@ -124,8 +127,9 @@ public class PitcherConstants {
         config.Slot0.kA = KA;
         config.Slot0.kG = KG;
 
-        config.MotionMagic.MotionMagicExpo_kV = EXPO_KV;
-        config.MotionMagic.MotionMagicExpo_kA = EXPO_KA;
+        config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
+        config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
+        config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
 
         config.Slot0.GravityType = GRAVITY_TYPE_VALUE;
         config.Slot0.StaticFeedforwardSign = STATIC_FEEDFORWARD_SIGN_VALUE;
@@ -143,10 +147,11 @@ public class PitcherConstants {
         MASTER_MOTOR.setPhysicsSimulation(SIMULATION);
 
         MASTER_MOTOR.registerSignal(TalonFXSignal.POSITION, 100);
-        MASTER_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 1000);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.VELOCITY, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.CLOSED_LOOP_REFERENCE, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
+        MASTER_MOTOR.registerSignal(TalonFXSignal.ROTOR_VELOCITY, 100);
         MASTER_MOTOR.registerSignal(TalonFXSignal.ROTOR_POSITION, 100);
     }
 
@@ -163,6 +168,8 @@ public class PitcherConstants {
 
         final Follower followerRequest = new Follower(MASTER_MOTOR_ID, FOLLOWER_OPPOSES_MASTER);
         FOLLOWER_MOTOR.setControl(followerRequest);
+
+        FOLLOWER_MOTOR.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
     }
 
     public static void configureEncoder() {

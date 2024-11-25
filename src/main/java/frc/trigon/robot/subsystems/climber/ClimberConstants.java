@@ -1,6 +1,7 @@
 package frc.trigon.robot.subsystems.climber;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.signals.ForwardLimitSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -10,6 +11,7 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXSignal;
@@ -31,31 +33,38 @@ public class ClimberConstants {
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     static final boolean ENABLE_FOC = true;
-    private static final double //TODO: calibrate
-            GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 0,
-            GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0,
-            GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 0,
-            GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0;
-    private static final double //TODO: calibrate
-            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? GROUNDED_P : 0,
-            ON_CHAIN_I = RobotHardwareStats.isSimulation() ? GROUNDED_I : 0,
-            ON_CHAIN_D = RobotHardwareStats.isSimulation() ? GROUNDED_D : 0,
-            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? GROUNDED_KS : 0,
-            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? GROUNDED_KV : 0,
-            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? GROUNDED_KA : 0;
+    private static final double
+            LEFT_GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 50,
+            LEFT_GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0.078964,
+            LEFT_GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 7.9056,
+            LEFT_GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0.18439;
+    private static final double
+            RIGHT_GROUNDED_P = RobotHardwareStats.isSimulation() ? 800 : 50,
+            RIGHT_GROUNDED_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            RIGHT_GROUNDED_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            RIGHT_GROUNDED_KS = RobotHardwareStats.isSimulation() ? 0.0045028 : 0.079947,
+            RIGHT_GROUNDED_KV = RobotHardwareStats.isSimulation() ? 8.792 : 7.9986,
+            RIGHT_GROUNDED_KA = RobotHardwareStats.isSimulation() ? 0.17809 : 0.21705;
+    private static final double
+            ON_CHAIN_P = RobotHardwareStats.isSimulation() ? RIGHT_GROUNDED_P : 1,
+            ON_CHAIN_I = RobotHardwareStats.isSimulation() ? LEFT_GROUNDED_I : 0,
+            ON_CHAIN_D = RobotHardwareStats.isSimulation() ? LEFT_GROUNDED_D : 0,
+            ON_CHAIN_KS = RobotHardwareStats.isSimulation() ? LEFT_GROUNDED_KS : 0.079947,
+            ON_CHAIN_KV = RobotHardwareStats.isSimulation() ? LEFT_GROUNDED_KV : 7.9986,
+            ON_CHAIN_KA = RobotHardwareStats.isSimulation() ? LEFT_GROUNDED_KA : 0.21705;
+    static final double ON_CHAIN_KG = 0.4;
     static final double
-            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KV : 0,
-            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 12 / GROUNDED_KA : 0,
-            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KV) - 0.75 : 0,
-            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KA) - 50 : 0;
+            MAX_GROUNDED_VELOCITY = RobotHardwareStats.isSimulation() ? 12 / LEFT_GROUNDED_KV : 1.5,
+            MAX_GROUNDED_ACCELERATION = RobotHardwareStats.isSimulation() ? 12 / LEFT_GROUNDED_KA : 1.5,
+            MAX_ON_CHAIN_VELOCITY = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KV) - 0.75 : 1,
+            MAX_ON_CHAIN_ACCELERATION = RobotHardwareStats.isSimulation() ? (12 / ON_CHAIN_KA) - 50 : 1;
     static final int
             GROUNDED_SLOT = 0,
             ON_CHAIN_SLOT = 1;
-    private static final double
-            REVERSE_SOFT_LIMIT_POSITION_ROTATIONS = 0,
-            FORWARD_SOFT_LIMIT_POSITION_ROTATIONS = 3.183;
+    private static final double FORWARD_SOFT_LIMIT_POSITION_ROTATIONS = -2.9;
+    private static final double LIMIT_SWITCH_RESET_POSITION = 0;
     static final double GEAR_RATIO = 68.57;
 
     private static final int
@@ -71,7 +80,7 @@ public class ClimberConstants {
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
             Units.Volts.of(1.5).per(Units.Second.of(1)),
-            Units.Volts.of(8),
+            Units.Volts.of(5),
             null,
             null
     );
@@ -115,15 +124,13 @@ public class ClimberConstants {
             MOVE_CLIMBER_DOWN_VOLTAGE = -4,
             MOVE_CLIMBER_UP_VOLTAGE = 4;
     static final double CLIMBER_TOLERANCE_ROTATIONS = 0.01;
-    static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
-    static final double LIMIT_SWITCH_PRESSED_POSITION = 0;
 
     static {
-        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION);
-        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_MOTOR_SIMULATION);
+        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_MOTOR_SIMULATION, RIGHT_GROUNDED_P, RIGHT_GROUNDED_I, RIGHT_GROUNDED_D, RIGHT_GROUNDED_KS, RIGHT_GROUNDED_KV, RIGHT_GROUNDED_KA, IntakeConstants.MASTER_MOTOR_ID);
+        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_MOTOR_SIMULATION, LEFT_GROUNDED_P, LEFT_GROUNDED_I, LEFT_GROUNDED_D, LEFT_GROUNDED_KS, LEFT_GROUNDED_KV, LEFT_GROUNDED_KA, IntakeConstants.FOLLOWER_MOTOR_ID);
     }
 
-    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, SimpleMotorSimulation simulation) {
+    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, SimpleMotorSimulation simulation, double groundedP, double groundedI, double groundedD, double groundedKS, double groundedKV, double groundedKA, int limitSwitchID) {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = invertedValue;
@@ -131,12 +138,12 @@ public class ClimberConstants {
         config.Audio.BeepOnBoot = false;
         config.Audio.BeepOnConfig = false;
 
-        config.Slot0.kP = GROUNDED_P;
-        config.Slot0.kI = GROUNDED_I;
-        config.Slot0.kD = GROUNDED_D;
-        config.Slot0.kS = GROUNDED_KS;
-        config.Slot0.kV = GROUNDED_KV;
-        config.Slot0.kA = GROUNDED_KA;
+        config.Slot0.kP = groundedP;
+        config.Slot0.kI = groundedI;
+        config.Slot0.kD = groundedD;
+        config.Slot0.kS = groundedKS;
+        config.Slot0.kV = groundedKV;
+        config.Slot0.kA = groundedKA;
 
         config.Slot1.kP = ON_CHAIN_P;
         config.Slot1.kI = ON_CHAIN_I;
@@ -145,10 +152,15 @@ public class ClimberConstants {
         config.Slot1.kV = ON_CHAIN_KV;
         config.Slot1.kA = ON_CHAIN_KA;
 
-        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT_POSITION_ROTATIONS;
-        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT_POSITION_ROTATIONS;
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = FORWARD_SOFT_LIMIT_POSITION_ROTATIONS;
+        config.HardwareLimitSwitch.ForwardLimitRemoteSensorID = limitSwitchID;
+        config.HardwareLimitSwitch.ForwardLimitSource = ForwardLimitSourceValue.RemoteTalonFX;
+        config.HardwareLimitSwitch.ForwardLimitAutosetPositionEnable = true;
+        config.HardwareLimitSwitch.ForwardLimitAutosetPositionValue = LIMIT_SWITCH_RESET_POSITION;
+
+        config.MotionMagic.MotionMagicAcceleration = MAX_GROUNDED_ACCELERATION;
+        config.MotionMagic.MotionMagicCruiseVelocity = MAX_GROUNDED_VELOCITY;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 
@@ -161,12 +173,13 @@ public class ClimberConstants {
         motor.registerSignal(TalonFXSignal.STATOR_CURRENT, 100);
         motor.registerSignal(TalonFXSignal.MOTOR_VOLTAGE, 100);
         motor.registerSignal(TalonFXSignal.REVERSE_LIMIT, 100);
+        motor.registerSignal(TalonFXSignal.FORWARD_LIMIT, 100);
     }
 
     public enum ClimberState {
         REST(0, false),
-        PREPARE_FOR_CLIMB(3.183, false), //TODO: calibrate
-        CLIMB(0.1, true); //TODO: calibrate
+        PREPARE_FOR_CLIMB(-2.9, false),
+        CLIMB(0, true);
 
         public final double positionRotations;
         public final boolean affectedByRobotWeight;

@@ -4,18 +4,30 @@
   "holonomicMode": true,
   "pathFolders": [
     "3NoteAutoThroughAmp",
+    "3NoteAutoThroughAmpLeft",
     "5NoteAutoAroundStage",
     "7NoteAuto",
     "FrontRow4NoteAuto",
     "MiddleRush3NoteAuto",
+    "FrontRow4NoteAutoFarShoot",
     "SourceSide3NoteAuto",
+    "SourceSide3NoteAutoFront",
+    "SourceSide3NoteAutoRight",
     "SpeakerSide3NoteAuto",
-    "Zayde3NoteAuto"
+    "Zayde3NoteAuto",
+    "test"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "3NoteAutoThroughAmpVarients",
+    "frontRow",
+    "FarNotesAroundStageVarients",
+    "OtherAutos",
+    "SourceSide3NoteAutoVarients",
+    "misc"
+  ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 400.0,
-  "defaultMaxAngAccel": 600.0,
+  "defaultMaxAngAccel": 400.0,
   "maxModuleSpeed": 4.5
 }

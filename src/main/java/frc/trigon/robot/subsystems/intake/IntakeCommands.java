@@ -15,7 +15,7 @@ public class IntakeCommands {
 
     public static Command getSetTargetStateCommand(IntakeConstants.IntakeState targetState) {
         if (targetState == IntakeConstants.IntakeState.COLLECT)
-            return getCollectionCommand();
+            return getCollectionCommand().andThen(getCorrectNotePositionCommand());
         return new StartEndCommand(
                 () -> RobotContainer.INTAKE.setTargetState(targetState),
                 RobotContainer.INTAKE::stop,
@@ -40,13 +40,11 @@ public class IntakeCommands {
                         (interrupted) -> {
                             if (!interrupted) {
                                 RobotContainer.INTAKE.indicateCollection();
-                                RobotContainer.INTAKE.sendStaticBrakeRequest();
                             }
                         },
                         RobotContainer.INTAKE::hasNote,
                         RobotContainer.INTAKE
-                ),
-                getWaitForNoteToStopCommand().andThen(getStopIntakeCommand())
+                )
         );
     }
 
@@ -58,7 +56,7 @@ public class IntakeCommands {
     }
 
 
-    private static Command getWaitForNoteToStopCommand() {
-        return new WaitCommand(IntakeConstants.NOTE_STOPPING_SECONDS);
+    private static Command getCorrectNotePositionCommand() {
+        return getSetTargetStateCommand(IntakeConstants.IntakeState.CORRECT_NOTE_POSITION).onlyWhile(RobotContainer.INTAKE::hasNote).andThen(getStopIntakeCommand());
     }
 }

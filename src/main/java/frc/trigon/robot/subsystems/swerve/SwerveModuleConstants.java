@@ -25,19 +25,19 @@ public class SwerveModuleConstants {
             DRIVE_MOTOR_NEUTRAL_MODE_VALUE = NeutralModeValue.Brake,
             STEER_MOTOR_NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            DRIVE_SLIP_CURRENT = RobotHardwareStats.isSimulation() ? 1000 : 100,
-            STEER_CURRENT_LIMIT = RobotHardwareStats.isSimulation() ? 1000 : 50;
+            DRIVE_SLIP_CURRENT = RobotHardwareStats.isSimulation() ? 1000 : 80,
+            STEER_CURRENT_LIMIT = RobotHardwareStats.isSimulation() ? 1000 : 30;
     private static final double
             STEER_MOTOR_P = RobotHardwareStats.isSimulation() ? 75 : 75,
             STEER_MOTOR_I = 0,
             STEER_MOTOR_D = 0;
     private static final double
-            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 20 : 50,
+            DRIVE_MOTOR_P = RobotHardwareStats.isSimulation() ? 20 : 52,
             DRIVE_MOTOR_I = 0,
             DRIVE_MOTOR_D = 0,
-            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.14031 : 0,
-            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0.55781 : 0,
-            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 1.1359 : 0;
+            DRIVE_MOTOR_KS = RobotHardwareStats.isSimulation() ? 0.14031 : 6.2176,
+            DRIVE_MOTOR_KV = RobotHardwareStats.isSimulation() ? 0.55781 : 0.0017378,
+            DRIVE_MOTOR_KA = RobotHardwareStats.isSimulation() ? 1.1359 : 2.4345;
     static final boolean ENABLE_FOC = true;
     static final TalonFXConfiguration
             DRIVE_MOTOR_CONFIGURATION = generateDriveConfiguration(),
@@ -56,11 +56,11 @@ public class SwerveModuleConstants {
 
     static final SysIdRoutine.Config DRIVE_MOTOR_SYSID_CONFIG = new SysIdRoutine.Config(
             Units.Volts.of(5).per(Units.Second),
-            Units.Volts.of(20),
+            Units.Volts.of(8),
             Units.Second.of(1000)
     );
 
-    static final double WHEEL_DIAMETER_METERS = RobotHardwareStats.isSimulation() ? 0.1016 : 0.049149 * 2;
+    static final double WHEEL_DIAMETER_METERS = RobotHardwareStats.isSimulation() ? 0.1016 : 0.049274 * 2;
     static final double VOLTAGE_COMPENSATION_SATURATION = 12;
 
     static SimpleMotorSimulation createDriveSimulation() {

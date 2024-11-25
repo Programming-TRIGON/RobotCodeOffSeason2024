@@ -43,7 +43,7 @@ public class ShootingCommands {
     public static Command getCloseSpeakerShotCommand() {
         return new ParallelCommandGroup(
                 getPrepareCloseSpeakerShotCommand(),
-                getFeedNoteWhenPitcherAndShooterReadyCommand()
+                GeneralCommands.runWhenContinueTriggerPressed(getFeedNoteWhenPitcherAndShooterReadyCommand())
         );
     }
 

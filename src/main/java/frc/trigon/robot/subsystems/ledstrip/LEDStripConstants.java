@@ -4,14 +4,15 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.trigon.robot.Robot;
 
 public class LEDStripConstants {
-    private static final int PORT = 0;
+    private static final int PORT = 9;
     private static final int
-            RIGHT_CLIMBER_NUMBER_OF_LEDS = 24,
-            LEFT_CLIMBER_NUMBER_OF_LEDS = 24;
+            RIGHT_CLIMBER_NUMBER_OF_LEDS = 22,
+            LEFT_CLIMBER_NUMBER_OF_LEDS = 22;
     private static final boolean
             RIGHT_CLIMBER_INVERTED = false,
             LEFT_CLIMBER_INVERTED = false;
@@ -20,12 +21,21 @@ public class LEDStripConstants {
 
     static final double MINIMUM_BATTERY_VOLTAGE = 10.5;
     static final Trigger LOW_BATTERY_TRIGGER = new Trigger(() -> !DriverStation.isEnabled() && Robot.IS_REAL && RobotController.getBatteryVoltage() < LEDStripConstants.MINIMUM_BATTERY_VOLTAGE);
-    static final double LOW_BATTERY_BLINKING_INTERVAL_SECONDS = 0.2;
-    static final double LOW_BATTERY_BLINKING_TIME_SECONDS = 5;
+    static final Color
+            LOW_BATTERY_FIRST_COLOR = Color.kOrange,
+            LOW_BATTERY_SECOND_COLOR = Color.kYellow;
+    static final double LOW_BATTERY_ALTERNATE_COLOR_INTERVAL_SECONDS = 0.2;
+    static final double LOW_BATTERY_ALTERNATING_TIME_SECONDS = 10;
+    public static final Color DEFAULT_COMMAND_COLOR = Color.kLightSeaGreen;
+    public static final int DEFAULT_COMMAND_BREATHING_LEDS_AMOUNT = 7;
+    public static final double DEFAULT_COMMAND_BREATHING_CYCLE_TIME_SECONDS = 1.5;
+    public static final boolean
+            DEFAULT_COMMAND_BREATHING_SHOULD_LOOP = true,
+            DEFAULT_COMMAND_BREATHING_IS_INVERTED = false;
 
     public static final LEDStrip
             RIGHT_CLIMBER_LEDS = new LEDStrip(RIGHT_CLIMBER_INVERTED, RIGHT_CLIMBER_NUMBER_OF_LEDS, 0),
-            LEFT_CLIMBER_LEDS = new LEDStrip(LEFT_CLIMBER_INVERTED, LEFT_CLIMBER_NUMBER_OF_LEDS, RIGHT_CLIMBER_NUMBER_OF_LEDS - 1);
+            LEFT_CLIMBER_LEDS = new LEDStrip(LEFT_CLIMBER_INVERTED, LEFT_CLIMBER_NUMBER_OF_LEDS, RIGHT_CLIMBER_NUMBER_OF_LEDS);
 
     static {
         LED.setLength(RIGHT_CLIMBER_NUMBER_OF_LEDS + LEFT_CLIMBER_NUMBER_OF_LEDS);

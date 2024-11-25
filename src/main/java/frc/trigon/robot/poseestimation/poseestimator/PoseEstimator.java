@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCamera;
+import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.RobotHardwareStats;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -34,10 +36,8 @@ public class PoseEstimator implements AutoCloseable {
         this.aprilTagCameras = aprilTagCameras;
         putAprilTagsOnFieldWidget();
         SmartDashboard.putData("Field", field);
-        PathPlannerLogging.setLogActivePathCallback((pose) -> {
-            field.getObject("path").setPoses(pose);
-            Logger.recordOutput("Path", pose.toArray(new Pose2d[0]));
-        });
+
+        logTargetPath();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PoseEstimator implements AutoCloseable {
 
     public void periodic() {
         updateFromVision();
-        field.setRobotPose(getCurrentPose());
+        field.setRobotPose(getCurrentEstimatedPose());
     }
 
     /**
@@ -63,8 +63,15 @@ public class PoseEstimator implements AutoCloseable {
     /**
      * @return the estimated pose of the robot, relative to the blue alliance's driver station right corner
      */
-    public Pose2d getCurrentPose() {
+    public Pose2d getCurrentEstimatedPose() {
         return poseEstimator6328.getEstimatedPose();
+    }
+
+    /**
+     * @return the odometry's estimated pose of the robot, relative to the blue alliance's driver station right corner
+     */
+    public Pose2d getCurrentOdometryPose() {
+        return poseEstimator6328.getOdometryPose();
     }
 
     /**
@@ -88,13 +95,23 @@ public class PoseEstimator implements AutoCloseable {
         }
 
         final Rotation2d bestRobotHeading = aprilTagCameras[closestCameraToTag].getSolvePNPHeading();
-        resetPose(new Pose2d(getCurrentPose().getTranslation(), bestRobotHeading));
+        resetPose(new Pose2d(getCurrentEstimatedPose().getTranslation(), bestRobotHeading));
+    }
+
+    private void logTargetPath() {
+        PathPlannerLogging.setLogActivePathCallback((pose) -> {
+            field.getObject("path").setPoses(pose);
+            Logger.recordOutput("Path", pose.toArray(new Pose2d[0]));
+        });
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> Logger.recordOutput("TargetPPPose", pose));
     }
 
     private void updateFromVision() {
         getViableVisionObservations().stream()
                 .sorted(Comparator.comparingDouble(PoseEstimator6328.VisionObservation::timestamp))
                 .forEach(poseEstimator6328::addVisionObservation);
+        if (RobotHardwareStats.isSimulation())
+            AprilTagCameraConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentOdometryPose());
     }
 
     private List<PoseEstimator6328.VisionObservation> getViableVisionObservations() {
@@ -112,7 +129,7 @@ public class PoseEstimator implements AutoCloseable {
         if (!aprilTagCamera.hasNewResult())
             return null;
         final Pose2d robotPose = aprilTagCamera.getEstimatedRobotPose();
-        if (robotPose == null)
+        if (robotPose == null || robotPose.getTranslation() == null || robotPose.getRotation() == null)
             return null;
 
         return new PoseEstimator6328.VisionObservation(

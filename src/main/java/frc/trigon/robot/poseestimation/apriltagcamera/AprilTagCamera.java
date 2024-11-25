@@ -5,10 +5,11 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import frc.trigon.robot.Robot;
+import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator6328;
 import org.littletonrobotics.junction.Logger;
+import org.trigon.hardware.RobotHardwareStats;
 
 /**
  * An april tag camera is a class that provides the robot's pose, from a camera using one or multiple apriltags.
@@ -44,10 +45,12 @@ public class AprilTagCamera {
         this.thetaStandardDeviationExponent = thetaStandardDeviationExponent;
         this.translationStandardDeviationExponent = translationStandardDeviationExponent;
 
-        if (Robot.IS_REAL)
-            aprilTagCameraIO = aprilTagCameraType.createIOFunction.apply(name);
-        else
-            aprilTagCameraIO = new AprilTagCameraIO();
+        if (RobotHardwareStats.isSimulation()) {
+            aprilTagCameraIO = AprilTagCameraConstants.AprilTagCameraType.SIMULATION_CAMERA.createIOFunction.apply(name);
+            aprilTagCameraIO.addSimulatedCameraToVisionSimulation(robotCenterToCamera);
+            return;
+        }
+        aprilTagCameraIO = aprilTagCameraType.createIOFunction.apply(name);
     }
 
     public void update() {
@@ -58,7 +61,7 @@ public class AprilTagCamera {
     }
 
     public boolean hasNewResult() {
-        return (inputs.hasResult && inputs.distanceFromBestTag != 0) && isNewTimestamp();
+        return (inputs.hasResult && inputs.distanceFromBestTag != Double.POSITIVE_INFINITY) && isNewTimestamp();
     }
 
     public Pose2d getEstimatedRobotPose() {
@@ -78,7 +81,7 @@ public class AprilTagCamera {
     }
 
     /**
-     * Calculates the range of how inaccurate the estimated pose could be using the distance from the target, the number of targets, and a calculated gain.
+     * Calculates the range of how inaccurate the estimated pose could be using the distance from the target, the number of targets, and a calibrated gain.
      * The theta deviation is infinity when we assume the robot's heading because we already assume that the heading is correct.
      *
      * @return the standard deviations for the pose estimation strategy used
@@ -103,7 +106,7 @@ public class AprilTagCamera {
      * @return the robot's pose
      */
     private Pose2d calculateBestRobotPose() {
-        final Rotation2d gyroHeadingAtTimestamp = PoseEstimator6328.getInstance().samplePose(inputs.latestResultTimestampSeconds).getRotation();
+        final Rotation2d gyroHeadingAtTimestamp = RobotHardwareStats.isSimulation() ? RobotContainer.POSE_ESTIMATOR.getCurrentOdometryPose().getRotation() : PoseEstimator6328.getInstance().samplePose(inputs.latestResultTimestampSeconds).getRotation();
         return calculateAssumedRobotHeadingPose(gyroHeadingAtTimestamp);
     }
 
@@ -114,30 +117,42 @@ public class AprilTagCamera {
      * @return the robot's pose
      */
     private Pose2d calculateAssumedRobotHeadingPose(Rotation2d gyroHeading) {
-        if (inputs.visibleTagIDs.length == 0 || !inputs.hasResult)
+        if (inputs.visibleTagIDs.length == 0 || !inputs.hasResult || inputs.poseAmbiguity > AprilTagCameraConstants.MAXIMUM_AMBIGUITY)
             return null;
 
-        final Translation2d fieldRelativeRobotTranslation = getFieldRelativeRobotTranslation(gyroHeading);
-
         if (!isWithinBestTagRangeForSolvePNP())
-            return new Pose2d(fieldRelativeRobotTranslation, gyroHeading);
-
-        final Rotation2d solvePNPHeading = inputs.cameraSolvePNPPose.getRotation().toRotation2d().minus(robotCenterToCamera.getRotation().toRotation2d());
-        return new Pose2d(fieldRelativeRobotTranslation, solvePNPHeading);
+            return new Pose2d(getFieldRelativeRobotTranslation(gyroHeading), gyroHeading);
+        final Rotation2d solvePNPHeading = getSolvePNPHeading();
+        return new Pose2d(getFieldRelativeRobotTranslation(solvePNPHeading), solvePNPHeading);
     }
 
-    private Translation2d getFieldRelativeRobotTranslation(Rotation2d gyroHeading) {
-        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]).plus(AprilTagCameraConstants.TAG_OFFSET);
+    private Translation2d getFieldRelativeRobotTranslation(Rotation2d currentHeading) {
+        final Pose3d bestTagPose = FieldConstants.TAG_ID_TO_POSE.get(inputs.visibleTagIDs[0]);
+        if (bestTagPose == null)
+            return null;
 
-        final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(gyroHeading, bestTagPose);
+        correctTargetRelativeRotation();
+
+        final Translation2d tagRelativeCameraTranslation = calculateTagRelativeCameraTranslation(currentHeading, bestTagPose);
         final Translation2d fieldRelativeRobotPose = getFieldRelativeRobotPose(tagRelativeCameraTranslation, bestTagPose);
-        final Translation2d fieldRelativeCameraToRobotTranslation = robotCenterToCamera.getTranslation().toTranslation2d().rotateBy(gyroHeading);
+        final Translation2d fieldRelativeCameraToRobotTranslation = robotCenterToCamera.getTranslation().toTranslation2d().rotateBy(currentHeading);
         return fieldRelativeRobotPose.minus(fieldRelativeCameraToRobotTranslation);
+    }
+
+    /**
+     * When the roll of the camera changes, the target pitch and yaw are also affected.
+     * This method corrects the yaw and pitch based on the camera's mount position roll.
+     */
+    private void correctTargetRelativeRotation() {
+        final Translation2d targetRotation = new Translation2d(inputs.bestTargetRelativePitchRadians, inputs.bestTargetRelativeYawRadians);
+        targetRotation.rotateBy(Rotation2d.fromRadians(robotCenterToCamera.getRotation().getX()));
+        inputs.bestTargetRelativePitchRadians = targetRotation.getX();
+        inputs.bestTargetRelativeYawRadians = targetRotation.getY();
     }
 
     private Translation2d calculateTagRelativeCameraTranslation(Rotation2d gyroHeading, Pose3d tagPose) {
         final double robotPlaneTargetYawRadians = getRobotPlaneTargetYawRadians();
-        final double robotPlaneCameraDistanceToUsedTagMeters = calculateRobotPlaneDistanceToTag(tagPose, robotPlaneTargetYawRadians);
+        final double robotPlaneCameraDistanceToUsedTagMeters = calculateRobotPlaneXYDistanceToTag(tagPose, robotPlaneTargetYawRadians);
         final double headingOffsetToUsedTagRadians = gyroHeading.getRadians() - robotPlaneTargetYawRadians + robotCenterToCamera.getRotation().getZ();
         return new Translation2d(robotPlaneCameraDistanceToUsedTagMeters, Rotation2d.fromRadians(headingOffsetToUsedTagRadians));
     }
@@ -157,9 +172,9 @@ public class AprilTagCamera {
         return Math.atan(Math.tan(targetAngleRadians) * Math.cos(cameraAngleRadians));
     }
 
-    private double calculateRobotPlaneDistanceToTag(Pose3d usedTagPose, double robotPlaneTargetYaw) {
-        double zDistanceToUsedTagMeters = Math.abs(usedTagPose.getZ() - robotCenterToCamera.getTranslation().getZ());
-        double robotPlaneDistanceFromUsedTagMeters = zDistanceToUsedTagMeters / Math.tan(-robotCenterToCamera.getRotation().getY() - inputs.bestTargetRelativePitchRadians);
+    private double calculateRobotPlaneXYDistanceToTag(Pose3d usedTagPose, double robotPlaneTargetYaw) {
+        final double zDistanceToUsedTagMeters = Math.abs(usedTagPose.getZ() - robotCenterToCamera.getTranslation().getZ());
+        final double robotPlaneDistanceFromUsedTagMeters = zDistanceToUsedTagMeters / Math.tan(-robotCenterToCamera.getRotation().getY() - inputs.bestTargetRelativePitchRadians);
         return robotPlaneDistanceFromUsedTagMeters / Math.cos(robotPlaneTargetYaw);
     }
 
@@ -189,14 +204,14 @@ public class AprilTagCamera {
     }
 
     private boolean isWithinBestTagRangeForSolvePNP() {
-        return inputs.distanceFromBestTag < AprilTagCameraConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_PNP_METERS;
+        return inputs.distanceFromBestTag < AprilTagCameraConstants.MAXIMUM_DISTANCE_FROM_TAG_FOR_SOLVE_PNP_METERS;
     }
 
     private void logCameraInfo() {
         Logger.processInputs("Cameras/" + name, inputs);
         if (!FieldConstants.TAG_ID_TO_POSE.isEmpty())
             logUsedTags();
-        if (!inputs.hasResult || inputs.distanceFromBestTag == 0 || robotPose == null) {
+        if (!inputs.hasResult || inputs.distanceFromBestTag == Double.POSITIVE_INFINITY || robotPose == null) {
             logEstimatedRobotPose();
             logSolvePNPPose();
         } else {

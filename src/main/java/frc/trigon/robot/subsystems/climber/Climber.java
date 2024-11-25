@@ -2,6 +2,7 @@ package frc.trigon.robot.subsystems.climber;
 
 import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Voltage;
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.trigon.hardware.phoenix6.talonfx.TalonFXMotor;
@@ -38,8 +40,6 @@ public class Climber extends MotorSubsystem {
     public Climber() {
         setName("Climber");
         GeneralCommands.getDelayedCommand(3, this::configureChangingDefaultCommand).schedule();
-        configurePositionResettingTrigger(rightMotor);
-        configurePositionResettingTrigger(leftMotor);
     }
 
     @Override
@@ -127,18 +127,11 @@ public class Climber extends MotorSubsystem {
 
     void setTargetPosition(double targetRightPositionRotations, double targetLeftPositionRotations, boolean affectedByRobotWeight) {
         rightMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetRightPositionRotations));
-        leftMotor.setControl(determineRequest(affectedByRobotWeight)
-                .withPosition(targetLeftPositionRotations));
-    }
-
-    private void configurePositionResettingTrigger(TalonFXMotor motor) {
-        final Trigger positionResettingTrigger = new Trigger(() -> hasHitReverseLimit(motor)).debounce(ClimberConstants.LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS);
-        positionResettingTrigger.onFalse(new InstantCommand(() -> motor.setPosition(ClimberConstants.LIMIT_SWITCH_PRESSED_POSITION)));
-    }
-
-    private boolean hasHitReverseLimit(TalonFXMotor motor) {
-        return motor.getSignal(TalonFXSignal.REVERSE_LIMIT) == 0;
+                .withPosition(targetRightPositionRotations)
+                .withFeedForward(affectedByRobotWeight ? ClimberConstants.ON_CHAIN_KG : 0));
+        leftMotor.setControl(determineRequest(affectedByRobotWeight).withFeedForward(ClimberConstants.ON_CHAIN_KG)
+                .withPosition(targetLeftPositionRotations)
+                .withFeedForward(affectedByRobotWeight ? ClimberConstants.ON_CHAIN_KG : 0));
     }
 
     private DynamicMotionMagicVoltage determineRequest(boolean affectedByRobotWeight) {

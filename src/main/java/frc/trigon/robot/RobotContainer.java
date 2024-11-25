@@ -9,14 +9,18 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.commands.CommandConstants;
+import frc.trigon.robot.commands.LEDAutoSetupCommand;
 import frc.trigon.robot.commands.factories.AmpCommands;
 import frc.trigon.robot.commands.factories.AutonomousCommands;
 import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.commands.factories.ShootingCommands;
+import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
+import frc.trigon.robot.subsystems.ampaligner.AmpAlignerConstants;
 import frc.trigon.robot.subsystems.climber.Climber;
 import frc.trigon.robot.subsystems.intake.Intake;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
@@ -27,7 +31,10 @@ import frc.trigon.robot.subsystems.swerve.Swerve;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
-    public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator();
+    public static final PoseEstimator POSE_ESTIMATOR = new PoseEstimator(
+            CameraConstants.FRONT_TAG_CAMERA,
+            CameraConstants.REAR_TAG_CAMERA
+    );
     public static final Swerve SWERVE = new Swerve();
     public static final Intake INTAKE = new Intake();
     public static final Climber CLIMBER = new Climber();
@@ -69,20 +76,25 @@ public class RobotContainer {
         OperatorConstants.DRIVE_FROM_DPAD_TRIGGER.whileTrue(CommandConstants.SELF_RELATIVE_DRIVE_FROM_DPAD_COMMAND);
         OperatorConstants.TOGGLE_FIELD_AND_SELF_RELATIVE_DRIVE_TRIGGER.onTrue(GeneralCommands.getToggleFieldAndSelfRelativeDriveCommand());
         OperatorConstants.TOGGLE_BRAKE_TRIGGER.onTrue(GeneralCommands.getToggleBrakeCommand());
-        OperatorConstants.ALIGN_TO_AMP_TRIGGER.whileTrue(CommandConstants.FACE_AMP_COMMAND);
-        OperatorConstants.ALIGN_TO_SPEAKER_TRIGGER.whileTrue(CommandConstants.FACE_SPEAKER_COMMAND);
         OperatorConstants.ALIGN_TO_RIGHT_STAGE.whileTrue(CommandConstants.ALIGN_TO_RIGHT_STAGE_COMMAND);
         OperatorConstants.ALIGN_TO_LEFT_STAGE.whileTrue(CommandConstants.ALIGN_TO_LEFT_STAGE_COMMAND);
         OperatorConstants.ALIGN_TO_MIDDLE_STAGE.whileTrue(CommandConstants.ALIGN_TO_MIDDLE_STAGE_COMMAND);
 
         OperatorConstants.EJECT_NOTE_TRIGGER.whileTrue(CommandConstants.EJECT_COMMAND);
+        OperatorConstants.HIGH_EJECT_NOTE_TRIGGER.whileTrue(GeneralCommands.getHighEjectNoteCommand());
         OperatorConstants.COLLECT_NOTE_TRIGGER.whileTrue(GeneralCommands.getNoteCollectionCommand());
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_ON_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_ON_COMMAND);
         OperatorConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_TRIGGER.onTrue(CommandConstants.TURN_AUTONOMOUS_NOTE_ALIGNING_OFF_COMMAND);
 
+        OperatorConstants.LED_AUTO_SETUP_TRIGGER.whileTrue(new LEDAutoSetupCommand(() -> autoChooser.get().getName()));
+
         OperatorConstants.CLIMB_TRIGGER.whileTrue(GeneralCommands.getClimbCommand());
         OperatorConstants.MOVE_CLIMBER_DOWN_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_DOWN_MANUALLY_COMMAND);
         OperatorConstants.MOVE_CLIMBER_UP_MANUALLY_TRIGGER.whileTrue(CommandConstants.MOVE_CLIMBER_UP_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_RIGHT_CLIMBER_DOWN_MANUALLY.whileTrue(CommandConstants.MOVE_RIGHT_CLIMBER_DOWN_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_RIGHT_CLIMBER_UP_MANUALLY.whileTrue(CommandConstants.MOVE_RIGHT_CLIMBER_UP_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_LEFT_CLIMBER_DOWN_MANUALLY.whileTrue(CommandConstants.MOVE_LEFT_CLIMBER_DOWN_MANUALLY_COMMAND);
+        OperatorConstants.MOVE_LEFT_CLIMBER_UP_MANUALLY.whileTrue(CommandConstants.MOVE_LEFT_CLIMBER_UP_MANUALLY_COMMAND);
         OperatorConstants.OVERRIDE_IS_CLIMBING_TRIGGER.onTrue(CommandConstants.OVERRIDE_IS_CLIMBING_COMMAND);
 
         OperatorConstants.SPEAKER_SHOT_TRIGGER.whileTrue(CommandConstants.SHOOT_AT_SPEAKER_COMMAND);
@@ -91,8 +103,11 @@ public class RobotContainer {
         OperatorConstants.DELIVERY_TRIGGER.whileTrue(CommandConstants.DELIVERY_COMMAND);
         OperatorConstants.MANUAL_LOW_DELIVERY_TRIGGER.whileTrue(ShootingCommands.getManualLowDeliveryCommand());
 
-        OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand());
+        OperatorConstants.AMP_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(true));
+        OperatorConstants.AMP_WITHOUT_ALIGN_TRIGGER.whileTrue(AmpCommands.getScoreInAmpCommand(false));
         OperatorConstants.AUTONOMOUS_AMP_TRIGGER.whileTrue(AmpCommands.getAutonomousScoreInAmpCommand());
+        OperatorConstants.REALIGN_AMP_ALIGNER_TRIGGER.whileTrue(AmpAlignerCommands.getSetPositionCommand(AmpAlignerConstants.REALIGN_AMP_ALIGNER_ANGLE));
+        OperatorConstants.BLOCK_TRIGGER.whileTrue(GeneralCommands.getBlockCommand());
 
         OperatorConstants.RESET_POSE_TO_AUTO_POSE_TRIGGER.onTrue(AutonomousCommands.getResetPoseToAutoPoseCommand(() -> autoChooser.get().getName()));
     }

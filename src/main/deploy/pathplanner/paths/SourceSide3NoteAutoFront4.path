@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.663059280534515,
+        "y": 4.584108541436456
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8852482149408742,
+        "y": 4.326837143702777
+      },
+      "isLocked": false,
+      "linkedName": "SourceSide3NoteAutoRightSecondFeed"
+    },
+    {
+      "anchor": {
+        "x": 2.7155331803541096,
+        "y": 4.1046482092964185
+      },
+      "prevControl": {
+        "x": 2.130825458232113,
+        "y": 4.385307915914978
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SourceSide3NoteAutoFrontSecondCollection"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 400.0,
+    "maxAngularAcceleration": 400.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -1.591140271194542,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SourceSide3NoteAutoFront",
+  "previewStartingState": {
+    "rotation": -60.25511870305777,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

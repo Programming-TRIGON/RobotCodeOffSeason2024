@@ -5,11 +5,11 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.AutonomousConstants;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
@@ -19,6 +19,7 @@ import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
+import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
 
 import java.util.Optional;
@@ -37,20 +38,24 @@ public class AutonomousCommands {
                     if (DriverStation.isEnabled())
                         return;
                     final Pose2d autoStartPose = PathPlannerAuto.getStaringPoseFromAutoFile(pathName.get());
-                    RobotContainer.POSE_ESTIMATOR.resetPose(new MirrorablePose2d(autoStartPose, true).get());
+                    final MirrorablePose2d correctedAutoStartPose = new MirrorablePose2d(autoStartPose, true);
+                    RobotContainer.POSE_ESTIMATOR.resetPose(correctedAutoStartPose.get());
                 }
         ).ignoringDisable(true);
     }
 
     public static Command getNoteCollectionCommand() {
-        return IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT).onlyIf(() -> !RobotContainer.INTAKE.hasNote());
+        return new ParallelCommandGroup(
+                IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.COLLECT),
+                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.FINISHED_INTAKE_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+        );
     }
 
     public static Command getFeedNoteCommand() {
         return new ParallelCommandGroup(
                 IntakeCommands.getSetTargetStateCommand(IntakeConstants.IntakeState.FEED_SHOOTING),
                 GeneralCommands.getVisualizeNoteShootingCommand()
-        ).until(() -> !RobotContainer.INTAKE.hasNote());
+        ).withTimeout(AutonomousConstants.AUTONOMOUS_FEEDING_TIME_SECONDS);
     }
 
     public static Command getAlignToNoteCommand() {
@@ -72,22 +77,26 @@ public class AutonomousCommands {
         );
     }
 
-    public static Command getPrepareForShooterEjectionCommand(boolean isClose) {
-        return isClose ? getPrepareForCloseShooterEjectionCommand() : getPrepareForShooterEjectionCommand();
-    }
-
-    private static Command getPrepareForShooterEjectionCommand() {
+    public static Command getPreparePitchForSpeakerShotCommand() {
         return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+                ShootingCommands.getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand()
         );
     }
 
-    private static Command getPrepareForCloseShooterEjectionCommand() {
+    public static Command getPreparePitchCommand(Rotation2d pitch) {
         return new ParallelCommandGroup(
-                PitcherCommands.getSetTargetPitchCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_PITCH),
-                ShooterCommands.getSetTargetVelocityCommand(ShootingConstants.CLOSE_EJECT_FROM_SHOOTER_VELOCITY_ROTATIONS_PER_SECOND)
+                ShootingCommands.getUpdateShootingCalculationsCommand(false),
+                PitcherCommands.getSetTargetPitchCommand(pitch)
         );
+    }
+
+    public static Command getPrepareShooterForSpeakerShotCommand() {
+        return ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand();
+    }
+
+    public static Command getPrepareShooterCommand(double targetVelocityRotationsPerSecond) {
+        return ShooterCommands.getSetTargetVelocityCommand(targetVelocityRotationsPerSecond, targetVelocityRotationsPerSecond * ShooterConstants.RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO);
     }
 
     private static Optional<Rotation2d> calculateRotationOverride() {
@@ -95,7 +104,7 @@ public class AutonomousCommands {
         if (RobotContainer.INTAKE.hasNote() || !NOTE_DETECTION_CAMERA.hasTargets())
             return Optional.empty();
 
-        final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentPose().getRotation();
+        final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getRotation();
         final Rotation2d targetRotation = NOTE_DETECTION_CAMERA.getTrackedObjectYaw().minus(currentRotation);
         return Optional.of(targetRotation);
     }
@@ -106,8 +115,8 @@ public class AutonomousCommands {
 
     private static Command getSetCurrentLEDColorCommand() {
         return GeneralCommands.getContinuousConditionalCommand(
-                LEDStripCommands.getStaticColorCommand(Color.kGreen, LEDStrip.LED_STRIPS),
-                LEDStripCommands.getStaticColorCommand(Color.kRed, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(IntakeConstants.NOTE_DETECTION_CAMERA_HAS_TARGETS_BREATHING_LEDS_COLOR, LEDStrip.LED_STRIPS),
+                LEDStripCommands.getStaticColorCommand(IntakeConstants.NOTE_DETECTION_CAMERA_HAS_NO_TARGETS_BREATHING_LEDS_COLOR, LEDStrip.LED_STRIPS),
                 NOTE_DETECTION_CAMERA::hasTargets
         ).asProxy().until(() -> !IS_ALIGNING_TO_NOTE);
     }

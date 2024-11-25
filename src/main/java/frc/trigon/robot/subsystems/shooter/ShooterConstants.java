@@ -24,16 +24,23 @@ public class ShooterConstants {
             LEFT_MOTOR = new TalonFXMotor(LEFT_MOTOR_ID, LEFT_MOTOR_NAME);
 
     private static final InvertedValue
-            RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive,
+            RIGHT_MOTOR_INVERTED_VALUE = InvertedValue.CounterClockwise_Positive,
             LEFT_MOTOR_INVERTED_VALUE = InvertedValue.Clockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Coast;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 15 : 0,
-            I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0.35586 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0;
+            RIGHT_P = RobotHardwareStats.isSimulation() ? 15 : 10,
+            RIGHT_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            RIGHT_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            RIGHT_KS = RobotHardwareStats.isSimulation() ? 0.35586 : 6.3793,
+            RIGHT_KV = RobotHardwareStats.isSimulation() ? 0 : 0.071122,
+            RIGHT_KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0.90291;
+    private static final double
+            LEFT_P = RobotHardwareStats.isSimulation() ? 15 : 10,
+            LEFT_I = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_D = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_KS = RobotHardwareStats.isSimulation() ? 0.35586 : 5.0484,
+            LEFT_KV = RobotHardwareStats.isSimulation() ? 0 : 0,
+            LEFT_KA = RobotHardwareStats.isSimulation() ? 0.59136 : 0.79623;
     private static final double GEAR_RATIO = 1;
 
     private static final int
@@ -48,8 +55,8 @@ public class ShooterConstants {
             LEFT_SIMULATION = new FlywheelSimulation(LEFT_GEARBOX, GEAR_RATIO, MOMENT_OF_INERTIA);
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(0.25).per(Units.Second),
-            Units.Volts.of(7),
+            Units.Volts.of(5).per(Units.Second),
+            Units.Volts.of(9),
             Units.Second.of(1000)
     );
 
@@ -59,15 +66,15 @@ public class ShooterConstants {
             LEFT_MECHANISM = new SpeedMechanism2d("LeftShooterMechanism", MAX_DISPLAYABLE_VELOCITY);
 
     public static final double WHEEL_DIAMETER_METERS = edu.wpi.first.math.util.Units.inchesToMeters(4);
-    public static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1;
-    static final double VELOCITY_TOLERANCE = 3;
+    public static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1.5;
+    static final double VELOCITY_TOLERANCE = 0.4;
 
     static {
-        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION);
-        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_SIMULATION);
+        configureMotor(RIGHT_MOTOR, RIGHT_MOTOR_INVERTED_VALUE, RIGHT_SIMULATION, RIGHT_P, RIGHT_I, RIGHT_D, RIGHT_KS, RIGHT_KV, RIGHT_KA);
+        configureMotor(LEFT_MOTOR, LEFT_MOTOR_INVERTED_VALUE, LEFT_SIMULATION, LEFT_P, LEFT_I, LEFT_D, LEFT_KS, LEFT_KV, LEFT_KA);
     }
 
-    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, FlywheelSimulation simulation) {
+    private static void configureMotor(TalonFXMotor motor, InvertedValue invertedValue, FlywheelSimulation simulation, double p, double i, double d, double kS, double kV, double kA) {
         final TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.Audio.BeepOnBoot = false;
@@ -76,12 +83,12 @@ public class ShooterConstants {
         config.MotorOutput.Inverted = invertedValue;
         config.MotorOutput.NeutralMode = NEUTRAL_MODE_VALUE;
 
-        config.Slot0.kP = P;
-        config.Slot0.kI = I;
-        config.Slot0.kD = D;
-        config.Slot0.kS = KS;
-        config.Slot0.kV = KV;
-        config.Slot0.kA = KA;
+        config.Slot0.kP = p;
+        config.Slot0.kI = i;
+        config.Slot0.kD = d;
+        config.Slot0.kS = kS;
+        config.Slot0.kV = kV;
+        config.Slot0.kA = kA;
 
         config.Feedback.SensorToMechanismRatio = GEAR_RATIO;
 

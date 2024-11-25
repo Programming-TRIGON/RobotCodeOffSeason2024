@@ -21,10 +21,11 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
 
         inputs.hasResult = results.targets_Fiducials.length > 0;
 
-        if (inputs.hasResult)
+        if (inputs.hasResult) {
             updateHasResultInputs(inputs, results);
-        else
-            updateNoResultInputs(inputs);
+            return;
+        }
+        updateNoResultInputs(inputs);
     }
 
     private void updateHasResultInputs(AprilTagCameraInputsAutoLogged inputs, LimelightHelpers.LimelightResults results) {
@@ -39,8 +40,9 @@ public class AprilTagLimelightIO extends AprilTagCameraIO {
     }
 
     private void updateNoResultInputs(AprilTagCameraInputsAutoLogged inputs) {
-        inputs.visibleTagIDs = new int[0];
         inputs.cameraSolvePNPPose = new Pose3d();
+        inputs.visibleTagIDs = new int[0];
+        inputs.distanceFromBestTag = Double.POSITIVE_INFINITY;
     }
 
     private int[] getVisibleTagIDs(LimelightHelpers.LimelightResults results) {

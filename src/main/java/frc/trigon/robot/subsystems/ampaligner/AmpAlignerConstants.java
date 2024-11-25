@@ -18,21 +18,21 @@ public class AmpAlignerConstants {
     private static final String MOTOR_NAME = "AmpAlignerMotor";
     static final TalonFXMotor MOTOR = new TalonFXMotor(MOTOR_ID, MOTOR_NAME);
 
-    private static final InvertedValue INVERTED_VALUE = InvertedValue.Clockwise_Positive;
+    private static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final ForwardLimitTypeValue FORWARD_LIMIT_TYPE_VALUE = ForwardLimitTypeValue.NormallyOpen;
     private static final ForwardLimitSourceValue FORWARD_LIMIT_SOURCE_VALUE = ForwardLimitSourceValue.LimitSwitchPin;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 50 : 0,
+            P = RobotHardwareStats.isSimulation() ? 50 : 20,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
             D = RobotHardwareStats.isSimulation() ? 0 : 0,
-            KS = RobotHardwareStats.isSimulation() ? 0.055582 : 0,
-            KV = RobotHardwareStats.isSimulation() ? 6 : 0,
-            KA = RobotHardwareStats.isSimulation() ? 0.12886 : 0;
-    static final double KG = RobotHardwareStats.isSimulation() ? 0.11971 : 0;
+            KS = RobotHardwareStats.isSimulation() ? 0.055582 : 0.37527,
+            KV = RobotHardwareStats.isSimulation() ? 6 : 4.5959,
+            KA = RobotHardwareStats.isSimulation() ? 0.12886 : 0.16118;
+    static final double KG = RobotHardwareStats.isSimulation() ? 0.11971 : 0.13609;
     private static final double
-            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 6 : 0,
-            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 6 : 0;
+            MOTION_MAGIC_ACCELERATION = RobotHardwareStats.isSimulation() ? 6 : 5,
+            MOTION_MAGIC_CRUISE_VELOCITY = RobotHardwareStats.isSimulation() ? 6 : 5;
     private static final GravityTypeValue GRAVITY_TYPE_VALUE = GravityTypeValue.Arm_Cosine;
     private static final StaticFeedforwardSignValue STATIC_FEEDFORWARD_SIGN_VALUE = StaticFeedforwardSignValue.UseVelocitySign;
     private static final double GEAR_RATIO = 48;
@@ -43,9 +43,9 @@ public class AmpAlignerConstants {
     private static final double AMP_ALIGNER_MASS_KILOGRAMS = 1.1;
     public static final double AMP_ALIGNER_LENGTH_METERS = 0.52;
     private static final Rotation2d
-            AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(173.7 - 156),
+            AMP_ALIGNER_MINIMUM_ANGLE = Rotation2d.fromDegrees(17.7),
             AMP_ALIGNER_MAXIMUM_ANGLE = Rotation2d.fromDegrees(173.7);
-    private static final Rotation2d REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(173.7 - 156);
+    private static final Rotation2d REVERSE_SOFT_LIMIT_THRESHOLD = Rotation2d.fromDegrees(17.7);
     private static final boolean SIMULATE_GRAVITY = true;
     private static final SingleJointedArmSimulation SIMULATION = new SingleJointedArmSimulation(
             GEARBOX,
@@ -58,16 +58,17 @@ public class AmpAlignerConstants {
     );
 
     static final SysIdRoutine.Config SYSID_CONFIG = new SysIdRoutine.Config(
-            Units.Volts.of(1.5).per(Units.Second.of(1)),
-            Units.Volts.of(3),
+            Units.Volts.of(1).per(Units.Second.of(1)),
+            Units.Volts.of(2),
             Units.Second.of(1000)
     );
 
     public static final Transform3d PITCHER_TO_AMP_ALIGNER = new Transform3d(-0.4838, 0, 0.1472, new Rotation3d(0, edu.wpi.first.math.util.Units.degreesToRadians(6.3), 0));
 
+    public static final Rotation2d REALIGN_AMP_ALIGNER_ANGLE = Rotation2d.fromDegrees(5);
     static final Rotation2d READY_FOR_DEFAULT_PITCHER_MOVEMENT_ANGLE = Rotation2d.fromDegrees(80);
     static final Rotation2d LIMIT_SWITCH_PRESSED_ANGLE = Rotation2d.fromDegrees(173.7);
-    static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.1;
+    static final double LIMIT_SWITCH_DEBOUNCE_TIME_SECONDS = 0.01;
     static final Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.3);
 
     static {
@@ -117,8 +118,8 @@ public class AmpAlignerConstants {
     }
 
     public enum AmpAlignerState {
-        OPEN(Rotation2d.fromDegrees(173.7 - 156)),
-        CLOSE(Rotation2d.fromDegrees(173.7));
+        OPEN(Rotation2d.fromDegrees(17.7)),
+        CLOSE(Rotation2d.fromDegrees(173));
 
         public final Rotation2d targetAngle;
 
