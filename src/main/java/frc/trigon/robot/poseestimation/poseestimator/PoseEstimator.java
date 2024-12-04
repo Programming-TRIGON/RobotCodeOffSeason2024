@@ -98,6 +98,23 @@ public class PoseEstimator implements AutoCloseable {
         resetPose(new Pose2d(getCurrentEstimatedPose().getTranslation(), bestRobotHeading));
     }
 
+    public boolean hasResult() {
+        for (AprilTagCamera camera : aprilTagCameras) {
+            if (!camera.hasResult())
+                return false;
+        }
+        return true;
+    }
+
+    public Rotation2d getBestTagYawRelativeToRobot() {
+        Rotation2d bestTagYawRelativeToCamera = aprilTagCameras[0].getBestTagYawRelativeToRobot();
+        for (AprilTagCamera camera : aprilTagCameras) {
+            if (Math.abs(bestTagYawRelativeToCamera.getDegrees()) < Math.abs(camera.getBestTagYawRelativeToRobot().getDegrees()))
+                bestTagYawRelativeToCamera = camera.getBestTagYawRelativeToRobot();
+        }
+        return bestTagYawRelativeToCamera;
+    }
+
     private void logTargetPath() {
         PathPlannerLogging.setLogActivePathCallback((pose) -> {
             field.getObject("path").setPoses(pose);

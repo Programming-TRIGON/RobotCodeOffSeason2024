@@ -249,7 +249,7 @@ public class ShootingCalculations {
      * @param shootingTarget     the shootingTarget of the shooting. What we want the projectile to reach
      * @return the angle (yaw) the robot should reach in order to face the shooting target
      */
-    private MirrorableRotation2d getAngleToTarget(Translation2d currentTranslation, MirrorableTranslation3d shootingTarget) {
+    public MirrorableRotation2d getAngleToTarget(Translation2d currentTranslation, MirrorableTranslation3d shootingTarget) {
         final Translation2d difference = currentTranslation.minus(shootingTarget.get().toTranslation2d());
         return MirrorableRotation2d.fromRadians(Math.atan2(difference.getY(), difference.getX()), false);
     }

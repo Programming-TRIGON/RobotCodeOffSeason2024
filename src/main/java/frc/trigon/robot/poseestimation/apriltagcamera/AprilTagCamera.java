@@ -64,6 +64,10 @@ public class AprilTagCamera {
         return (inputs.hasResult && inputs.distanceFromBestTag != Double.POSITIVE_INFINITY) && isNewTimestamp();
     }
 
+    public boolean hasResult() {
+        return inputs.hasResult;
+    }
+
     public Pose2d getEstimatedRobotPose() {
         return robotPose;
     }
@@ -95,6 +99,20 @@ public class AprilTagCamera {
 
     public double getDistanceToBestTagMeters() {
         return inputs.distanceFromBestTag;
+    }
+
+    public Rotation2d getBestTagYawRelativeToRobot() {
+        if (!inputs.hasResult)
+            return Rotation2d.fromDegrees(180);
+        final Rotation2d bestTagYawRelativeToCamera = Rotation2d.fromDegrees(inputs.bestTarget.getYaw());
+        final Rotation2d robotCenterToCameraYaw = Rotation2d.fromRadians(robotCenterToCamera.getRotation().getZ());
+        return bestTagYawRelativeToCamera.rotateBy(robotCenterToCameraYaw);
+    }
+
+    public Translation3d getBestTagTanslation() {
+        if (!inputs.hasResult)
+            return new Translation3d();
+        return inputs.bestTarget.getBestCameraToTarget().getTranslation();
     }
 
     /**
@@ -156,6 +174,8 @@ public class AprilTagCamera {
         final double headingOffsetToUsedTagRadians = gyroHeading.getRadians() - robotPlaneTargetYawRadians + robotCenterToCamera.getRotation().getZ();
         return new Translation2d(robotPlaneCameraDistanceToUsedTagMeters, Rotation2d.fromRadians(headingOffsetToUsedTagRadians));
     }
+
+//    private Translation3d
 
     private double getRobotPlaneTargetYawRadians() {
         double targetYawRadians = -inputs.bestTargetRelativeYawRadians;
