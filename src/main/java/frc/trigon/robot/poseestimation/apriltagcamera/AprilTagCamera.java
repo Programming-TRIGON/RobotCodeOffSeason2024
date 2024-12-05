@@ -101,20 +101,6 @@ public class AprilTagCamera {
         return inputs.distanceFromBestTag;
     }
 
-    public Rotation2d getBestTagYawRelativeToRobot() {
-        if (!inputs.hasResult)
-            return Rotation2d.fromDegrees(180);
-        final Rotation2d bestTagYawRelativeToCamera = Rotation2d.fromDegrees(inputs.bestTarget.getYaw());
-        final Rotation2d robotCenterToCameraYaw = Rotation2d.fromRadians(robotCenterToCamera.getRotation().getZ());
-        return bestTagYawRelativeToCamera.rotateBy(robotCenterToCameraYaw);
-    }
-
-    public Translation3d getBestTagTanslation() {
-        if (!inputs.hasResult)
-            return new Translation3d();
-        return inputs.bestTarget.getBestCameraToTarget().getTranslation();
-    }
-
     /**
      * If the robot is close enough to the tag, it calculates the pose using the solve PNP heading.
      * If it's too far, it assumes the robot's heading from the gyro and calculates its position from there.

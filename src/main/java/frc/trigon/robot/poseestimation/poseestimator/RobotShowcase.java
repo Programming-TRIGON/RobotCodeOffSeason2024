@@ -1,5 +1,6 @@
 package frc.trigon.robot.poseestimation.poseestimator;
 
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import frc.trigon.robot.constants.CameraConstants;
 import org.photonvision.PhotonCamera;
@@ -17,28 +18,33 @@ public class RobotShowcase {
 
     public MirrorableTranslation3d getBestTagTranslationRelativeToRobot() {
         final PhotonPipelineResult bestResult = getBestResult();
-        final Translation3d bestTagTranslation = getBestTagTranslation(bestResult);
+        if (bestResult == null)
+            return new MirrorableTranslation3d(new Translation3d(), false);
+        final Transform3d cameraToTagTransform = getBestTagTranslation(bestResult);
 
         if (isGettingResultFromFrontCamera)
-            return new MirrorableTranslation3d(bestTagTranslation.minus(CameraConstants.FRONT_CENTER_TO_CAMERA.getTranslation()), false);
-        return new MirrorableTranslation3d(bestTagTranslation.minus(CameraConstants.REAR_CENTER_TO_CAMERA.getTranslation()), false);
+            return new MirrorableTranslation3d(CameraConstants.FRONT_CENTER_TO_CAMERA_POSE.transformBy(cameraToTagTransform).getTranslation(), false);
+        return new MirrorableTranslation3d(CameraConstants.REAR_CENTER_TO_CAMERA_POSE.transformBy(cameraToTagTransform).getTranslation(), false);
     }
 
-    private Translation3d getBestTagTranslation(PhotonPipelineResult result) {
+    private Transform3d getBestTagTranslation(PhotonPipelineResult result) {
         final PhotonTrackedTarget bestTarget = result.getBestTarget();
-        final Translation3d tagTranslation = bestTarget.getBestCameraToTarget().getTranslation();
-        return tagTranslation;
+        return bestTarget.getBestCameraToTarget();
     }
 
     private PhotonPipelineResult getBestResult() {
         final PhotonPipelineResult frontResult = getLatestPipelineResult(frontTagCamera);
         final PhotonPipelineResult rearResult = getLatestPipelineResult(rearTagCamera);
 
-        if (frontResult == null && rearResult != null) {
+        if (!frontResult.hasTargets()) {
+            if (!rearResult.hasTargets())
+                return null;
             isGettingResultFromFrontCamera = false;
             return rearResult;
         }
-        if (rearResult == null) {
+        if (!rearResult.hasTargets()) {
+            if (!frontResult.hasTargets())
+                return null;
             isGettingResultFromFrontCamera = true;
             return frontResult;
         }
@@ -52,6 +58,6 @@ public class RobotShowcase {
 
     private PhotonPipelineResult getLatestPipelineResult(PhotonCamera camera) {
         final List<PhotonPipelineResult> unreadResults = camera.getAllUnreadResults();
-        return unreadResults.isEmpty() ? null : unreadResults.get(unreadResults.size() - 1);
+        return unreadResults.isEmpty() ? new PhotonPipelineResult() : unreadResults.get(unreadResults.size() - 1);
     }
 }

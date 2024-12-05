@@ -44,7 +44,7 @@ public class AlignToTagCommand extends ParallelCommandGroup {
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> fieldRelativePowersToSelfRelativeXPower(OperatorConstants.DRIVER_CONTROLLER.getLeftY(), OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
-                () -> -PID_CONTROLLER.calculate(RobotContainer.POSE_ESTIMATOR.getBestTagYawRelativeToRobot().getDegrees()),
+                () -> -PID_CONTROLLER.calculate(ShootingCalculations.getInstance().getAngleToTarget(new Translation2d(), RobotContainer.ROBOT_SHOWCASE.getBestTagTranslationRelativeToRobot()).get().getDegrees()),
                 this::getTargetAngle
         );
     }

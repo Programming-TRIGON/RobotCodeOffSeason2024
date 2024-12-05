@@ -41,7 +41,6 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
         final PhotonTrackedTarget bestTarget = getBestTarget(latestResult);
         final Rotation3d bestTargetRelativeRotation3d = getBestTargetRelativeRotation(bestTarget);
 
-        inputs.bestTarget = bestTarget;
         inputs.cameraSolvePNPPose = getSolvePNPPose(latestResult, bestTarget);
         inputs.latestResultTimestampSeconds = latestResult.getTimestampSeconds();
         inputs.bestTargetRelativePitchRadians = bestTargetRelativeRotation3d.getY();

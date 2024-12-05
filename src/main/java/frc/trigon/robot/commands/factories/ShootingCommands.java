@@ -20,26 +20,10 @@ public class ShootingCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
 
     public static Command getShootAtTagCommand() {
-        return new ParallelCommandGroup(
+        return new ParallelRaceGroup(
                 getPrepareForShootingAtTargetCommand(),
                 getFeedNoteForShootingCommand()
         );
-    }
-
-    private static Command getPrepareForShootingAtTargetCommand() {
-        return new ParallelCommandGroup(
-                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
-                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand(),
-                SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
-                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
-                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
-                        () -> SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()
-                )
-        );
-    }
-
-    private static Command getUpdateShootingCalculationsCommandForShootingTarget() {
-        return new RunCommand(() -> SHOOTING_CALCULATIONS.updateCalculationsForShot(RobotContainer.ROBOT_SHOWCASE.getBestTagTranslationRelativeToRobot()));
     }
 
     /**
@@ -86,6 +70,23 @@ public class ShootingCommands {
 
     static Command getUpdateShootingCalculationsCommand(boolean isDelivery) {
         return new RunCommand(isDelivery ? SHOOTING_CALCULATIONS::updateCalculationsForDelivery : SHOOTING_CALCULATIONS::updateCalculationsForSpeakerShot);
+    }
+
+    private static Command getPrepareForShootingAtTargetCommand() {
+        return new ParallelCommandGroup(
+                getUpdateShootingCalculationsCommandForShootingTarget(),
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
+                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand(),
+                SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                        () -> SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()
+                )
+        );
+    }
+
+    private static Command getUpdateShootingCalculationsCommandForShootingTarget() {
+        return new RunCommand(() -> SHOOTING_CALCULATIONS.updateCalculationsForShot(RobotContainer.ROBOT_SHOWCASE.getBestTagTranslationRelativeToRobot()));
     }
 
     private static Command getPrepareForShootingCommand(boolean isDelivery) {
