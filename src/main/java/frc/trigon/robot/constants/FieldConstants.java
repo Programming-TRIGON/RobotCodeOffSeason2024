@@ -5,13 +5,14 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.*;
 import org.trigon.utilities.mirrorable.MirrorablePose2d;
-import org.trigon.utilities.mirrorable.MirrorableTranslation3d;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class FieldConstants {
-    private static final boolean SHOULD_USE_HOME_TAG_LAYOUT = false;
+    private static final boolean SHOULD_USE_HOME_TAG_LAYOUT = true;
+    private static final List<AprilTag> aprilTags = getAprilTagLayout();
     public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = createAprilTagFieldLayout();
     private static final Transform3d TAG_OFFSET = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
 
@@ -25,22 +26,26 @@ public class FieldConstants {
     private static final Translation3d
             SPEAKER_TAG_TO_SPEAKER = new Translation3d(0.15, 0.0, 0.82),
             AMP_TAG_TO_AMP = new Translation3d(0, 0.03, -0.32);
-    public static final MirrorableTranslation3d
-            SPEAKER_TRANSLATION = new MirrorableTranslation3d(TAG_ID_TO_POSE.get(SPEAKER_TAG_ID).getTranslation().plus(SPEAKER_TAG_TO_SPEAKER), true),
-            AMP_TRANSLATION = new MirrorableTranslation3d(TAG_ID_TO_POSE.get(AMP_TAG_ID).getTranslation().plus(AMP_TAG_TO_AMP), true),
-            TARGET_DELIVERY_POSITION = new MirrorableTranslation3d(2.5, 7, 0, true);
+//    public static final MirrorableTranslation3d
+//            SPEAKER_TRANSLATION = new MirrorableTranslation3d(TAG_ID_TO_POSE.get(SPEAKER_TAG_ID).getTranslation().plus(SPEAKER_TAG_TO_SPEAKER), true),
+//            AMP_TRANSLATION = new MirrorableTranslation3d(TAG_ID_TO_POSE.get(AMP_TAG_ID).getTranslation().plus(AMP_TAG_TO_AMP), true),
+//            TARGET_DELIVERY_POSITION = new MirrorableTranslation3d(2.5, 7, 0, true);
 
     public static final MirrorablePose2d IN_FRONT_OF_AMP_POSE = new MirrorablePose2d(1.842, 8.204 - 0.405, Rotation2d.fromDegrees(-90), true);
     public static final double MAXIMUM_DISTANCE_FROM_AMP_FOR_AUTONOMOUS_AMP_PREPARATION_METERS = 2.5;
 
     private static AprilTagFieldLayout createAprilTagFieldLayout() {
-        try {
-            return SHOULD_USE_HOME_TAG_LAYOUT ?
-                    AprilTagFieldLayout.loadFromResource("2024-crescendo-home-tag-layout.json") :
-                    AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return SHOULD_USE_HOME_TAG_LAYOUT ?
+                new AprilTagFieldLayout(aprilTags, FIELD_LENGTH_METERS, FIELD_WIDTH_METERS) :
+                AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+    }
+
+    private static List<AprilTag> getAprilTagLayout() {
+        final List<AprilTag> tags = new ArrayList<>();
+        final Translation3d aprilTagTranslation = new Translation3d(-0.038099999999999995, 4.982717999999999, 1.4511020000000001);
+        final AprilTag aprilTag = new AprilTag(8, new Pose3d(aprilTagTranslation, new Rotation3d(0, 0, 0)));
+        tags.add(aprilTag);
+        return tags;
     }
 
     private static HashMap<Integer, Pose3d> fieldLayoutToTagIdToPoseMap() {

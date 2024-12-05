@@ -44,6 +44,7 @@ public class Swerve extends MotorSubsystem {
 
         updatePoseEstimatorStates();
         RobotContainer.POSE_ESTIMATOR.periodic();
+        RobotContainer.ROBOT_SHOWCASE.periodic();
     }
 
     @Override

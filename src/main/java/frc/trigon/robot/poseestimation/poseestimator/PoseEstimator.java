@@ -30,7 +30,7 @@ public class PoseEstimator implements AutoCloseable {
     /**
      * Constructs a new PoseEstimator.
      *
-     * @param aprilTagCameras the sources that should update the pose estimator apart from the odometry. This should be cameras etc.
+     * @param aprilTagCameras the cameras that should be used to update the pose estimator.
      */
     public PoseEstimator(AprilTagCamera... aprilTagCameras) {
         this.aprilTagCameras = aprilTagCameras;
@@ -48,6 +48,8 @@ public class PoseEstimator implements AutoCloseable {
     public void periodic() {
         updateFromVision();
         field.setRobotPose(getCurrentEstimatedPose());
+        if (RobotHardwareStats.isSimulation())
+            AprilTagCameraConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentOdometryPose());
     }
 
     /**
@@ -88,6 +90,8 @@ public class PoseEstimator implements AutoCloseable {
     }
 
     public void setGyroHeadingToBestSolvePNPHeading() {
+        if (aprilTagCameras.length == 0)
+            return;
         int closestCameraToTag = 0;
         for (int i = 0; i < aprilTagCameras.length; i++) {
             if (aprilTagCameras[i].getDistanceToBestTagMeters() < aprilTagCameras[closestCameraToTag].getDistanceToBestTagMeters())
@@ -106,10 +110,13 @@ public class PoseEstimator implements AutoCloseable {
         return true;
     }
 
+    /**
+     * Logs and updates the field widget with the target PathPlanner path as an array of Pose2ds.
+     */
     private void logTargetPath() {
-        PathPlannerLogging.setLogActivePathCallback((pose) -> {
-            field.getObject("path").setPoses(pose);
-            Logger.recordOutput("Path", pose.toArray(new Pose2d[0]));
+        PathPlannerLogging.setLogActivePathCallback((pathPoses) -> {
+            field.getObject("path").setPoses(pathPoses);
+            Logger.recordOutput("Path", pathPoses.toArray(new Pose2d[0]));
         });
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> Logger.recordOutput("TargetPPPose", pose));
     }
@@ -118,8 +125,6 @@ public class PoseEstimator implements AutoCloseable {
         getViableVisionObservations().stream()
                 .sorted(Comparator.comparingDouble(PoseEstimator6328.VisionObservation::timestamp))
                 .forEach(poseEstimator6328::addVisionObservation);
-        if (RobotHardwareStats.isSimulation())
-            AprilTagCameraConstants.VISION_SIMULATION.update(RobotContainer.POSE_ESTIMATOR.getCurrentOdometryPose());
     }
 
     private List<PoseEstimator6328.VisionObservation> getViableVisionObservations() {

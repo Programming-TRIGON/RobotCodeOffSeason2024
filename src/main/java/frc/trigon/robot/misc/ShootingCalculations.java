@@ -3,7 +3,6 @@ package frc.trigon.robot.misc;
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.constants.FieldConstants;
 import frc.trigon.robot.constants.ShootingConstants;
 import frc.trigon.robot.subsystems.pitcher.PitcherConstants;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
@@ -29,16 +28,16 @@ public class ShootingCalculations {
      * Updates the {@linkplain ShootingCalculations#targetShootingState} class variable to contain the target state for delivery.
      */
     public void updateCalculationsForDelivery() {
-        Logger.recordOutput("ShootingCalculations/TargetDeliveryPose", FieldConstants.TARGET_DELIVERY_POSITION.get());
-        targetShootingState = calculateTargetShootingState(FieldConstants.TARGET_DELIVERY_POSITION, ShootingConstants.DELIVERY_STANDING_VELOCITY_ROTATIONS_PER_SECOND, true);
+//        Logger.recordOutput("ShootingCalculations/TargetDeliveryPose", FieldConstants.TARGET_DELIVERY_POSITION.get());
+//        targetShootingState = calculateTargetShootingState(FieldConstants.TARGET_DELIVERY_POSITION, ShootingConstants.DELIVERY_STANDING_VELOCITY_ROTATIONS_PER_SECOND, true);
     }
 
     /**
      * Updates the {@linkplain ShootingCalculations#targetShootingState} class variable to contain the target state for shooting at the speaker.
      */
     public void updateCalculationsForSpeakerShot() {
-        Logger.recordOutput("ShootingCalculations/TargetSpeakerPose", FieldConstants.SPEAKER_TRANSLATION.get());
-        targetShootingState = calculateTargetShootingState(FieldConstants.SPEAKER_TRANSLATION, ShootingConstants.SPEAKER_SHOT_STANDING_VELOCITY_ROTATIONS_PER_SECOND, false);
+//        Logger.recordOutput("ShootingCalculations/TargetSpeakerPose", FieldConstants.SPEAKER_TRANSLATION.get());
+//        targetShootingState = calculateTargetShootingState(FieldConstants.SPEAKER_TRANSLATION, ShootingConstants.SPEAKER_SHOT_STANDING_VELOCITY_ROTATIONS_PER_SECOND, false);
     }
 
     public void updateCalculationsForShot(MirrorableTranslation3d shootingTarget) {
@@ -106,11 +105,14 @@ public class ShootingCalculations {
      * @return the target state of the robot so the note will reach the shooting target, as a {@linkplain ShootingCalculations.TargetShootingState}
      */
     private TargetShootingState calculateTargetShootingState(MirrorableTranslation3d shootingTarget, double standingShootingVelocityRotationsPerSecond, boolean reachFromAbove) {
-        final Translation2d currentTranslation = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getTranslation();
+        final Translation2d currentTranslation = new Translation2d();
         final MirrorableRotation2d standingTargetRobotAngle = getAngleToTarget(currentTranslation, shootingTarget);
+        final MirrorableRotation2d standingTargetRobotAngleAfterGyroAccountability = new MirrorableRotation2d(standingTargetRobotAngle.get().minus(RobotContainer.POSE_ESTIMATOR.getCurrentOdometryPose().getRotation()), false);
         final double standingTangentialVelocity = angularVelocityToTangentialVelocity(standingShootingVelocityRotationsPerSecond);
-        final Rotation2d standingTargetPitch = calculateTargetPitch(standingTangentialVelocity, reachFromAbove, currentTranslation, standingTargetRobotAngle, shootingTarget);
-        final TargetShootingState standingShootingState = new TargetShootingState(standingTargetRobotAngle, standingTargetPitch, standingTangentialVelocity);
+        final Rotation2d standingTargetPitch = calculateTargetPitch(standingTangentialVelocity, reachFromAbove, currentTranslation, standingTargetRobotAngleAfterGyroAccountability, shootingTarget);
+        Logger.recordOutput("ShootingCalculations/TargetPitchDegrees", standingTargetPitch.getDegrees());
+        Logger.recordOutput("ShootingCalculations/TargetRobotAngleDegrees", standingTargetRobotAngleAfterGyroAccountability.get().getDegrees());
+        final TargetShootingState standingShootingState = new TargetShootingState(standingTargetRobotAngleAfterGyroAccountability, standingTargetPitch, standingTangentialVelocity);
 
         return calculateTargetShootingState(standingShootingState);
     }

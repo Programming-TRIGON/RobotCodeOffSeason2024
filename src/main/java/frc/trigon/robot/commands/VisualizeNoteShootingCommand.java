@@ -94,7 +94,7 @@ public class VisualizeNoteShootingCommand extends Command {
         startingYaw = Rotation2d.fromDegrees(90);
         fieldRelativeNoteExitPointTranslation = new Translation3d(
                 notePose.getX(),
-                FieldConstants.AMP_TRANSLATION.get().getY(),
+                0,
                 notePose.getZ());
         initialXYVelocity = new Translation2d(0, 0);
         initialZVelocity = 0;

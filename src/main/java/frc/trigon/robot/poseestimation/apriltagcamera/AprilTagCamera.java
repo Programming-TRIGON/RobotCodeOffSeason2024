@@ -160,9 +160,7 @@ public class AprilTagCamera {
         final double headingOffsetToUsedTagRadians = gyroHeading.getRadians() - robotPlaneTargetYawRadians + robotCenterToCamera.getRotation().getZ();
         return new Translation2d(robotPlaneCameraDistanceToUsedTagMeters, Rotation2d.fromRadians(headingOffsetToUsedTagRadians));
     }
-
-//    private Translation3d
-
+    
     private double getRobotPlaneTargetYawRadians() {
         double targetYawRadians = -inputs.bestTargetRelativeYawRadians;
         for (int i = 0; i < AprilTagCameraConstants.CALCULATE_YAW_ITERATIONS; i++) {

@@ -34,6 +34,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
 
     private PhotonPipelineResult getLatestPipelineResult() {
         final List<PhotonPipelineResult> unreadResults = photonCamera.getAllUnreadResults();
+        System.out.println("april tag camera unreadResults is empty: " + unreadResults.isEmpty());
         return unreadResults.isEmpty() ? null : unreadResults.get(unreadResults.size() - 1);
     }
 
