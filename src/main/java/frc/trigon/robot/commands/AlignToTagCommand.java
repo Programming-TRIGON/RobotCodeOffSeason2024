@@ -1,13 +1,15 @@
-package frc.trigon.robot.commands.factories;
+package frc.trigon.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.trigon.robot.RobotContainer;
-import frc.trigon.robot.commands.CommandConstants;
+import frc.trigon.robot.commands.factories.GeneralCommands;
 import frc.trigon.robot.constants.OperatorConstants;
+import frc.trigon.robot.misc.ShootingCalculations;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
@@ -39,7 +41,6 @@ public class AlignToTagCommand extends ParallelCommandGroup {
         );
     }
 
-
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> fieldRelativePowersToSelfRelativeXPower(OperatorConstants.DRIVER_CONTROLLER.getLeftY(), OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
@@ -57,7 +58,6 @@ public class AlignToTagCommand extends ParallelCommandGroup {
     }
 
     private MirrorableRotation2d getTargetAngle() {
-        final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getRotation();
-        return new MirrorableRotation2d(currentRotation.plus(RobotContainer.POSE_ESTIMATOR.getBestTagYawRelativeToRobot()), false);
+        return ShootingCalculations.getInstance().getAngleToTarget(new Translation2d(), RobotContainer.ROBOT_SHOWCASE.getBestTagTranslationRelativeToRobot());
     }
 }

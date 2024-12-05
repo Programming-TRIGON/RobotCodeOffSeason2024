@@ -17,6 +17,7 @@ import frc.trigon.robot.commands.factories.ShootingCommands;
 import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimator;
+import frc.trigon.robot.poseestimation.poseestimator.RobotShowcase;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import frc.trigon.robot.subsystems.ampaligner.AmpAligner;
 import frc.trigon.robot.subsystems.ampaligner.AmpAlignerCommands;
@@ -35,6 +36,7 @@ public class RobotContainer {
             CameraConstants.FRONT_TAG_CAMERA,
             CameraConstants.REAR_TAG_CAMERA
     );
+    public static final RobotShowcase ROBOT_SHOWCASE = new RobotShowcase();
     public static final Swerve SWERVE = new Swerve();
     public static final Intake INTAKE = new Intake();
     public static final Climber CLIMBER = new Climber();

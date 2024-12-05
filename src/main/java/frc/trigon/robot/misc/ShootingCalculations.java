@@ -41,6 +41,11 @@ public class ShootingCalculations {
         targetShootingState = calculateTargetShootingState(FieldConstants.SPEAKER_TRANSLATION, ShootingConstants.SPEAKER_SHOT_STANDING_VELOCITY_ROTATIONS_PER_SECOND, false);
     }
 
+    public void updateCalculationsForShot(MirrorableTranslation3d shootingTarget) {
+        Logger.recordOutput("ShootingCalculations/TargetShootingPose", shootingTarget.get());
+        targetShootingState = calculateTargetShootingState(shootingTarget, ShootingConstants.SPEAKER_SHOT_STANDING_VELOCITY_ROTATIONS_PER_SECOND, false);
+    }
+
     /**
      * @return the target state of the robot to shoot at the provided shooting target
      */

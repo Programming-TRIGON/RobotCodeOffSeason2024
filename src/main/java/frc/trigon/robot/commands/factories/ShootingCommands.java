@@ -19,6 +19,29 @@ import frc.trigon.robot.subsystems.swerve.SwerveCommands;
 public class ShootingCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
 
+    public static Command getShootAtTagCommand() {
+        return new ParallelCommandGroup(
+                getPrepareForShootingAtTargetCommand(),
+                getFeedNoteForShootingCommand()
+        );
+    }
+
+    private static Command getPrepareForShootingAtTargetCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
+                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand(),
+                SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                        () -> SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle()
+                )
+        );
+    }
+
+    private static Command getUpdateShootingCalculationsCommandForShootingTarget() {
+        return new RunCommand(() -> SHOOTING_CALCULATIONS.updateCalculationsForShot(RobotContainer.ROBOT_SHOWCASE.getBestTagTranslationRelativeToRobot()));
+    }
+
     /**
      * Creates a command that adjusts the shooting mechanism to aim at a target (either delivery target or speaker target), and feeds the note once the shooting mechanism is ready to shoot (all setpoints were reached).
      *

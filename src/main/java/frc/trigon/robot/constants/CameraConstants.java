@@ -14,7 +14,7 @@ public class CameraConstants {
             TRANSLATIONS_STD_EXPONENT = RobotHardwareStats.isSimulation() ? 0.2 : 0.002,
             THETA_STD_EXPONENT = 0.02;
 
-    private static final Transform3d
+    public static final Transform3d
             FRONT_CENTER_TO_CAMERA = new Transform3d(
             new Translation3d(0.325, 0.0465, 0.192),
             new Rotation3d(0, Units.degreesToRadians(-31), 0)
