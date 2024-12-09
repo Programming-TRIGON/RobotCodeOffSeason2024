@@ -15,9 +15,24 @@ import frc.trigon.robot.subsystems.pitcher.PitcherCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterCommands;
 import frc.trigon.robot.subsystems.shooter.ShooterConstants;
 import frc.trigon.robot.subsystems.swerve.SwerveCommands;
+import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 public class ShootingCommands {
     private static final ShootingCalculations SHOOTING_CALCULATIONS = ShootingCalculations.getInstance();
+
+    public static Command getShootAtTagCommand() {
+        return new ParallelCommandGroup(
+                PitcherCommands.getReachTargetPitchFromShootingCalculationsCommand(),
+                ShooterCommands.getReachTargetShootingVelocityFromShootingCalculationsCommand(),
+                SwerveCommands.getClosedLoopFieldRelativeDriveCommand(
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftY()),
+                        () -> CommandConstants.calculateDriveStickAxisValue(OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
+                        () -> new MirrorableRotation2d(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get().plus(RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getRotation()), false)
+                ),
+                new RunCommand(SHOOTING_CALCULATIONS::updateCalculationsForTagShot),
+                GeneralCommands.runWhenContinueTriggerPressed(getFeedNoteForShootingCommand())
+        );
+    }
 
     /**
      * Creates a command that adjusts the shooting mechanism to aim at a target (either delivery target or speaker target), and feeds the note once the shooting mechanism is ready to shoot (all setpoints were reached).
@@ -91,7 +106,7 @@ public class ShootingCommands {
                         .alongWith(GeneralCommands.getVisualizeNoteShootingCommand()),
                 () -> RobotContainer.SHOOTER.atTargetVelocity() &&
                         RobotContainer.PITCHER.atTargetPitch() &&
-                        RobotContainer.SWERVE.atAngle(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle())
+                        RobotContainer.SWERVE.atAngle(new MirrorableRotation2d(SHOOTING_CALCULATIONS.getTargetShootingState().targetRobotAngle().get().plus(RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getRotation()), false))
         );
     }
 

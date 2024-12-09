@@ -43,9 +43,9 @@ public class PitcherConstants {
     private static final boolean FOLLOWER_OPPOSES_MASTER = true;
     private static final NeutralModeValue NEUTRAL_MODE_VALUE = NeutralModeValue.Brake;
     private static final double
-            P = RobotHardwareStats.isSimulation() ? 100 : 0.5,
+            P = RobotHardwareStats.isSimulation() ? 100 : 0.2,
             I = RobotHardwareStats.isSimulation() ? 0 : 0,
-            D = RobotHardwareStats.isSimulation() ? 20 : 0.5,
+            D = RobotHardwareStats.isSimulation() ? 20 : 0.7,
             KS = RobotHardwareStats.isSimulation() ? 0.2 : 0.3,
             KV = RobotHardwareStats.isSimulation() ? 32 : 23,
             KA = RobotHardwareStats.isSimulation() ? 0 : 0,

@@ -25,20 +25,11 @@ public class CameraConstants {
             );
 
     public static final AprilTagCamera
-            FRONT_TAG_CAMERA = new AprilTagCamera(
-            AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
-            "FrontTagCamera",
-            FRONT_CENTER_TO_CAMERA,
-            THETA_STD_EXPONENT,
-            TRANSLATIONS_STD_EXPONENT
-    ),
             REAR_TAG_CAMERA = new AprilTagCamera(
-                    AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
-                    "RearTagCamera",
-                    REAR_CENTER_TO_CAMERA,
-                    THETA_STD_EXPONENT,
-                    TRANSLATIONS_STD_EXPONENT
-            );
+            AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
+            "RearTagCamera",
+            REAR_CENTER_TO_CAMERA
+    );
 
     public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");
 }

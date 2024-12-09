@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.trigon.robot.RobotContainer;
+import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.poseestimation.poseestimator.PoseEstimatorConstants;
 import frc.trigon.robot.subsystems.MotorSubsystem;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -198,10 +199,16 @@ public class Swerve extends MotorSubsystem {
      * @param targetAngle the target angle, relative to the blue alliance's forward position
      */
     void fieldRelativeDrive(double xPower, double yPower, MirrorableRotation2d targetAngle) {
+        if (!CameraConstants.REAR_TAG_CAMERA.hasResult())
+            targetAngle = prev;
+        else
+            prev = targetAngle;
         final ChassisSpeeds speeds = selfRelativeSpeedsFromFieldRelativePowers(xPower, yPower, 0);
         speeds.omegaRadiansPerSecond = calculateProfiledAngleSpeedToTargetAngle(targetAngle);
         selfRelativeDrive(speeds);
     }
+
+    MirrorableRotation2d prev = new MirrorableRotation2d(new Rotation2d(), false);
 
     /**
      * Drives the swerve with the given powers, relative to the field's frame of reference.

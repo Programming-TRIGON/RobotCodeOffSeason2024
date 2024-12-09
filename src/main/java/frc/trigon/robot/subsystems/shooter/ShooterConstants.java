@@ -65,8 +65,8 @@ public class ShooterConstants {
             RIGHT_MECHANISM = new SpeedMechanism2d("RightShooterMechanism", MAX_DISPLAYABLE_VELOCITY),
             LEFT_MECHANISM = new SpeedMechanism2d("LeftShooterMechanism", MAX_DISPLAYABLE_VELOCITY);
 
-    public static final double WHEEL_DIAMETER_METERS = edu.wpi.first.math.util.Units.inchesToMeters(4);
-    public static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1.5;
+    public static final double WHEEL_DIAMETER_METERS = edu.wpi.first.math.util.Units.inchesToMeters(4) * 0.67;
+    public static final double RIGHT_MOTOR_TO_LEFT_MOTOR_RATIO = 1;
     static final double VELOCITY_TOLERANCE = 0.4;
 
     static {

@@ -33,15 +33,14 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     }
 
     private PhotonPipelineResult getLatestPipelineResult() {
-        final List<PhotonPipelineResult> unreadResults = photonCamera.getAllUnreadResults();
-        return unreadResults.isEmpty() ? null : unreadResults.get(unreadResults.size() - 1);
+        return photonCamera.getLatestResult();
     }
 
     private void updateHasResultInputs(AprilTagCameraInputsAutoLogged inputs, PhotonPipelineResult latestResult) {
         final PhotonTrackedTarget bestTarget = getBestTarget(latestResult);
         final Rotation3d bestTargetRelativeRotation3d = getBestTargetRelativeRotation(bestTarget);
 
-        inputs.cameraSolvePNPPose = getSolvePNPPose(latestResult, bestTarget);
+        inputs.cameraSolvePNPPose = bestTarget.getBestCameraToTarget();
         inputs.latestResultTimestampSeconds = latestResult.getTimestampSeconds();
         inputs.bestTargetRelativePitchRadians = bestTargetRelativeRotation3d.getY();
         inputs.bestTargetRelativeYawRadians = bestTargetRelativeRotation3d.getZ();
@@ -51,7 +50,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     }
 
     private void updateNoResultInputs(AprilTagCameraInputsAutoLogged inputs) {
-        inputs.cameraSolvePNPPose = new Pose3d();
+        inputs.cameraSolvePNPPose = new Transform3d();
         inputs.visibleTagIDs = new int[0];
         inputs.distanceFromBestTag = Double.POSITIVE_INFINITY;
     }
@@ -65,7 +64,7 @@ public class AprilTagPhotonCameraIO extends AprilTagCameraIO {
     private PhotonTrackedTarget getBestTarget(PhotonPipelineResult result) {
         PhotonTrackedTarget bestTarget = result.getBestTarget();
         for (PhotonTrackedTarget target : result.getTargets()) {
-            if (target.getArea() > bestTarget.area)
+            if (target.getArea() > bestTarget.getArea())
                 bestTarget = target;
         }
         return bestTarget;
