@@ -4,9 +4,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
-import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCamera;
-import frc.trigon.robot.poseestimation.apriltagcamera.AprilTagCameraConstants;
 import org.trigon.hardware.RobotHardwareStats;
 
 public class CameraConstants {
@@ -24,21 +21,21 @@ public class CameraConstants {
                     new Rotation3d(Math.PI - Units.degreesToRadians(0), Units.degreesToRadians(-33), Math.PI + Units.degreesToRadians(0))
             );
 
-    public static final AprilTagCamera
-            FRONT_TAG_CAMERA = new AprilTagCamera(
-            AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
-            "FrontTagCamera",
-            FRONT_CENTER_TO_CAMERA,
-            THETA_STD_EXPONENT,
-            TRANSLATIONS_STD_EXPONENT
-    ),
-            REAR_TAG_CAMERA = new AprilTagCamera(
-                    AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
-                    "RearTagCamera",
-                    REAR_CENTER_TO_CAMERA,
-                    THETA_STD_EXPONENT,
-                    TRANSLATIONS_STD_EXPONENT
-            );
-
-    public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");
+//    public static final AprilTagCamera
+//            FRONT_TAG_CAMERA = new AprilTagCamera(
+//            AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
+//            "FrontTagCamera",
+//            FRONT_CENTER_TO_CAMERA,
+//            THETA_STD_EXPONENT,
+//            TRANSLATIONS_STD_EXPONENT
+//    ),
+//            REAR_TAG_CAMERA = new AprilTagCamera(
+//                    AprilTagCameraConstants.AprilTagCameraType.PHOTON_CAMERA,
+//                    "RearTagCamera",
+//                    REAR_CENTER_TO_CAMERA,
+//                    THETA_STD_EXPONENT,
+//                    TRANSLATIONS_STD_EXPONENT
+//            );
+//
+//    public static final ObjectDetectionCamera NOTE_DETECTION_CAMERA = new ObjectDetectionCamera("NoteDetectionCamera");
 }

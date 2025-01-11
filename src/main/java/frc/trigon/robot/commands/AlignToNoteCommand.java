@@ -4,12 +4,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.trigon.robot.RobotContainer;
 import frc.trigon.robot.commands.factories.GeneralCommands;
-import frc.trigon.robot.constants.CameraConstants;
 import frc.trigon.robot.constants.OperatorConstants;
-import frc.trigon.robot.misc.objectdetectioncamera.ObjectDetectionCamera;
 import frc.trigon.robot.subsystems.intake.IntakeConstants;
 import frc.trigon.robot.subsystems.ledstrip.LEDStrip;
 import frc.trigon.robot.subsystems.ledstrip.LEDStripCommands;
@@ -18,7 +15,7 @@ import org.trigon.hardware.RobotHardwareStats;
 import org.trigon.utilities.mirrorable.MirrorableRotation2d;
 
 public class AlignToNoteCommand extends ParallelCommandGroup {
-    private static final ObjectDetectionCamera CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
+    //    private static final ObjectDetectionCamera CAMERA = CameraConstants.NOTE_DETECTION_CAMERA;
     private static final PIDController Y_PID_CONTROLLER = RobotHardwareStats.isSimulation() ?
             new PIDController(0.0075, 0, 0) :
             new PIDController(0.0002, 0, 0);
@@ -26,8 +23,8 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
     public AlignToNoteCommand() {
         addCommands(
                 getSetCurrentLEDColorCommand(),
-                GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND), this::shouldAlignToNote).asProxy(),
-                new RunCommand(CAMERA::trackObject)
+                GeneralCommands.getContinuousConditionalCommand(getDriveWhileAligningToNoteCommand(), GeneralCommands.duplicate(CommandConstants.FIELD_RELATIVE_DRIVE_COMMAND), this::shouldAlignToNote).asProxy()
+//                new RunCommand(CAMERA::trackObject)
         );
     }
 
@@ -49,14 +46,16 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
                         IntakeConstants.ALIGN_TO_NOTE_BREATHING_IS_INVERTED,
                         LEDStrip.LED_STRIPS
                 ),
-                CAMERA::hasTargets
+                () -> false
+//                CAMERA::hasTargets
         ).asProxy();
     }
 
     private Command getDriveWhileAligningToNoteCommand() {
         return SwerveCommands.getClosedLoopSelfRelativeDriveCommand(
                 () -> fieldRelativePowersToSelfRelativeXPower(OperatorConstants.DRIVER_CONTROLLER.getLeftY(), OperatorConstants.DRIVER_CONTROLLER.getLeftX()),
-                () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
+                () -> 0,
+//                () -> -Y_PID_CONTROLLER.calculate(CAMERA.getTrackedObjectYaw().getDegrees()),
                 this::getTargetAngle
         );
     }
@@ -71,10 +70,10 @@ public class AlignToNoteCommand extends ParallelCommandGroup {
 
     private MirrorableRotation2d getTargetAngle() {
         final Rotation2d currentRotation = RobotContainer.POSE_ESTIMATOR.getCurrentEstimatedPose().getRotation();
-        return new MirrorableRotation2d(currentRotation.plus(CAMERA.getTrackedObjectYaw()), false);
+        return new MirrorableRotation2d(currentRotation.plus(new Rotation2d()), false);
     }
 
     private boolean shouldAlignToNote() {
-        return CAMERA.hasTargets() && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
+        return false && !RobotContainer.INTAKE.isEarlyNoteCollectionDetected();
     }
 }
